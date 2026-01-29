@@ -1,0 +1,8116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KiX Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  --text: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --accent: #3b82f6;
+  --accent-light: #dbeafe;
+  --accent-dark: #2563eb;
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --maxw: 96%;
+  --pagePadX: 20px;
+  --r: 12px;
+  --r2: 8px;
+}
+
+* { 
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  background: var(--card-bg);
+  padding: 24px 32px;
+  margin: -20px -20px 24px;
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-info {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.header-info span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-info strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* 导航栏 */
+.nav-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card-bg);
+  padding: 16px 0;
+  margin: 0 -20px 32px;
+  border-bottom: 2px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+}
+
+/* 搜索框容器 */
+.search-container {
+  position: relative;
+  margin-left: auto; 
+  flex-shrink: 0;
+}
+
+.metric-search-input {
+  width: 280px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.metric-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.metric-search-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* 搜索结果下拉框 */
+.search-results {
+  position: fixed;
+  top: 120px;  /* 固定在页面顶部下方 */
+  right: 20px; /* 右侧对齐 */
+  width: 400px; /* 固定宽度 */
+  max-height: calc(100vh - 140px); /* 最大高度为视口高度减去顶部间距 */
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* 更强的阴影 */
+  display: none;
+  z-index: 9999; /* 更高的层级 */
+}
+
+.search-results.show {
+  display: block;
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.15s;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: var(--accent-light);
+}
+
+.search-result-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.search-result-domain {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.search-no-results {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* 高亮动画 */
+@keyframes highlight-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    border-color: var(--border);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    border-color: var(--accent);
+  }
+}
+
+.chart-card.highlight {
+  animation: highlight-pulse 1.5s ease-in-out 2;
+  border-color: var(--accent);
+}
+
+.nav-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.nav-tabs::-webkit-scrollbar-track {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+
+.nav-tabs::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.nav-tabs::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.nav-tab {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.nav-tab:hover {
+  background: var(--card-bg);
+  border-color: var(--accent);
+  color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.nav-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+/* 模块 */
+.modules {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.module-row {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  scroll-margin-top: 100px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.module-row:hover {
+  box-shadow: var(--shadow);
+}
+
+.module-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.module-header h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.module-header p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.module-body {
+  padding: 24px;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 图表卡片 */
+.chart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  min-height: 380px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.canvas-wrapper {
+  position: relative;
+  height: 420px;
+  padding: 16px;
+}
+
+/* Chart Tabs Row - contains tabs and filter */
+.chart-tabs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 16px;
+}
+
+/* Chart Tabs */
+
+/* Dim filter (dropdown) */
+.dim-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.dim-filter label{
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.dim-select{
+  min-width: 180px;
+  max-width: 360px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+}
+
+.dim-select:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.dim-hint{
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.chart-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.chart-tab {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.chart-tab:hover {
+  background: var(--card-bg);
+  border-color: var(--accent-light);
+  color: var(--accent);
+}
+
+.chart-tab.active {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+/* KPI卡片 */
+.kpi-card {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: var(--r2);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  color: white;
+}
+
+.kpi-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+    .funnel-wrap{
+      width:100%;
+      height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+/* 空状态 */
+.empty-module {
+  padding: 80px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--border-light);
+  border-radius: var(--r2);
+}
+
+.empty-module-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.3;
+}
+
+/* 动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.module-row {
+  animation: fadeInUp 0.4s ease-out backwards;
+}
+
+.module-row:nth-child(1) { animation-delay: 0.05s; }
+.module-row:nth-child(2) { animation-delay: 0.1s; }
+.module-row:nth-child(3) { animation-delay: 0.15s; }
+.module-row:nth-child(4) { animation-delay: 0.2s; }
+.module-row:nth-child(5) { animation-delay: 0.25s; }
+.module-row:nth-child(6) { animation-delay: 0.3s; }
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .nav-tabs {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .container {
+    padding: 16px;
+  }
+
+  .module-body {
+    padding: 16px;
+  }
+}
+
+/* ====== Layout: 3 charts per row ====== */
+.charts-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 1200px){
+  .charts-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 780px){
+  .charts-grid{ grid-template-columns: repeat(1, minmax(0, 1fr)); }
+}
+
+/* ====== Dim multi-select dropdown ====== */
+.dim-filter{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.dim-filter-label{
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.dim-dd-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  max-width: 260px;
+}
+.dim-dd-btn:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+.dim-dd-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+.dim-dd-panel{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 320px;
+  max-height: 360px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+  z-index: 50;
+  display: none;
+  overflow: hidden;
+}
+.dim-dd-panel.open{ display: block; }
+.dim-dd-search{
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+}
+.dim-dd-list{
+  padding: 8px 10px;
+  overflow: auto;
+  max-height: 280px;
+}
+.dim-dd-item{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px;
+  border-radius: 8px;
+}
+.dim-dd-item:hover{
+  background: rgba(59,130,246,0.07);
+}
+.dim-dd-actions{
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+.dim-dd-actions button{
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+}
+.dim-dd-actions button.primary{
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+/* ====== Prevent label clipping ====== */
+.canvas-wrapper{
+  padding: 10px 8px 18px 8px;
+}
+
+
+/* ====== Card header refinements ====== */
+.chart-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.latest-badge{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-light);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+/* More breathing room so labels don't clip */
+.canvas-wrapper{
+  padding: 12px 10px 26px 10px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>📊 KiX Dashboard</h1>
+    <div class="header-info">
+      <span>📅 Date: <strong id="dataPeriod">-</strong></span>
+      <span style="margin-left:20px">🕒 Generated: <strong id="generatedAt">-</strong></span>
+    </div>
+  </div>
+
+<nav class="nav-tabs" id="navTabs">
+    <!-- 导航按钮会通过JS插入到这里 -->
+</nav>
+
+  <div class="modules" id="modulesArea"></div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+
+
+// =========================
+// Global Chart.js aesthetics
+// =========================
+Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji'";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = "#475569"; // slate-600
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.boxHeight = 10;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = "circle";
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.bodySpacing = 6;
+Chart.defaults.plugins.tooltip.titleSpacing = 6;
+Chart.defaults.plugins.tooltip.displayColors = true;
+
+// 短日期格式化: 将 "2026-01-05" 或 "2026-01-05~2026-01-11" 转换为 "01-05"
+function formatShortDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return dateStr;
+
+  // 如果已经是短格式 (MM-DD 或 MM)，直接返回
+  if (/^\d{2}-\d{2}$/.test(dateStr) || /^\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+
+  // 处理周范围格式 "YYYY-MM-DD~YYYY-MM-DD"
+  if (dateStr.includes('~')) {
+    const parts = dateStr.split('~');
+    dateStr = parts[0].trim(); // 取第一个日期
+  }
+
+  // 匹配 YYYY-MM-DD 格式
+  const match = dateStr.match(/^\d{4}-(\d{2}-\d{2})/);
+  if (match) {
+    return match[1]; // 返回 MM-DD 部分
+  }
+
+  // 处理月份格式 YYYY-MM
+  const monthMatch = dateStr.match(/^\d{4}-(\d{2})$/);
+  if (monthMatch) {
+    return monthMatch[1]; // 返回 MM
+  }
+
+  return dateStr; // 其他格式原样返回
+}
+
+// Common axis tick formatting
+function formatTick(v, kind) {
+  const percent = isPercentKind(kind);
+
+  // 如果是字符串(可能是日期),进行日期格式化
+  if (typeof v === 'string') {
+    return formatShortDate(v);
+  }
+
+  return formatNumberCompact(v, { isPercent: percent, decimals: percent ? 0 : 2, maxDigits: 6 });
+}
+
+function applyCommonScales(scales, kind) {
+  // x
+  if (scales.x) {
+    scales.x.grid = scales.x.grid || {};
+    scales.x.ticks = scales.x.ticks || {};
+    scales.x.grid.display = false;
+    scales.x.ticks.maxRotation = 0;
+    scales.x.ticks.autoSkip = true;
+    scales.x.ticks.padding = 6;
+  }
+  // y / y1
+  ["y","y1"].forEach(k=>{
+    if (!scales[k]) return;
+    scales[k].ticks = scales[k].ticks || {};
+    scales[k].ticks.padding = 6;
+    scales[k].ticks.callback = (v)=>formatTick(v, kind);
+    scales[k].grid = scales[k].grid || {};
+    if (k === "y") scales[k].grid.color = "#eef2f7";
+  });
+}
+
+// Compute latest value (for badge) — always interpret as "latest point", not sum
+function getLatestValueFromTab(tab) {
+  try {
+    if (!tab || !tab.data) return null;
+
+    // single value
+    if (tab.kind === "single_value" && typeof tab.data.value === "number") return tab.data.value;
+
+    // percent charts: show 100% (semantic "total")
+    if (isPercentKind(tab.kind)) return 100;
+
+    // time-series array: take last finite point (overall line/bar_line uses this)
+    if (Array.isArray(tab.data.values) && tab.data.values.length) {
+      for (let i = tab.data.values.length - 1; i >= 0; i--) {
+        const v = Number(tab.data.values[i]);
+        if (Number.isFinite(v)) return v;
+      }
+    }
+
+    // matrix time-series: take last date row sum (fallback)
+    if (Array.isArray(tab.data.matrix) && tab.data.matrix.length) {
+      for (let i = tab.data.matrix.length - 1; i >= 0; i--) {
+        const row = tab.data.matrix[i] || [];
+        const nums = row.map(x => Number(x)).filter(x => Number.isFinite(x));
+        if (nums.length) return nums.reduce((a,b)=>a+b, 0);
+      }
+    }
+
+    // labels/values (doughnut etc.): treat as total
+    if (Array.isArray(tab.data.values) && tab.data.values.length) {
+      const nums = tab.data.values.map(x => Number(x)).filter(x => Number.isFinite(x));
+      if (nums.length) return nums.reduce((a,b)=>a+b, 0);
+    }
+
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+
+function updateLatestBadge(chartId, tab) {
+  const el = document.getElementById("latest-" + chartId);
+  if (!el) return;
+
+  // 🔥 Funnel badge: 显示百分比而不是分数形式
+  if (tab && tab.kind === "funnel" && tab.data && (tab.data.numerator !== undefined) && (tab.data.denominator !== undefined)) {
+    const n = Number(tab.data.numerator ?? 0) || 0;
+    const d = Number(tab.data.denominator ?? 0) || 0;
+    const percentage = d > 0 ? ((n / d) * 100).toFixed(1) : '0.0';
+    el.textContent = `${percentage}%`;
+    return;
+  }
+
+  const v = getLatestValueFromTab(tab);
+  if (v === null || v === undefined || Number.isNaN(v)) {
+    el.textContent = "-";
+    return;
+  }
+
+  const percent = isPercentKind(tab.kind);
+  if (percent) {
+    let p = Number(v);
+    if (Math.abs(p) <= 1) p = p * 100;
+    const s = (Math.round(p * 10) / 10).toString().replace(/\.0$/, "");
+    el.textContent = s + "%";
+    return;
+  }
+
+  const num = Number(v);
+  const abs = Math.abs(num);
+  const decimals = abs < 1 ? 4 : 2;
+  let s = num.toLocaleString(undefined, { maximumFractionDigits: decimals });
+  s = s.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");
+  el.textContent = s;
+}
+
+const CHARTS_BY_DOMAIN = {
+  "platform_basics": [
+    {
+      "chart_id": "dau__series__series_daily",
+      "title": "日活跃用户数 (DAU)",
+      "metric_id": "dau",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              22.0,
+              54.0,
+              61.0,
+              68.0,
+              80.0,
+              80.0,
+              37.0,
+              28.0,
+              74.0,
+              82.0,
+              90.0,
+              31.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_country",
+          "tab_label": "by country",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "CN",
+            "SG",
+            "US",
+            "PH",
+            "EG",
+            "GB",
+            "SA",
+            "FR",
+            "Old mobile version",
+            "TW",
+            "MY",
+            "JP",
+            "RU",
+            "IQ",
+            "ID",
+            "HK",
+            "TZ",
+            "AR"
+          ],
+          "selected_dim_values": [
+            "CN"
+          ],
+          "ranked_dim_values": [
+            "CN",
+            "SG",
+            "US",
+            "PH",
+            "GB",
+            "SA",
+            "FR",
+            "EG",
+            "Old mobile version",
+            "TW",
+            "JP",
+            "AR",
+            "HK",
+            "MY",
+            "TZ"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "AR",
+              "CN",
+              "EG",
+              "FR",
+              "GB",
+              "HK",
+              "ID",
+              "IQ",
+              "JP",
+              "MY",
+              "Old mobile version",
+              "PH",
+              "RU",
+              "SA",
+              "SG",
+              "TW",
+              "TZ",
+              "US"
+            ],
+            "matrix": [
+              [
+                0.0,
+                10.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                9.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                31.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                1.0,
+                15.0,
+                0.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.0,
+                37.0,
+                2.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                2.0,
+                14.0,
+                0.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.0,
+                37.0,
+                6.0,
+                1.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                2.0,
+                0.0,
+                1.0,
+                13.0,
+                0.0,
+                0.0,
+                5.0
+              ],
+              [
+                0.0,
+                48.0,
+                4.0,
+                1.0,
+                2.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                3.0,
+                1.0,
+                0.0,
+                13.0,
+                0.0,
+                0.0,
+                5.0
+              ],
+              [
+                0.0,
+                51.0,
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                3.0,
+                14.0,
+                1.0,
+                0.0,
+                4.0
+              ],
+              [
+                0.0,
+                18.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                1.0,
+                11.0,
+                0.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.0,
+                11.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                10.0,
+                1.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                44.0,
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                2.0,
+                0.0,
+                1.0,
+                14.0,
+                1.0,
+                0.0,
+                7.0
+              ],
+              [
+                0.0,
+                45.0,
+                3.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                3.0,
+                0.0,
+                1.0,
+                24.0,
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                1.0,
+                53.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                3.0,
+                0.0,
+                0.0,
+                23.0,
+                1.0,
+                1.0,
+                5.0
+              ],
+              [
+                0.0,
+                20.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                7.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "source"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "others",
+            "Organic"
+          ],
+          "selected_dim_values": [
+            "others"
+          ],
+          "ranked_dim_values": [
+            "others",
+            "Organic"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "Organic",
+              "others"
+            ],
+            "matrix": [
+              [
+                0.0,
+                22.0
+              ],
+              [
+                0.0,
+                54.0
+              ],
+              [
+                0.0,
+                61.0
+              ],
+              [
+                3.0,
+                65.0
+              ],
+              [
+                3.0,
+                77.0
+              ],
+              [
+                5.0,
+                75.0
+              ],
+              [
+                1.0,
+                36.0
+              ],
+              [
+                1.0,
+                27.0
+              ],
+              [
+                7.0,
+                67.0
+              ],
+              [
+                4.0,
+                78.0
+              ],
+              [
+                11.0,
+                79.0
+              ],
+              [
+                3.0,
+                28.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Platform Basics"
+    },
+    {
+      "chart_id": "retention_d7___series__series_weekly_avg",
+      "title": "留存(D7)",
+      "metric_id": "retention(d7)",
+      "module": "series",
+      "item_id": "series_weekly_avg",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "bar_line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-12",
+              "01-19",
+              "01-26"
+            ],
+            "values": [
+              1.0,
+              0.4444444444444444,
+              0.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "source"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "__NULL__",
+            "Organic",
+            "pdd"
+          ],
+          "selected_dim_values": [
+            "__NULL__",
+            "Organic"
+          ],
+          "ranked_dim_values": [
+            "__NULL__",
+            "Organic",
+            "pdd"
+          ],
+          "data": {
+            "dates": [
+              "01-12",
+              "01-19",
+              "01-26"
+            ],
+            "series": [
+              "Organic",
+              "__NULL__",
+              "pdd"
+            ],
+            "matrix": [
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.4705882352941176,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Platform Basics"
+    },
+    {
+      "chart_id": "average_meaningful_battles_per_user__series__series_daily",
+      "title": "人均成功 PK 次数（活跃用户）",
+      "metric_id": "average_meaningful_battles_per_user",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "bar_line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.7679558011049724,
+              1.05,
+              1.809278350515464,
+              0.0142857142857142
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Platform Basics"
+    }
+  ],
+  "user_growth": [
+    {
+      "chart_id": "new_user__series__series_daily",
+      "title": "新用户数",
+      "metric_id": "new_user",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              11.0,
+              22.0,
+              26.0,
+              26.0,
+              27.0,
+              21.0,
+              18.0,
+              9.0,
+              17.0,
+              15.0,
+              21.0,
+              5.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_country",
+          "tab_label": "by country",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "SG",
+            "CN",
+            "PH",
+            "SA",
+            "EG",
+            "MX",
+            "ID",
+            "PK",
+            "US",
+            "MA",
+            "HK",
+            "MY",
+            "IN",
+            "TH",
+            "KH",
+            "NG",
+            "IQ",
+            "BR",
+            "DZ",
+            "AE",
+            "JP",
+            "LB",
+            "QA",
+            "LK",
+            "TN",
+            "TW",
+            "TZ"
+          ],
+          "selected_dim_values": [
+            "SG"
+          ],
+          "ranked_dim_values": [
+            "SG",
+            "CN",
+            "PH",
+            "SA",
+            "ID",
+            "US",
+            "MX",
+            "EG",
+            "PK",
+            "HK",
+            "IN",
+            "TH",
+            "MA",
+            "NG",
+            "TZ",
+            "TW",
+            "BR",
+            "QA",
+            "KH",
+            "JP",
+            "IQ",
+            "MY"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "AE",
+              "BR",
+              "CN",
+              "DZ",
+              "EG",
+              "HK",
+              "ID",
+              "IN",
+              "IQ",
+              "JP",
+              "KH",
+              "LB",
+              "LK",
+              "MA",
+              "MX",
+              "MY",
+              "NG",
+              "PH",
+              "PK",
+              "QA",
+              "SA",
+              "SG",
+              "TH",
+              "TN",
+              "TW",
+              "TZ",
+              "US"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                2.0,
+                0.0,
+                1.0,
+                0.0,
+                3.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                2.0,
+                2.0,
+                0.0,
+                2.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                4.0,
+                0.0,
+                2.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                1.0,
+                3.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                2.0,
+                7.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                7.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                0.0,
+                2.0,
+                2.0,
+                0.0,
+                3.0,
+                4.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                2.0,
+                1.0,
+                5.0,
+                2.0,
+                3.0,
+                2.0,
+                2.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                2.0,
+                3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                7.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                2.0,
+                0.0,
+                2.0,
+                3.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                3.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                3.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                3.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                3.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                3.0,
+                0.0,
+                1.0,
+                1.0,
+                4.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                8.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.0,
+                0.0,
+                1.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                1.0,
+                2.0,
+                1.0,
+                0.0,
+                1.0,
+                5.0,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "source"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "others",
+            "Organic"
+          ],
+          "selected_dim_values": [
+            "others",
+            "Organic"
+          ],
+          "ranked_dim_values": [
+            "others",
+            "Organic"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "Organic",
+              "others"
+            ],
+            "matrix": [
+              [
+                5.0,
+                6.0
+              ],
+              [
+                8.0,
+                14.0
+              ],
+              [
+                6.0,
+                20.0
+              ],
+              [
+                6.0,
+                20.0
+              ],
+              [
+                4.0,
+                23.0
+              ],
+              [
+                1.0,
+                20.0
+              ],
+              [
+                2.0,
+                16.0
+              ],
+              [
+                0.0,
+                9.0
+              ],
+              [
+                4.0,
+                13.0
+              ],
+              [
+                3.0,
+                12.0
+              ],
+              [
+                4.0,
+                17.0
+              ],
+              [
+                0.0,
+                5.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "User Growth"
+    },
+    {
+      "chart_id": "new_activated_user__series__series_daily",
+      "title": "有效新用户占比",
+      "metric_id": "new_activated_user",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.0909090909090909,
+              0.2272727272727272,
+              0.0384615384615384,
+              0.1153846153846153,
+              0.1481481481481481,
+              0.1904761904761904,
+              0.0555555555555555,
+              0.0,
+              0.1176470588235294,
+              0.2666666666666666,
+              0.0952380952380952,
+              0.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_country",
+          "tab_label": "by country",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "SG",
+            "CN",
+            "JP",
+            "PH",
+            "EG",
+            "AE",
+            "SA",
+            "MY",
+            "TZ",
+            "TW",
+            "TN",
+            "TH",
+            "QA",
+            "PK",
+            "NG",
+            "MA",
+            "MX",
+            "BR",
+            "LK",
+            "LB",
+            "KH",
+            "IQ",
+            "IN",
+            "ID",
+            "HK",
+            "DZ",
+            "US"
+          ],
+          "selected_dim_values": [
+            "SG"
+          ],
+          "ranked_dim_values": [
+            "SG",
+            "JP",
+            "PH",
+            "CN",
+            "BR",
+            "NG",
+            "TZ",
+            "TW",
+            "TH",
+            "SA",
+            "QA",
+            "PK",
+            "MY",
+            "MX",
+            "MA",
+            "KH",
+            "IQ",
+            "IN",
+            "ID",
+            "HK",
+            "EG",
+            "US"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "AE",
+              "BR",
+              "CN",
+              "DZ",
+              "EG",
+              "HK",
+              "ID",
+              "IN",
+              "IQ",
+              "JP",
+              "KH",
+              "LB",
+              "LK",
+              "MA",
+              "MX",
+              "MY",
+              "NG",
+              "PH",
+              "PK",
+              "QA",
+              "SA",
+              "SG",
+              "TH",
+              "TN",
+              "TW",
+              "TZ",
+              "US"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.6666666666666666,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1428571428571428,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.3333333333333333,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.6666666666666666,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.1428571428571428,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.6666666666666666,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.25,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.375,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.4,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "source"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "__NULL__",
+            "pdd",
+            "Organic",
+            "No User Consent"
+          ],
+          "selected_dim_values": [
+            "pdd",
+            "__NULL__",
+            "Organic",
+            "No User Consent"
+          ],
+          "ranked_dim_values": [
+            "pdd",
+            "__NULL__",
+            "Organic",
+            "No User Consent"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "No User Consent",
+              "Organic",
+              "__NULL__",
+              "pdd"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.1666666666666666,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.3571428571428571,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0526315789473684,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.1578947368421052,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.1739130434782608,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.1578947368421052,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0666666666666666,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.1538461538461538,
+                0.0
+              ],
+              [
+                0.0,
+                0.3333333333333333,
+                0.2727272727272727,
+                0.0
+              ],
+              [
+                0.0,
+                0.25,
+                0.0588235294117647,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "User Growth"
+    }
+  ],
+  "revenue": [
+    {
+      "chart_id": "daily_income__series__series_daily",
+      "title": "总收入",
+      "metric_id": "daily_income",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "values": [
+              0.99,
+              1.25,
+              2.006,
+              6.122,
+              1.042,
+              1.224,
+              0.182,
+              0.026,
+              0.624,
+              0.104,
+              0.26
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Revenue"
+    }
+  ],
+  "daily_challenge": [
+    {
+      "chart_id": "from_waiting_to_start_match__series__series_daily",
+      "title": "候场成功开赛率",
+      "metric_id": "from_waiting_to_start_match",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.8636363636363636,
+              0.671875,
+              0.5352112676056338,
+              0.6351351351351351,
+              0.6,
+              0.6933333333333334,
+              0.2666666666666666,
+              0.4666666666666667,
+              0.6986301369863014,
+              0.5128205128205128,
+              0.7051282051282052,
+              0.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "book_kix_challenge_uv__series__series_daily",
+      "title": "赛事预约率",
+      "metric_id": "book_kix_challenge_uv",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              1.5263157894736843,
+              0.3265306122448979,
+              0.5064935064935064,
+              0.5542168674698795,
+              0.5652173913043478,
+              0.7162162162162162,
+              0.9583333333333334,
+              0.7037037037037037,
+              0.5757575757575758,
+              0.7142857142857143,
+              0.6494845360824743,
+              0.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "participate_kix_challenge_uv__series__series_daily",
+      "title": "赛事参赛人数趋势",
+      "metric_id": "participate_kix_challenge_uv",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              19.0,
+              43.0,
+              40.0,
+              47.0,
+              49.0,
+              49.0,
+              8.0,
+              7.0,
+              51.0,
+              40.0,
+              56.0,
+              0.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "finish_kix_challenge_rate__series__series_daily",
+      "title": "赛事完成率",
+      "metric_id": "finish_kix_challenge_rate",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.9473684210526316,
+              0.9767441860465116,
+              0.95,
+              0.9574468085106383,
+              0.8775510204081632,
+              0.9183673469387756,
+              1.0,
+              1.0,
+              0.9411764705882352,
+              1.0,
+              0.9285714285714286,
+              0.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "kix_train_times__series__series_daily",
+      "title": "赛前人均游玩次数",
+      "metric_id": "kix_train_times",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              3.96,
+              4.08,
+              2.730769230769231,
+              3.704761904761905,
+              3.4958677685950414,
+              5.75206611570248,
+              3.380281690140845
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_id",
+          "tab_label": "by game_id",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_id"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "642",
+            "1403",
+            "1333",
+            "531",
+            "1402",
+            "471",
+            "1348",
+            "1252",
+            "691"
+          ],
+          "selected_dim_values": [
+            "642"
+          ],
+          "ranked_dim_values": [
+            "642",
+            "1403",
+            "1333",
+            "531",
+            "1402",
+            "471",
+            "1348",
+            "1252",
+            "691"
+          ],
+          "data": {
+            "dates": [
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "1252",
+              "1333",
+              "1348",
+              "1402",
+              "1403",
+              "471",
+              "531",
+              "642",
+              "691"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                4.056910569105691,
+                3.857142857142857,
+                2.3333333333333335
+              ],
+              [
+                0.0,
+                4.08,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.730769230769231,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                3.704761904761905,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.4958677685950414,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.037383177570093,
+                3.5714285714285716,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.380281690140845,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_name",
+          "tab_label": "by game_name",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_name"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Deep Sea 2048",
+            "Drift Bus",
+            "Shoot The Apple",
+            "Punch Box",
+            "HangGlider",
+            "The Last Battle",
+            "Cards Fusion",
+            "Spin Maze Save Xmas",
+            "Fast Driver"
+          ],
+          "selected_dim_values": [
+            "Deep Sea 2048"
+          ],
+          "ranked_dim_values": [
+            "Deep Sea 2048",
+            "Drift Bus",
+            "Shoot The Apple",
+            "Punch Box",
+            "HangGlider",
+            "The Last Battle",
+            "Cards Fusion",
+            "Spin Maze Save Xmas",
+            "Fast Driver"
+          ],
+          "data": {
+            "dates": [
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "Cards Fusion",
+              "Deep Sea 2048",
+              "Drift Bus",
+              "Fast Driver",
+              "HangGlider",
+              "Punch Box",
+              "Shoot The Apple",
+              "Spin Maze Save Xmas",
+              "The Last Battle"
+            ],
+            "matrix": [
+              [
+                0.0,
+                3.857142857142857,
+                0.0,
+                2.3333333333333335,
+                0.0,
+                4.056910569105691,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                4.08,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                2.730769230769231,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                3.704761904761905,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                3.4958677685950414,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                6.037383177570093,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                3.5714285714285716
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                3.380281690140845,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_mode",
+          "tab_label": "by mode",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "mode"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "normal",
+            "1v1",
+            "multi"
+          ],
+          "selected_dim_values": [
+            "normal"
+          ],
+          "ranked_dim_values": [
+            "normal",
+            "1v1",
+            "multi"
+          ],
+          "data": {
+            "dates": [
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "1v1",
+              "multi",
+              "normal"
+            ],
+            "matrix": [
+              [
+                2.0,
+                1.7857142857142858,
+                5.03030303030303
+              ],
+              [
+                1.2727272727272727,
+                0.0,
+                4.871794871794871
+              ],
+              [
+                1.6666666666666667,
+                1.0,
+                3.5625
+              ],
+              [
+                3.918918918918919,
+                0.0,
+                3.588235294117647
+              ],
+              [
+                2.783783783783784,
+                1.1538461538461535,
+                4.295774647887324
+              ],
+              [
+                6.633802816901408,
+                2.4583333333333335,
+                7.515151515151516
+              ],
+              [
+                3.068965517241379,
+                3.0,
+                3.757575757575758
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "kix_reward_uv__series__series_daily",
+      "title": "KiX challenge奖励人数",
+      "metric_id": "kix_reward_uv",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "values": [
+              4.0,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              6.0,
+              7.0,
+              7.0,
+              7.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "kix_challenge_reward_usd__series__series_daily",
+      "title": "KiX challenge奖励金额",
+      "metric_id": "kix_challenge_reward_usd",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "values": [
+              19.25,
+              24.77,
+              29.72,
+              34.68,
+              34.690000000000005,
+              39.63,
+              44.580000000000005,
+              49.54,
+              54.74000000000001,
+              59.720000000000006,
+              64.71
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "kix_challenge_redeem_uv__series__series_daily",
+      "title": "KiX challenge redeem人数",
+      "metric_id": "kix_challenge_redeem_uv",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "values": [
+              1.0,
+              6.0,
+              6.0,
+              6.0,
+              5.0,
+              6.0,
+              4.0,
+              5.0,
+              7.0,
+              7.0,
+              6.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_id",
+          "tab_label": "by game_id",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_id"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "1348",
+            "1402",
+            "1245",
+            "1278",
+            "1403",
+            "531",
+            "778",
+            "1265",
+            "642",
+            "1333",
+            "1110"
+          ],
+          "selected_dim_values": [
+            "1348"
+          ],
+          "ranked_dim_values": [
+            "1348",
+            "1402",
+            "1403",
+            "531",
+            "1265",
+            "642",
+            "1333"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "1110",
+              "1245",
+              "1265",
+              "1278",
+              "1333",
+              "1348",
+              "1402",
+              "1403",
+              "531",
+              "642",
+              "778"
+            ],
+            "matrix": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.0
+              ],
+              [
+                0.0,
+                0.0,
+                5.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                5.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                7.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                7.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_name",
+          "tab_label": "by game_name",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_name"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Cards Fusion",
+            "HangGlider",
+            "Animals Crush",
+            "Drift Bus",
+            "Happy Bird",
+            "Punch Box",
+            "Sling Tomb",
+            "Deep Sea 2048",
+            "Zombie Survivor",
+            "Shoot The Apple",
+            "Fish Shooting"
+          ],
+          "selected_dim_values": [
+            "Cards Fusion"
+          ],
+          "ranked_dim_values": [
+            "Cards Fusion",
+            "HangGlider",
+            "Drift Bus",
+            "Punch Box",
+            "Deep Sea 2048",
+            "Zombie Survivor",
+            "Shoot The Apple"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "Animals Crush",
+              "Cards Fusion",
+              "Deep Sea 2048",
+              "Drift Bus",
+              "Fish Shooting",
+              "HangGlider",
+              "Happy Bird",
+              "Punch Box",
+              "Shoot The Apple",
+              "Sling Tomb",
+              "Zombie Survivor"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0
+              ],
+              [
+                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                5.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                4.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                5.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                7.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                7.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_redeem_type",
+          "tab_label": "by redeem_type",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "redeem_type"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Coin",
+            "Energy",
+            "GiftCard",
+            "PAYNOW",
+            "ALIPAY"
+          ],
+          "selected_dim_values": [
+            "Coin"
+          ],
+          "ranked_dim_values": [
+            "Coin",
+            "GiftCard",
+            "Energy",
+            "PAYNOW",
+            "ALIPAY"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "ALIPAY",
+              "Coin",
+              "Energy",
+              "GiftCard",
+              "PAYNOW"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                4.0,
+                1.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                2.0,
+                3.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                0.0,
+                5.0,
+                0.0,
+                1.0
+              ],
+              [
+                0.0,
+                3.0,
+                0.0,
+                0.0,
+                2.0
+              ],
+              [
+                0.0,
+                2.0,
+                2.0,
+                2.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                3.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                1.0,
+                2.0,
+                1.0
+              ],
+              [
+                0.0,
+                2.0,
+                2.0,
+                2.0,
+                1.0
+              ],
+              [
+                0.0,
+                4.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              [
+                1.0,
+                2.0,
+                2.0,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    },
+    {
+      "chart_id": "kix_challenge_reward_value__series__series_daily",
+      "title": "KiX challleng兑换金额",
+      "metric_id": "kix_challenge_reward_value",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "values": [
+              14.0,
+              610.5,
+              225.0,
+              75.5,
+              423.76,
+              401.5,
+              42.94,
+              102.25,
+              322.88,
+              870.0,
+              222.26
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_id",
+          "tab_label": "by game_id",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_id"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "1348",
+            "1278",
+            "1265",
+            "531",
+            "1402",
+            "1245",
+            "1403",
+            "642",
+            "778",
+            "1333",
+            "1110"
+          ],
+          "selected_dim_values": [
+            "1348"
+          ],
+          "ranked_dim_values": [
+            "1348",
+            "1265",
+            "531",
+            "1402",
+            "1403",
+            "642",
+            "1333"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "1110",
+              "1245",
+              "1265",
+              "1278",
+              "1333",
+              "1348",
+              "1402",
+              "1403",
+              "531",
+              "642",
+              "778"
+            ],
+            "matrix": [
+              [
+                14.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                610.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                225.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                75.5
+              ],
+              [
+                0.0,
+                0.0,
+                423.76,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                401.5,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                42.94,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                102.25,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                322.88,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                870.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                222.26,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_name",
+          "tab_label": "by game_name",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_name"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Cards Fusion",
+            "Happy Bird",
+            "Zombie Survivor",
+            "Punch Box",
+            "HangGlider",
+            "Sling Tomb",
+            "Drift Bus",
+            "Deep Sea 2048",
+            "Animals Crush",
+            "Shoot The Apple",
+            "Fish Shooting"
+          ],
+          "selected_dim_values": [
+            "Cards Fusion"
+          ],
+          "ranked_dim_values": [
+            "Cards Fusion",
+            "Zombie Survivor",
+            "Punch Box",
+            "HangGlider",
+            "Drift Bus",
+            "Deep Sea 2048",
+            "Shoot The Apple"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "Animals Crush",
+              "Cards Fusion",
+              "Deep Sea 2048",
+              "Drift Bus",
+              "Fish Shooting",
+              "HangGlider",
+              "Happy Bird",
+              "Punch Box",
+              "Shoot The Apple",
+              "Sling Tomb",
+              "Zombie Survivor"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                14.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                610.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                225.0,
+                0.0
+              ],
+              [
+                75.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                423.76
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                401.5,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                42.94,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                102.25,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                322.88,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                870.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                222.26,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_redeem_type",
+          "tab_label": "by redeem_type",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "redeem_type"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Coin",
+            "PAYNOW",
+            "Energy",
+            "GiftCard",
+            "ALIPAY"
+          ],
+          "selected_dim_values": [
+            "Coin"
+          ],
+          "ranked_dim_values": [
+            "Coin",
+            "PAYNOW",
+            "GiftCard",
+            "Energy",
+            "ALIPAY"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "ALIPAY",
+              "Coin",
+              "Energy",
+              "GiftCard",
+              "PAYNOW"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                14.0
+              ],
+              [
+                0.0,
+                586.0,
+                7.0,
+                0.0,
+                17.5
+              ],
+              [
+                0.0,
+                169.0,
+                35.0,
+                0.0,
+                21.0
+              ],
+              [
+                0.0,
+                0.0,
+                51.0,
+                0.0,
+                24.5
+              ],
+              [
+                0.0,
+                394.0,
+                0.0,
+                0.0,
+                29.76
+              ],
+              [
+                0.0,
+                338.0,
+                34.0,
+                29.5,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                3.0,
+                39.94,
+                0.0
+              ],
+              [
+                0.0,
+                47.0,
+                9.0,
+                11.25,
+                35.0
+              ],
+              [
+                0.0,
+                266.0,
+                6.0,
+                12.38,
+                38.5
+              ],
+              [
+                0.0,
+                816.0,
+                3.0,
+                9.0,
+                42.0
+              ],
+              [
+                27.63,
+                152.0,
+                15.0,
+                0.0,
+                27.63
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Daily Challenge"
+    }
+  ],
+  "pk": [
+    {
+      "chart_id": "average_player_per_match__series__series_daily",
+      "title": "单局对战密度",
+      "metric_id": "average_player_per_match",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "values": [
+              18.0,
+              42.0,
+              36.0,
+              44.0,
+              41.0,
+              45.0,
+              8.0,
+              7.0,
+              48.0,
+              40.0,
+              52.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_mode",
+          "tab_label": "by mode",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "mode"
+            ]
+          },
+          "filterable": false,
+          "all_dim_values": [
+            "__NULL__"
+          ],
+          "selected_dim_values": [
+            "__NULL__"
+          ],
+          "ranked_dim_values": [
+            "__NULL__"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "__NULL__"
+            ],
+            "matrix": [
+              [
+                18.0
+              ],
+              [
+                42.0
+              ],
+              [
+                36.0
+              ],
+              [
+                44.0
+              ],
+              [
+                41.0
+              ],
+              [
+                45.0
+              ],
+              [
+                8.0
+              ],
+              [
+                7.0
+              ],
+              [
+                48.0
+              ],
+              [
+                40.0
+              ],
+              [
+                52.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_type",
+          "tab_label": "by type",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "type"
+            ]
+          },
+          "filterable": false,
+          "all_dim_values": [
+            "__NULL__"
+          ],
+          "selected_dim_values": [
+            "__NULL__"
+          ],
+          "ranked_dim_values": [
+            "__NULL__"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28"
+            ],
+            "series": [
+              "__NULL__"
+            ],
+            "matrix": [
+              [
+                18.0
+              ],
+              [
+                42.0
+              ],
+              [
+                36.0
+              ],
+              [
+                44.0
+              ],
+              [
+                41.0
+              ],
+              [
+                45.0
+              ],
+              [
+                8.0
+              ],
+              [
+                7.0
+              ],
+              [
+                48.0
+              ],
+              [
+                40.0
+              ],
+              [
+                52.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "PK"
+    },
+    {
+      "chart_id": "pk_successful_matching__series__series_daily",
+      "title": "匹配成功率",
+      "metric_id": "pk_successful_matching",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0053859964093357,
+              0.8897168405365127,
+              0.9767441860465116
+            ]
+          }
+        },
+        {
+          "tab_id": "by_game_id",
+          "tab_label": "by game_id",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "game_id"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Animals Crush",
+            "Pixel Journey",
+            "Sling Tomb",
+            "Block Breaker",
+            "Spin Maze Save Xmas",
+            "Tofu Cat",
+            "Dragon Snap Rescue",
+            "Candy Store",
+            "Jelly Blast",
+            "Sushi Frenzy",
+            "Color Block Away",
+            "Sea Treasure",
+            "Pupper Jones",
+            "Punch Box",
+            "Mini Golf",
+            "Tennis Dash",
+            "Candy Monster",
+            "Don't Brake",
+            "Deep Sea 2048",
+            "Drift Bus",
+            "The Last Battle",
+            "Gold Miner",
+            "Nutmeg Football",
+            "Fast Driver",
+            "Sky Speedster",
+            "Squid Head Kick",
+            "Winter Elimination Fun",
+            "Zombie Survivor",
+            "daf0a5efMKNPPXCE",
+            "daf0a5efMKOUBM8A",
+            "sheep rush",
+            "Tile Connect Puzzle",
+            "King Of Drift",
+            "Shoot The Apple",
+            "Monkey Mart",
+            "Atro Pong",
+            "Happy Bird",
+            "HangGlider",
+            "Golden Move Quest",
+            "Frog Super Bubbles",
+            "Fish Shooting",
+            "Defuse the bombs",
+            "Crossy Chicken",
+            "Cosmic Blaster",
+            "Corona Jump",
+            "Cards Fusion",
+            "test pk"
+          ],
+          "selected_dim_values": [
+            "Animals Crush"
+          ],
+          "ranked_dim_values": [
+            "Animals Crush",
+            "Pixel Journey",
+            "Sling Tomb",
+            "Block Breaker",
+            "Spin Maze Save Xmas",
+            "Tofu Cat",
+            "Dragon Snap Rescue",
+            "Jelly Blast",
+            "Candy Store",
+            "Sushi Frenzy",
+            "Color Block Away",
+            "Tennis Dash",
+            "Sea Treasure",
+            "Pupper Jones",
+            "Punch Box",
+            "Mini Golf",
+            "Don't Brake",
+            "Candy Monster",
+            "Deep Sea 2048",
+            "Drift Bus",
+            "The Last Battle",
+            "Gold Miner",
+            "Nutmeg Football",
+            "Fast Driver",
+            "HangGlider",
+            "Cards Fusion",
+            "Zombie Survivor",
+            "Winter Elimination Fun",
+            "Tile Connect Puzzle",
+            "Sky Speedster",
+            "Corona Jump",
+            "Cosmic Blaster",
+            "King Of Drift",
+            "Shoot The Apple",
+            "Monkey Mart",
+            "Atro Pong",
+            "sheep rush"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "Animals Crush",
+              "Atro Pong",
+              "Block Breaker",
+              "Candy Monster",
+              "Candy Store",
+              "Cards Fusion",
+              "Color Block Away",
+              "Corona Jump",
+              "Cosmic Blaster",
+              "Crossy Chicken",
+              "Deep Sea 2048",
+              "Defuse the bombs",
+              "Don't Brake",
+              "Dragon Snap Rescue",
+              "Drift Bus",
+              "Fast Driver",
+              "Fish Shooting",
+              "Frog Super Bubbles",
+              "Gold Miner",
+              "Golden Move Quest",
+              "HangGlider",
+              "Happy Bird",
+              "Jelly Blast",
+              "King Of Drift",
+              "Mini Golf",
+              "Monkey Mart",
+              "Nutmeg Football",
+              "Pixel Journey",
+              "Punch Box",
+              "Pupper Jones",
+              "Sea Treasure",
+              "Shoot The Apple",
+              "Sky Speedster",
+              "Sling Tomb",
+              "Spin Maze Save Xmas",
+              "Squid Head Kick",
+              "Sushi Frenzy",
+              "Tennis Dash",
+              "The Last Battle",
+              "Tile Connect Puzzle",
+              "Tofu Cat",
+              "Winter Elimination Fun",
+              "Zombie Survivor",
+              "daf0a5efMKNPPXCE",
+              "daf0a5efMKOUBM8A",
+              "sheep rush",
+              "test pk"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0204081632653061,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0625,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0476190476190476,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                0.0,
+                0.9166666666666666,
+                1.0,
+                0.5,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.95,
+                0.0,
+                1.0,
+                0.5625,
+                0.9094827586206896,
+                0.5833333333333334,
+                0.0,
+                0.0,
+                0.6875,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                1.0,
+                0.0,
+                0.5454545454545454,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.9509803921568628,
+                0.8974358974358975,
+                0.0,
+                0.5,
+                1.0,
+                0.7727272727272727,
+                0.0,
+                0.76,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.96,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_mode",
+          "tab_label": "by mode",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "mode"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "multi",
+            "1v1",
+            "2v2"
+          ],
+          "selected_dim_values": [
+            "multi",
+            "1v1"
+          ],
+          "ranked_dim_values": [
+            "multi",
+            "1v1"
+          ],
+          "data": {
+            "dates": [
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "1v1",
+              "2v2",
+              "multi"
+            ],
+            "matrix": [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0517241379310344
+              ],
+              [
+                0.8780889621087314,
+                0.0,
+                1.0
+              ],
+              [
+                0.9743589743589745,
+                0.0,
+                1.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "PK"
+    }
+  ],
+  "viral": [
+    {
+      "chart_id": "viral_new_uv__series__series_daily",
+      "title": "Viral 占比",
+      "metric_id": "viral_new_uv",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "12-31",
+              "01-01",
+              "01-02",
+              "01-03",
+              "01-04",
+              "01-05",
+              "01-06",
+              "01-07",
+              "01-08",
+              "01-09",
+              "01-10",
+              "01-11",
+              "01-12",
+              "01-13",
+              "01-14",
+              "01-15",
+              "01-16",
+              "01-17",
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0416666666666666,
+              0.0,
+              0.0,
+              0.0,
+              0.0769230769230769,
+              0.4827586206896552,
+              0.1428571428571428,
+              0.1923076923076923,
+              0.1428571428571428,
+              0.0666666666666666,
+              0.0,
+              0.3333333333333333,
+              0.2222222222222222,
+              0.5,
+              10.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Viral"
+    },
+    {
+      "chart_id": "invitation_impression_to_click_funnel__series__value_daily",
+      "title": "邀请曝光 → 点击漏斗",
+      "metric_id": "invitation_impression_to_click_funnel",
+      "module": "series",
+      "item_id": "value_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "funnel",
+          "meta": {},
+          "data": {
+            "date": "2026-01-29",
+            "denominator": 6.0,
+            "numerator": 4.0,
+            "value": 0.6666666666666666
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "funnel",
+          "meta": {
+            "dims": [
+              "source"
+            ],
+            "date": "2026-01-29"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "HQ_Withdraw_Share",
+            "Add_Friend_Invite",
+            "Energy_Rescue",
+            "HQ_H5_Download",
+            "HQ_After_Share",
+            "HQ_H5_Share",
+            "PK_After_Share",
+            "HQ_Room_Invite",
+            "Game_Room_Invite",
+            "Dev_Competition_Share",
+            "Gamification_Task",
+            "Dev_Minisite_Visit",
+            "HQ_Reservation_Detail"
+          ],
+          "selected_dim_values": [
+            "Add_Friend_Invite"
+          ],
+          "ranked_dim_values": [
+            "Add_Friend_Invite",
+            "HQ_H5_Download",
+            "Energy_Rescue",
+            "HQ_After_Share",
+            "PK_After_Share",
+            "HQ_H5_Share",
+            "Dev_Competition_Share",
+            "HQ_Withdraw_Share",
+            "HQ_Room_Invite",
+            "Dev_Minisite_Visit",
+            "Game_Room_Invite",
+            "Gamification_Task"
+          ],
+          "data": {
+            "date": "2026-01-29",
+            "dim_labels": [
+              "HQ_H5_Download",
+              "Game_Room_Invite",
+              "HQ_H5_Share"
+            ],
+            "denominator": [
+              1.0,
+              2.0,
+              3.0
+            ],
+            "numerator": [
+              3.0,
+              0.0,
+              1.0
+            ],
+            "values": [
+              3.0,
+              0.0,
+              0.3333333333333333
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Viral"
+    },
+    {
+      "chart_id": "click_to_invite_sucess_funnel__series__value_daily",
+      "title": "点击->邀请成功漏斗",
+      "metric_id": "click_to_invite_sucess_funnel",
+      "module": "series",
+      "item_id": "value_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "funnel",
+          "meta": {},
+          "data": {
+            "date": "2026-01-29",
+            "denominator": 4.0,
+            "numerator": 0.0,
+            "value": 0.0
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "funnel",
+          "meta": {
+            "dims": [
+              "source"
+            ],
+            "date": "2026-01-29"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "Add_Friend_Invite",
+            "Energy_Rescue",
+            "HQ_H5_Download",
+            "Dev_Competition_Share",
+            "Dev_Minisite_Visit",
+            "Game_Room_Invite",
+            "Gamification_Task",
+            "HQ_After_Share",
+            "HQ_H5_Share",
+            "HQ_Reservation_Detail",
+            "HQ_Room_Invite",
+            "HQ_Withdraw_Share",
+            "PK_After_Share"
+          ],
+          "selected_dim_values": [
+            "HQ_H5_Download"
+          ],
+          "ranked_dim_values": [
+            "HQ_H5_Download",
+            "Add_Friend_Invite",
+            "Dev_Competition_Share",
+            "Dev_Minisite_Visit",
+            "Energy_Rescue",
+            "Game_Room_Invite",
+            "Gamification_Task",
+            "HQ_After_Share",
+            "HQ_H5_Share",
+            "HQ_Room_Invite",
+            "HQ_Withdraw_Share",
+            "PK_After_Share"
+          ],
+          "data": {
+            "date": "2026-01-29",
+            "dim_labels": [
+              "HQ_H5_Download",
+              "Game_Room_Invite",
+              "HQ_H5_Share"
+            ],
+            "denominator": [
+              3.0,
+              0.0,
+              1.0
+            ],
+            "numerator": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "values": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Viral"
+    },
+    {
+      "chart_id": "viral_d1_rate__series__series_daily",
+      "title": "viral来源用户的留存",
+      "metric_id": "viral_d1_rate",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {},
+          "data": {
+            "dates": [
+              "12-31",
+              "01-01",
+              "01-02",
+              "01-03",
+              "01-04",
+              "01-05",
+              "01-06",
+              "01-07",
+              "01-08",
+              "01-09",
+              "01-10",
+              "01-11",
+              "01-12",
+              "01-13",
+              "01-14",
+              "01-15",
+              "01-16",
+              "01-17",
+              "01-18",
+              "01-19",
+              "01-20",
+              "01-21",
+              "01-22",
+              "01-23",
+              "01-24",
+              "01-25",
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "values": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.5,
+              0.1428571428571428,
+              0.75,
+              0.2,
+              0.25,
+              0.0,
+              0.0,
+              0.4,
+              0.5,
+              0.5384615384615384,
+              0.0
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "Viral"
+    }
+  ],
+  "cash_out": [],
+  "monitoring": [
+    {
+      "chart_id": "average_ping_response__series__value_daily",
+      "title": "MTR / API PING P90",
+      "metric_id": "average_ping_response",
+      "module": "series",
+      "item_id": "value_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "by_country+platform",
+          "tab_label": "by country × platform",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country",
+              "platform"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "US × ios",
+            "CN × ios",
+            "SG × ios",
+            "FR × ios",
+            "GB × android",
+            "CN × android",
+            "PH × ios",
+            "EG × android",
+            "US × android",
+            "AE × android",
+            "TZ × ios",
+            "EG × ios",
+            "SA × ios",
+            "AR × android",
+            "SG × android",
+            "TW × ios"
+          ],
+          "selected_dim_values": [
+            "US × ios"
+          ],
+          "ranked_dim_values": [
+            "US × ios",
+            "CN × ios",
+            "SG × ios",
+            "FR × ios",
+            "GB × android",
+            "CN × android",
+            "PH × ios",
+            "EG × android",
+            "US × android",
+            "AE × android",
+            "TZ × ios",
+            "EG × ios",
+            "SA × ios",
+            "AR × android",
+            "SG × android",
+            "TW × ios"
+          ],
+          "data": {
+            "dates": [
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "AE × android",
+              "AR × android",
+              "CN × android",
+              "CN × ios",
+              "EG × android",
+              "EG × ios",
+              "FR × ios",
+              "GB × android",
+              "PH × ios",
+              "SA × ios",
+              "SG × android",
+              "SG × ios",
+              "TW × ios",
+              "TZ × ios",
+              "US × android",
+              "US × ios"
+            ],
+            "matrix": [
+              [
+                51.0,
+                17.0,
+                82.0,
+                144.0,
+                65.0,
+                0.0,
+                49.0,
+                59.0,
+                213.0,
+                0.0,
+                14.0,
+                197.0,
+                0.0,
+                0.0,
+                51.0,
+                230.0
+              ],
+              [
+                51.0,
+                14.0,
+                87.0,
+                207.0,
+                99.0,
+                95.0,
+                0.0,
+                53.0,
+                60.0,
+                0.0,
+                11.0,
+                238.0,
+                0.0,
+                0.0,
+                65.0,
+                437.0
+              ],
+              [
+                58.0,
+                19.0,
+                101.0,
+                222.0,
+                110.0,
+                0.0,
+                692.0,
+                231.0,
+                57.0,
+                0.0,
+                14.0,
+                424.0,
+                49.0,
+                97.0,
+                54.0,
+                1440.0
+              ],
+              [
+                0.0,
+                13.0,
+                70.0,
+                610.0,
+                55.0,
+                0.0,
+                0.0,
+                49.0,
+                0.0,
+                75.0,
+                12.0,
+                69.0,
+                0.0,
+                0.0,
+                49.0,
+                0.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_country",
+          "tab_label": "by country",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "US",
+            "CN",
+            "SG",
+            "FR",
+            "EG",
+            "GB",
+            "PH",
+            "AE",
+            "TZ",
+            "SA",
+            "AR",
+            "TW"
+          ],
+          "selected_dim_values": [
+            "US"
+          ],
+          "ranked_dim_values": [
+            "US",
+            "CN",
+            "SG",
+            "FR",
+            "EG",
+            "GB",
+            "PH",
+            "AE",
+            "TZ",
+            "SA",
+            "AR",
+            "TW"
+          ],
+          "data": {
+            "dates": [
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "AE",
+              "AR",
+              "CN",
+              "EG",
+              "FR",
+              "GB",
+              "PH",
+              "SA",
+              "SG",
+              "TW",
+              "TZ",
+              "US"
+            ],
+            "matrix": [
+              [
+                51.0,
+                17.0,
+                226.0,
+                65.0,
+                49.0,
+                59.0,
+                213.0,
+                0.0,
+                211.0,
+                0.0,
+                0.0,
+                281.0
+              ],
+              [
+                51.0,
+                14.0,
+                294.0,
+                194.0,
+                0.0,
+                53.0,
+                60.0,
+                0.0,
+                249.0,
+                0.0,
+                0.0,
+                502.0
+              ],
+              [
+                58.0,
+                19.0,
+                323.0,
+                110.0,
+                692.0,
+                231.0,
+                57.0,
+                0.0,
+                438.0,
+                49.0,
+                97.0,
+                1494.0
+              ],
+              [
+                0.0,
+                13.0,
+                680.0,
+                55.0,
+                0.0,
+                49.0,
+                0.0,
+                75.0,
+                81.0,
+                0.0,
+                0.0,
+                49.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_platform",
+          "tab_label": "by platform",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "platform"
+            ]
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "ios",
+            "android"
+          ],
+          "selected_dim_values": [
+            "ios"
+          ],
+          "ranked_dim_values": [
+            "ios",
+            "android"
+          ],
+          "data": {
+            "dates": [
+              "01-26",
+              "01-27",
+              "01-28",
+              "01-29"
+            ],
+            "series": [
+              "android",
+              "ios"
+            ],
+            "matrix": [
+              [
+                339.0,
+                833.0
+              ],
+              [
+                380.0,
+                1037.0
+              ],
+              [
+                587.0,
+                2981.0
+              ],
+              [
+                248.0,
+                754.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": true,
+      "business_domain": "Monitoring"
+    }
+  ],
+  "engagement": []
+};
+
+const DOMAIN_TITLES = {
+  "platform_basics": { name: "🏗️ Platform Basics", desc: "平台基础指标" },
+  "user_growth": { name: "📈 User Growth", desc: "用户增长指标" },
+  "revenue": { name: "💰 Revenue", desc: "收入相关指标" },
+  "daily_challenge": { name: "🎯 Daily Challenge", desc: "每日挑战" },
+  "pk": { name: "⚔️ PK", desc: "PK对战" },
+  "viral": { name: "🚀 Viral", desc: "病毒传播" },
+  "cash_out": { name: "💸 Cash out", desc: "提现相关" },
+  "monitoring": { name: "📊 Monitoring", desc: "监控指标" },
+  "engagement": { name: "🎮 Engagement", desc: "用户参与度" }
+
+};
+
+const DEFAULT_TITLE = { name: "📊 Other", desc: "其他指标" };
+const chartInstances = {};
+
+// =========================
+// Number formatting (compact)
+// =========================
+function trimDecimals(v, decimals) {
+  const s = Number(v).toFixed(decimals);
+  return s.replace(/\.?0+$/, "");
+}
+
+function formatNumberCompact(x, opts = {}) {
+  const {
+    maxDigits = 4,
+    decimals = 1,  // 默认从2改为1,更简洁
+    isPercent = false,
+    unit = null,
+  } = opts;
+
+  if (x === null || x === undefined || Number.isNaN(x)) return "";
+  let v = Number(x);
+
+  if (isPercent) {
+    // If input is ratio 0~1, convert to %
+    if (Math.abs(v) <= 1) v = v * 100;
+    let s = `${trimDecimals(v, 1)}%`;  // 百分比固定1位小数
+    return s;
+  }
+
+  const abs = Math.abs(v);
+  let s = "";
+  if (abs >= 1e9) s = `${trimDecimals(v / 1e9, 1)}B`;
+  else if (abs >= 1e6) s = `${trimDecimals(v / 1e6, 1)}M`;
+  else if (abs >= 1e3) s = `${trimDecimals(v / 1e3, 1)}K`;
+  else if (abs >= 1) s = `${trimDecimals(v, 0)}`; // 整数不显示小数
+  else s = `${trimDecimals(v, 2)}`; // 小于1的数字保留2位小数
+
+  if (unit) s = `${s} ${unit}`;
+
+  return s;
+}
+
+function renderFunnel(containerSelector, tab, spec) {
+  const el = document.querySelector(containerSelector);
+  if (!el) return;
+
+  const data = tab.data || {};
+
+  // 从 metric_id 解析 layer 名称
+  let layer1Name = "Layer 1 (denominator)";
+  let layer2Name = "Layer 2 (numerator)";
+
+  if (spec && spec.metric_id && spec.metric_id.includes('_to_')) {
+    const parts = spec.metric_id.split('_to_');
+    if (parts.length === 2) {
+      layer1Name = parts[0].replace(/_/g, ' ');
+      layer2Name = parts[1].replace(/_/g, ' ');
+    }
+  }
+
+  // 🔥 因为funnel只支持单选维度值，所以这里简化处理
+  // 检查是否是多维度数据（有dim_labels数组）
+  let layer1, layer2, title;
+
+  if (Array.isArray(data.dim_labels) && data.dim_labels.length > 0) {
+    // 有维度数据：取第一个（因为单选只会有一个）
+    layer1 = Number(data.denominator[0] ?? 0) || 0;
+    layer2 = Number(data.numerator[0] ?? 0) || 0;
+    title = data.dim_labels[0];
+  } else {
+    // Overall数据
+    layer1 = Number(data.denominator ?? 0) || 0;
+    layer2 = Number(data.numerator ?? 0) || 0;
+    title = tab.tab_label || "Funnel";
+  }
+
+  const W = Math.max(260, el.clientWidth || 360);
+  const H = Math.max(180, el.clientHeight || 220);
+
+  d3.select(el).html("");
+  renderSingleFunnel(d3.select(el), title, layer1, layer2, layer1Name, layer2Name, W, H);
+}
+
+function renderSingleFunnel(container, title, layer1, layer2, layer1Name, layer2Name, W, H) {
+  const pad = 14;
+  const barH = 46; // 增加柱子高度以容纳文字
+  const gap = 24; // 增加间距
+
+  const svg = container.append("svg")
+    .attr("width", W)
+    .attr("height", H)
+    .attr("viewBox", `0 0 ${W} ${H}`)
+    .style("flex-shrink", "0");
+
+  const maxV = Math.max(layer1, layer2, 1);
+  const w1 = (W - pad*2) * (layer1 / maxV);
+  const w2 = (W - pad*2) * (layer2 / maxV);
+
+  // Bars (centered)
+  const x1 = (W - w1) / 2;
+  const x2 = (W - w2) / 2;
+
+  const y1 = 50; // 标题下方留更多空间
+  const y2 = y1 + barH + gap;
+
+  // Background rails
+  svg.append("rect")
+    .attr("x", pad).attr("y", y1)
+    .attr("width", W - pad*2).attr("height", barH)
+    .attr("rx", 10).attr("fill", "#f2f5fa");
+
+  svg.append("rect")
+    .attr("x", pad).attr("y", y2)
+    .attr("width", W - pad*2).attr("height", barH)
+    .attr("rx", 10).attr("fill", "#f2f5fa");
+
+  // Filled bars with gradient
+  const gradient1 = svg.append("defs").append("linearGradient")
+    .attr("id", `grad1-${Math.random().toString(36).substr(2, 9)}`)
+    .attr("x1", "0%").attr("y1", "0%")
+    .attr("x2", "100%").attr("y2", "0%");
+  gradient1.append("stop").attr("offset", "0%").attr("style", "stop-color:#6c5ce7;stop-opacity:1");
+  gradient1.append("stop").attr("offset", "100%").attr("style", "stop-color:#a29bfe;stop-opacity:1");
+
+  const gradient2 = svg.append("defs").append("linearGradient")
+    .attr("id", `grad2-${Math.random().toString(36).substr(2, 9)}`)
+    .attr("x1", "0%").attr("y1", "0%")
+    .attr("x2", "100%").attr("y2", "0%");
+  gradient2.append("stop").attr("offset", "0%").attr("style", "stop-color:#00b894;stop-opacity:1");
+  gradient2.append("stop").attr("offset", "100%").attr("style", "stop-color:#55efc4;stop-opacity:1");
+
+  svg.append("rect")
+    .attr("x", x1).attr("y", y1)
+    .attr("width", w1).attr("height", barH)
+    .attr("rx", 10)
+    .attr("fill", `url(#${gradient1.attr("id")})`);
+
+  svg.append("rect")
+    .attr("x", x2).attr("y", y2)
+    .attr("width", w2).attr("height", barH)
+    .attr("rx", 10)
+    .attr("fill", `url(#${gradient2.attr("id")})`);
+
+  // Title with percentage (top)
+  const badgePct = layer1 ? ((layer2 / layer1) * 100).toFixed(1) : '0.0';
+  svg.append("text")
+    .attr("x", W / 2)
+    .attr("y", 28)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#111")
+    .attr("font-size", 14)
+    .attr("font-weight", 700)
+    .text(title);
+
+  svg.append("text")
+    .attr("x", W / 2)
+    .attr("y", 42)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#6b7280")
+    .attr("font-size", 11)
+    .attr("font-weight", 500)
+    .text(`转化率: ${badgePct}%`);
+
+  const fmtInt = (v) => {
+    try { return Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
+    catch(e) { return String(v || 0); }
+  };
+
+  // 🔥 Layer名称直接放在柱子左侧内部
+  svg.append("text")
+    .attr("x", x1 + 12)
+    .attr("y", y1 + barH/2 + 5)
+    .attr("fill", "#000")
+    .attr("font-size", 12)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(layer1Name);
+
+  svg.append("text")
+    .attr("x", x2 + 12)
+    .attr("y", y2 + barH/2 + 5)
+    .attr("fill", "#000")
+    .attr("font-size", 12)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(layer2Name);
+
+  // 数值放在柱子右侧
+  svg.append("text")
+    .attr("x", x1 + w1 - 12)
+    .attr("y", y1 + barH/2 + 5)
+    .attr("text-anchor", "end")
+    .attr("fill", "#000")
+    .attr("font-size", 14)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(fmtInt(layer1));
+
+  svg.append("text")
+    .attr("x", x2 + w2 - 12)
+    .attr("y", y2 + barH/2 + 5)
+    .attr("text-anchor", "end")
+    .attr("fill", "#000")
+    .attr("font-size", 14)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(fmtInt(layer2));
+
+  // Arrow + rate in center
+  const midY = y1 + barH + gap/2;
+
+  // 绘制箭头
+  svg.append("defs").append("marker")
+    .attr("id", `arrowhead-${Math.random().toString(36).substr(2, 9)}`)
+    .attr("markerWidth", 10)
+    .attr("markerHeight", 10)
+    .attr("refX", 9)
+    .attr("refY", 3)
+    .attr("orient", "auto")
+    .append("polygon")
+    .attr("points", "0 0, 10 3, 0 6")
+    .attr("fill", "#94a3b8");
+
+  svg.append("line")
+    .attr("x1", W/2)
+    .attr("y1", y1 + barH + 4)
+    .attr("x2", W/2)
+    .attr("y2", y2 - 4)
+    .attr("stroke", "#94a3b8")
+    .attr("stroke-width", 3)
+    .attr("stroke-linecap", "round")
+    .attr("marker-end", `url(#${svg.select("marker").attr("id")})`);
+
+  // 转化率背景圆
+  const rate = layer1 ? (layer2 / layer1) : 0;
+  const ratePct = (Math.abs(rate) <= 1 ? rate*100 : rate);
+  const rateText = (Math.round(ratePct*10)/10).toString().replace(/\.0$/, "") + "%";
+
+  svg.append("circle")
+    .attr("cx", W/2)
+    .attr("cy", midY)
+    .attr("r", 20)
+    .attr("fill", "#fff")
+    .attr("stroke", "#e2e8f0")
+    .attr("stroke-width", 2);
+
+  svg.append("text")
+    .attr("x", W/2)
+    .attr("y", midY + 5)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#3b82f6")
+    .attr("font-size", 13)
+    .attr("font-weight", 800)
+    .text(rateText);
+}
+
+function isPercentKind(kind) {
+  return ["stacked100", "stacked100_area", "horizontal_percent_bar", "doughnut", "funnel"].includes(kind);
+}
+
+// =========================
+// Dim filter state
+// =========================
+const selectedDimsState = {}; // key: chartId-tabId -> [dimLabels]
+
+function dimStateKey(chartId, tabId) {
+  return `${chartId}::${tabId}`;
+}
+
+function getDefaultTopDims(tab, topN = 5) {
+  // Prefer ranked dims (sorted by latest value), then selected_dim_values, then all_dim_values
+  const ranked = (tab.ranked_dim_values || []).filter(x => x !== null && x !== undefined && String(x).trim() !== "");
+  if (ranked.length) return ranked.slice(0, topN);
+
+  const sel = (tab.selected_dim_values || []).filter(x => x !== null && x !== undefined && String(x).trim() !== "");
+  if (sel.length) return sel.slice(0, topN);
+
+  const all = (tab.all_dim_values || []).filter(x => x !== null && x !== undefined && String(x).trim() !== "");
+  return all.slice(0, topN);
+}
+
+function filterTabData(tab, selectedDims) {
+  const t = JSON.parse(JSON.stringify(tab));
+  if (!selectedDims || !selectedDims.length) return t;
+  // Funnel (latest snapshot, possibly with dim_labels arrays)
+  if (t.kind === "funnel" && t.data) {
+    // by-dim funnel payload: {dim_labels, denominator, numerator, values}
+    if (Array.isArray(t.data.dim_labels)) {
+      const keep = t.data.dim_labels
+        .map((l, i) => ({ l, i }))
+        .filter(x => selectedDims.includes(x.l))
+        .map(x => x.i);
+
+      if (!keep.length) return t;
+
+      // 🔥 funnel只支持单选，所以只保留第一个选中的维度值数据
+      const idx = keep[0];
+      t.data = {
+        date: t.data.date,
+        dim_labels: [t.data.dim_labels[idx]],
+        denominator: [t.data.denominator[idx]],
+        numerator: [t.data.numerator[idx]],
+        values: [t.data.values[idx]]
+      };
+      return t;
+    }
+    return t;
+  }
+
+  // Pie-like charts
+  if (t.data && Array.isArray(t.data.labels) && Array.isArray(t.data.values)) {
+    const idx = t.data.labels.map((l, i) => ({ l, i }))
+      .filter(x => selectedDims.includes(x.l))
+      .map(x => x.i);
+    t.data.labels = idx.map(i => t.data.labels[i]);
+    t.data.values = idx.map(i => t.data.values[i]);
+    return t;
+  }
+
+  // Matrix-like charts (time series with multiple dimension series)
+  if (t.data && Array.isArray(t.data.series) && Array.isArray(t.data.matrix) && Array.isArray(t.data.dates)) {
+    const keepIdx = t.data.series
+      .map((s, i) => ({ s, i }))
+      .filter(x => selectedDims.includes(x.s))
+      .map(x => x.i);
+
+    t.data.series = keepIdx.map(i => t.data.series[i]);
+    t.data.matrix = t.data.matrix.map(row => keepIdx.map(i => row[i] ?? 0));
+
+    // ✅ 裁掉“前面全是 0/空”的日期段：从选中维度真正开始有数据的那一天起展示
+    let first = 0;
+    for (let r = 0; r < t.data.matrix.length; r++) {
+      const row = t.data.matrix[r] || [];
+      const hasData = row.some(v => v !== null && v !== undefined && !Number.isNaN(v) && Number(v) !== 0);
+      if (hasData) { first = r; break; }
+      first = r + 1;
+    }
+    if (first > 0 && first < t.data.matrix.length) {
+      t.data.dates = t.data.dates.slice(first);
+      t.data.matrix = t.data.matrix.slice(first);
+    }
+
+    return t;
+  }
+
+  return t;
+}
+
+function setupDimDropdown(chartId, tab) {
+  const canvas = document.getElementById("canvas-" + chartId);
+  if (!canvas) return null;
+
+  const card = canvas.closest(".chart-card");
+  if (!card) return null;
+
+  const box = card.querySelector(".dim-filter");
+  const selectEl = card.querySelector("select.dim-select");
+  const hint = card.querySelector(".dim-hint");
+  if (!box || !selectEl) return null;
+
+  if (!tab.filterable) {
+    box.style.display = "none";
+    if (hint) hint.style.display = "none";
+    return null;
+  }
+
+  box.style.display = "flex";
+  box.style.alignItems = "center";
+  if (hint) hint.style.display = "block";
+
+  const options = (tab.ranked_dim_values && tab.ranked_dim_values.length)
+    ? tab.ranked_dim_values
+    : (tab.all_dim_values && tab.all_dim_values.length)
+      ? tab.all_dim_values
+      : (tab.data && tab.data.series && tab.data.series.length)
+        ? tab.data.series
+        : (tab.data && tab.data.labels && tab.data.labels.length)
+          ? tab.data.labels
+          : [];
+
+  selectEl.innerHTML = "";
+  for (const d of options) {
+    const opt = document.createElement("option");
+    opt.value = d;
+    opt.textContent = d;
+    selectEl.appendChild(opt);
+  }
+
+  const key = dimStateKey(chartId, tab.tab_id);
+  if (!selectedDimsState[key] || !selectedDimsState[key].length) {
+    selectedDimsState[key] = tab.selected_dim_values || getDefaultTopDims(tab, 1);
+  }
+  const current = new Set(selectedDimsState[key]);
+  for (const opt of selectEl.options) opt.selected = current.has(opt.value);
+
+  return selectEl;
+}
+
+function getSelectedDims(selectEl) {
+  return Array.from(selectEl.selectedOptions).map(o => o.value);
+}
+
+
+
+
+// =========================
+// Dim filter dropdown (search + checkbox multi-select)
+// =========================
+function setupDimDropdownV3(chartId, tab, onApply) {
+  const canvas = document.getElementById("canvas-" + chartId);
+  if (!canvas) return null;
+  const card = canvas.closest(".chart-card");
+  if (!card) return null;
+
+  const box = card.querySelector(".dim-filter");
+  if (!box) return null;
+
+  const btn = box.querySelector(".dim-dd-btn");
+  const btnText = box.querySelector(".dim-dd-text");
+  const panel = box.querySelector(".dim-dd-panel");
+  const search = box.querySelector(".dim-dd-search");
+  const list = box.querySelector(".dim-dd-list");
+  const btnClear = box.querySelector(".dim-dd-clear");
+  const btnApply = box.querySelector(".dim-dd-apply");
+
+  if (!btn || !btnText || !panel || !search || !list || !btnClear || !btnApply) return null;
+
+  if (!tab.filterable) {
+    box.style.display = "none";
+    return null;
+  }
+  box.style.display = "flex";
+
+  const options = (tab.ranked_dim_values && tab.ranked_dim_values.length)
+    ? tab.ranked_dim_values
+    : (tab.all_dim_values && tab.all_dim_values.length)
+      ? tab.all_dim_values
+      : (tab.data && tab.data.series && tab.data.series.length)
+        ? tab.data.series
+        : (tab.data && tab.data.labels && tab.data.labels.length)
+          ? tab.data.labels
+          : [];
+
+  const key = dimStateKey(chartId, tab.tab_id);
+  if (!selectedDimsState[key] || !selectedDimsState[key].length) {
+    selectedDimsState[key] = tab.selected_dim_values || getDefaultTopDims(tab, 1);
+  }
+
+  // 🔥 检查是否为funnel类型，funnel只能单选
+  const isFunnelType = tab.kind === "funnel";
+
+  function updateBtnText() {
+    const n = (selectedDimsState[key] || []).length;
+    btnText.textContent = n ? `已选 ${n}` : "未选择";
+  }
+
+  function renderList(filterText="") {
+    const ft = (filterText || "").toLowerCase().trim();
+    list.innerHTML = "";
+    const selected = new Set(selectedDimsState[key] || []);
+    const filtered = ft ? options.filter(x => String(x).toLowerCase().includes(ft)) : options;
+
+    // 🔥 为funnel类型构建维度值->百分比的映射
+    let dimPercentMap = {};
+    if (isFunnelType && tab.data && Array.isArray(tab.data.dim_labels)) {
+      tab.data.dim_labels.forEach((label, idx) => {
+        const denom = Number(tab.data.denominator?.[idx] ?? 0) || 0;
+        const numer = Number(tab.data.numerator?.[idx] ?? 0) || 0;
+        const pct = denom > 0 ? ((numer / denom) * 100).toFixed(1) : '0.0';
+        dimPercentMap[label] = pct;
+      });
+    }
+
+    for (const d of filtered) {
+      const row = document.createElement("label");
+      row.className = "dim-dd-item";
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "center";
+      row.style.gap = "8px";
+
+      const leftPart = document.createElement("div");
+      leftPart.style.display = "flex";
+      leftPart.style.alignItems = "center";
+      leftPart.style.gap = "8px";
+      leftPart.style.flex = "1";
+
+      const cb = document.createElement("input");
+
+      // 🔥 funnel类型使用radio单选，其他类型使用checkbox多选
+      cb.type = isFunnelType ? "radio" : "checkbox";
+      cb.name = isFunnelType ? `funnel-${key}` : undefined; // radio需要name分组
+      cb.value = d;
+      cb.checked = selected.has(d);
+
+      cb.onchange = () => {
+        if (isFunnelType) {
+          // 🔥 funnel单选：只保留当前选中的一个
+          selectedDimsState[key] = cb.checked ? [d] : [];
+        } else {
+          // 多选：原有逻辑
+          const s = new Set(selectedDimsState[key] || []);
+          if (cb.checked) s.add(d); else s.delete(d);
+          selectedDimsState[key] = Array.from(s);
+        }
+        updateBtnText();
+
+        // 🔥 funnel单选时需要重新渲染列表以更新radio状态
+        if (isFunnelType) {
+          renderList(filterText);
+        }
+      };
+
+      const text = document.createElement("span");
+      text.textContent = d;
+      text.style.fontSize = "12px";
+      text.style.color = "var(--text)";
+      text.style.flex = "1";
+
+      leftPart.appendChild(cb);
+      leftPart.appendChild(text);
+      row.appendChild(leftPart);
+
+      // 🔥 funnel类型：在右侧显示百分比
+      if (isFunnelType && dimPercentMap[d] !== undefined) {
+        const pctSpan = document.createElement("span");
+        pctSpan.textContent = dimPercentMap[d] + '%';
+        pctSpan.style.fontSize = "11px";
+        pctSpan.style.color = "#6b7280";
+        pctSpan.style.fontWeight = "500";
+        pctSpan.style.minWidth = "45px";
+        pctSpan.style.textAlign = "right";
+        row.appendChild(pctSpan);
+      }
+
+      list.appendChild(row);
+    }
+  }
+
+  function closePanel(){ panel.classList.remove("open"); }
+  function openPanel(){
+    panel.classList.add("open");
+    search.value = "";
+    renderList("");
+    updateBtnText();
+    setTimeout(()=>search.focus(), 0);
+  }
+
+  btn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (panel.classList.contains("open")) closePanel(); else openPanel();
+  };
+
+  document.addEventListener("click", (e) => {
+    if (!panel.classList.contains("open")) return;
+    if (!box.contains(e.target)) closePanel();
+  });
+
+  search.oninput = () => renderList(search.value);
+
+  btnClear.onclick = (e) => {
+    e.preventDefault();
+    selectedDimsState[key] = [];
+    renderList(search.value);
+    updateBtnText();
+  };
+
+  btnApply.onclick = (e) => {
+    e.preventDefault();
+    const selected = (selectedDimsState[key] && selectedDimsState[key].length) ? selectedDimsState[key] : (tab.selected_dim_values || getDefaultTopDims(tab, 1));
+    selectedDimsState[key] = selected;
+    updateBtnText();
+    closePanel();
+    if (typeof onApply === "function") onApply(selected);
+  };
+
+  updateBtnText();
+  renderList("");
+  return { key };
+}
+
+// Chart.js 配色方案 - 白色主题
+const COLORS = [
+  '#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444',
+  '#06b6d4', '#ec4899', '#14b8a6', '#f97316', '#6366f1'
+];
+
+const COLORS_ALPHA = COLORS.map(c => c + '20'); // 透明度20%
+
+// 默认Chart.js配置
+Chart.defaults.color = '#6b7280';
+Chart.defaults.borderColor = '#e5e7eb';
+Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 15;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(31, 41, 55, 0.95)';
+Chart.defaults.plugins.tooltip.titleColor = '#fff';
+Chart.defaults.plugins.tooltip.bodyColor = '#e5e7eb';
+Chart.defaults.plugins.tooltip.borderColor = '#374151';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+// 初始化导航
+function initNavigation() {
+  const navTabs = document.getElementById("navTabs");
+  const domains = Object.keys(DOMAIN_TITLES);
+
+  // 先添加所有导航按钮
+  domains.forEach((domainId, index) => {
+    const info = DOMAIN_TITLES[domainId] || DEFAULT_TITLE;
+    const btn = document.createElement("button");
+    btn.className = "nav-tab" + (index === 0 ? " active" : "");
+    btn.textContent = info.name;
+    btn.dataset.domain = domainId;
+    btn.onclick = () => scrollToModule(domainId);
+    navTabs.appendChild(btn);
+  });
+
+  // 最后添加搜索框（放在右侧）
+  const searchContainer = document.createElement("div");
+  searchContainer.className = "search-container";
+  searchContainer.innerHTML = `
+    <input 
+      type="text" 
+      id="metricSearch" 
+      class="metric-search-input" 
+      placeholder="🔍 搜索指标..."
+      autocomplete="off"
+    />
+    <div class="search-results" id="searchResults"></div>
+  `;
+  navTabs.appendChild(searchContainer);
+
+  // 初始化搜索功能
+  initMetricSearch();
+}
+
+// 🔍 初始化指标搜索功能
+function initMetricSearch() {
+  const searchInput = document.getElementById("metricSearch");
+  const searchResults = document.getElementById("searchResults");
+
+  if (!searchInput || !searchResults) {
+    console.warn("搜索框元素未找到");
+    return;
+  }
+
+  // 构建所有指标的索引
+  const allMetrics = [];
+  try {
+    Object.entries(CHARTS_BY_DOMAIN).forEach(([domain, charts]) => {
+      const domainInfo = DOMAIN_TITLES[domain] || DEFAULT_TITLE;
+      if (charts && Array.isArray(charts)) {
+        charts.forEach(chart => {
+          if (chart && chart.chart_id && chart.title) {
+            allMetrics.push({
+              chartId: chart.chart_id,
+              title: chart.title,
+              domain: domain,
+              domainName: domainInfo.name,
+              metricId: chart.metric_id || ""
+            });
+          }
+        });
+      }
+    });
+    console.log(`✓ 搜索索引已构建，共 ${allMetrics.length} 个指标`);
+  } catch (err) {
+    console.error("构建搜索索引失败:", err);
+    return;
+  }
+
+  let searchTimeout;
+
+  searchInput.addEventListener("input", (e) => {
+    clearTimeout(searchTimeout);
+    const query = e.target.value.trim();
+
+    if (!query) {
+      searchResults.classList.remove("show");
+      searchResults.innerHTML = "";
+      return;
+    }
+
+    // 延迟搜索以优化性能
+    searchTimeout = setTimeout(() => {
+      performSearch(query, allMetrics, searchResults);
+    }, 200);
+  });
+
+  // 点击外部关闭搜索结果
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+      searchResults.classList.remove("show");
+    }
+  });
+
+  searchInput.addEventListener("focus", () => {
+    if (searchInput.value.trim() && searchResults.innerHTML) {
+      searchResults.classList.add("show");
+    }
+  });
+
+  // 支持Enter键选择第一个结果
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const firstItem = searchResults.querySelector(".search-result-item");
+      if (firstItem) {
+        firstItem.click();
+      }
+    }
+  });
+}
+
+// 执行搜索
+function performSearch(query, allMetrics, searchResults) {
+  const lowerQuery = query.toLowerCase();
+
+  // 模糊匹配：标题或metric_id包含查询词
+  const matches = allMetrics.filter(metric => {
+    const titleMatch = metric.title.toLowerCase().includes(lowerQuery);
+    const idMatch = metric.metricId.toLowerCase().includes(lowerQuery);
+    return titleMatch || idMatch;
+  });
+
+  if (matches.length === 0) {
+    searchResults.innerHTML = '<div class="search-no-results">未找到匹配的指标</div>';
+    searchResults.classList.add("show");
+    return;
+  }
+
+  // 限制显示前10个结果
+  const topMatches = matches.slice(0, 10);
+
+  searchResults.innerHTML = topMatches.map(metric => `
+    <div class="search-result-item" data-chart-id="${metric.chartId}">
+      <div class="search-result-title">${highlightMatch(metric.title, query)}</div>
+      <div class="search-result-domain">${metric.domainName}</div>
+    </div>
+  `).join("");
+
+  searchResults.classList.add("show");
+
+  // 绑定点击事件
+  searchResults.querySelectorAll(".search-result-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const chartId = item.dataset.chartId;
+      scrollToAndHighlightChart(chartId);
+      searchResults.classList.remove("show");
+      document.getElementById("metricSearch").value = "";
+    });
+  });
+}
+
+// 高亮匹配的文本
+function highlightMatch(text, query) {
+  if (!text || !query) return text;
+
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const index = lowerText.indexOf(lowerQuery);
+
+  if (index === -1) return text;
+
+  const before = text.substring(0, index);
+  const match = text.substring(index, index + query.length);
+  const after = text.substring(index + query.length);
+
+  return `${before}<mark style="background:#fef08a;color:#854d0e;padding:1px 3px;border-radius:3px;font-weight:600;">${match}</mark>${after}`;
+}
+
+// 滚动到指定图表并高亮
+function scrollToAndHighlightChart(chartId) {
+  // 直接查找带有data-chart-id属性的chart-card
+  const chartCard = document.querySelector(`.chart-card[data-chart-id="${chartId}"]`);
+
+  if (!chartCard) {
+    console.warn(`未找到图表: ${chartId}`);
+    return;
+  }
+
+  // 移除所有现有的高亮
+  document.querySelectorAll(".chart-card.highlight").forEach(el => {
+    el.classList.remove("highlight");
+  });
+
+  // 滚动到图表
+  chartCard.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  // 添加高亮动画
+  setTimeout(() => {
+    chartCard.classList.add("highlight");
+    console.log(`✓ 高亮图表: ${chartId}`);
+
+    // 3秒后移除高亮
+    setTimeout(() => {
+      chartCard.classList.remove("highlight");
+    }, 3000);
+  }, 500);
+}
+
+function scrollToModule(domainId) {
+  const module = document.getElementById("module-" + domainId);
+  if (module) {
+    module.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelectorAll(".nav-tab").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.domain === domainId);
+    });
+  }
+}
+
+// 创建模块
+function createModule(domain, charts) {
+  const info = DOMAIN_TITLES[domain] || DEFAULT_TITLE;
+  const chartCount = charts ? charts.length : 0;
+
+  const module = document.createElement("article");
+  module.className = "module-row";
+  module.id = "module-" + domain;
+
+  module.innerHTML = `
+    <div class="module-header">
+      <h2>${info.name}</h2>
+      <p style="margin:4px 0 0;color:var(--muted);font-size:12px">${info.desc} · ${chartCount} 个图表</p>
+    </div>
+    <div class="module-body">
+      <div class="charts"></div>
+    </div>
+  `;
+
+  return module;
+}
+
+// 创建图表卡片
+function createChartCard(spec) {
+  const card = document.createElement("div");
+  card.className = "chart-card";
+  card.dataset.chartId = spec.chart_id; // 添加chart-id属性用于搜索定位
+
+  // 处理tabbed类型
+  if (spec.kind === "tabbed" && spec.tabs) {
+    const firstTab = spec.tabs[0];
+
+    card.innerHTML = `
+      <div class="chart-header">
+        <div class="chart-title">${spec.title}</div>
+        ${spec.hide_badge ? "" : `<div class="latest-badge" id="latest-${spec.chart_id}">-</div>`}
+      </div>
+      <div class="chart-tabs-row">
+        <div class="chart-tabs" id="tabs-${spec.chart_id}"></div>
+        <div class="dim-filter" style="display:none;">
+          <span class="dim-filter-label" style="font-size: 12px; color: #6b7280; margin-right: 6px;">筛选:</span>
+          <button class="dim-dd-btn" type="button">
+            <span class="dim-dd-text">未选择</span>
+            <span>▾</span>
+          </button>
+          <div class="dim-dd-panel">
+            <input class="dim-dd-search" type="text" placeholder="搜索维度..." />
+            <div class="dim-dd-list"></div>
+            <div class="dim-dd-actions">
+              <button class="dim-dd-clear" type="button">清空</button>
+              <button class="dim-dd-apply primary" type="button">应用</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-wrapper" style="height: 420px; padding: 16px;">
+         <div class="funnel-wrap" id="funnel-${spec.chart_id}" style="display:none;"></div>
+         <div class="kpi-wrap" id="kpi-${spec.chart_id}" style="display:none;"></div>
+         <canvas id="canvas-${spec.chart_id}"></canvas>
+       </div>
+      <div class="dim-hint" style="display:none; margin-top: -8px; padding: 0 16px 12px; font-size: 11px; color: #9ca3af;">默认展示Top维度值，可多选切换</div>
+    `;
+
+    // 创建tabs
+    const tabsContainer = card.querySelector(".chart-tabs");
+    spec.tabs.forEach((tab, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "chart-tab" + (idx === 0 ? " active" : "");
+      btn.textContent = tab.tab_label;
+      btn.dataset.tabId = tab.tab_id;
+      btn.dataset.chartId = spec.chart_id;
+      btn.onclick = () => switchTab(spec, tab.tab_id);
+      tabsContainer.appendChild(btn);
+    });
+
+    return card;
+  }
+
+  // 普通图表
+  card.innerHTML = `
+    <div class="chart-header">
+      <div class="chart-title">${spec.title}</div>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="canvas-${spec.chart_id}"></canvas>
+    </div>
+  `;
+
+  return card;
+}
+
+function getOverallTabFromSpec(spec) {
+  if (!spec || !Array.isArray(spec.tabs) || !spec.tabs.length) return null;
+  return spec.tabs.find(t => t.tab_id === "overall") || spec.tabs[0];
+}
+
+// 切换Tab
+function switchTab(spec, tabId) {
+  // 更新按钮状态
+  document.querySelectorAll(`[data-chart-id="${spec.chart_id}"]`).forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tabId === tabId);
+  });
+
+  const tab = spec.tabs.find(t => t.tab_id === tabId);
+  if (!tab) return;
+
+  // ✅ Badge 永远显示 overall 的最新值（切到维度tab也不变）
+  const overallTab = getOverallTabFromSpec(spec);
+
+  // 维度筛选（dropdown 面板）
+  setupDimDropdownV3(spec.chart_id, tab, (finalSelected) => {
+    const key = dimStateKey(spec.chart_id, tab.tab_id);
+    selectedDimsState[key] = finalSelected;
+
+    const filtered = filterTabData(tab, finalSelected);
+
+    // 不随维度变化
+    updateLatestBadge(spec.chart_id, overallTab);
+
+    renderTabChart(spec.chart_id, filtered);
+  });
+
+  // 初次渲染：使用Python端传递的selected_dim_values作为默认值
+  let tabToRender = tab;
+  if (tab.filterable) {
+    const key = dimStateKey(spec.chart_id, tab.tab_id);
+    const selected =
+      (selectedDimsState[key] && selectedDimsState[key].length)
+        ? selectedDimsState[key]
+        : (tab.selected_dim_values || getDefaultTopDims(tab, 1));
+    selectedDimsState[key] = selected;
+    tabToRender = filterTabData(tab, selected);
+  }
+
+  // 不随 tab / 维度变化
+  updateLatestBadge(spec.chart_id, overallTab);
+
+  renderTabChart(spec.chart_id, tabToRender);
+}
+
+// 渲染Tab图表
+function renderTabChart(chartId, tab) {
+  const canvas = document.getElementById("canvas-" + chartId);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  // 销毁旧图表
+  if (chartInstances[chartId]) {
+    chartInstances[chartId].destroy();
+  }
+
+  // reset containers (keep DOM stable)
+  const funnelEl = document.getElementById("funnel-" + chartId);
+  const kpiEl = document.getElementById("kpi-" + chartId);
+  if (funnelEl) funnelEl.style.display = "none";
+  if (kpiEl) kpiEl.style.display = "none";
+  canvas.style.display = "block";
+
+  let chart = null;
+
+  switch(tab.kind) {
+    case "single_value":
+      // KPI: show in kpi container (keep DOM stable for tab switching)
+      const wrap = canvas.parentElement;
+      const kpiEl = document.getElementById("kpi-" + chartId);
+      const funnelEl = document.getElementById("funnel-" + chartId);
+      if (funnelEl) funnelEl.style.display = "none";
+      if (canvas) canvas.style.display = "none";
+      if (kpiEl) {
+        kpiEl.style.display = "flex";
+        kpiEl.innerHTML = `
+          <div class="kpi-card">
+            <div class="kpi-title">${tab.tab_label || '当前值'}</div>
+            <div class="kpi-value">${formatNumberCompact((tab.data.value || 0), {maxDigits: 6, decimals: 2, isPercent: isPercentKind(tab.kind)})}</div>
+          </div>
+        `;
+      }
+      break;
+
+    case "funnel":
+      // Funnel: render into dedicated div (keep canvas for other tabs)
+      const funnelEl2 = document.getElementById("funnel-" + chartId);
+      const kpiEl2 = document.getElementById("kpi-" + chartId);
+      if (kpiEl2) kpiEl2.style.display = "none";
+      if (canvas) canvas.style.display = "none";
+      if (funnelEl2) {
+        funnelEl2.style.display = "flex";
+        // 需要传递spec来获取metric_id
+        const currentSpec = Object.values(CHARTS_BY_DOMAIN).flat().find(s => s.chart_id === chartId);
+        renderFunnel(`#funnel-${chartId}`, tab, currentSpec);
+      }
+      break;
+
+    case "line":
+    case "bar_line":
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: tab.data.dates,
+          datasets: [{
+            label: '趋势',
+            data: tab.data.values,
+            borderColor: COLORS[0],
+            backgroundColor: COLORS_ALPHA[0],
+            tension: 0.4,
+            fill: true,
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: COLORS[0],
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              display: (ctx) => {
+                const v = ctx.dataset.data?.[ctx.dataIndex];
+                return v !== null && v !== undefined && !Number.isNaN(v) && v !== 0;
+              },
+              formatter: (value) => {
+                if (value === null || value === undefined || Number.isNaN(value)) return "";
+                const percent = isPercentKind(tab.kind);
+                if (percent) {
+                  let p = Number(value);
+                  if (Math.abs(p) <= 1) p = p * 100;
+                  const s = (Math.round(p * 10) / 10).toString().replace(/\.0$/, "");
+                  return s + "%";
+                }
+                const num = Number(value);
+                const abs = Math.abs(num);
+                const decimals = abs < 1 ? 4 : 2;
+                let s = num.toLocaleString(undefined, { maximumFractionDigits: decimals });
+                s = s.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");
+                return s;
+              },
+              clamp: true,
+              clip: false,
+              padding: 2,
+              anchor: "end",
+              align: (ctx) => (ctx.dataset.type === 'bar' ? 'top' : 'end'),
+      offset: 6,
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return '值: ' + formatNumberCompact(v, { isPercent: isPercentKind(tab.kind), decimals: isPercentKind(tab.kind) ? 1 : 2, maxDigits: 8 });
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#6b7280',
+                padding: 8
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#6b7280',
+                padding: 8
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "grouped_bar":
+      // 分组柱状图
+      const groupedDatasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map(row => row[idx] || 0),
+        backgroundColor: COLORS[idx % COLORS.length],
+        borderColor: COLORS[idx % COLORS.length],
+        borderWidth: 0,  // 去掉边框,更现代
+        borderRadius: 4,  // 添加圆角
+        barPercentage: 0.85,  // 增加柱子宽度
+        categoryPercentage: 0.75  // 调整分类间距
+      }));
+
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: { labels: tab.data.dates, datasets: groupedDatasets },
+        options: {
+          layout: { padding: { top: 28, right: 14, bottom: 44, left: 8 } },  // 增加顶部padding以容纳标签
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              display: true,
+              position: 'top',
+              align: 'end',
+              labels: {
+                usePointStyle: true,
+                padding: 12,
+                font: { size: 12 }
+              }
+            },
+            datalabels: {
+              display: (ctx) => {
+                const v = ctx.dataset.data?.[ctx.dataIndex];
+                return v !== null && v !== undefined && !Number.isNaN(v) && v !== 0;
+              },
+              formatter: (value) => {
+                if (value === null || value === undefined || Number.isNaN(value)) return "";
+                return formatNumberCompact(value, { decimals: 0, maxDigits: 5 });
+              },
+              anchor: 'end',
+              align: 'top',
+              offset: 2,
+              clamp: true,
+              font: { size: 10, weight: '500' },
+              color: '#4b5563'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return context.dataset.label + ': ' + formatNumberCompact(v, { decimals: 0, maxDigits: 8 });
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: { 
+                color: '#6b7280', 
+                callback: function(value, index, ticks) {
+                  // value是索引，需要从labels数组获取实际标签
+                  const label = this.getLabelForValue(value);
+                  return formatShortDate(label);
+                },
+                padding: 6,
+                maxRotation: 45,
+                minRotation: 0
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "multi_line":
+      // 多折线图
+      const multiLineDatasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map(row => row[idx] || 0),
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS_ALPHA[idx % COLORS.length],
+        borderWidth: 2.5,
+        tension: 0.4,
+        fill: false,
+        pointRadius: 3,
+        pointBackgroundColor: COLORS[idx % COLORS.length],
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2
+      }));
+
+      chart = new Chart(ctx, {
+        type: "line",
+        data: { labels: tab.data.dates, datasets: multiLineDatasets },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: { 
+                color: '#6b7280', 
+                callback: function(value, index, ticks) {
+                  const label = this.getLabelForValue(value);
+                  return formatShortDate(label);
+                },
+                padding: 6,
+                maxRotation: 45,
+                minRotation: 0
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "stacked_area":
+      // 堆叠面积图
+      const stackedDatasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map(row => row[idx] || 0),
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS_ALPHA[idx % COLORS.length],
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+        pointRadius: 0
+      }));
+
+      chart = new Chart(ctx, {
+        type: "line",
+        data: { labels: tab.data.dates, datasets: stackedDatasets },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          },
+          scales: {
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            },
+            x: {
+              stacked: true,
+              grid: {
+                display: false
+              },
+              ticks: { 
+                color: '#6b7280', 
+                callback: function(value, index, ticks) {
+                  const label = this.getLabelForValue(value);
+                  return formatShortDate(label);
+                },
+                padding: 6,
+                maxRotation: 45,
+                minRotation: 0
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "doughnut":
+      // 环形图
+      const total = tab.data.values.reduce((a, b) => a + b, 0);
+      chart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: tab.data.labels,
+          datasets: [{
+            data: tab.data.values,
+            backgroundColor: COLORS,
+            borderColor: '#fff',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'right',
+              labels: {
+                generateLabels: function(chart) {
+                  const data = chart.data;
+                  return data.labels.map((label, i) => {
+                    const value = data.datasets[0].data[i];
+                    const percent = ((value / total) * 100).toFixed(1);
+                    return {
+                      text: `${label}: ${percent}%`,
+                      fillStyle: data.datasets[0].backgroundColor[i],
+                      hidden: false,
+                      index: i
+                    };
+                  });
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const value = context.parsed;
+                  const percent = ((value / total) * 100).toFixed(1);
+                  return `${context.label}: ${formatNumberCompact(value, {decimals: 2, maxDigits: 8})} (${percent}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "horizontal_percent_bar":
+      // 横向百分比条形图
+      const hTotal = tab.data.values.reduce((a, b) => a + b, 0);
+      const percentages = tab.data.values.map(v => (v / hTotal) * 100);
+
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: tab.data.labels,
+          datasets: [{
+            data: percentages,
+            backgroundColor: COLORS,
+            borderColor: COLORS,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          indexAxis: 'y',
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.parsed.x.toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: '#f3f4f6'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                },
+                color: '#6b7280'
+              }
+            },
+            y: {
+              grid: {
+                display: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            }
+          }
+        }
+      });
+      break;
+
+    case "treemap":
+      // 矩形树图 (使用D3.js)
+      canvas.parentElement.innerHTML = `<div id="treemap-${chartId}" style="width:100%;height:320px"></div>`;
+      renderTreemap(chartId, tab.data);
+      break;
+
+    case "grouped_bar_line":
+      // 柱状图+折线图组合
+      const barData = tab.data.series[0];
+      const lineData = tab.data.series[1] || tab.data.series[0];
+
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: tab.data.dates,
+          datasets: [
+            {
+              type: 'bar',
+              label: barData,
+              data: tab.data.matrix.map(row => row[0] || 0),
+              backgroundColor: COLORS_ALPHA[0],
+              borderColor: COLORS[0],
+              borderWidth: 1,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: lineData + ' (趋势)',
+              data: tab.data.matrix.map(row => row[1] || row[0] || 0),
+              borderColor: COLORS[1],
+              backgroundColor: COLORS_ALPHA[1],
+              borderWidth: 2.5,
+              tension: 0.4,
+              fill: false,
+              pointRadius: 4,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              align: 'end'
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6'
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              beginAtZero: true,
+              grid: {
+                drawOnChartArea: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            }
+          }
+        }
+      });
+      break;
+
+    case "stacked100":
+    case "stacked100_area":
+      // 百分比堆叠图
+      const isArea = tab.kind === "stacked100_area";
+      const stacked100Datasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map((row, rowIdx) => {
+          const rowTotal = row.reduce((a, b) => a + b, 0);
+          return rowTotal > 0 ? (row[idx] / rowTotal) * 100 : 0;
+        }),
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS_ALPHA[idx % COLORS.length],
+        borderWidth: isArea ? 2 : 1,
+        tension: isArea ? 0.4 : 0,
+        fill: true,
+        pointRadius: isArea ? 0 : 3
+      }));
+
+      chart = new Chart(ctx, {
+        type: isArea ? "line" : "bar",
+        data: { labels: tab.data.dates, datasets: stacked100Datasets },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  return `${context.dataset.label}: ${context.parsed.y.toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: '#f3f4f6'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                },
+                color: '#6b7280'
+              }
+            },
+            x: {
+              stacked: true,
+              grid: {
+                display: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind), padding: 6 }
+            }
+          }
+        }
+      });
+      break;
+
+    default:
+      console.warn("Unsupported chart type:", tab.kind);
+      canvas.parentElement.innerHTML = `
+        <div class="empty-module">
+          <div class="empty-module-icon">📊</div>
+          <div>暂不支持 ${tab.kind} 类型图表</div>
+        </div>
+      `;
+  }
+
+  if (chart) {
+    chartInstances[chartId] = chart;
+  }
+}
+
+// 渲染矩形树图
+function renderTreemap(chartId, data) {
+  const container = document.getElementById("treemap-" + chartId);
+  if (!container || !data || !data.labels) return;
+
+  // 构建层次数据
+  const hierarchyData = {
+    name: "root",
+    children: data.labels.map((label, i) => ({
+      name: label,
+      value: data.values[i] || 0
+    }))
+  };
+
+  const width = container.clientWidth;
+  const height = 320;
+
+  const root = d3.hierarchy(hierarchyData)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+
+  d3.treemap()
+    .size([width, height])
+    .padding(2)
+    (root);
+
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const cell = svg.selectAll("g")
+    .data(root.leaves())
+    .join("g")
+    .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+  cell.append("rect")
+    .attr("width", d => d.x1 - d.x0)
+    .attr("height", d => d.y1 - d.y0)
+    .attr("fill", (d, i) => COLORS[i % COLORS.length])
+    .attr("opacity", 0.8)
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 2);
+
+  cell.append("text")
+    .attr("x", 4)
+    .attr("y", 20)
+    .text(d => d.data.name)
+    .attr("font-size", "12px")
+    .attr("fill", "#fff")
+    .attr("font-weight", "600");
+
+  cell.append("text")
+    .attr("x", 4)
+    .attr("y", 36)
+    .text(d => d.data.value.toLocaleString())
+    .attr("font-size", "11px")
+    .attr("fill", "#fff")
+    .attr("opacity", 0.9);
+}
+
+// 渲染所有图表
+function renderAllCharts() {
+  const container = document.getElementById("modulesArea");
+  container.innerHTML = "";
+
+  Object.entries(CHARTS_BY_DOMAIN).forEach(([domain, charts]) => {
+    const module = createModule(domain, charts);
+    container.appendChild(module);
+
+    const chartsContainer = module.querySelector(".charts");
+
+    if (!charts || charts.length === 0) {
+      chartsContainer.innerHTML = `
+        <div class="empty-module">
+          <div style="font-size:36px;opacity:0.4">📊</div>
+          <div>暂无指标数据</div>
+        </div>
+      `;
+    } else {
+      charts.forEach(spec => {
+        const card = createChartCard(spec);
+        chartsContainer.appendChild(card);
+
+        // 渲染图表
+        if (spec.kind === "tabbed" && spec.tabs && spec.tabs.length > 0) {
+          switchTab(spec, spec.tabs[0].tab_id);
+        }
+      });
+    }
+  });
+}
+
+// 初始化
+function initPage() {
+  initNavigation();
+  renderAllCharts();
+
+  document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
+  document.getElementById("generatedAt").textContent = new Date().toLocaleString();
+}
+
+document.addEventListener("DOMContentLoaded", initPage);
+</script>
+</body>
+</html>
