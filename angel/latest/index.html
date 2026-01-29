@@ -258,6 +258,232 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* AI分析部分 */
+.ai-analysis-container {
+  margin: 24px 0;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-analysis-container:hover {
+  box-shadow: var(--shadow);
+}
+
+.ai-analysis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+.ai-analysis-header:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.ai-analysis-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.ai-icon {
+  width: 24px;
+  height: 24px;
+  color: #0284c7;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.toggle-icon {
+  width: 20px;
+  height: 20px;
+  color: #0369a1;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.ai-analysis-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-analysis-content.expanded {
+  max-height: 2000px;
+}
+
+.ai-analysis-text {
+  padding: 20px 24px;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* AI分析内容样式 - 极简版 */
+.ai-analysis-text h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 18px 0 10px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ai-analysis-text h3:first-child {
+  margin-top: 0;
+}
+
+.ai-analysis-text .tldr-section {
+  margin-bottom: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .domain-item {
+  margin: 6px 0 6px 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .domain-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.ai-analysis-text .domain-name::after {
+  content: ": ";
+}
+
+.ai-analysis-text .chain-item {
+  margin: 6px 0 6px 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .confidence-section {
+  margin-top: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.ai-analysis-text strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* 面包屑导航 */
+.metric-detail-breadcrumb {
+  margin: 24px 0 16px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fbbf24;
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+}
+
+.breadcrumb-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  color: #d97706;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: #fffbeb;
+  border-color: #d97706;
+  transform: translateX(-2px);
+}
+
+.back-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.breadcrumb-path {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #92400e;
+}
+
+.breadcrumb-item {
+  font-weight: 500;
+}
+
+.breadcrumb-item.current {
+  font-weight: 700;
+  color: #78350f;
+}
+
+.breadcrumb-separator {
+  color: #d97706;
+  font-weight: 600;
+}
+
+/* 详情页模式 */
+.detail-mode .chart-card {
+  cursor: default;
+}
+
+.chart-card.current-metric {
+  border: 2px solid #3b82f6;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.chart-card.related-metric {
+  opacity: 1;
+}
+
+.module-row.hidden-module {
+  display: none;
+}
+
+.module-header.related-section {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-bottom: 2px solid #86efac;
+}
+
+.module-header.related-section h2::before {
+  content: "🔗 ";
+}
+
 /* 模块 */
 .modules {
   display: flex;
@@ -341,11 +567,45 @@ body {
   border-bottom: 1px solid var(--border-light);
 }
 
+.chart-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .chart-title {
   font-size: 16px;
   font-weight: 600;
   color: var(--text);
   letter-spacing: -0.01em;
+}
+
+/* View Details 链接 */
+.view-details-link-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 16px 20px;
+  margin-top: -8px;
+}
+
+.view-details-link {
+  color: #3b82f6;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.view-details-link:hover {
+  color: #2563eb;
+  transform: translateX(2px);
+}
+
+/* 详情模式下隐藏View Details链接 */
+.detail-mode .view-details-link-wrapper {
+  display: none;
 }
 
 .canvas-wrapper {
@@ -704,6 +964,41 @@ body {
     <!-- 导航按钮会通过JS插入到这里 -->
 </nav>
 
+  <!-- AI分析部分 -->
+  <div class="ai-analysis-container">
+    <div class="ai-analysis-header" onclick="toggleAIAnalysis()">
+      <div class="ai-analysis-title">
+        <svg class="ai-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+        </svg>
+        <span>AI智能分析</span>
+      </div>
+      <svg class="toggle-icon" id="aiToggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+    <div class="ai-analysis-content" id="aiAnalysisContent">
+      <div class="ai-analysis-text" id="aiAnalysisText">加载中...</div>
+    </div>
+  </div>
+
+  <!-- 指标详情页面包屑 -->
+  <div class="metric-detail-breadcrumb" id="metricBreadcrumb" style="display: none;">
+    <div class="breadcrumb-content">
+      <button class="back-button" onclick="returnToAllMetrics()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回全部指标</span>
+      </button>
+      <div class="breadcrumb-path">
+        <span class="breadcrumb-item">全部指标</span>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-item current" id="currentMetricName">指标详情</span>
+      </div>
+    </div>
+  </div>
+
   <div class="modules" id="modulesArea"></div>
 </div>
 
@@ -908,7 +1203,7 @@ const CHARTS_BY_DOMAIN = {
               74.0,
               82.0,
               90.0,
-              33.0
+              59.0
             ]
           }
         },
@@ -935,10 +1230,10 @@ const CHARTS_BY_DOMAIN = {
             "TW",
             "MY",
             "JP",
+            "HK",
             "RU",
             "IQ",
             "ID",
-            "HK",
             "TZ",
             "AR"
           ],
@@ -953,12 +1248,12 @@ const CHARTS_BY_DOMAIN = {
             "GB",
             "SA",
             "FR",
+            "TW",
             "EG",
             "Old mobile version",
-            "TW",
             "JP",
-            "AR",
             "HK",
+            "AR",
             "MY",
             "TZ"
           ],
@@ -1220,11 +1515,11 @@ const CHARTS_BY_DOMAIN = {
               ],
               [
                 0.0,
-                21.0,
-                0.0,
+                34.0,
                 0.0,
                 1.0,
-                0.0,
+                1.0,
+                1.0,
                 0.0,
                 0.0,
                 0.0,
@@ -1233,10 +1528,10 @@ const CHARTS_BY_DOMAIN = {
                 1.0,
                 0.0,
                 2.0,
-                7.0,
+                16.0,
+                1.0,
                 0.0,
-                0.0,
-                1.0
+                2.0
               ]
             ]
           }
@@ -1327,15 +1622,16 @@ const CHARTS_BY_DOMAIN = {
                 79.0
               ],
               [
-                3.0,
-                30.0
+                5.0,
+                54.0
               ]
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Platform Basics"
+      "business_domain": "Platform Basics",
+      "related_metrics": []
     },
     {
       "chart_id": "retention_d7___series__series_weekly_avg",
@@ -1419,7 +1715,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Platform Basics"
+      "business_domain": "Platform Basics",
+      "related_metrics": []
     },
     {
       "chart_id": "average_meaningful_battles_per_user__series__series_daily",
@@ -1442,16 +1739,17 @@ const CHARTS_BY_DOMAIN = {
               "01-29"
             ],
             "values": [
-              0.7624309392265194,
-              1.05,
+              0.2950819672131147,
+              1.0441988950276244,
               1.809278350515464,
-              0.0277777777777777
+              0.2016806722689075
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Platform Basics"
+      "business_domain": "Platform Basics",
+      "related_metrics": []
     }
   ],
   "user_growth": [
@@ -1495,7 +1793,7 @@ const CHARTS_BY_DOMAIN = {
               17.0,
               15.0,
               21.0,
-              5.0
+              7.0
             ]
           }
         },
@@ -1517,23 +1815,23 @@ const CHARTS_BY_DOMAIN = {
             "EG",
             "MX",
             "ID",
-            "PK",
             "US",
+            "PK",
+            "MY",
             "MA",
             "HK",
-            "MY",
             "IN",
-            "TH",
             "KH",
+            "TH",
+            "BR",
             "NG",
             "IQ",
-            "BR",
             "DZ",
             "AE",
-            "JP",
             "LB",
-            "QA",
             "LK",
+            "JP",
+            "QA",
             "TN",
             "TW",
             "TZ"
@@ -1546,24 +1844,24 @@ const CHARTS_BY_DOMAIN = {
             "CN",
             "PH",
             "SA",
-            "ID",
             "US",
+            "ID",
             "MX",
             "EG",
             "PK",
             "HK",
-            "IN",
-            "TH",
-            "MA",
             "NG",
-            "TZ",
-            "TW",
-            "BR",
-            "QA",
+            "TH",
+            "MY",
+            "MA",
+            "IN",
             "KH",
+            "QA",
             "JP",
             "IQ",
-            "MY"
+            "TW",
+            "TZ",
+            "BR"
           ],
           "data": {
             "dates": [
@@ -1945,7 +2243,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.0,
+                1.0,
                 0.0,
                 0.0,
                 1.0,
@@ -1956,7 +2254,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.0
+                1.0
               ]
             ]
           }
@@ -2049,14 +2347,17 @@ const CHARTS_BY_DOMAIN = {
               ],
               [
                 0.0,
-                5.0
+                7.0
               ]
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "User Growth"
+      "business_domain": "User Growth",
+      "related_metrics": [
+        "dau"
+      ]
     },
     {
       "chart_id": "new_activated_user__series__series_daily",
@@ -2097,7 +2398,7 @@ const CHARTS_BY_DOMAIN = {
               0.0,
               0.1176470588235294,
               0.2666666666666666,
-              0.0952380952380952,
+              0.1428571428571428,
               0.0
             ]
           }
@@ -2525,7 +2826,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.4,
+                0.6,
                 0.0,
                 0.0,
                 0.0,
@@ -2677,7 +2978,7 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.25,
-                0.0588235294117647,
+                0.1176470588235294,
                 0.0
               ],
               [
@@ -2691,7 +2992,10 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "User Growth"
+      "business_domain": "User Growth",
+      "related_metrics": [
+        "dau"
+      ]
     }
   ],
   "revenue": [
@@ -2739,7 +3043,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Revenue"
+      "business_domain": "Revenue",
+      "related_metrics": []
     }
   ],
   "daily_challenge": [
@@ -2789,7 +3094,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "book_kix_challenge_uv__series__series_daily",
@@ -2830,14 +3136,15 @@ const CHARTS_BY_DOMAIN = {
               0.7037037037037037,
               0.5757575757575758,
               0.7142857142857143,
-              0.6428571428571429,
+              0.6176470588235294,
               0.0
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "participate_kix_challenge_uv__series__series_daily",
@@ -2885,7 +3192,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "finish_kix_challenge_rate__series__series_daily",
@@ -2933,7 +3241,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "kix_train_times__series__series_daily",
@@ -2965,7 +3274,7 @@ const CHARTS_BY_DOMAIN = {
               3.704761904761905,
               3.4958677685950414,
               5.75206611570248,
-              3.380281690140845
+              3.7641509433962264
             ]
           }
         },
@@ -2984,10 +3293,10 @@ const CHARTS_BY_DOMAIN = {
             "1403",
             "1333",
             "531",
+            "1252",
             "1402",
             "471",
             "1348",
-            "1252",
             "691"
           ],
           "selected_dim_values": [
@@ -2998,10 +3307,10 @@ const CHARTS_BY_DOMAIN = {
             "1403",
             "1333",
             "531",
+            "1252",
             "1402",
             "471",
             "1348",
-            "1252",
             "691"
           ],
           "data": {
@@ -3093,7 +3402,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0
               ],
               [
-                3.380281690140845,
+                3.7641509433962264,
                 0.0,
                 0.0,
                 0.0,
@@ -3121,10 +3430,10 @@ const CHARTS_BY_DOMAIN = {
             "Drift Bus",
             "Shoot The Apple",
             "Punch Box",
+            "Spin Maze Save Xmas",
             "HangGlider",
             "The Last Battle",
             "Cards Fusion",
-            "Spin Maze Save Xmas",
             "Fast Driver"
           ],
           "selected_dim_values": [
@@ -3135,10 +3444,10 @@ const CHARTS_BY_DOMAIN = {
             "Drift Bus",
             "Shoot The Apple",
             "Punch Box",
+            "Spin Maze Save Xmas",
             "HangGlider",
             "The Last Battle",
             "Cards Fusion",
-            "Spin Maze Save Xmas",
             "Fast Driver"
           ],
           "data": {
@@ -3237,7 +3546,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                3.380281690140845,
+                3.7641509433962264,
                 0.0
               ]
             ]
@@ -3313,16 +3622,17 @@ const CHARTS_BY_DOMAIN = {
                 7.515151515151516
               ],
               [
-                3.068965517241379,
-                3.0,
-                3.757575757575758
+                3.1219512195121952,
+                3.875,
+                4.26530612244898
               ]
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "kix_reward_uv__series__series_daily",
@@ -3368,7 +3678,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "kix_challenge_reward_usd__series__series_daily",
@@ -3414,7 +3725,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "kix_challenge_redeem_uv__series__series_daily",
@@ -4007,7 +4319,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     },
     {
       "chart_id": "kix_challenge_reward_value__series__series_daily",
@@ -4600,7 +4913,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "Daily Challenge"
+      "business_domain": "Daily Challenge",
+      "related_metrics": []
     }
   ],
   "pk": [
@@ -4794,7 +5108,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "PK"
+      "business_domain": "PK",
+      "related_metrics": []
     },
     {
       "chart_id": "pk_successful_matching__series__series_daily",
@@ -4834,9 +5149,9 @@ const CHARTS_BY_DOMAIN = {
               0.0,
               0.0,
               0.0,
-              0.0053859964093357,
-              0.8614008941877794,
-              0.9772727272727272
+              0.0017953321364452,
+              0.4485842026825633,
+              0.9932885906040269
             ]
           }
         },
@@ -4851,41 +5166,40 @@ const CHARTS_BY_DOMAIN = {
           },
           "filterable": true,
           "all_dim_values": [
-            "Pixel Journey",
-            "Sling Tomb",
-            "Block Breaker",
-            "Animals Crush",
+            "Pupper Jones",
             "Spin Maze Save Xmas",
             "Gold Miner",
-            "Tofu Cat",
-            "Dragon Snap Rescue",
-            "Sushi Frenzy",
+            "Sling Tomb",
             "Jelly Blast",
-            "Color Block Away",
-            "Candy Store",
-            "Sea Treasure",
-            "Pupper Jones",
-            "Don't Brake",
-            "Punch Box",
-            "Candy Monster",
-            "Mini Golf",
-            "Tennis Dash",
-            "Deep Sea 2048",
-            "Drift Bus",
+            "Sushi Frenzy",
+            "Tofu Cat",
+            "Animals Crush",
             "The Last Battle",
-            "Nutmeg Football",
+            "Sea Treasure",
             "Fast Driver",
+            "Tennis Dash",
+            "Block Breaker",
+            "Dragon Snap Rescue",
+            "Pixel Journey",
+            "Candy Store",
+            "Winter Elimination Fun",
+            "Deep Sea 2048",
+            "Punch Box",
+            "Don't Brake",
+            "Drift Bus",
+            "Candy Monster",
+            "Nutmeg Football",
             "daf0a5efMKNPPXCE",
+            "Zombie Survivor",
+            "Tile Connect Puzzle",
             "Squid Head Kick",
             "sheep rush",
-            "Tile Connect Puzzle",
+            "Shoot The Apple",
             "Sky Speedster",
-            "Winter Elimination Fun",
-            "Zombie Survivor",
             "daf0a5efMKOUBM8A",
             "King Of Drift",
-            "Shoot The Apple",
             "Monkey Mart",
+            "Mini Golf",
             "Atro Pong",
             "Happy Bird",
             "HangGlider",
@@ -4896,49 +5210,50 @@ const CHARTS_BY_DOMAIN = {
             "Crossy Chicken",
             "Cosmic Blaster",
             "Corona Jump",
+            "Color Block Away",
             "Cards Fusion",
             "test pk"
           ],
           "selected_dim_values": [
-            "Pixel Journey"
+            "Pupper Jones"
           ],
           "ranked_dim_values": [
-            "Pixel Journey",
-            "Sling Tomb",
-            "Block Breaker",
-            "Animals Crush",
+            "Pupper Jones",
             "Spin Maze Save Xmas",
             "Gold Miner",
-            "Tofu Cat",
-            "Dragon Snap Rescue",
+            "Sling Tomb",
             "Jelly Blast",
             "Sushi Frenzy",
-            "Color Block Away",
-            "Tennis Dash",
-            "Sea Treasure",
-            "Pupper Jones",
-            "Punch Box",
-            "Mini Golf",
-            "Don't Brake",
-            "Candy Monster",
-            "Candy Store",
-            "Deep Sea 2048",
-            "Drift Bus",
+            "Tofu Cat",
+            "Animals Crush",
             "The Last Battle",
-            "Nutmeg Football",
+            "Sea Treasure",
             "Fast Driver",
-            "HangGlider",
-            "Cards Fusion",
-            "Zombie Survivor",
+            "Block Breaker",
+            "Pixel Journey",
+            "Candy Store",
+            "Tennis Dash",
             "Winter Elimination Fun",
-            "Tile Connect Puzzle",
+            "Dragon Snap Rescue",
+            "Deep Sea 2048",
+            "Punch Box",
+            "Don't Brake",
+            "Drift Bus",
+            "Candy Monster",
+            "Nutmeg Football",
+            "Zombie Survivor",
             "Sky Speedster",
-            "Corona Jump",
-            "Cosmic Blaster",
-            "King Of Drift",
+            "Tile Connect Puzzle",
+            "Mini Golf",
             "Shoot The Apple",
             "Monkey Mart",
             "Atro Pong",
+            "King Of Drift",
+            "HangGlider",
+            "Cosmic Blaster",
+            "Corona Jump",
+            "Color Block Away",
+            "Cards Fusion",
             "sheep rush"
           ],
           "data": {
@@ -5454,7 +5769,6 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.0204081632653061,
                 0.0,
                 0.0,
                 0.0,
@@ -5474,19 +5788,20 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.0625,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0476190476190476,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
+                0.0,
+                0.0,
+                0.0181818181818181,
                 0.0,
                 0.0,
                 0.0,
@@ -5497,47 +5812,47 @@ const CHARTS_BY_DOMAIN = {
                 0.0
               ],
               [
-                0.9076923076923076,
-                0.0,
-                0.9166666666666666,
-                1.0,
+                0.1692307692307692,
                 0.0,
                 0.0,
-                1.0,
+                0.3333333333333333,
+                0.0,
+                0.0,
+                0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.95,
                 0.0,
-                1.0,
+                0.6363636363636364,
+                0.0,
+                0.5344827586206896,
+                0.0833333333333333,
+                0.0,
+                0.0,
                 0.5625,
-                0.8879310344827587,
-                0.4166666666666667,
-                0.0,
-                0.0,
-                0.6875,
                 0.0,
                 0.0,
                 0.0,
                 0.5,
                 0.0,
-                1.0,
-                0.0,
-                0.4545454545454545,
-                1.0,
-                1.0,
-                1.0,
-                1.0,
                 0.0,
                 0.0,
-                0.9509803921568628,
-                0.8846153846153846,
+                0.1818181818181818,
                 0.0,
-                0.5,
+                0.875,
                 1.0,
-                0.7727272727272727,
+                0.1111111111111111,
                 0.0,
-                0.68,
+                0.0,
+                0.5588235294117647,
+                0.6282051282051282,
+                0.0,
+                0.25,
+                0.0,
+                0.1363636363636363,
+                0.0,
+                0.24,
                 0.0,
                 0.0,
                 0.0,
@@ -5561,7 +5876,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 1.0,
                 0.0,
-                0.0,
+                1.0,
                 0.0,
                 0.0,
                 1.0,
@@ -5575,19 +5890,19 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 1.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
                 1.0,
-                0.96,
-                0.0,
                 1.0,
                 0.0,
                 0.0,
+                1.0,
+                0.9857142857142858,
                 0.0,
                 1.0,
+                1.0,
+                1.0,
                 0.0,
+                1.0,
+                1.0,
                 0.0,
                 0.0,
                 0.0,
@@ -5689,15 +6004,15 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.0,
-                0.0517241379310344
+                0.0172413793103448
               ],
               [
-                0.8467874794069192,
+                0.4250411861614497,
                 0.0,
-                1.0
+                0.671875
               ],
               [
-                0.975,
+                0.992248062015504,
                 0.0,
                 1.0
               ]
@@ -5706,7 +6021,8 @@ const CHARTS_BY_DOMAIN = {
         }
       ],
       "hide_badge": false,
-      "business_domain": "PK"
+      "business_domain": "PK",
+      "related_metrics": []
     }
   ],
   "viral": [
@@ -5786,13 +6102,14 @@ const CHARTS_BY_DOMAIN = {
               0.3333333333333333,
               0.2222222222222222,
               0.5,
-              12.0
+              5.0
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Viral"
+      "business_domain": "Viral",
+      "related_metrics": []
     },
     {
       "chart_id": "invitation_impression_to_click_funnel__series__value_daily",
@@ -5809,9 +6126,9 @@ const CHARTS_BY_DOMAIN = {
           "meta": {},
           "data": {
             "date": "2026-01-29",
-            "denominator": 8.0,
-            "numerator": 4.0,
-            "value": 0.5
+            "denominator": 27.0,
+            "numerator": 18.0,
+            "value": 0.6666666666666666
           }
         },
         {
@@ -5829,10 +6146,10 @@ const CHARTS_BY_DOMAIN = {
             "HQ_Withdraw_Share",
             "Add_Friend_Invite",
             "Energy_Rescue",
-            "HQ_After_Share",
             "HQ_H5_Share",
-            "PK_After_Share",
             "HQ_H5_Download",
+            "HQ_After_Share",
+            "PK_After_Share",
             "HQ_Room_Invite",
             "Game_Room_Invite",
             "Dev_Competition_Share",
@@ -5848,10 +6165,10 @@ const CHARTS_BY_DOMAIN = {
             "HQ_H5_Download",
             "Energy_Rescue",
             "HQ_After_Share",
-            "PK_After_Share",
             "HQ_H5_Share",
-            "Dev_Competition_Share",
+            "PK_After_Share",
             "HQ_Withdraw_Share",
+            "Dev_Competition_Share",
             "HQ_Room_Invite",
             "Dev_Minisite_Visit",
             "Game_Room_Invite",
@@ -5860,34 +6177,47 @@ const CHARTS_BY_DOMAIN = {
           "data": {
             "date": "2026-01-29",
             "dim_labels": [
+              "HQ_H5_Share",
+              "Add_Friend_Invite",
+              "Dev_Competition_Share",
+              "Dev_Minisite_Visit",
               "Game_Room_Invite",
               "HQ_H5_Download",
-              "Dev_Minisite_Visit",
-              "HQ_H5_Share"
+              "HQ_Withdraw_Share"
             ],
             "denominator": [
-              2.0,
+              7.0,
               2.0,
               1.0,
-              3.0
+              5.0,
+              4.0,
+              6.0,
+              2.0
             ],
             "numerator": [
+              4.0,
+              2.0,
               0.0,
-              3.0,
-              0.0,
+              1.0,
+              1.0,
+              9.0,
               1.0
             ],
             "values": [
+              0.5714285714285714,
+              1.0,
               0.0,
+              0.2,
+              0.25,
               1.5,
-              0.0,
-              0.3333333333333333
+              0.5
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Viral"
+      "business_domain": "Viral",
+      "related_metrics": []
     },
     {
       "chart_id": "click_to_invite_sucess_funnel__series__value_daily",
@@ -5904,7 +6234,7 @@ const CHARTS_BY_DOMAIN = {
           "meta": {},
           "data": {
             "date": "2026-01-29",
-            "denominator": 4.0,
+            "denominator": 18.0,
             "numerator": 0.0,
             "value": 0.0
           }
@@ -5922,8 +6252,8 @@ const CHARTS_BY_DOMAIN = {
           "filterable": true,
           "all_dim_values": [
             "Add_Friend_Invite",
-            "Energy_Rescue",
             "HQ_H5_Download",
+            "Energy_Rescue",
             "Dev_Competition_Share",
             "Dev_Minisite_Visit",
             "Game_Room_Invite",
@@ -5955,18 +6285,27 @@ const CHARTS_BY_DOMAIN = {
           "data": {
             "date": "2026-01-29",
             "dim_labels": [
+              "HQ_H5_Share",
+              "Add_Friend_Invite",
+              "Dev_Competition_Share",
+              "Dev_Minisite_Visit",
               "Game_Room_Invite",
               "HQ_H5_Download",
-              "Dev_Minisite_Visit",
-              "HQ_H5_Share"
+              "HQ_Withdraw_Share"
             ],
             "denominator": [
+              4.0,
+              2.0,
               0.0,
-              3.0,
-              0.0,
+              1.0,
+              1.0,
+              9.0,
               1.0
             ],
             "numerator": [
+              0.0,
+              0.0,
+              0.0,
               0.0,
               0.0,
               0.0,
@@ -5976,13 +6315,17 @@ const CHARTS_BY_DOMAIN = {
               0.0,
               0.0,
               0.0,
+              0.0,
+              0.0,
+              0.0,
               0.0
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Viral"
+      "business_domain": "Viral",
+      "related_metrics": []
     },
     {
       "chart_id": "viral_d1_rate__series__series_daily",
@@ -6059,14 +6402,15 @@ const CHARTS_BY_DOMAIN = {
               0.0,
               0.4,
               0.5,
-              0.5384615384615384,
+              0.6153846153846154,
               0.0
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "Viral"
+      "business_domain": "Viral",
+      "related_metrics": []
     }
   ],
   "cash_out": [],
@@ -6096,17 +6440,19 @@ const CHARTS_BY_DOMAIN = {
             "SG × ios",
             "FR × ios",
             "GB × android",
-            "CN × android",
             "PH × ios",
+            "CN × android",
             "EG × android",
             "US × android",
             "AE × android",
+            "TW × ios",
+            "GB × ios",
+            "HK × ios",
             "TZ × ios",
             "EG × ios",
             "SA × ios",
             "AR × android",
-            "SG × android",
-            "TW × ios"
+            "SG × android"
           ],
           "selected_dim_values": [
             "US × ios"
@@ -6117,17 +6463,19 @@ const CHARTS_BY_DOMAIN = {
             "SG × ios",
             "FR × ios",
             "GB × android",
-            "CN × android",
             "PH × ios",
+            "CN × android",
             "EG × android",
             "US × android",
             "AE × android",
+            "TW × ios",
+            "GB × ios",
+            "HK × ios",
             "TZ × ios",
             "EG × ios",
             "SA × ios",
             "AR × android",
-            "SG × android",
-            "TW × ios"
+            "SG × android"
           ],
           "data": {
             "dates": [
@@ -6145,6 +6493,8 @@ const CHARTS_BY_DOMAIN = {
               "EG × ios",
               "FR × ios",
               "GB × android",
+              "GB × ios",
+              "HK × ios",
               "PH × ios",
               "SA × ios",
               "SG × android",
@@ -6159,19 +6509,21 @@ const CHARTS_BY_DOMAIN = {
                 51.0,
                 17.0,
                 82.0,
-                144.0,
+                184.0,
                 65.0,
-                0.0,
-                49.0,
-                59.0,
-                213.0,
-                0.0,
-                14.0,
-                197.0,
                 0.0,
                 0.0,
                 51.0,
-                230.0
+                0.0,
+                0.0,
+                213.0,
+                0.0,
+                14.0,
+                248.0,
+                0.0,
+                0.0,
+                51.0,
+                64.0
               ],
               [
                 51.0,
@@ -6182,6 +6534,8 @@ const CHARTS_BY_DOMAIN = {
                 95.0,
                 0.0,
                 53.0,
+                0.0,
+                0.0,
                 60.0,
                 0.0,
                 11.0,
@@ -6200,6 +6554,8 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 692.0,
                 231.0,
+                0.0,
+                0.0,
                 57.0,
                 0.0,
                 14.0,
@@ -6210,21 +6566,23 @@ const CHARTS_BY_DOMAIN = {
                 1440.0
               ],
               [
-                0.0,
+                54.0,
                 13.0,
-                70.0,
-                610.0,
-                55.0,
+                65.0,
+                646.0,
+                57.0,
                 0.0,
-                0.0,
-                49.0,
-                0.0,
+                29.0,
+                77.0,
+                120.0,
+                108.0,
+                59.0,
                 75.0,
                 12.0,
-                69.0,
+                60.0,
+                82.0,
                 0.0,
-                0.0,
-                49.0,
+                52.0,
                 0.0
               ]
             ]
@@ -6245,14 +6603,15 @@ const CHARTS_BY_DOMAIN = {
             "CN",
             "SG",
             "FR",
-            "EG",
             "GB",
+            "EG",
             "PH",
             "AE",
+            "TW",
+            "HK",
             "TZ",
             "SA",
-            "AR",
-            "TW"
+            "AR"
           ],
           "selected_dim_values": [
             "US"
@@ -6262,14 +6621,15 @@ const CHARTS_BY_DOMAIN = {
             "CN",
             "SG",
             "FR",
-            "EG",
             "GB",
+            "EG",
             "PH",
             "AE",
+            "TW",
+            "HK",
             "TZ",
             "SA",
-            "AR",
-            "TW"
+            "AR"
           ],
           "data": {
             "dates": [
@@ -6285,6 +6645,7 @@ const CHARTS_BY_DOMAIN = {
               "EG",
               "FR",
               "GB",
+              "HK",
               "PH",
               "SA",
               "SG",
@@ -6296,16 +6657,17 @@ const CHARTS_BY_DOMAIN = {
               [
                 51.0,
                 17.0,
-                226.0,
+                266.0,
                 65.0,
-                49.0,
-                59.0,
+                0.0,
+                51.0,
+                0.0,
                 213.0,
                 0.0,
-                211.0,
+                262.0,
                 0.0,
                 0.0,
-                281.0
+                115.0
               ],
               [
                 51.0,
@@ -6314,6 +6676,7 @@ const CHARTS_BY_DOMAIN = {
                 194.0,
                 0.0,
                 53.0,
+                0.0,
                 60.0,
                 0.0,
                 249.0,
@@ -6328,6 +6691,7 @@ const CHARTS_BY_DOMAIN = {
                 110.0,
                 692.0,
                 231.0,
+                0.0,
                 57.0,
                 0.0,
                 438.0,
@@ -6336,18 +6700,19 @@ const CHARTS_BY_DOMAIN = {
                 1494.0
               ],
               [
-                0.0,
+                54.0,
                 13.0,
-                680.0,
-                55.0,
-                0.0,
-                49.0,
-                0.0,
+                711.0,
+                57.0,
+                29.0,
+                197.0,
+                108.0,
+                59.0,
                 75.0,
-                81.0,
+                72.0,
+                82.0,
                 0.0,
-                0.0,
-                49.0
+                52.0
               ]
             ]
           }
@@ -6386,8 +6751,8 @@ const CHARTS_BY_DOMAIN = {
             ],
             "matrix": [
               [
-                339.0,
-                833.0
+                331.0,
+                709.0
               ],
               [
                 380.0,
@@ -6398,15 +6763,16 @@ const CHARTS_BY_DOMAIN = {
                 2981.0
               ],
               [
-                248.0,
-                754.0
+                330.0,
+                1179.0
               ]
             ]
           }
         }
       ],
       "hide_badge": true,
-      "business_domain": "Monitoring"
+      "business_domain": "Monitoring",
+      "related_metrics": []
     }
   ],
   "engagement": []
@@ -6432,7 +6798,12 @@ const chartInstances = {};
 // Number formatting (compact)
 // =========================
 function trimDecimals(v, decimals) {
+  if (decimals === 0) {
+    // 当decimals=0时，直接返回整数，不用正则处理
+    return Math.round(v).toString();
+  }
   const s = Number(v).toFixed(decimals);
+  // 只处理小数部分的末尾0
   return s.replace(/\.?0+$/, "");
 }
 
@@ -7265,15 +7636,27 @@ function createChartCard(spec) {
   const card = document.createElement("div");
   card.className = "chart-card";
   card.dataset.chartId = spec.chart_id; // 添加chart-id属性用于搜索定位
+  card.dataset.metricId = spec.metric_id || ''; // 添加metric-id属性
 
   // 处理tabbed类型
   if (spec.kind === "tabbed" && spec.tabs) {
     const firstTab = spec.tabs[0];
 
+    // 所有指标都显示view details链接
+    const viewDetailsLink = spec.metric_id ? `
+      <div class="view-details-link-wrapper">
+        <a class="view-details-link" onclick="onViewDetailsClick('${spec.metric_id}', event)" href="javascript:void(0);">
+          view details →
+        </a>
+      </div>
+    ` : '';
+
     card.innerHTML = `
       <div class="chart-header">
         <div class="chart-title">${spec.title}</div>
-        ${spec.hide_badge ? "" : `<div class="latest-badge" id="latest-${spec.chart_id}">-</div>`}
+        <div class="chart-header-right">
+          ${spec.hide_badge ? "" : `<div class="latest-badge" id="latest-${spec.chart_id}">-</div>`}
+        </div>
       </div>
       <div class="chart-tabs-row">
         <div class="chart-tabs" id="tabs-${spec.chart_id}"></div>
@@ -7299,6 +7682,7 @@ function createChartCard(spec) {
          <canvas id="canvas-${spec.chart_id}"></canvas>
        </div>
       <div class="dim-hint" style="display:none; margin-top: -8px; padding: 0 16px 12px; font-size: 11px; color: #9ca3af;">默认展示Top维度值，可多选切换</div>
+      ${viewDetailsLink}
     `;
 
     // 创建tabs
@@ -7317,6 +7701,14 @@ function createChartCard(spec) {
   }
 
   // 普通图表
+  const viewDetailsLink = spec.metric_id ? `
+    <div class="view-details-link-wrapper">
+      <a class="view-details-link" onclick="onViewDetailsClick('${spec.metric_id}', event)" href="javascript:void(0);">
+        view details →
+      </a>
+    </div>
+  ` : '';
+
   card.innerHTML = `
     <div class="chart-header">
       <div class="chart-title">${spec.title}</div>
@@ -7324,6 +7716,7 @@ function createChartCard(spec) {
     <div class="canvas-wrapper">
       <canvas id="canvas-${spec.chart_id}"></canvas>
     </div>
+    ${viewDetailsLink}
   `;
 
   return card;
@@ -8109,13 +8502,375 @@ function renderAllCharts() {
   });
 }
 
+// AI分析展开/折叠功能
+function toggleAIAnalysis() {
+  const content = document.getElementById('aiAnalysisContent');
+  const icon = document.getElementById('aiToggleIcon');
+
+  if (content.classList.contains('expanded')) {
+    content.classList.remove('expanded');
+    icon.classList.remove('rotated');
+  } else {
+    content.classList.add('expanded');
+    icon.classList.add('rotated');
+  }
+}
+
+// 加载AI分析内容
+function loadAIAnalysis() {
+  const textElement = document.getElementById('aiAnalysisText');
+  const aiSummaryText = `【0 TL;DR】
+- 当前整体态势显示用户增长和收入均处于低迷状态，主要机会在于提升新用户转化率和赛事参与度，主要限制在于用户活跃度和赛事完成率。
+
+【1 Business Domain Overview】
+- **platform_basics**: 日活跃用户数 (DAU) 为 19，较之前减少了 27，显示出用户活跃度显著下降，需关注用户留存和活跃策略。
+- **user_growth**: 新用户数为 1，较之前减少了 3，有效新用户占比为 0.25，下降了 0.04，表明新用户转化存在明显瓶颈。
+- **revenue**: 总收入为 0.26，较之前增加了 0.16，但整体收入水平仍然较低，需通过提升用户转化和活跃度来推动收入增长。
+- **daily_challenge**: 候场成功开赛率为 0.71，较之前提升了 0.19，显示出赛事预约的改善，但仍需进一步优化用户参与度。
+- **pk**: 单局对战密度为 52，较之前增加了 12，匹配成功率为 0.96，提升了 0.08，表明对战体验有所改善。
+- **viral**: 数据缺失，无法评估病毒传播效果，但需关注用户留存和传播链路的优化。
+- **cash_out**: 数据缺失，无法评估用户提现情况，需关注用户的现金流动性。
+- **monitoring**: 数据缺失，无法进行有效监控，需建立完善的监控机制。
+- **engagement**: 人均成功 PK 次数为 0.03，较之前减少了 1.78，显示出用户参与度和赛事完成率的下降。
+
+【2 Growth Chain Diagnosis】
+- 新用户转化链路：新用户数为 1，且有效新用户占比为 0.25，表明新用户转化率低，需优化用户引导和体验以提升转化。
+- 用户活跃度链路：日活跃用户数 (DAU) 为 19，较之前减少，需通过提升赛事参与和用户留存策略来增强活跃度。
+- 收入增长链路：总收入为 0.26，尽管有所增加，但仍需通过提升用户转化和活跃度来推动收入的持续增长。
+- 赛事参与链路：候场成功开赛率为 0.71，尽管有所提升，但仍需优化赛事设计和用户体验以提高参与率和完成率。
+- 对战体验链路：单局对战密度为 52，匹配成功率为 0.96，表明对战体验有所改善，但需进一步提升用户的参与意愿。
+- 用户留存链路：人均成功 PK 次数为 0.03，显示出用户参与度下降，需关注用户体验和留存策略以提升活跃度。
+
+【3 Confidence & Data Limits】
+- 对于用户增长和收入的判断置信度较高，基于最新数据的变化趋势。 
+- 但对病毒传播和现金流动性等领域的判断置信度较低，因缺乏相关数据支持，无法进行有效分析。 
+- 监控和参与度的分析也受限于数据缺失，需建立更完善的数据收集机制。
+`;
+
+  // 解析并格式化AI分析文本
+  const formattedHTML = parseAIAnalysis(aiSummaryText);
+  textElement.innerHTML = formattedHTML;
+}
+
+// 解析AI分析文本为HTML
+function parseAIAnalysis(text) {
+  if (!text || text === '暂无AI分析内容' || text.includes('加载AI分析内容时出错')) {
+    return `<div style="color: #9ca3af; text-align: center; padding: 20px;">${text}</div>`;
+  }
+
+  let html = '';
+  const lines = text.split('\n');
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+
+    if (!line) {
+      continue;
+    }
+
+    // 【0 TL;DR】- 摘要部分
+    if (line.includes('【0 TL;DR】')) {
+      html += '<h3>核心摘要</h3>';
+      continue;
+    }
+
+    // 【1 Business Domain Overview】- 业务域概览
+    if (line.includes('【1 Business Domain Overview】')) {
+      html += '<h3>业务域概览</h3>';
+      continue;
+    }
+
+    // 【2 Growth Chain Diagnosis】- 增长链诊断
+    if (line.includes('【2 Growth Chain Diagnosis】')) {
+      html += '<h3>增长链诊断</h3>';
+      continue;
+    }
+
+    // 【3 Confidence & Data Limits】- 置信度说明
+    if (line.includes('【3 Confidence & Data Limits】')) {
+      html += '<h3>置信度与数据限制</h3>';
+      continue;
+    }
+
+    // TL;DR内容
+    if (i > 0 && lines[i-1].includes('【0 TL;DR】')) {
+      html += `<div class="tldr-section">${escapeHtml(line)}</div>`;
+      continue;
+    }
+
+    // Confidence内容
+    if (i > 0 && lines[i-1].includes('【3 Confidence & Data Limits】')) {
+      html += `<div class="confidence-section">${escapeHtml(line)}</div>`;
+      continue;
+    }
+
+    // 业务域列表项 (- **Domain Name**: ...)
+    if (line.startsWith('- **') && line.includes('**:')) {
+      const match = line.match(/- \*\*(.+?)\*\*:\s*(.+)/);
+      if (match) {
+        const domain = match[1];
+        const content = match[2];
+        html += `<div class="domain-item"><span class="domain-name">${escapeHtml(domain)}</span>${formatContent(content)}</div>`;
+        continue;
+      }
+    }
+
+    // 增长链列表项 (- **xxx与xxx**: ...)
+    if (line.startsWith('- **') && !line.includes('**:')) {
+      html += `<div class="chain-item">${formatContent(line.substring(2))}</div>`;
+      continue;
+    }
+
+    // 普通文本
+    html += `<p>${formatContent(line)}</p>`;
+  }
+
+  return html;
+}
+
+// 格式化内容：只处理加粗文本
+function formatContent(text) {
+  // 转义HTML
+  text = escapeHtml(text);
+
+  // 高亮加粗文本 **text**
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+  return text;
+}
+
+// HTML转义
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// =========================
+// URL路由和指标详情页功能
+// =========================
+let isDetailMode = false;
+let currentMetricId = null;
+
+// 从URL获取当前指标ID
+function getMetricIdFromURL() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#metric=')) {
+    return decodeURIComponent(hash.substring(8));
+  }
+  return null;
+}
+
+// 设置URL的指标ID
+function setMetricIdToURL(metricId) {
+  if (metricId) {
+    window.location.hash = 'metric=' + encodeURIComponent(metricId);
+  } else {
+    window.location.hash = '';
+  }
+}
+
+// 获取指标的相关指标列表
+function getRelatedMetrics(metricId) {
+  const allCharts = [];
+  Object.values(CHARTS_BY_DOMAIN).forEach(charts => {
+    allCharts.push(...charts);
+  });
+
+  const chart = allCharts.find(c => c.metric_id === metricId);
+  if (!chart) return [];
+
+  return chart.related_metrics || [];
+}
+
+// 获取指标名称
+function getMetricName(metricId) {
+  const allCharts = [];
+  Object.values(CHARTS_BY_DOMAIN).forEach(charts => {
+    allCharts.push(...charts);
+  });
+
+  const chart = allCharts.find(c => c.metric_id === metricId);
+  return chart ? chart.metric_name : metricId;
+}
+
+// 显示指标详情页
+function showMetricDetail(metricId) {
+  if (!metricId) {
+    returnToAllMetrics();
+    return;
+  }
+
+  isDetailMode = true;
+  currentMetricId = metricId;
+
+  // 显示面包屑
+  const breadcrumb = document.getElementById('metricBreadcrumb');
+  const metricNameEl = document.getElementById('currentMetricName');
+  breadcrumb.style.display = 'block';
+  metricNameEl.textContent = getMetricName(metricId);
+
+  // 获取相关指标
+  const relatedMetrics = getRelatedMetrics(metricId);
+  const allMetricsToShow = [metricId, ...relatedMetrics];
+
+  // 隐藏导航栏
+  const navTabs = document.getElementById('navTabs');
+  if (navTabs) navTabs.style.display = 'none';
+
+  // 添加详情模式class
+  const modulesArea = document.getElementById('modulesArea');
+  modulesArea.classList.add('detail-mode');
+
+  // 遍历所有模块
+  const modules = document.querySelectorAll('.module-row');
+  modules.forEach(module => {
+    const chartsContainer = module.querySelector('.charts');
+    if (!chartsContainer) return;
+
+    const charts = module.querySelectorAll('.chart-card');
+    let hasVisibleChart = false;
+    let currentMetricCard = null;
+    const relatedMetricCards = [];
+    const otherCards = [];
+
+    // 第一遍：分类卡片
+    charts.forEach(card => {
+      const cardMetricId = card.dataset.metricId;
+
+      if (allMetricsToShow.includes(cardMetricId)) {
+        hasVisibleChart = true;
+
+        if (cardMetricId === metricId) {
+          // 当前指标
+          card.style.display = 'block';
+          card.classList.add('current-metric');
+          currentMetricCard = card;
+        } else {
+          // 相关指标
+          card.style.display = 'block';
+          card.classList.add('related-metric');
+          relatedMetricCards.push(card);
+        }
+      } else {
+        // 其他指标（隐藏）
+        card.style.display = 'none';
+        otherCards.push(card);
+      }
+    });
+
+    // 第二遍：重新排序DOM元素
+    // 顺序：当前指标 → 相关指标 → 其他隐藏的指标
+    if (hasVisibleChart && currentMetricCard) {
+      // 先添加当前指标
+      chartsContainer.appendChild(currentMetricCard);
+
+      // 再添加相关指标
+      relatedMetricCards.forEach(card => {
+        chartsContainer.appendChild(card);
+      });
+
+      // 最后添加其他隐藏的指标（保持在DOM中但不可见）
+      otherCards.forEach(card => {
+        chartsContainer.appendChild(card);
+      });
+    }
+
+    // 如果模块没有可见的图表，隐藏整个模块
+    if (!hasVisibleChart) {
+      module.classList.add('hidden-module');
+    } else {
+      module.classList.remove('hidden-module');
+
+      // 如果这个模块包含相关指标，标记模块头
+      const hasRelated = relatedMetricCards.length > 0;
+
+      if (hasRelated) {
+        const moduleHeader = module.querySelector('.module-header');
+        if (moduleHeader) {
+          moduleHeader.classList.add('related-section');
+        }
+      }
+    }
+  });
+
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 返回全部指标视图
+function returnToAllMetrics() {
+  isDetailMode = false;
+  currentMetricId = null;
+
+  // 更新URL
+  setMetricIdToURL(null);
+
+  // 隐藏面包屑
+  const breadcrumb = document.getElementById('metricBreadcrumb');
+  breadcrumb.style.display = 'none';
+
+  // 显示导航栏
+  const navTabs = document.getElementById('navTabs');
+  if (navTabs) navTabs.style.display = 'flex';
+
+  // 移除详情模式class
+  const modulesArea = document.getElementById('modulesArea');
+  modulesArea.classList.remove('detail-mode');
+
+  // 重新渲染所有图表以恢复原始顺序
+  renderAllCharts();
+
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 处理URL变化（浏览器前进后退）
+function handleHashChange() {
+  const metricId = getMetricIdFromURL();
+  if (metricId) {
+    showMetricDetail(metricId);
+  } else if (isDetailMode) {
+    returnToAllMetrics();
+  }
+}
+
+// 点击图表卡片进入详情页
+// 点击View Details按钮进入详情页
+function onViewDetailsClick(metricId, event) {
+  // 阻止事件冒泡
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  // 如果已经在详情模式，不响应点击
+  if (isDetailMode) {
+    return;
+  }
+
+  setMetricIdToURL(metricId);
+  showMetricDetail(metricId);
+}
+
 // 初始化
 function initPage() {
   initNavigation();
   renderAllCharts();
+  loadAIAnalysis();
 
   document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
   document.getElementById("generatedAt").textContent = new Date().toLocaleString();
+
+  // 监听URL hash变化
+  window.addEventListener('hashchange', handleHashChange);
+
+  // 检查初始URL
+  const initialMetricId = getMetricIdFromURL();
+  if (initialMetricId) {
+    // 延迟执行，确保所有图表已渲染
+    setTimeout(() => showMetricDetail(initialMetricId), 100);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", initPage);
