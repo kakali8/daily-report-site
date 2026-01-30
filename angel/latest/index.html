@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <style>
+*,*::before,*::after{box-sizing:border-box;}
 :root {
   --bg: #f8f9fa;
   --card-bg: #ffffff;
@@ -258,86 +259,229 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* AI分析部分 */
-.ai-analysis-container {
-  margin: 24px 0;
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  border: 1px solid #bae6fd;
-  border-radius: var(--r);
+/* AI 分析面板（方案A：导航下方固定占位，不遮挡图表） */
+:root { --aiw: {aiw_px}px; --ai-top: 86px; }
+
+/* 两列布局：左侧图表，右侧 AI 面板（不 overlay） */
+.content-layout{
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.main-area{
+  flex: 1 1 auto;
+  min-width: 0; /* 允许内部图表自适应缩放 */
+}
+
+/* AI 面板：从导航栏下方开始 sticky */
+.ai-panel{
+  width: var(--aiw);
+  min-width: var(--aiw);
+  max-width: var(--aiw);
+  flex: 0 0 var(--aiw);
+  position: sticky;
+  top: var(--ai-top);
+  height: calc(100vh - var(--ai-top) - 16px);
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+}
+
+/* 折叠：AI 面板宽度变 0，主内容占满 */
+body.ai-collapsed .ai-panel{
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  flex: 0 0 0 !important;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 折叠时显示一个小把手（不挡图表） */
+.ai-expand-handle{
+  position: sticky;
+  top: calc(var(--ai-top) + 10px);
+  margin-left: -6px;
+  align-self: flex-start;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--card-bg);
   box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ai-analysis-container:hover {
-  box-shadow: var(--shadow);
-}
-
-.ai-analysis-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
+  color: var(--text);
+  font-weight: 700;
   cursor: pointer;
-  user-select: none;
-  transition: background 0.2s ease;
+  display: none;
 }
+body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; justify-content:center; }
 
-.ai-analysis-header:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.ai-analysis-title {
+.ai-panel-header{
+  padding: 14px 14px 10px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #0369a1;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));
 }
-
-.ai-icon {
-  width: 24px;
-  height: 24px;
-  color: #0284c7;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.toggle-icon {
-  width: 20px;
-  height: 20px;
-  color: #0369a1;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.toggle-icon.rotated {
-  transform: rotate(180deg);
-}
-
-.ai-analysis-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ai-analysis-content.expanded {
-  max-height: 2000px;
-}
-
-.ai-analysis-text {
-  padding: 20px 24px;
-  background: white;
-  border-top: 1px solid #e5e7eb;
-  color: #374151;
+.ai-panel-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
   font-size: 14px;
-  line-height: 1.7;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  color: var(--text);
 }
+.ai-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), #4dabf7);
+  box-shadow: 0 0 0 4px rgba(34,139,230,0.12);
+}
+.ai-panel-actions{ display:flex; gap:8px; }
+.ai-panel-btn{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: all .15s ease;
+}
+.ai-panel-btn:hover{
+  color: var(--text);
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-sm);
+}
+
+.ai-panel-subtitle{
+  padding: 10px 14px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.ai-panel-content{
+  padding: 12px 14px 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.ai-panel-content .ai-empty{
+  border: 1px dashed var(--border-light);
+  border-radius: 14px;
+  padding: 14px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.02);
+}
+
+.ai-panel-content .ai-block{
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 12px 12px 10px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 12px;
+}
+
+.ai-panel-content .ai-kv{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 10px;
+  margin: 8px 0 10px;
+}
+.ai-panel-content .ai-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: rgba(34,139,230,0.06);
+  color: var(--text);
+  font-size: 12px;
+}
+.ai-panel-content ul{ padding-left: 18px; margin: 8px 0 0; }
+.ai-panel-content li{ margin: 6px 0; color: var(--text); line-height: 1.55; }
+
+/* Sidebar header / close button */
+
+
+/* AI content typography */
+.ai-metric-title{
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 14px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+.ai-point{
+  margin: 12px 0;
+  padding: 12px 12px 12px 12px;
+  background: #fbfdff;
+  border: 1px solid #eef2f7;
+  border-left: 4px solid #3b82f6;
+  border-radius: 12px;
+}
+.ai-point-title{
+  color:#1d4ed8;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.ai-point-content{
+  color:#334155;
+  line-height: 1.65;
+  font-size: 13.5px;
+}
+
+
+/* 小屏降级：改回覆盖式（不然内容太窄） */
+@media (max-width: 980px){
+    }
+.ai-metric-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.ai-point {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 3px solid #3b82f6;
+}
+
+.ai-point-title {
+  color: #3b82f6;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.ai-point-content {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  }
 
 /* AI分析内容样式 - 极简版 */
 .ai-analysis-text h3 {
@@ -531,9 +675,28 @@ body {
 
 .charts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  /* AI 面板展开时：更倾向 2 列（每卡更宽更易读） */
+  grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
   gap: 24px;
 }
+
+/* AI 面板折叠后：允许更多列，充分利用全宽 */
+body.ai-collapsed .charts{
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+
+@media (max-width: 1100px){
+  .content-layout{ display:block; }
+  .ai-panel{ position: relative; top: 0; height: auto; width: 100%; flex: none; margin-top: 14px; }
+  body.ai-collapsed .ai-panel{ display:none; }
+  body.ai-collapsed .ai-expand-handle{ display:none; }
+  .charts{ grid-template-columns: 1fr !important; }
+}
+
+/* Sidebar 打开时，图表网格从 3 列收敛到 2 列（避免过窄） */
+@media (max-width: 1200px){
+  }
+
 
 @media (max-width: 768px) {
   .charts {
@@ -579,6 +742,27 @@ body {
   color: var(--text);
   letter-spacing: -0.01em;
 }
+
+.ai-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:10px;
+  padding:2px 8px;
+  font-size:12px;
+  font-weight:700;
+  color:#2563eb;
+  background:rgba(37,99,235,0.10);
+  border:1px solid rgba(37,99,235,0.25);
+  border-radius:999px;
+  cursor:pointer;
+  user-select:none;
+}
+.ai-badge:hover{
+  background:rgba(37,99,235,0.16);
+  border-color:rgba(37,99,235,0.35);
+}
+
 
 /* View Details 链接 */
 .view-details-link-wrapper {
@@ -950,222 +1134,11 @@ body {
 </style>
 </head>
 <body>
-
-<div class="container">
-  <div class="header">
-    <h1>📊 KiX Dashboard</h1>
-    <div class="header-info">
-      <span>📅 Date: <strong id="dataPeriod">-</strong></span>
-      <span style="margin-left:20px">🕒 Generated: <strong id="generatedAt">-</strong></span>
-    </div>
-  </div>
-
-<nav class="nav-tabs" id="navTabs">
-    <!-- 导航按钮会通过JS插入到这里 -->
-</nav>
-
-  <!-- AI分析部分 -->
-  <div class="ai-analysis-container">
-    <div class="ai-analysis-header" onclick="toggleAIAnalysis()">
-      <div class="ai-analysis-title">
-        <svg class="ai-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-        </svg>
-        <span>AI智能分析</span>
-      </div>
-      <svg class="toggle-icon" id="aiToggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="6 9 12 15 18 9"></polyline>
-      </svg>
-    </div>
-    <div class="ai-analysis-content" id="aiAnalysisContent">
-      <div class="ai-analysis-text" id="aiAnalysisText">加载中...</div>
-    </div>
-  </div>
-
-  <!-- 指标详情页面包屑 -->
-  <div class="metric-detail-breadcrumb" id="metricBreadcrumb" style="display: none;">
-    <div class="breadcrumb-content">
-      <button class="back-button" onclick="returnToAllMetrics()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        <span>返回全部指标</span>
-      </button>
-      <div class="breadcrumb-path">
-        <span class="breadcrumb-item">全部指标</span>
-        <span class="breadcrumb-separator">›</span>
-        <span class="breadcrumb-item current" id="currentMetricName">指标详情</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="modules" id="modulesArea"></div>
-</div>
-
-<script>
-Chart.register(ChartDataLabels);
-
-
-// =========================
-// Global Chart.js aesthetics
-// =========================
-Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji'";
-Chart.defaults.font.size = 11;
-Chart.defaults.color = "#475569"; // slate-600
-Chart.defaults.plugins.legend.labels.boxWidth = 10;
-Chart.defaults.plugins.legend.labels.boxHeight = 10;
-Chart.defaults.plugins.legend.labels.usePointStyle = true;
-Chart.defaults.plugins.legend.labels.pointStyle = "circle";
-Chart.defaults.plugins.tooltip.padding = 10;
-Chart.defaults.plugins.tooltip.bodySpacing = 6;
-Chart.defaults.plugins.tooltip.titleSpacing = 6;
-Chart.defaults.plugins.tooltip.displayColors = true;
-
-// 短日期格式化: 将 "2026-01-05" 或 "2026-01-05~2026-01-11" 转换为 "01-05"
-function formatShortDate(dateStr) {
-  if (!dateStr || typeof dateStr !== 'string') return dateStr;
-
-  // 如果已经是短格式 (MM-DD 或 MM)，直接返回
-  if (/^\d{2}-\d{2}$/.test(dateStr) || /^\d{2}$/.test(dateStr)) {
-    return dateStr;
-  }
-
-  // 处理周范围格式 "YYYY-MM-DD~YYYY-MM-DD"
-  if (dateStr.includes('~')) {
-    const parts = dateStr.split('~');
-    dateStr = parts[0].trim(); // 取第一个日期
-  }
-
-  // 匹配 YYYY-MM-DD 格式
-  const match = dateStr.match(/^\d{4}-(\d{2}-\d{2})/);
-  if (match) {
-    return match[1]; // 返回 MM-DD 部分
-  }
-
-  // 处理月份格式 YYYY-MM
-  const monthMatch = dateStr.match(/^\d{4}-(\d{2})$/);
-  if (monthMatch) {
-    return monthMatch[1]; // 返回 MM
-  }
-
-  return dateStr; // 其他格式原样返回
-}
-
-// Common axis tick formatting
-function formatTick(v, kind) {
-  const percent = isPercentKind(kind);
-
-  // 如果是字符串(可能是日期),进行日期格式化
-  if (typeof v === 'string') {
-    return formatShortDate(v);
-  }
-
-  return formatNumberCompact(v, { isPercent: percent, decimals: percent ? 0 : 2, maxDigits: 6 });
-}
-
-function applyCommonScales(scales, kind) {
-  // x
-  if (scales.x) {
-    scales.x.grid = scales.x.grid || {};
-    scales.x.ticks = scales.x.ticks || {};
-    scales.x.grid.display = false;
-    scales.x.ticks.maxRotation = 0;
-    scales.x.ticks.autoSkip = true;
-    scales.x.ticks.padding = 6;
-  }
-  // y / y1
-  ["y","y1"].forEach(k=>{
-    if (!scales[k]) return;
-    scales[k].ticks = scales[k].ticks || {};
-    scales[k].ticks.padding = 6;
-    scales[k].ticks.callback = (v)=>formatTick(v, kind);
-    scales[k].grid = scales[k].grid || {};
-    if (k === "y") scales[k].grid.color = "#eef2f7";
-  });
-}
-
-// Compute latest value (for badge) — always interpret as "latest point", not sum
-function getLatestValueFromTab(tab) {
-  try {
-    if (!tab || !tab.data) return null;
-
-    // single value
-    if (tab.kind === "single_value" && typeof tab.data.value === "number") return tab.data.value;
-
-    // percent charts: show 100% (semantic "total")
-    if (isPercentKind(tab.kind)) return 100;
-
-    // time-series array: take last finite point (overall line/bar_line uses this)
-    if (Array.isArray(tab.data.values) && tab.data.values.length) {
-      for (let i = tab.data.values.length - 1; i >= 0; i--) {
-        const v = Number(tab.data.values[i]);
-        if (Number.isFinite(v)) return v;
-      }
-    }
-
-    // matrix time-series: take last date row sum (fallback)
-    if (Array.isArray(tab.data.matrix) && tab.data.matrix.length) {
-      for (let i = tab.data.matrix.length - 1; i >= 0; i--) {
-        const row = tab.data.matrix[i] || [];
-        const nums = row.map(x => Number(x)).filter(x => Number.isFinite(x));
-        if (nums.length) return nums.reduce((a,b)=>a+b, 0);
-      }
-    }
-
-    // labels/values (doughnut etc.): treat as total
-    if (Array.isArray(tab.data.values) && tab.data.values.length) {
-      const nums = tab.data.values.map(x => Number(x)).filter(x => Number.isFinite(x));
-      if (nums.length) return nums.reduce((a,b)=>a+b, 0);
-    }
-
-    return null;
-  } catch (e) {
-    return null;
-  }
-}
-
-
-function updateLatestBadge(chartId, tab) {
-  const el = document.getElementById("latest-" + chartId);
-  if (!el) return;
-
-  // 🔥 Funnel badge: 显示百分比而不是分数形式
-  if (tab && tab.kind === "funnel" && tab.data && (tab.data.numerator !== undefined) && (tab.data.denominator !== undefined)) {
-    const n = Number(tab.data.numerator ?? 0) || 0;
-    const d = Number(tab.data.denominator ?? 0) || 0;
-    const percentage = d > 0 ? ((n / d) * 100).toFixed(1) : '0.0';
-    el.textContent = `${percentage}%`;
-    return;
-  }
-
-  const v = getLatestValueFromTab(tab);
-  if (v === null || v === undefined || Number.isNaN(v)) {
-    el.textContent = "-";
-    return;
-  }
-
-  const percent = isPercentKind(tab.kind);
-  if (percent) {
-    let p = Number(v);
-    if (Math.abs(p) <= 1) p = p * 100;
-    const s = (Math.round(p * 10) / 10).toString().replace(/\.0$/, "");
-    el.textContent = s + "%";
-    return;
-  }
-
-  const num = Number(v);
-  const abs = Math.abs(num);
-  const decimals = abs < 1 ? 4 : 2;
-  let s = num.toLocaleString(undefined, { maximumFractionDigits: decimals });
-  s = s.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");
-  el.textContent = s;
-}
-
-const CHARTS_BY_DOMAIN = {
+<script type="application/json" id="charts-data">{
   "platform_basics": [
     {
       "chart_id": "dau__series__series_daily",
-      "title": "日活跃用户数 (DAU)",
+      "title": "\u65e5\u6d3b\u8dc3\u7528\u6237\u6570 (DAU)",
       "metric_id": "dau",
       "module": "series",
       "item_id": "series_daily",
@@ -1677,11 +1650,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Platform Basics",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u5f53\u65e5\u53bb\u91cd\u6d3b\u8dc3\u7528\u6237\u6570",
+      "has_ai": true
     },
     {
       "chart_id": "retention_d7___series__series_weekly_avg",
-      "title": "留存(D7)",
+      "title": "\u7559\u5b58(D7)",
       "metric_id": "retention(d7)",
       "module": "series",
       "item_id": "series_weekly_avg",
@@ -1700,7 +1675,7 @@ const CHARTS_BY_DOMAIN = {
             ],
             "values": [
               1.0,
-              0.6470588235294118,
+              0.6666666666666666,
               0.0
             ]
           }
@@ -1717,14 +1692,16 @@ const CHARTS_BY_DOMAIN = {
           "filterable": true,
           "all_dim_values": [
             "__NULL__",
+            "pdd",
             "Organic"
           ],
           "selected_dim_values": [
             "__NULL__",
-            "Organic"
+            "pdd"
           ],
           "ranked_dim_values": [
             "__NULL__",
+            "pdd",
             "Organic"
           ],
           "data": {
@@ -1735,18 +1712,22 @@ const CHARTS_BY_DOMAIN = {
             ],
             "series": [
               "Organic",
-              "__NULL__"
+              "__NULL__",
+              "pdd"
             ],
             "matrix": [
               [
                 0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.6470588235294118,
                 1.0
               ],
               [
                 0.0,
-                0.6470588235294118
-              ],
-              [
                 0.0,
                 0.0
               ]
@@ -1756,11 +1737,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Platform Basics",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6709\u6548\u5bf9\u6218\u7528\u6237 D7 \u7559\u5b58",
+      "has_ai": true
     },
     {
       "chart_id": "average_meaningful_battles_per_user__series__series_daily",
-      "title": "人均成功 PK 次数（活跃用户）",
+      "title": "\u4eba\u5747\u6210\u529f PK \u6b21\u6570\uff08\u6d3b\u8dc3\u7528\u6237\uff09",
       "metric_id": "average_meaningful_battles_per_user",
       "module": "series",
       "item_id": "series_daily",
@@ -1778,7 +1761,7 @@ const CHARTS_BY_DOMAIN = {
               "01-29"
             ],
             "values": [
-              0.6850828729281768,
+              0.4640883977900552,
               1.809278350515464,
               0.9414634146341464
             ]
@@ -1787,13 +1770,15 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Platform Basics",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u4eba\u5747\u6210\u529f PK \u6b21\u6570\uff08\u6d3b\u8dc3\u7528\u6237\uff09",
+      "has_ai": false
     }
   ],
   "user_growth": [
     {
       "chart_id": "new_user__series__series_daily",
-      "title": "新用户数",
+      "title": "\u65b0\u7528\u6237\u6570",
       "metric_id": "new_user",
       "module": "series",
       "item_id": "series_daily",
@@ -2396,11 +2381,13 @@ const CHARTS_BY_DOMAIN = {
       "business_domain": "User Growth",
       "related_metrics": [
         "dau"
-      ]
+      ],
+      "description": "\u65b0\u7528\u6237\u6570\u53cd\u6620\u4e86\u5e73\u53f0\u7684\u7528\u6237\u589e\u957f\u60c5\u51b5",
+      "has_ai": true
     },
     {
       "chart_id": "new_activated_user__series__series_daily",
-      "title": "有效新用户占比",
+      "title": "\u6709\u6548\u65b0\u7528\u6237\u5360\u6bd4",
       "metric_id": "new_activated_user",
       "module": "series",
       "item_id": "series_daily",
@@ -2432,13 +2419,13 @@ const CHARTS_BY_DOMAIN = {
               0.0384615384615384,
               0.1153846153846153,
               0.1481481481481481,
-              0.1428571428571428,
+              0.1904761904761904,
               0.0555555555555555,
               0.0,
               0.1176470588235294,
               0.2666666666666666,
               0.1904761904761904,
-              0.2307692307692307
+              0.2692307692307692
             ]
           }
         },
@@ -2721,7 +2708,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.3333333333333333,
+                0.6666666666666666,
                 0.0,
                 0.0,
                 0.0,
@@ -2876,7 +2863,7 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.0,
-                0.4,
+                0.6,
                 0.0,
                 0.0,
                 1.0,
@@ -2918,20 +2905,20 @@ const CHARTS_BY_DOMAIN = {
           "all_dim_values": [
             "__NULL__",
             "Organic",
-            "No User Consent",
-            "pdd"
+            "pdd",
+            "No User Consent"
           ],
           "selected_dim_values": [
             "Organic",
             "__NULL__",
-            "No User Consent",
-            "pdd"
+            "pdd",
+            "No User Consent"
           ],
           "ranked_dim_values": [
             "Organic",
             "__NULL__",
-            "No User Consent",
-            "pdd"
+            "pdd",
+            "No User Consent"
           ],
           "data": {
             "dates": [
@@ -2989,7 +2976,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.1578947368421052,
-                0.0
+                1.0
               ],
               [
                 0.0,
@@ -3024,7 +3011,7 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.5,
-                0.1818181818181818,
+                0.2272727272727272,
                 0.0
               ]
             ]
@@ -3035,13 +3022,15 @@ const CHARTS_BY_DOMAIN = {
       "business_domain": "User Growth",
       "related_metrics": [
         "dau"
-      ]
+      ],
+      "description": "T+1 \u8fdb\u5165\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b",
+      "has_ai": true
     }
   ],
   "revenue": [
     {
       "chart_id": "daily_income__series__series_daily",
-      "title": "总收入",
+      "title": "\u603b\u6536\u5165",
       "metric_id": "daily_income",
       "module": "series",
       "item_id": "series_daily",
@@ -3086,13 +3075,15 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Revenue",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6240\u6709\u6536\u5165\u6c47\u603b",
+      "has_ai": true
     }
   ],
   "daily_challenge": [
     {
       "chart_id": "from_waiting_to_start_match__series__series_daily",
-      "title": "赛事开玩率",
+      "title": "\u8d5b\u4e8b\u5f00\u73a9\u7387",
       "metric_id": "from_waiting_to_start_match",
       "module": "series",
       "item_id": "series_daily",
@@ -3137,11 +3128,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u662f\u6307\u5728\u5019\u573a\u540e\uff0c\u6210\u529f\u5f00\u59cb\u6bd4\u8d5b\u7684\u7528\u6237\u4e0e\u603b\u6b21\u6570\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u5019\u573a\u4f53\u9a8c\u7684\u6d41\u7545\u6027\u3002",
+      "has_ai": true
     },
     {
       "chart_id": "book_kix_challenge_uv__series__series_daily",
-      "title": "赛事预约率",
+      "title": "\u8d5b\u4e8b\u9884\u7ea6\u7387",
       "metric_id": "book_kix_challenge_uv",
       "module": "series",
       "item_id": "series_daily",
@@ -3180,7 +3173,7 @@ const CHARTS_BY_DOMAIN = {
               0.5757575757575758,
               0.7142857142857143,
               0.5625,
-              0.5575221238938053,
+              0.4772727272727273,
               0.0
             ]
           }
@@ -3188,11 +3181,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002",
+      "has_ai": true
     },
     {
       "chart_id": "participate_kix_challenge_uv__series__series_daily",
-      "title": "赛事参赛人数趋势",
+      "title": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
       "metric_id": "participate_kix_challenge_uv",
       "module": "series",
       "item_id": "series_daily",
@@ -3237,11 +3232,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
+      "has_ai": false
     },
     {
       "chart_id": "finish_kix_challenge_rate__series__series_daily",
-      "title": "赛事完成率",
+      "title": "\u8d5b\u4e8b\u5b8c\u6210\u7387",
       "metric_id": "finish_kix_challenge_rate",
       "module": "series",
       "item_id": "series_daily",
@@ -3286,11 +3283,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5728\u4e00\u5b9a\u65f6\u95f4\u5185\uff0c\u5b8c\u6210\u7ed3\u7b97\u7684\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\u3002",
+      "has_ai": true
     },
     {
       "chart_id": "kix_train_times__series__series_daily",
-      "title": "赛前人均游玩次数",
+      "title": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570",
       "metric_id": "kix_train_times",
       "module": "series",
       "item_id": "series_daily",
@@ -3318,7 +3317,7 @@ const CHARTS_BY_DOMAIN = {
               3.4958677685950414,
               5.75206611570248,
               4.155172413793103,
-              4.590062111801243
+              4.337606837606837
             ]
           }
         },
@@ -3439,7 +3438,7 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.0,
-                4.681528662420382,
+                4.395652173913043,
                 0.0,
                 0.0,
                 1.0,
@@ -3571,7 +3570,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                4.681528662420382
+                4.395652173913043
               ]
             ]
           }
@@ -3646,9 +3645,9 @@ const CHARTS_BY_DOMAIN = {
                 5.132530120481928
               ],
               [
-                5.440677966101695,
-                1.896551724137931,
-                4.972602739726027
+                5.0125,
+                2.056603773584906,
+                5.0
               ]
             ]
           }
@@ -3656,11 +3655,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807",
+      "has_ai": false
     },
     {
       "chart_id": "kix_reward_uv__series__series_daily",
-      "title": "KiX challenge奖励人数",
+      "title": "KiX challenge\u5956\u52b1\u4eba\u6570",
       "metric_id": "kix_reward_uv",
       "module": "series",
       "item_id": "series_daily",
@@ -3705,11 +3706,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6bcf\u65e5KiX challenge\u5956\u52b1\u4eba\u6570",
+      "has_ai": false
     },
     {
       "chart_id": "kix_challenge_reward_usd__series__series_daily",
-      "title": "KiX challenge奖励金额",
+      "title": "KiX challenge\u5956\u52b1\u91d1\u989d",
       "metric_id": "kix_challenge_reward_usd",
       "module": "series",
       "item_id": "series_daily",
@@ -3754,11 +3757,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6bcf\u65e5KiX challenge\u5956\u52b1\u91d1\u989d",
+      "has_ai": false
     },
     {
       "chart_id": "kix_challenge_redeem_uv__series__series_daily",
-      "title": "KiX challenge redeem人数",
+      "title": "KiX challenge redeem\u4eba\u6570",
       "metric_id": "kix_challenge_redeem_uv",
       "module": "series",
       "item_id": "series_daily",
@@ -4414,11 +4419,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6bcf\u65e5KiX challenge\u5151\u5956\u4eba\u6570",
+      "has_ai": false
     },
     {
       "chart_id": "kix_challenge_reward_value__series__series_daily",
-      "title": "KiX challleng兑换金额",
+      "title": "KiX challleng\u5151\u6362\u91d1\u989d",
       "metric_id": "kix_challenge_reward_value",
       "module": "series",
       "item_id": "series_daily",
@@ -5074,11 +5081,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u5151\u5956\u91d1\u989d",
+      "has_ai": false
     },
     {
       "chart_id": "median_game_seconds__series__series_daily",
-      "title": "Challenge游戏时长中位数",
+      "title": "Challenge\u6e38\u620f\u65f6\u957f\u4e2d\u4f4d\u6570",
       "metric_id": "median_game_seconds",
       "module": "series",
       "item_id": "series_daily",
@@ -5377,11 +5386,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6bcf\u65e5KiX challeng\u6e38\u620f\u65f6\u957f",
+      "has_ai": false
     },
     {
       "chart_id": "score_zero_user__series__series_daily",
-      "title": "零分用户占比",
+      "title": "\u96f6\u5206\u7528\u6237\u5360\u6bd4",
       "metric_id": "score_zero_user",
       "module": "series",
       "item_id": "series_daily",
@@ -5426,13 +5437,15 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Daily Challenge",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u96f6\u5206\u5360\u6bd4",
+      "has_ai": false
     }
   ],
   "pk": [
     {
       "chart_id": "average_player_per_match__series__series_daily",
-      "title": "单局对战密度",
+      "title": "\u5355\u5c40\u5bf9\u6218\u5bc6\u5ea6",
       "metric_id": "average_player_per_match",
       "module": "series",
       "item_id": "series_daily",
@@ -5631,11 +5644,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "PK",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u5355\u5c40\u5e73\u5747\u53c2\u8d5b\u4eba\u6570",
+      "has_ai": true
     },
     {
       "chart_id": "pk_successful_matching__series__series_daily",
-      "title": "匹配成功率",
+      "title": "\u5339\u914d\u6210\u529f\u7387",
       "metric_id": "pk_successful_matching",
       "module": "series",
       "item_id": "series_daily",
@@ -5663,17 +5678,17 @@ const CHARTS_BY_DOMAIN = {
             ],
             "values": [
               0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0017953321364452,
-              0.0,
-              0.7068965517241379
+              0.0073529411764705,
+              0.0025125628140703,
+              0.0069444444444444,
+              0.0097560975609756,
+              0.0065359477124183,
+              0.0319148936170212,
+              0.075,
+              0.0046728971962616,
+              0.0053859964093357,
+              0.0029806259314456,
+              0.4245689655172414
             ]
           }
         },
@@ -5688,95 +5703,95 @@ const CHARTS_BY_DOMAIN = {
           },
           "filterable": true,
           "all_dim_values": [
-            "King Of Drift",
-            "Deep Sea 2048",
-            "sheep rush",
-            "Candy Monster",
-            "Sea Treasure",
-            "Color Block Away",
-            "Nutmeg Football",
             "Mini Golf",
-            "Tofu Cat",
-            "Pupper Jones",
-            "Animals Crush",
-            "Sling Tomb",
-            "Tennis Dash",
             "Gold Miner",
-            "Spin Maze Save Xmas",
-            "Block Breaker",
-            "Jelly Blast",
-            "The Last Battle",
-            "Fast Driver",
             "Pixel Journey",
+            "The Last Battle",
+            "Candy Monster",
+            "Tofu Cat",
+            "Animals Crush",
+            "Pupper Jones",
+            "Tennis Dash",
+            "Sea Treasure",
+            "Fast Driver",
             "Winter Elimination Fun",
-            "Sushi Frenzy",
-            "Defuse the bombs",
-            "Squid Head Kick",
-            "Tile Connect Puzzle",
-            "Shoot The Apple",
+            "test pk",
+            "Deep Sea 2048",
+            "Dragon Snap Rescue",
+            "Sling Tomb",
+            "Block Breaker",
+            "sheep rush",
+            "Jelly Blast",
+            "Monkey Mart",
+            "Cards Fusion",
+            "Fish Shooting",
             "Candy Store",
+            "Sushi Frenzy",
+            "Spin Maze Save Xmas",
+            "Nutmeg Football",
+            "Don't Brake",
+            "Color Block Away",
+            "Happy Bird",
+            "Shoot The Apple",
+            "Punch Box",
             "Zombie Survivor",
+            "Tile Connect Puzzle",
             "daf0a5efMKNPPXCE",
             "daf0a5efMKOUBM8A",
-            "Sky Speedster",
             "Corona Jump",
-            "Cards Fusion",
-            "Don't Brake",
-            "Punch Box",
+            "Squid Head Kick",
+            "Sky Speedster",
+            "Drift Bus",
             "Cosmic Blaster",
-            "Monkey Mart",
             "Crossy Chicken",
             "Atro Pong",
-            "Happy Bird",
             "HangGlider",
             "Golden Move Quest",
+            "Defuse the bombs",
             "Frog Super Bubbles",
-            "Fish Shooting",
-            "Drift Bus",
-            "Dragon Snap Rescue",
-            "test pk"
+            "King Of Drift"
           ],
           "selected_dim_values": [
             "Mini Golf"
           ],
           "ranked_dim_values": [
             "Mini Golf",
-            "Color Block Away",
-            "Sea Treasure",
-            "Nutmeg Football",
-            "King Of Drift",
-            "Deep Sea 2048",
-            "sheep rush",
+            "Pixel Journey",
             "Candy Monster",
             "Tofu Cat",
-            "Pupper Jones",
             "Animals Crush",
-            "Sling Tomb",
-            "Tennis Dash",
             "Gold Miner",
-            "Spin Maze Save Xmas",
-            "Block Breaker",
-            "Jelly Blast",
-            "The Last Battle",
-            "Sushi Frenzy",
-            "Fast Driver",
-            "Pixel Journey",
+            "Tennis Dash",
+            "Sea Treasure",
+            "Pupper Jones",
             "Winter Elimination Fun",
-            "Sky Speedster",
-            "Tile Connect Puzzle",
+            "Deep Sea 2048",
+            "Fast Driver",
+            "Sling Tomb",
+            "Dragon Snap Rescue",
+            "Block Breaker",
+            "sheep rush",
+            "Jelly Blast",
+            "Cards Fusion",
+            "Monkey Mart",
+            "The Last Battle",
+            "Candy Store",
+            "Spin Maze Save Xmas",
+            "Don't Brake",
+            "Nutmeg Football",
+            "Color Block Away",
+            "Shoot The Apple",
+            "Punch Box",
             "Zombie Survivor",
             "Corona Jump",
-            "Shoot The Apple",
             "Cosmic Blaster",
-            "Monkey Mart",
+            "Tile Connect Puzzle",
             "Atro Pong",
-            "Candy Store",
+            "Sushi Frenzy",
+            "Sky Speedster",
             "HangGlider",
-            "Drift Bus",
-            "Dragon Snap Rescue",
-            "Don't Brake",
-            "Cards Fusion",
-            "Punch Box"
+            "King Of Drift",
+            "Drift Bus"
           ],
           "data": {
             "dates": [
@@ -5911,6 +5926,10 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
+                0.25,
+                0.0,
+                0.0,
+                0.0384615384615384,
                 0.0,
                 0.0,
                 0.0,
@@ -5920,6 +5939,51 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.125,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0416666666666666,
                 0.0,
                 0.0,
                 0.0,
@@ -5960,7 +6024,203 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
+                0.1428571428571428,
                 0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1428571428571428,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0333333333333333,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0227272727272727,
+                0.0,
+                0.0,
+                0.3333333333333333,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1111111111111111,
+                0.0,
+                0.0,
+                0.0,
+                0.1111111111111111,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0454545454545454,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0128205128205128,
+                0.0,
+                0.0,
+                0.0222222222222222,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.25,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.25,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.3333333333333333,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.2,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.3333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -5993,6 +6253,7 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.0,
+                0.125,
                 0.0,
                 0.0,
                 0.0,
@@ -6014,8 +6275,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
+                1.0,
                 0.0,
                 0.0,
                 0.0,
@@ -6045,6 +6305,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
+                0.0136986301369863,
                 0.0,
                 0.0,
                 0.0,
@@ -6065,253 +6326,7 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
+                0.0625,
                 0.0,
                 0.0,
                 0.0,
@@ -6346,13 +6361,13 @@ const CHARTS_BY_DOMAIN = {
                 0.0,
                 0.0,
                 0.0,
+                0.0909090909090909,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
+                0.0625,
                 0.0,
                 0.0,
                 0.0,
@@ -6383,52 +6398,52 @@ const CHARTS_BY_DOMAIN = {
                 0.0
               ],
               [
-                0.8275862068965517,
+                0.6551724137931034,
+                0.0,
+                0.2857142857142857,
+                0.8571428571428571,
+                0.1428571428571428,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                0.0,
+                0.0,
+                0.2,
+                0.0,
+                0.0,
+                0.0,
+                0.3636363636363636,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.4,
+                0.0,
+                0.5,
+                0.5714285714285714,
+                0.0,
+                0.0,
+                0.4615384615384615,
+                0.1216216216216216,
+                0.0,
                 0.0,
                 0.5714285714285714,
-                1.0,
+                0.2142857142857142,
                 0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.5,
-                0.0,
-                0.0,
-                0.6,
-                0.0,
-                0.0,
-                0.0,
-                0.5454545454545454,
-                1.0,
-                1.0,
-                0.0,
-                1.0,
-                0.5,
-                0.0,
-                0.875,
-                1.0,
-                0.0,
-                0.0,
-                0.8076923076923077,
-                0.5878378378378378,
-                0.0,
-                0.5,
-                0.7142857142857143,
-                0.5,
-                0.0,
-                0.9076923076923076,
+                0.8,
                 0.5,
                 0.0,
                 0.0,
                 0.0,
-                1.0,
+                0.4,
                 0.0
               ]
             ]
@@ -6445,17 +6460,17 @@ const CHARTS_BY_DOMAIN = {
           },
           "filterable": true,
           "all_dim_values": [
-            "1v1",
             "multi",
+            "1v1",
             "2v2"
           ],
           "selected_dim_values": [
-            "1v1",
-            "multi"
+            "multi",
+            "1v1"
           ],
           "ranked_dim_values": [
-            "1v1",
-            "multi"
+            "multi",
+            "1v1"
           ],
           "data": {
             "dates": [
@@ -6486,57 +6501,57 @@ const CHARTS_BY_DOMAIN = {
               [
                 0.0,
                 0.0,
-                0.0
+                0.2
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.0666666666666666
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.1034482758620689
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.0618556701030927
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.0833333333333333
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.75
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.75
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.1333333333333333
               ],
               [
                 0.0,
                 0.0,
-                0.0172413793103448
+                0.0517241379310344
               ],
               [
                 0.0,
                 0.0,
-                0.0
+                0.03125
               ],
               [
-                0.719047619047619,
+                0.4238095238095238,
                 0.0,
-                0.5909090909090909
+                0.4318181818181818
               ]
             ]
           }
@@ -6544,11 +6559,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "PK",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u6210\u529f\u8fdb\u5165\u5bf9\u6218\u7684\u5339\u914d\u6bd4\u4f8b",
+      "has_ai": true
     },
     {
       "chart_id": "pk_click_to_enter__series__value_daily",
-      "title": "PK进入率",
+      "title": "PK\u8fdb\u5165\u7387",
       "metric_id": "pk_click_to_enter",
       "module": "series",
       "item_id": "value_daily",
@@ -6561,19 +6578,21 @@ const CHARTS_BY_DOMAIN = {
           "meta": {},
           "data": {
             "date": "2026-01-29",
-            "denominator": 772.0,
-            "numerator": 756.0,
-            "value": 0.9792746113989638
+            "denominator": 773.0,
+            "numerator": 757.0,
+            "value": 0.9793014230271668
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "PK \u8bf7\u6c42\u6210\u529f\u8fdb\u5165\u7684\u6bd4\u4f8b",
+      "has_ai": false
     },
     {
       "chart_id": "pk_enter_to_ready__series__value_daily",
-      "title": "PK准备率",
+      "title": "PK\u51c6\u5907\u7387",
       "metric_id": "pk_enter_to_ready",
       "module": "series",
       "item_id": "value_daily",
@@ -6586,19 +6605,21 @@ const CHARTS_BY_DOMAIN = {
           "meta": {},
           "data": {
             "date": "2026-01-29",
-            "denominator": 756.0,
+            "denominator": 757.0,
             "numerator": 748.0,
-            "value": 0.9894179894179894
+            "value": 0.988110964332893
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "PK\u51c6\u5907\u7387\u662f\u6307\u6210\u529f\u8fdb\u5165\u51c6\u5907\u9636\u6bb5\u7684\u6bd4\u4f8b",
+      "has_ai": false
     },
     {
       "chart_id": "pk_ready_to_start__series__value_daily",
-      "title": "PK成功开玩率",
+      "title": "PK\u6210\u529f\u5f00\u73a9\u7387",
       "metric_id": "pk_ready_to_start",
       "module": "series",
       "item_id": "value_daily",
@@ -6619,11 +6640,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "PK",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u5f00\u73a9\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "pk_start_to_finish__series__value_daily",
-      "title": "PK完成率",
+      "title": "PK\u5b8c\u6210\u7387",
       "metric_id": "pk_start_to_finish",
       "module": "series",
       "item_id": "value_daily",
@@ -6644,13 +6667,15 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "PK",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u5173\u6ce8\u5b8c\u6210\u7387",
+      "has_ai": false
     }
   ],
   "viral": [
     {
       "chart_id": "invitation_impression_to_click__series__value_daily",
-      "title": "邀请曝光 → 点击漏斗",
+      "title": "\u9080\u8bf7\u66dd\u5149 \u2192 \u70b9\u51fb\u6f0f\u6597",
       "metric_id": "invitation_impression_to_click",
       "module": "series",
       "item_id": "value_daily",
@@ -6766,11 +6791,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u7528\u6237\u662f\u5426\u613f\u610f\u5c1d\u8bd5\u5206\u4eab",
+      "has_ai": false
     },
     {
       "chart_id": "viral_new_uv__series__series_daily",
-      "title": "Viral 占比",
+      "title": "Viral \u5360\u6bd4",
       "metric_id": "viral_new_uv",
       "module": "series",
       "item_id": "series_daily",
@@ -6836,7 +6863,7 @@ const CHARTS_BY_DOMAIN = {
               0.2068965517241379,
               0.0357142857142857,
               0.0384615384615384,
-              0.0689655172413793,
+              0.0714285714285714,
               0.0,
               0.0,
               0.0666666666666666,
@@ -6849,11 +6876,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b",
+      "has_ai": false
     },
     {
       "chart_id": "click_to_invite_sucess__series__value_daily",
-      "title": "点击->邀请成功漏斗",
+      "title": "\u70b9\u51fb->\u9080\u8bf7\u6210\u529f\u6f0f\u6597",
       "metric_id": "click_to_invite_sucess",
       "module": "series",
       "item_id": "value_daily",
@@ -6969,11 +6998,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u70b9\u51fb->\u9080\u8bf7\u6210\u529f",
+      "has_ai": false
     },
     {
       "chart_id": "viral_d1_rate__series__series_daily",
-      "title": "viral来源用户的留存",
+      "title": "viral\u6765\u6e90\u7528\u6237\u7684\u7559\u5b58",
       "metric_id": "viral_d1_rate",
       "module": "series",
       "item_id": "series_daily",
@@ -7045,18 +7076,20 @@ const CHARTS_BY_DOMAIN = {
               0.4,
               0.5,
               0.7692307692307693,
-              0.4081632653061224
+              0.5510204081632653
             ]
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "viral\u6765\u6e90\u7528\u6237\u7684\u7559\u5b58",
+      "has_ai": false
     },
     {
       "chart_id": "minisite_invitation_impression_to_click__series__value_daily",
-      "title": "Minisite 邀请曝光 → 点击漏斗",
+      "title": "Minisite \u9080\u8bf7\u66dd\u5149 \u2192 \u70b9\u51fb\u6f0f\u6597",
       "metric_id": "minisite_invitation_impression_to_click",
       "module": "series",
       "item_id": "value_daily",
@@ -7077,11 +7110,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "Minisite\u5206\u4eab\u70b9\u51fb\u60c5\u51b5",
+      "has_ai": false
     },
     {
       "chart_id": "viral_reward_uv__series__series_daily",
-      "title": "viral奖励用户数",
+      "title": "viral\u5956\u52b1\u7528\u6237\u6570",
       "metric_id": "viral_reward_uv",
       "module": "series",
       "item_id": "series_daily",
@@ -7160,11 +7195,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "viral\u5956\u52b1\u7528\u6237\u6570",
+      "has_ai": false
     },
     {
       "chart_id": "viral_reward_energy__series__series_daily",
-      "title": "viral奖励能量",
+      "title": "viral\u5956\u52b1\u80fd\u91cf",
       "metric_id": "viral_reward_energy",
       "module": "series",
       "item_id": "series_daily",
@@ -7243,11 +7280,13 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "viral\u5956\u52b1\u80fd\u91cf",
+      "has_ai": false
     },
     {
       "chart_id": "minisite_click_to_invite_sucess__series__value_daily",
-      "title": "Minisite点击->邀请成功漏斗",
+      "title": "Minisite\u70b9\u51fb->\u9080\u8bf7\u6210\u529f\u6f0f\u6597",
       "metric_id": "minisite_click_to_invite_sucess",
       "module": "series",
       "item_id": "value_daily",
@@ -7268,13 +7307,15 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": false,
       "business_domain": "Viral",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "Minisite\u70b9\u51fb->\u9080\u8bf7\u6210\u529f",
+      "has_ai": false
     }
   ],
   "cash_out": [
     {
       "chart_id": "prize_win_to_cash_out__series__value_daily",
-      "title": "获奖用户提现率",
+      "title": "\u83b7\u5956\u7528\u6237\u63d0\u73b0\u7387",
       "metric_id": "prize_win_to_cash_out",
       "module": "series",
       "item_id": "value_daily",
@@ -7321,11 +7362,13 @@ const CHARTS_BY_DOMAIN = {
       "business_domain": "cash out",
       "related_metrics": [
         "kix_challenge_redeem_uv"
-      ]
+      ],
+      "description": "\u6bcf\u65e5\u83b7\u5956\u7528\u6237\u4e2d\u9009\u62e9\u63d0\u73b0\u7684\u6bd4\u4f8b",
+      "has_ai": false
     },
     {
       "chart_id": "prize_cash_out_to_successful__series__value_daily",
-      "title": "提现成功率",
+      "title": "\u63d0\u73b0\u6210\u529f\u7387",
       "metric_id": "prize_cash_out_to_successful",
       "module": "series",
       "item_id": "value_daily",
@@ -7368,7 +7411,9 @@ const CHARTS_BY_DOMAIN = {
       "business_domain": "cash out",
       "related_metrics": [
         "kix_challenge_redeem_uv"
-      ]
+      ],
+      "description": "\u63d0\u73b0\u6210\u529f\u7387",
+      "has_ai": true
     }
   ],
   "monitoring": [
@@ -7394,12 +7439,12 @@ const CHARTS_BY_DOMAIN = {
             "US",
             "SG",
             "CN",
-            "FR",
             "GB",
+            "FR",
             "EG",
-            "PH",
             "AE",
             "TW",
+            "PH",
             "HK",
             "ID",
             "TZ",
@@ -7415,12 +7460,12 @@ const CHARTS_BY_DOMAIN = {
             "US",
             "SG",
             "CN",
-            "FR",
             "GB",
+            "FR",
             "EG",
-            "PH",
             "AE",
             "TW",
+            "PH",
             "HK",
             "ID",
             "TZ",
@@ -7455,16 +7500,16 @@ const CHARTS_BY_DOMAIN = {
             ],
             "matrix": [
               [
-                51.0,
+                98.0,
                 14.0,
-                300.0,
+                359.0,
                 161.0,
                 0.0,
-                53.0,
+                106.0,
                 0.0,
                 0.0,
                 0.0,
-                60.0,
+                0.0,
                 0.0,
                 1172.0,
                 0.0,
@@ -7544,8 +7589,8 @@ const CHARTS_BY_DOMAIN = {
             ],
             "matrix": [
               [
-                394.0,
-                1544.0
+                522.0,
+                1515.0
               ],
               [
                 587.0,
@@ -7561,11 +7606,235 @@ const CHARTS_BY_DOMAIN = {
       ],
       "hide_badge": true,
       "business_domain": "Monitoring",
-      "related_metrics": []
+      "related_metrics": [],
+      "description": "\u7f51\u7edc\u94fe\u8def\u5ef6\u8fdf",
+      "has_ai": false
     }
   ],
   "engagement": []
-};
+}</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-01-30 17:07\n\n## Platform Basics\n\n**dau**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u5f53\u524dDAU\u4e3a3\uff0c\u65e5\u671f\u4e3a\u6700\u65b0\u6570\u636e\u65e5\uff0c\u4e0e\u76ee\u680750000\u76f8\u5dee49997\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929DAU\u65e0\u53d8\u5316\uff0c\u8fd1\u671f\u8d70\u52bf\u5e73\u7a33\u4f46\u8fdc\u672a\u8fbe\u5230\u589e\u957f\u9884\u671f\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u9700\u5173\u6ce8\u65b0\u7528\u6237\u7559\u5b58\u8f6c\u5316\u7387\uff0c\u53ca\u5468\u672b\u4e0e\u5de5\u4f5c\u65e5DAU\u6ce2\u52a8\u60c5\u51b5\u4ee5\u63d0\u5347\u6574\u4f53\u8868\u73b0\u3002\n\n**retention(d7)**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 0.0\uff0c\u65e5\u671f\u4e3a\u6700\u8fd1\u4e00\u6b21\u6570\u636e\u66f4\u65b0\uff0c\u4e0e\u76ee\u6807 0.25 \u76f8\u5dee 0.25\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\u7559\u5b58\u7387\u65e0\u53d8\u5316\uff0c\u8fd1\u671f\u8d70\u52bf\u6301\u7eed\u4f4e\u8ff7\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u4e0d\u540c\u6765\u6e90\u6e20\u9053\u5747\u663e\u793a\u7559\u5b58\u4e3a 0.0\uff0c\u8868\u660e\u7528\u6237\u83b7\u53d6\u548c\u7559\u5b58\u5b58\u5728\u4e25\u91cd\u95ee\u9898\u3002\n\n\n## User Growth\n\n**new_user**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u5f53\u524d\u65b0\u7528\u6237\u6570\u4e3a 3\uff0c\u76ee\u6807\u4e3a 5000\uff0c\u5dee\u8ddd\u4e3a 4997\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\u65e0\u53d8\u5316\uff0c\u8fd1\u671f\u65b0\u7528\u6237\u6570\u6301\u7eed\u4f4e\u8ff7\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u9700\u5173\u6ce8\u83b7\u5ba2\u6210\u672c\uff0c\u5f53\u524d\u6e20\u9053\uff08EG\u3001LK\u3001MY\uff09\u8868\u73b0\u4e00\u81f4\uff0c\u5747\u4e3a\u201cothers\u201d\u3002\n\n**new_activated_user**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u5f53\u524d\u65b0\u6fc0\u6d3b\u7528\u6237\u4e3a 0\uff0c\u8ddd\u79bb\u76ee\u6807 3000 \u7528\u6237\u5dee\u8ddd\u5de8\u5927\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\u65e0\u53d8\u5316\uff0c\u8fd1\u671f\u8d70\u52bf\u6301\u7eed\u4f4e\u8ff7\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u6fc0\u6d3b\u7387\u4e9f\u9700\u5173\u6ce8\uff0c\u9700\u5206\u6790\u6fc0\u6d3b\u6d41\u7a0b\u8f6c\u5316\u4ee5\u63d0\u5347\u7528\u6237\u6fc0\u6d3b\u3002\n\n\n## Revenue\n\n**daily_income**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0 daily_income \u4e3a 0.13\uff0c\u65e5\u671f\u4e3a\u6700\u8fd1\u4e00\u5929\uff0c\u8ddd\u79bb\u76ee\u6807 10000 \u76f8\u5dee 9999.87\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\uff0cdaily_income \u4e0b\u964d\uff0c\u8fd1\u671f\u8d70\u52bf\u5448\u73b0\u4e0b\u6ed1\u8d8b\u52bf\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1aARPPU \u548c\u4ed8\u8d39\u7528\u6237\u6570\u5747\u672a\u663e\u8457\u589e\u957f\uff0c\u5927 R \u7528\u6237\u8d21\u732e\u5360\u6bd4\u9700\u8fdb\u4e00\u6b65\u5206\u6790\u4ee5\u63d0\u5347\u6536\u5165\u3002\n\n\n## PK\n\n**average_player_per_match**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 48\uff082026-01-29\uff09\uff0c\u4e0e\u76ee\u6807 4.0 \u76f8\u5dee 44\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\uff0852\uff09\uff0c\u4e0b\u964d 4\uff1b\u8fd1\u671f\u8d70\u52bf\u6ce2\u52a8\u8f83\u5927\uff0c\u6700\u4f4e\u503c\u4e3a 7\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u9700\u5173\u6ce8\u4e2d\u9014\u9000\u51fa\u60c5\u51b5\uff0c\u53ef\u80fd\u5f71\u54cd\u5339\u914d\u8d28\u91cf\u4e0e\u73a9\u5bb6\u53c2\u4e0e\u5ea6\u3002\n\n**pk_successful_matching**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 0.64\uff08Spin Maze Save Xmas\uff09\uff0c\u8ddd\u79bb\u76ee\u6807 90.0 \u76f8\u5dee 89.36\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\uff0c\u6210\u529f\u5339\u914d\u7387\u672a\u89c1\u660e\u663e\u6539\u5584\uff0c\u8fd1\u671f\u6574\u4f53\u8d70\u52bf\u4f4e\u8ff7\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u5339\u914d\u5931\u8d25\u4e3b\u8981\u96c6\u4e2d\u5728 Candy Store\uff08\u6210\u529f\u7387 0.0\uff09\uff0c\u9700\u91cd\u70b9\u5206\u6790\u8be5\u65f6\u6bb5\u7684\u5339\u914d\u673a\u5236\u3002\n\n\n## Daily Challenge\n\n**from_waiting_to_start_match**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 0.54\uff082026-01-29\uff09\uff0c\u4e0e\u76ee\u6807 30.0 \u76f8\u5dee 29.46\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\uff080.71\uff09\u4e0b\u964d\u4e86 0.17\uff0c\u8fd1\u671f\u8d70\u52bf\u6ce2\u52a8\u8f83\u5927\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u7b49\u5f85\u65f6\u957f\u5206\u5e03\u4e0d\u5747\uff0c\u6700\u9ad8\u503c\u51fa\u73b0\u5728 2026-01-28\uff080.71\uff09\uff0c\u9700\u5173\u6ce8\u9ad8\u5cf0\u65f6\u6bb5\u7684\u7b49\u5f85\u60c5\u51b5\u3002\n\n**book_kix_challenge_uv**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 0.0\uff082026-01-30\uff09\uff0c\u4e0e\u76ee\u6807 10000 \u76f8\u5dee\u751a\u8fdc\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\uff080.5575\uff09\uff0c\u4eca\u65e5\u6570\u636e\u663e\u8457\u4e0b\u964d\uff0c\u8fd1\u671f\u6574\u4f53\u8d8b\u52bf\u4e0d\u4f73\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u9884\u7ea6\u7387\u6ce2\u52a8\u8f83\u5927\uff0c\u9700\u5206\u6790\u9884\u7ea6\u8f6c\u5316\u7387\u4ee5\u63d0\u5347\u6574\u4f53\u8868\u73b0\u3002\n\n**finish_kix_challenge_rate**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 1.0\uff082026-01-29\uff09\uff0c\u8fdc\u8d85\u76ee\u6807 30.0\uff0c\u5dee\u8ddd\u5de8\u5927\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\uff080.9286\uff09\u6709\u6240\u4e0a\u5347\uff0c\u8fd1\u671f\u6574\u4f53\u5b8c\u6210\u7387\u4fdd\u6301\u5728\u9ad8\u6c34\u5e73\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u6240\u6709\u4efb\u52a1\u7684\u5b8c\u6210\u7387\u5747\u4e3a 100%\uff0c\u65e0\u660e\u663e\u5361\u70b9\uff0c\u9700\u5173\u6ce8\u4efb\u52a1\u96be\u5ea6\u5bf9\u5b8c\u6210\u7387\u7684\u5f71\u54cd\u3002\n\n\n## Cash Out\n\n**prize_cash_out_to_successful**\n\n\u2022 **\u73b0\u72b6\u4e0e\u76ee\u6807**\uff1a\u6700\u65b0\u503c\u4e3a 1.0\uff0c\u65e5\u671f\u4e3a\u6700\u8fd1\u4e00\u6b21\u6570\u636e\u66f4\u65b0\uff0c\u5df2\u8d85\u8fc7\u76ee\u6807 95.0\u3002  \n\u2022 **\u8d8b\u52bf\u53d8\u5316**\uff1a\u76f8\u6bd4\u6628\u5929\u4fdd\u6301\u7a33\u5b9a\uff0c\u8fd1\u671f\u8d70\u52bf\u6301\u7eed\u5728\u9ad8\u4f4d\u3002  \n\u2022 **\u5173\u952e\u6d1e\u5bdf**\uff1a\u9700\u5173\u6ce8\u63d0\u73b0\u5931\u8d25\u539f\u56e0\u53ca\u5ba1\u6838\u65f6\u6548\uff0c\u4ee5\u7ef4\u6301\u5f53\u524d\u9ad8\u6210\u529f\u7387\u3002"</script>
+
+
+<div class="container">
+  <div class="header">
+    <h1>📊 KiX Dashboard</h1>
+    <div class="header-info">
+      <span>📅 Date: <strong id="dataPeriod">-</strong></span>
+      <span style="margin-left:20px">🕒 Generated: <strong id="generatedAt">-</strong></span>
+    </div>
+  </div>
+
+<nav class="nav-tabs" id="navTabs">
+    <!-- 导航按钮会通过JS插入到这里 -->
+</nav>
+
+  <!-- 指标详情页面包屑 -->
+  <div class="metric-detail-breadcrumb" id="metricBreadcrumb" style="display: none;">
+    <div class="breadcrumb-content">
+      <button class="back-button" onclick="returnToAllMetrics()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回全部指标</span>
+      </button>
+      <div class="breadcrumb-path">
+        <span class="breadcrumb-item">全部指标</span>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-item current" id="currentMetricName">指标详情</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-layout" id="contentLayout">
+  <div class="main-area">
+    <div class="modules" id="modulesArea"></div>
+  </div>
+
+  <aside class="ai-panel" id="aiPanel" aria-label="AI Analysis Panel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-title">
+        <span class="ai-dot"></span>
+        <span id="aiPanelTitle">AI 分析</span>
+      </div>
+      <div class="ai-panel-actions">
+        <button class="ai-panel-btn" id="aiCollapseBtn" title="折叠">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="ai-panel-subtitle" id="aiPanelSubtitle">点击任意指标卡片查看对应 AI 分析</div>
+    <div class="ai-panel-content" id="aiSidebarContent"></div>
+  </aside>
+
+  <button class="ai-expand-handle" id="aiExpandBtn" title="展开 AI">
+    AI
+  </button>
+</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+
+
+// =========================
+// Global Chart.js aesthetics
+// =========================
+Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji'";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = "#475569"; // slate-600
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.boxHeight = 10;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = "circle";
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.bodySpacing = 6;
+Chart.defaults.plugins.tooltip.titleSpacing = 6;
+Chart.defaults.plugins.tooltip.displayColors = true;
+
+// 短日期格式化: 将 "2026-01-05" 或 "2026-01-05~2026-01-11" 转换为 "01-05"
+function formatShortDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return dateStr;
+
+  // 如果已经是短格式 (MM-DD 或 MM)，直接返回
+  if (/^\d{2}-\d{2}$/.test(dateStr) || /^\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+
+  // 处理周范围格式 "YYYY-MM-DD~YYYY-MM-DD"
+  if (dateStr.includes('~')) {
+    const parts = dateStr.split('~');
+    dateStr = parts[0].trim(); // 取第一个日期
+  }
+
+  // 匹配 YYYY-MM-DD 格式
+  const match = dateStr.match(/^\d{4}-(\d{2}-\d{2})/);
+  if (match) {
+    return match[1]; // 返回 MM-DD 部分
+  }
+
+  // 处理月份格式 YYYY-MM
+  const monthMatch = dateStr.match(/^\d{4}-(\d{2})$/);
+  if (monthMatch) {
+    return monthMatch[1]; // 返回 MM
+  }
+
+  return dateStr; // 其他格式原样返回
+}
+
+// Common axis tick formatting
+function formatTick(v, kind) {
+  const percent = isPercentKind(kind);
+
+  // 如果是字符串(可能是日期),进行日期格式化
+  if (typeof v === 'string') {
+    return formatShortDate(v);
+  }
+
+  return formatNumberCompact(v, { isPercent: percent, decimals: percent ? 0 : 2, maxDigits: 6 });
+}
+
+function applyCommonScales(scales, kind) {
+  // x
+  if (scales.x) {
+    scales.x.grid = scales.x.grid || {};
+    scales.x.ticks = scales.x.ticks || {};
+    scales.x.grid.display = false;
+    scales.x.ticks.maxRotation = 0;
+    scales.x.ticks.autoSkip = true;
+    scales.x.ticks.padding = 6;
+  }
+  // y / y1
+  ["y","y1"].forEach(k=>{
+    if (!scales[k]) return;
+    scales[k].ticks = scales[k].ticks || {};
+    scales[k].ticks.padding = 6;
+    scales[k].ticks.callback = (v)=>formatTick(v, kind);
+    scales[k].grid = scales[k].grid || {};
+    if (k === "y") scales[k].grid.color = "#eef2f7";
+  });
+}
+
+// Compute latest value (for badge) — always interpret as "latest point", not sum
+function getLatestValueFromTab(tab) {
+  try {
+    if (!tab || !tab.data) return null;
+
+    // single value
+    if (tab.kind === "single_value" && typeof tab.data.value === "number") return tab.data.value;
+
+    // percent charts: show 100% (semantic "total")
+    if (isPercentKind(tab.kind)) return 100;
+
+    // time-series array: take last finite point (overall line/bar_line uses this)
+    if (Array.isArray(tab.data.values) && tab.data.values.length) {
+      for (let i = tab.data.values.length - 1; i >= 0; i--) {
+        const v = Number(tab.data.values[i]);
+        if (Number.isFinite(v)) return v;
+      }
+    }
+
+    // matrix time-series: take last date row sum (fallback)
+    if (Array.isArray(tab.data.matrix) && tab.data.matrix.length) {
+      for (let i = tab.data.matrix.length - 1; i >= 0; i--) {
+        const row = tab.data.matrix[i] || [];
+        const nums = row.map(x => Number(x)).filter(x => Number.isFinite(x));
+        if (nums.length) return nums.reduce((a,b)=>a+b, 0);
+      }
+    }
+
+    // labels/values (doughnut etc.): treat as total
+    if (Array.isArray(tab.data.values) && tab.data.values.length) {
+      const nums = tab.data.values.map(x => Number(x)).filter(x => Number.isFinite(x));
+      if (nums.length) return nums.reduce((a,b)=>a+b, 0);
+    }
+
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+
+function updateLatestBadge(chartId, tab) {
+  const el = document.getElementById("latest-" + chartId);
+  if (!el) return;
+
+  // 🔥 Funnel badge: 显示百分比而不是分数形式
+  if (tab && tab.kind === "funnel" && tab.data && (tab.data.numerator !== undefined) && (tab.data.denominator !== undefined)) {
+    const n = Number(tab.data.numerator ?? 0) || 0;
+    const d = Number(tab.data.denominator ?? 0) || 0;
+    const percentage = d > 0 ? ((n / d) * 100).toFixed(1) : '0.0';
+    el.textContent = `${percentage}%`;
+    return;
+  }
+
+  const v = getLatestValueFromTab(tab);
+  if (v === null || v === undefined || Number.isNaN(v)) {
+    el.textContent = "-";
+    return;
+  }
+
+  const percent = isPercentKind(tab.kind);
+  if (percent) {
+    let p = Number(v);
+    if (Math.abs(p) <= 1) p = p * 100;
+    const s = (Math.round(p * 10) / 10).toString().replace(/\.0$/, "");
+    el.textContent = s + "%";
+    return;
+  }
+
+  const num = Number(v);
+  const abs = Math.abs(num);
+  const decimals = abs < 1 ? 4 : 2;
+  let s = num.toLocaleString(undefined, { maximumFractionDigits: decimals });
+  s = s.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");
+  el.textContent = s;
+}
+
+const CHARTS_BY_DOMAIN = JSON.parse(document.getElementById('charts-data').textContent);
 
 const DOMAIN_TITLES = {
   "platform_basics": { name: "🏗️ Platform Basics", desc: "平台基础指标" },
@@ -8440,9 +8709,19 @@ function createChartCard(spec) {
       </div>
     ` : '';
 
+    // 构建metric描述行（如果有metric_id和description）
+    const metricInfo = (spec.metric_id && spec.description) ? `
+      <div class="metric-info" style="font-size: 11px; color: #9ca3af; margin-top: 4px; line-height: 1.4;">
+        ${spec.metric_id}: ${spec.description}
+      </div>
+    ` : '';
+
     card.innerHTML = `
       <div class="chart-header">
-        <div class="chart-title">${spec.title}</div>
+        <div>
+          <div class="chart-title">${spec.title}${spec.has_ai ? `<span class="ai-badge" data-metric-id="${spec.metric_id}" title="AI 分析">AI</span>` : ``}</div>
+          ${metricInfo}
+        </div>
         <div class="chart-header-right">
           ${spec.hide_badge ? "" : `<div class="latest-badge" id="latest-${spec.chart_id}">-</div>`}
         </div>
@@ -8498,15 +8777,33 @@ function createChartCard(spec) {
     </div>
   ` : '';
 
+  // 构建metric描述行（如果有metric_id和description）
+  const metricInfo = (spec.metric_id && spec.description) ? `
+    <div class="metric-info" style="font-size: 11px; color: #9ca3af; margin-top: 4px; line-height: 1.4;">
+      ${spec.metric_id}: ${spec.description}
+    </div>
+  ` : '';
+
   card.innerHTML = `
     <div class="chart-header">
-      <div class="chart-title">${spec.title}</div>
+      <div>
+        <div class="chart-title">${spec.title}${spec.has_ai ? `<span class="ai-badge" data-metric-id="${spec.metric_id}" title="AI 分析">AI</span>` : ``}</div>
+        ${metricInfo}
+      </div>
     </div>
     <div class="canvas-wrapper">
       <canvas id="canvas-${spec.chart_id}"></canvas>
     </div>
     ${viewDetailsLink}
   `;
+
+  // 添加点击显示 AI 分析的功能
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', function(e) {
+    if (!e.target.closest('a') && !e.target.closest('button') && !e.target.closest('.tab-button')) {
+      showAIAnalysisForMetric(spec.metric_id, spec.title);
+    }
+  });
 
   return card;
 }
@@ -9292,205 +9589,246 @@ function renderAllCharts() {
 }
 
 // AI分析展开/折叠功能
-function toggleAIAnalysis() {
-  const content = document.getElementById('aiAnalysisContent');
-  const icon = document.getElementById('aiToggleIcon');
 
-  if (content.classList.contains('expanded')) {
-    content.classList.remove('expanded');
-    icon.classList.remove('rotated');
-  } else {
-    content.classList.add('expanded');
-    icon.classList.add('rotated');
-  }
+// 全局变量存储 AI 分析数据
+let aiAnalysisData = {};
+let aiActiveMetricId = null;
+
+// 方案A：打开侧边栏时不遮挡图表（主内容让出右侧空间），并触发图表 resize
+
+// =========================
+// Chart resize helper (debounced)
+// =========================
+let __resizeAllChartsTimer = null;
+function scheduleResizeAllCharts(){
+  try {
+    if (__resizeAllChartsTimer) clearTimeout(__resizeAllChartsTimer);
+    __resizeAllChartsTimer = setTimeout(() => {
+      try { window.dispatchEvent(new Event("resize")); } catch(e) {}
+      try {
+        Object.keys(chartInstances || {}).forEach((k) => {
+          const ch = chartInstances[k];
+          if (ch && typeof ch.resize === "function") {
+            try { ch.resize(); } catch(e) {}
+          }
+        });
+      } catch(e) {}
+    }, 80);
+  } catch(e) {}
 }
 
-// 加载AI分析内容
+function setAIPanelCollapsed(collapsed){
+  document.body.classList.toggle("ai-collapsed", !!collapsed);
+  const expandBtn = document.getElementById("aiExpandBtn");
+  if (expandBtn) expandBtn.style.display = collapsed ? "inline-flex" : "none";
+  scheduleResizeAllCharts();
+}
+
+function setAISidebarOpen(open){
+  // 兼容旧函数名：open=true => 展开；open=false => 折叠
+  setAIPanelCollapsed(!open);
+}
+
+function closeAISidebar(){
+  setAIPanelCollapsed(true);
+}
+
+function openAISidebar(){
+  setAIPanelCollapsed(false);
+}
+
+
+// 加载并解析 AI 分析内容
 function loadAIAnalysis() {
-  const textElement = document.getElementById('aiAnalysisText');
-  const aiSummaryText = `# KiX 指标分析报告
-**生成时间**: 2026-01-30 11:14
-
-## Platform Basics
-
-**dau**
-
-• **现状与目标**：当前 DAU 为 3，日期为最新数据日期，与目标 50000 相差 49997。  
-• **趋势变化**：相比昨天 DAU 无变化，近期走势平稳但远低于预期。  
-• **关键洞察**：需关注新用户留存转化，尤其是周末与工作日的 DAU 波动情况。
-
-**retention(d7)**
-
-• **现状与目标**：最新值为 0.0，日期为最新数据日期，与目标 0.25 相差 0.25。  
-• **趋势变化**：相比昨天留存率无变化，近期走势持续低迷。  
-• **关键洞察**：不同来源渠道均为 0.0，表明所有渠道的留存表现极差，需分析首周用户行为以寻找改进机会。
-
-
-## User Growth
-
-**new_user**
-
-• **现状与目标**：当前新用户数为 9，日期为最新数据日，与目标 5000 相差 4991。  
-• **趋势变化**：相比昨天无变化，近期走势平稳，未见明显增长。  
-• **关键洞察**：获客成本需关注，当前所有新用户均来自“others”渠道，需评估其质量与有效性。
-
-**new_activated_user**
-
-• **现状与目标**：最新值为0.67，日期为最新数据日，与目标3000相差2999.33。  
-• **趋势变化**：相比昨天数据无变化，近期激活用户数持续低迷。  
-• **关键洞察**：激活率亟需提升，需深入分析激活流程以提高转化率。
-
-
-## Revenue
-
-**daily_income**
-
-• **现状与目标**：最新 daily_income 值为 0.13，日期为最近一天，距离目标 10000 相差 9999.87。  
-• **趋势变化**：相比昨天，daily_income 下降，近期走势呈现负增长。  
-• **关键洞察**：ARPPU 和付费用户数未提供，需关注大 R 用户的贡献占比以评估收入来源。
-
-
-## PK
-
-**average_player_per_match**
-
-• **现状与目标**：最新值为 48（2026-01-29），与目标 4.0 相差 44。  
-• **趋势变化**：相比昨天（52）下降 4，近期走势波动较大。  
-• **关键洞察**：需关注中途退出情况，可能影响匹配质量与玩家参与度。
-
-**pk_successful_matching**
-
-• **现状与目标**：最新值为 0.93（截至最近日期），与目标 90.0% 相比，达标。  
-• **趋势变化**：相比昨天，成功匹配率保持稳定，近期走势良好。  
-• **关键洞察**：关注匹配失败原因，分析不同游戏（如 Dragon Snap Rescue）时段的成功率差异。
-
-
-## Daily Challenge
-
-**from_waiting_to_start_match**
-
-• **现状与目标**：最新值为 0.54（2026-01-29），与目标 30.0 相差 29.46。  
-• **趋势变化**：相比昨天（0.71）下降了 0.17，近期走势波动较大。  
-• **关键洞察**：等待时长分布不均，最高值出现在 2026-01-28（0.71），显示出不同时段的等待情况差异明显。
-
-**book_kix_challenge_uv**
-
-• **现状与目标**：最新值为 0.0（2026-01-30），与目标 10000 相差甚远。  
-• **趋势变化**：相比昨天（0.594），今日数据为 0.0，显示出明显下降，近期走势不稳。  
-• **关键洞察**：预约率波动较大，需分析预约转化率以提升整体表现。
-
-**finish_kix_challenge_rate**
-
-• **现状与目标**：最新值为 1.0（2026-01-29），远超目标 30.0，差距巨大。  
-• **趋势变化**：相比昨天（0.93），完成率有所上升，近期整体保持在高水平。  
-• **关键洞察**：所有任务完成率均为 100%，无明显卡点，需关注不同难度任务的表现。
-
-
-## Cash Out
-
-**prize_cash_out_to_successful**
-
-• **现状与目标**：最新值为 1.0（2026-01-29），已超过目标 95.0。  
-• **趋势变化**：相比昨天（0.5），今日值显著提升，近期整体保持在 1.0。  
-• **关键洞察**：需关注提现失败原因及审核时效，以维持高成功率。`;
-
-  // 解析并格式化AI分析文本
-  const formattedHTML = parseAIAnalysis(aiSummaryText);
-  textElement.innerHTML = formattedHTML;
+  const el = document.getElementById('ai-summary-data');
+  if (!el) {
+    console.warn('AI summary element not found: #ai-summary-data');
+    aiAnalysisData = {};
+    return;
+  }
+  let aiSummaryText = "";
+  try {
+    aiSummaryText = JSON.parse(el.textContent || '""');
+  } catch (e) {
+    console.error('Failed to JSON.parse ai-summary-data:', e);
+    aiSummaryText = "";
+  }
+  console.log('AI summary raw length:', (aiSummaryText || "").length, 'head:', String(aiSummaryText || "").slice(0, 80));
+  aiAnalysisData = parseAIAnalysisByMetric(aiSummaryText);
+  console.log('AI 分析数据已加载:', Object.keys(aiAnalysisData).length, '个指标');
+  console.log('已加载的指标列表:', Object.keys(aiAnalysisData).join(', '));
 }
 
-// 解析AI分析文本为HTML
-function parseAIAnalysis(text) {
-  if (!text || text === '暂无AI分析内容' || text.includes('加载AI分析内容时出错')) {
-    return `<div style="color: #9ca3af; text-align: center; padding: 20px;">${text}</div>`;
+// 按指标解析 AI 分析文本
+function parseAIAnalysisByMetric(text) {
+  // text comes from JSON.parse(script[type=application/json]). It may contain literal "\n" sequences
+  // (double-escaped) or Unicode line separators. Normalize aggressively.
+  let t = String(text || "");
+  if (!t || t === "暂无AI分析内容" || t.includes("加载AI分析内容时出错")) return {};
+
+  // normalize line breaks
+  t = t.replace(/\u2028|\u2029/g, "\n");
+  // if still looks like a single line but contains literal backslash-n, unescape once
+  if (!t.includes("\n") && /\n/.test(t)) {
+    t = t.replace(/\r\n/g, "\n").replace(/\n/g, "\n").replace(/\r/g, "\n");
+  }
+  // unify CRLF
+  t = t.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  // strip zero-width chars that break startsWith
+  const stripInvisible = (s) =>
+    s.replace(/^[\uFEFF\u200B\u200C\u200D\u2060]+/, "").replace(/[\u200B\u200C\u200D\u2060]+/g, "");
+
+  const data = {};
+  const lines = t.split("\n");
+  let currentModule = null;
+  let currentMetricId = null;
+  let bulletPoints = [];
+
+  const flush = () => {
+    if (currentMetricId && bulletPoints.length > 0) {
+      data[currentMetricId] = { module: currentModule, points: [...bulletPoints] };
+    }
+    bulletPoints = [];
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = stripInvisible(lines[i] || "").trim();
+    if (!line) continue;
+
+    // module header: ## xxx
+    const m1 = line.match(/^##\s+(.+)$/);
+    if (m1) {
+      flush();
+      currentModule = m1[1].trim();
+      currentMetricId = null;
+      continue;
+    }
+
+    // metric id: **metric_id** (must be a standalone bold line)
+    const m2 = line.match(/^\*\*([^*]+)\*\*$/);
+    if (m2 && !line.includes(":")) {
+      flush();
+      currentMetricId = m2[1].trim();
+      continue;
+    }
+
+    // bullets: • xxx  OR - xxx  OR * xxx
+    const m3 = line.match(/^(?:•|\-|\*)\s*(.+)$/);
+    if (m3) {
+      bulletPoints.push(m3[1].trim());
+      continue;
+    }
+  }
+
+  flush();
+  return data;
+}
+
+// 显示指标的 AI 分析（右侧固定面板：宽度固定，不遮挡图表）
+function showAIAnalysisForMetric(metricId, metricName) {
+  aiActiveMetricId = (metricId || "").trim();
+
+  const content = document.getElementById('aiSidebarContent');
+  const titleEl = document.getElementById('aiPanelTitle');
+  const subtitleEl = document.getElementById('aiPanelSubtitle');
+
+  if (!content || !titleEl || !subtitleEl) return;
+
+  const key = (metricId || "").trim();
+  const analysis = aiAnalysisData[key];
+
+  // 确保面板展开（方案A：主内容自动适应）
+  setAIPanelCollapsed(false);
+
+  titleEl.textContent = metricName || metricId || "AI 分析";
+  subtitleEl.textContent = analysis
+    ? ("已选指标：" + (metricName || metricId))
+    : ("该指标暂无 AI 分析：" + (metricName || metricId));
+
+  if (!analysis) {
+    content.innerHTML = `
+      <div class="ai-empty">
+        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
+        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
+      </div>
+    `;
+    return;
   }
 
   let html = '';
-  const lines = text.split('\n');
+  html += `<div class="ai-block">`;
+  html += `<ul>`;
+  (analysis.points || []).forEach((pt) => {
+    const p = String(pt || '').trim();
+    if (!p) return;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-
-    if (!line) {
-      continue;
+    // 支持 "**标题**: 内容" 的结构
+    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
+    if (m) {
+      const t = m[1].trim();
+      const c = (m[2] || '').trim();
+      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
+    } else {
+      html += `<li>${escapeHtml(p)}</li>`;
     }
+  });
+  html += `</ul>`;
+  html += `</div>`;
 
-    // 【0 TL;DR】- 摘要部分
-    if (line.includes('【0 TL;DR】')) {
-      html += '<h3>核心摘要</h3>';
-      continue;
-    }
-
-    // 【1 Business Domain Overview】- 业务域概览
-    if (line.includes('【1 Business Domain Overview】')) {
-      html += '<h3>业务域概览</h3>';
-      continue;
-    }
-
-    // 【2 Growth Chain Diagnosis】- 增长链诊断
-    if (line.includes('【2 Growth Chain Diagnosis】')) {
-      html += '<h3>增长链诊断</h3>';
-      continue;
-    }
-
-    // 【3 Confidence & Data Limits】- 置信度说明
-    if (line.includes('【3 Confidence & Data Limits】')) {
-      html += '<h3>置信度与数据限制</h3>';
-      continue;
-    }
-
-    // TL;DR内容
-    if (i > 0 && lines[i-1].includes('【0 TL;DR】')) {
-      html += `<div class="tldr-section">${escapeHtml(line)}</div>`;
-      continue;
-    }
-
-    // Confidence内容
-    if (i > 0 && lines[i-1].includes('【3 Confidence & Data Limits】')) {
-      html += `<div class="confidence-section">${escapeHtml(line)}</div>`;
-      continue;
-    }
-
-    // 业务域列表项 (- **Domain Name**: ...)
-    if (line.startsWith('- **') && line.includes('**:')) {
-      const match = line.match(/- \*\*(.+?)\*\*:\s*(.+)/);
-      if (match) {
-        const domain = match[1];
-        const content = match[2];
-        html += `<div class="domain-item"><span class="domain-name">${escapeHtml(domain)}</span>${formatContent(content)}</div>`;
-        continue;
-      }
-    }
-
-    // 增长链列表项 (- **xxx与xxx**: ...)
-    if (line.startsWith('- **') && !line.includes('**:')) {
-      html += `<div class="chain-item">${formatContent(line.substring(2))}</div>`;
-      continue;
-    }
-
-    // 普通文本
-    html += `<p>${formatContent(line)}</p>`;
-  }
-
-  return html;
+  content.innerHTML = html;
 }
 
-// 格式化内容：只处理加粗文本
-function formatContent(text) {
-  // 转义HTML
-  text = escapeHtml(text);
-
-  // 高亮加粗文本 **text**
-  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-
-  return text;
+// 折叠 AI 面板（不遮挡图表）
+function closeAISidebar() {
+  aiActiveMetricId = null;
+  setAIPanelCollapsed(true);
 }
 
 // HTML转义
+
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+
+}
+
+// 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析
+function initAISidebarBadgeClick() {
+  // 点击标题右侧 AI 标识：打开/关闭右侧 AI 分析（不遮挡主内容）
+  document.addEventListener("click", (e) => {
+    const badge = e.target.closest(".ai-badge");
+    if (!badge) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const metricId = (badge.getAttribute("data-metric-id") || "").trim();
+    if (!metricId) return;
+
+    const sidebar = document.getElementById('aiSidebar');
+    const isOpen = sidebar.classList.contains('active');
+
+    // 若已经打开且点击的是同一个指标 -> 收起
+    if (isOpen && aiActiveMetricId && aiActiveMetricId === metricId) {
+      closeAISidebar();
+      return;
+    }
+
+    // 取卡片标题（去掉 AI badge 文案）
+    const card = badge.closest(".chart-card");
+    let metricName = metricId;
+    if (card) {
+      const titleEl = card.querySelector(".chart-title");
+      if (titleEl) {
+        const clone = titleEl.cloneNode(true);
+        clone.querySelectorAll(".ai-badge").forEach(x => x.remove());
+        metricName = (clone.textContent || "").trim() || metricId;
+      }
+    }
+
+    showAIAnalysisForMetric(metricId, metricName);
+  }, true);
 }
 
 // =========================
@@ -9704,7 +10042,37 @@ function onViewDetailsClick(metricId, event) {
 function initPage() {
   initNavigation();
   renderAllCharts();
+
+  // 点击卡片 -> 在右侧 AI 面板展示对应指标分析（面板为常驻列，不遮挡图表）
+  const modulesArea = document.getElementById("modulesArea");
+  if (modulesArea){
+    modulesArea.addEventListener("click", (ev) => {
+      const card = ev.target.closest(".chart-card");
+      if (!card) return;
+
+      // 避免干扰维度切换/按钮/下拉等交互
+      if (ev.target.closest("button, a, select, option, input, textarea, .dim-tabs, .dim-dropdown, .chart-actions")) return;
+
+      const metricId = card.dataset.metricId;
+      const metricName = card.dataset.metricName || metricId;
+
+      // 如果没有对应 AI，也展示 empty（但仍可展开面板）
+      openAISidebar();
+      showAIAnalysisForMetric(metricId, metricName);
+    });
+  }
+
   loadAIAnalysis();
+  // AI 面板默认展开
+  setAIPanelCollapsed(false);
+
+  const collapseBtn = document.getElementById("aiCollapseBtn");
+  if (collapseBtn) collapseBtn.addEventListener("click", () => setAIPanelCollapsed(true));
+  const expandBtn = document.getElementById("aiExpandBtn");
+  if (expandBtn) expandBtn.addEventListener("click", () => setAIPanelCollapsed(false));
+
+    initAISidebarBadgeClick();
+initAISidebarBadgeClick();
 
   document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
   document.getElementById("generatedAt").textContent = new Date().toLocaleString();
@@ -9712,7 +10080,10 @@ function initPage() {
   // 监听URL hash变化
   window.addEventListener('hashchange', handleHashChange);
 
-  // 检查初始URL
+
+  // ESC 关闭 AI 侧边栏
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ closeAISidebar(); } });
+// 检查初始URL
   const initialMetricId = getMetricIdFromURL();
   if (initialMetricId) {
     // 延迟执行，确保所有图表已渲染
@@ -9722,5 +10093,6 @@ function initPage() {
 
 document.addEventListener("DOMContentLoaded", initPage);
 </script>
+
 </body>
 </html>
