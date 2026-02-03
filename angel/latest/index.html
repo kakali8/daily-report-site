@@ -416,6 +416,12 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 }
 .ai-panel-content ul{ padding-left: 18px; margin: 8px 0 0; }
 .ai-panel-content li{ margin: 6px 0; color: var(--text); line-height: 1.55; }
+.ai-panel-content li.ai-section{
+  margin-top: 10px;
+  font-weight: 700;
+  color: #0f172a;
+  list-style: none;
+}
 
 /* Sidebar header / close button */
 
@@ -1996,7 +2002,7 @@ body.ai-collapsed .charts{
               0.2916666666666667,
               0.0,
               0.5,
-              0.4166666666666667
+              0.5
             ]
           }
         },
@@ -2136,7 +2142,7 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 1.0,
-                0.3636363636363636,
+                0.4545454545454545,
                 0.0
               ]
             ]
@@ -2171,14 +2177,7 @@ body.ai-collapsed .charts{
               "01-22",
               "01-23",
               "01-24",
-              "01-26",
-              "01-27",
-              "01-28",
-              "01-29",
-              "01-30",
-              "01-31",
-              "02-01",
-              "02-02"
+              "01-26"
             ],
             "values": [
               1.0,
@@ -2188,14 +2187,7 @@ body.ai-collapsed .charts{
               0.5,
               0.75,
               0.0,
-              0.5,
-              0.25,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
+              0.5
             ]
           }
         },
@@ -2211,18 +2203,15 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "__NULL__",
-            "pdd",
-            "No User Consent",
-            "Organic"
+            "pdd"
           ],
           "selected_dim_values": [
             "__NULL__",
-            "No User Consent"
+            "pdd"
           ],
           "ranked_dim_values": [
             "__NULL__",
-            "No User Consent",
-            "Organic"
+            "pdd"
           ],
           "data": {
             "dates": [
@@ -2233,110 +2222,43 @@ body.ai-collapsed .charts{
               "01-22",
               "01-23",
               "01-24",
-              "01-26",
-              "01-27",
-              "01-28",
-              "01-29",
-              "01-30",
-              "01-31",
-              "02-01",
-              "02-02"
+              "01-26"
             ],
             "series": [
-              "No User Consent",
-              "Organic",
               "__NULL__",
               "pdd"
             ],
             "matrix": [
               [
-                0.0,
-                0.0,
+                1.0,
+                0.0
+              ],
+              [
                 1.0,
                 0.0
               ],
               [
                 0.0,
-                0.0,
-                1.0,
                 0.0
               ],
               [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
                 0.6666666666666666,
                 0.0
               ],
               [
-                0.0,
-                0.0,
                 0.5,
                 0.0
               ],
               [
-                0.0,
-                0.0,
                 0.6666666666666666,
                 1.0
               ],
               [
                 0.0,
-                0.0,
-                0.0,
                 0.0
               ],
               [
-                0.0,
-                0.0,
                 0.5,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.3333333333333333,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.0
-              ],
-              [
-                0.0,
-                0.0,
-                0.0,
                 0.0
               ]
             ]
@@ -2347,7 +2269,7 @@ body.ai-collapsed .charts{
       "business_domain": "Platform Basics",
       "related_metrics": [],
       "description": "\u6709\u6548\u5bf9\u6218\u7528\u6237 D7 \u7559\u5b58",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "average_meaningful_battles_per_user__series__series_daily",
@@ -2369,7 +2291,7 @@ body.ai-collapsed .charts{
               "02-02"
             ],
             "values": [
-              0.2635135135135135,
+              0.0945945945945946,
               0.1231884057971014,
               0.8468468468468469
             ]
@@ -3270,7 +3192,7 @@ body.ai-collapsed .charts{
         "dau"
       ],
       "description": "\u65b0\u7528\u6237\u6570\u7684\u53d8\u5316\u8d8b\u52bf",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "new_activated_user__series__series_daily",
@@ -4197,7 +4119,7 @@ body.ai-collapsed .charts{
         "dau"
       ],
       "description": "T+1 \u8fdb\u5165\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b",
-      "has_ai": true
+      "has_ai": false
     }
   ],
   "revenue": [
@@ -4258,7 +4180,7 @@ body.ai-collapsed .charts{
       "business_domain": "Revenue",
       "related_metrics": [],
       "description": "\u6240\u6709\u6536\u5165\u6c47\u603b",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "ad_finish_times__series__series_daily",
@@ -4698,7 +4620,7 @@ body.ai-collapsed .charts{
               0.6271186440677966,
               0.5555555555555556,
               0.8620689655172413,
-              0.4926470588235294,
+              0.4589041095890411,
               0.0
             ]
           }
@@ -4708,7 +4630,7 @@ body.ai-collapsed .charts{
       "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "from_waiting_to_start_match__series__series_daily",
@@ -4767,7 +4689,7 @@ body.ai-collapsed .charts{
       "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u662f\u6307\u5728\u5019\u573a\u540e\uff0c\u6210\u529f\u5f00\u59cb\u6bd4\u8d5b\u7684\u7528\u6237\u4e0e\u603b\u6b21\u6570\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u5019\u573a\u4f53\u9a8c\u7684\u6d41\u7545\u6027\u3002",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "finish_kix_challenge_rate__series__series_daily",
@@ -4820,7 +4742,7 @@ body.ai-collapsed .charts{
       "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5b8c\u6210\u7ed3\u7b97\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\uff0c\u53cd\u6620\u8d5b\u4e8b\u7684\u53c2\u4e0e\u60c5\u51b5\u3002",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "kix_train_times__series__series_daily",
@@ -4852,7 +4774,7 @@ body.ai-collapsed .charts{
               3.6842105263157894,
               3.932692307692307,
               3.066666666666667,
-              3.6041666666666665
+              3.802469135802469
             ]
           }
         },
@@ -4870,8 +4792,8 @@ body.ai-collapsed .charts{
             "1403",
             "1338",
             "1252",
-            "1295",
             "1245",
+            "1295",
             "1379",
             "471",
             "1212",
@@ -4887,8 +4809,8 @@ body.ai-collapsed .charts{
             "1403",
             "1338",
             "1252",
-            "1295",
             "1245",
+            "1295",
             "1379",
             "471",
             "1212",
@@ -5009,14 +4931,14 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 0.0,
-                3.7226277372262775,
+                3.993377483443709,
                 0.0,
                 1.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                1.4,
+                1.2857142857142858,
                 0.0,
                 0.0
               ]
@@ -5037,8 +4959,8 @@ body.ai-collapsed .charts{
             "Drift Bus",
             "Tofu Cat",
             "Spin Maze Save Xmas",
-            "Candy Store",
             "Sling Tomb",
+            "Candy Store",
             "Squid Head Kick",
             "The Last Battle",
             "Color Block Away",
@@ -5054,8 +4976,8 @@ body.ai-collapsed .charts{
             "Drift Bus",
             "Tofu Cat",
             "Spin Maze Save Xmas",
-            "Candy Store",
             "Sling Tomb",
+            "Candy Store",
             "Squid Head Kick",
             "The Last Battle",
             "Color Block Away",
@@ -5178,9 +5100,9 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                1.4,
+                1.2857142857142858,
                 1.0,
-                3.7226277372262775,
+                3.993377483443709,
                 0.0,
                 0.0,
                 0.0,
@@ -5269,10 +5191,10 @@ body.ai-collapsed .charts{
                 4.10738255033557
               ],
               [
-                3.459016393442623,
+                3.753623188405797,
                 0.0,
                 2.5833333333333335,
-                3.9014084507042255
+                4.0246913580246915
               ]
             ]
           }
@@ -7377,7 +7299,7 @@ body.ai-collapsed .charts{
             ],
             "values": [
               0.0,
-              0.717391304347826,
+              0.4565217391304347,
               0.9591836734693876,
               0.9803921568627452,
               0.8275862068965517,
@@ -7391,7 +7313,7 @@ body.ai-collapsed .charts{
               0.6111111111111112,
               0.7777777777777778,
               0.90625,
-              0.6388888888888888
+              0.6805555555555556
             ]
           }
         }
@@ -7452,7 +7374,7 @@ body.ai-collapsed .charts{
               0.0,
               0.0077519379844961,
               0.0,
-              0.3831967213114754
+              0.3237704918032787
             ]
           }
         },
@@ -7467,42 +7389,39 @@ body.ai-collapsed .charts{
           },
           "filterable": true,
           "all_dim_values": [
-            "Cosmic Blaster",
             "Sushi Frenzy",
-            "Deadly Race",
-            "Sling Tomb",
             "Animals Crush",
+            "Sling Tomb",
             "Snipe Shooting 3D",
+            "Deadly Race",
             "The Last Battle",
             "Fish Shooting",
-            "Spin Maze Save Xmas",
-            "Punch Box",
-            "Tofu Cat",
             "Pixel Journey",
-            "Defuse the bombs",
-            "Squid Head Kick",
-            "Sky Speedster",
-            "Cards Fusion",
-            "Crossy Chicken",
-            "Drift Bus",
-            "Shoot The Apple",
+            "Tofu Cat",
+            "Spin Maze Save Xmas",
             "Gold Miner",
             "Frog Super Bubbles",
+            "Cards Fusion",
             "Animal Jump",
             "Don't Brake",
             "Tally Up Pot",
-            "Golden Move Quest",
-            "Sea Treasure",
+            "Shoot The Apple",
+            "Defuse the bombs",
+            "Squid Head Kick",
+            "Tennis Dash",
             "Tile Connect Puzzle",
             "Winter Elimination Fun",
             "Zombie Survivor",
             "daf0a5efMKNPPXCE",
             "daf0a5efMKOUBM8A",
+            "Sky Speedster",
             "sheep rush",
-            "Tennis Dash",
-            "King Of Drift",
+            "Sea Treasure",
             "Pupper Jones",
+            "Punch Box",
+            "King Of Drift",
             "Nutmeg Football",
+            "Crossy Chicken",
             "Atro Pong",
             "Block Breaker",
             "Brainrot Merge Fellas",
@@ -7510,53 +7429,54 @@ body.ai-collapsed .charts{
             "Candy Store",
             "Color Block Away",
             "Corona Jump",
+            "Cosmic Blaster",
             "Deep Sea 2048",
+            "Monkey Mart",
             "Dragon Snap Rescue",
+            "Drift Bus",
             "Fast Driver",
+            "Golden Move Quest",
             "HangGlider",
             "Happy Bird",
             "Jelly Blast",
             "Mini Golf",
-            "Monkey Mart",
             "test pk"
           ],
           "selected_dim_values": [
-            "Cosmic Blaster"
+            "Sushi Frenzy"
           ],
           "ranked_dim_values": [
-            "Cosmic Blaster",
             "Sushi Frenzy",
-            "Deadly Race",
-            "Sling Tomb",
             "Animals Crush",
+            "Sling Tomb",
             "Snipe Shooting 3D",
+            "Deadly Race",
             "The Last Battle",
             "Fish Shooting",
-            "Spin Maze Save Xmas",
-            "Punch Box",
-            "Tofu Cat",
             "Pixel Journey",
-            "Defuse the bombs",
-            "Squid Head Kick",
-            "Cards Fusion",
-            "Crossy Chicken",
-            "Sky Speedster",
-            "Drift Bus",
-            "Shoot The Apple",
+            "Tofu Cat",
+            "Spin Maze Save Xmas",
             "Frog Super Bubbles",
+            "Cards Fusion",
             "Animal Jump",
             "Don't Brake",
+            "Shoot The Apple",
             "Tally Up Pot",
-            "Golden Move Quest",
+            "Defuse the bombs",
+            "Monkey Mart",
+            "Sky Speedster",
+            "Squid Head Kick",
             "Tennis Dash",
             "Tile Connect Puzzle",
-            "Winter Elimination Fun",
-            "Zombie Survivor",
             "Sea Treasure",
             "Pupper Jones",
-            "Happy Bird",
+            "Winter Elimination Fun",
+            "Punch Box",
+            "Zombie Survivor",
             "Nutmeg Football",
-            "Monkey Mart",
+            "Happy Bird",
+            "Mini Golf",
+            "King Of Drift",
             "Atro Pong",
             "Block Breaker",
             "Brainrot Merge Fellas",
@@ -7564,14 +7484,16 @@ body.ai-collapsed .charts{
             "Candy Store",
             "Color Block Away",
             "Corona Jump",
+            "Cosmic Blaster",
+            "Crossy Chicken",
             "Deep Sea 2048",
             "Dragon Snap Rescue",
+            "Drift Bus",
             "Fast Driver",
             "Gold Miner",
+            "Golden Move Quest",
             "HangGlider",
             "Jelly Blast",
-            "King Of Drift",
-            "Mini Golf",
             "sheep rush"
           ],
           "data": {
@@ -8466,22 +8388,22 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.2,
+                0.1,
                 0.0,
                 0.0,
-                1.0,
-                0.2,
-                0.7647058823529411,
-                0.0,
-                0.3076923076923077,
                 0.0,
                 0.0,
-                0.1818181818181818,
-                0.0,
-                0.4676258992805755,
-                0.1428571428571428,
+                0.5882352941176471,
                 0.0,
                 0.0769230769230769,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.4100719424460431,
+                0.1428571428571428,
+                0.0,
+                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -8490,15 +8412,15 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.3333333333333333,
-                0.4,
                 0.0,
                 0.0,
-                0.1666666666666666,
-                0.2,
-                0.7530864197530864,
-                0.6956521739130435,
-                0.4545454545454545,
-                0.25,
+                0.0,
+                0.0833333333333333,
+                0.0,
+                0.7407407407407407,
+                0.6521739130434783,
+                0.2727272727272727,
+                0.0,
                 1.0,
                 0.0833333333333333,
                 0.0,
@@ -8640,7 +8562,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.3940042826552462,
+                0.3319057815845824,
                 0.0,
                 0.15
               ]
@@ -8652,7 +8574,7 @@ body.ai-collapsed .charts{
       "business_domain": "PK",
       "related_metrics": [],
       "description": "\u6210\u529f\u8fdb\u5165\u5bf9\u6218\u7684\u5339\u914d\u6bd4\u4f8b",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "pk_click_to_enter__series__value_daily",
@@ -8779,9 +8701,9 @@ body.ai-collapsed .charts{
           "meta": {},
           "data": {
             "date": "2026-02-02",
-            "denominator": 93.0,
+            "denominator": 75.0,
             "numerator": 11.0,
-            "value": 0.11827956989247312
+            "value": 0.14666666666666667
           }
         },
         {
@@ -8797,17 +8719,17 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "HQ_Withdraw_Share",
-            "Energy_Rescue",
+            "HQ_After_Share",
             "Add_Friend_Invite",
             "HQ_H5_Share",
-            "HQ_After_Share",
             "PK_After_Share",
-            "HQ_H5_Download",
             "HQ_Room_Invite",
-            "Dev_Competition_Share",
+            "Energy_Rescue",
+            "HQ_H5_Download",
             "Game_Room_Invite",
             "Gamification_Task",
-            "Dev_Minisite_Visit"
+            "Dev_Minisite_Visit",
+            "Dev_Competition_Share"
           ],
           "selected_dim_values": [
             "HQ_H5_Download"
@@ -8815,11 +8737,11 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "HQ_H5_Download",
             "Add_Friend_Invite",
-            "HQ_After_Share",
             "HQ_H5_Share",
+            "HQ_After_Share",
             "Energy_Rescue",
-            "HQ_Room_Invite",
             "Dev_Minisite_Visit",
+            "HQ_Room_Invite",
             "HQ_Withdraw_Share",
             "PK_After_Share",
             "Game_Room_Invite",
@@ -8840,15 +8762,15 @@ body.ai-collapsed .charts{
               "PK_After_Share"
             ],
             "denominator": [
-              12.0,
+              10.0,
               14.0,
               9.0,
               8.0,
               5.0,
-              2.0,
+              0.0,
               4.0,
-              36.0,
-              3.0
+              23.0,
+              2.0
             ],
             "numerator": [
               4.0,
@@ -8862,7 +8784,7 @@ body.ai-collapsed .charts{
               0.0
             ],
             "values": [
-              0.3333333333333333,
+              0.4,
               0.14285714285714285,
               0.3333333333333333,
               0.0,
@@ -8896,9 +8818,9 @@ body.ai-collapsed .charts{
           "meta": {},
           "data": {
             "date": "2026-02-02",
-            "denominator": 11.0,
+            "denominator": 19.0,
             "numerator": 6.0,
-            "value": 0.5454545454545454
+            "value": 0.3157894736842105
           }
         },
         {
@@ -8917,8 +8839,8 @@ body.ai-collapsed .charts{
             "HQ_H5_Download",
             "HQ_Room_Invite",
             "Add_Friend_Invite",
-            "PK_After_Share",
             "HQ_H5_Share",
+            "PK_After_Share",
             "Dev_Minisite_Visit",
             "Dev_Competition_Share",
             "Game_Room_Invite",
@@ -8933,8 +8855,8 @@ body.ai-collapsed .charts{
             "Energy_Rescue",
             "HQ_H5_Download",
             "HQ_Room_Invite",
-            "PK_After_Share",
             "HQ_H5_Share",
+            "PK_After_Share",
             "Dev_Minisite_Visit",
             "Add_Friend_Invite",
             "Dev_Competition_Share",
@@ -8957,11 +8879,11 @@ body.ai-collapsed .charts{
               "PK_After_Share"
             ],
             "denominator": [
+              6.0,
               4.0,
-              2.0,
-              3.0,
+              6.0,
               0.0,
-              1.0,
+              2.0,
               0.0,
               1.0,
               0.0,
@@ -8980,10 +8902,10 @@ body.ai-collapsed .charts{
             ],
             "values": [
               0.0,
-              0.5,
+              0.25,
               0.0,
               0.0,
-              5.0,
+              2.5,
               0.0,
               0.0,
               0.0,
@@ -9211,7 +9133,7 @@ body.ai-collapsed .charts{
               0.2842105263157894,
               0.6,
               0.8571428571428571,
-              0.4888888888888889
+              0.5111111111111111
             ]
           }
         }
@@ -9612,7 +9534,7 @@ body.ai-collapsed .charts{
         "kix_challenge_redeem_uv"
       ],
       "description": "\u63d0\u73b0\u6210\u529f\u7387\u662f\u6307\u5728\u6240\u6709\u63d0\u73b0\u8bf7\u6c42\u4e2d\u6210\u529f\u5b8c\u6210\u7684\u6bd4\u4f8b\u3002",
-      "has_ai": true
+      "has_ai": false
     }
   ],
   "monitoring": [
@@ -9642,12 +9564,12 @@ body.ai-collapsed .charts{
             "MY \u00d7 ios",
             "ID \u00d7 ios",
             "GB \u00d7 android",
-            "EG \u00d7 android",
             "US \u00d7 android",
             "BR \u00d7 android",
             "CN \u00d7 android",
             "TW \u00d7 ios",
             "US \u00d7 ios",
+            "EG \u00d7 android",
             "FI \u00d7 ios",
             "IQ \u00d7 ios",
             "EG \u00d7 ios",
@@ -9671,12 +9593,12 @@ body.ai-collapsed .charts{
             "MY \u00d7 ios",
             "ID \u00d7 ios",
             "GB \u00d7 android",
-            "EG \u00d7 android",
             "US \u00d7 android",
             "BR \u00d7 android",
             "CN \u00d7 android",
             "TW \u00d7 ios",
             "US \u00d7 ios",
+            "EG \u00d7 android",
             "FI \u00d7 ios",
             "IQ \u00d7 ios",
             "EG \u00d7 ios",
@@ -9729,8 +9651,8 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 82.0,
-                248.0,
-                88.0,
+                218.0,
+                0.0,
                 0.0,
                 0.0,
                 73.0,
@@ -9741,7 +9663,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                187.0,
+                54.0,
                 0.0,
                 0.0,
                 65.0,
@@ -9821,8 +9743,8 @@ body.ai-collapsed .charts{
             "MY",
             "US",
             "ID",
-            "EG",
             "GB",
+            "EG",
             "BR",
             "TW",
             "FI",
@@ -9845,8 +9767,8 @@ body.ai-collapsed .charts{
             "MY",
             "US",
             "ID",
-            "EG",
             "GB",
+            "EG",
             "BR",
             "TW",
             "FI",
@@ -9892,8 +9814,8 @@ body.ai-collapsed .charts{
                 10.0,
                 0.0,
                 0.0,
-                330.0,
-                88.0,
+                300.0,
+                0.0,
                 0.0,
                 73.0,
                 77.0,
@@ -9901,7 +9823,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                187.0,
+                54.0,
                 0.0,
                 0.0,
                 65.0,
@@ -9986,8 +9908,8 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                323.0,
-                608.0
+                235.0,
+                445.0
               ],
               [
                 422.0,
@@ -10040,7 +9962,7 @@ body.ai-collapsed .charts{
               "02-02"
             ],
             "values": [
-              0.0631578947368421,
+              0.0545454545454545,
               0.0538461538461538,
               0.088560885608856,
               0.0684931506849315,
@@ -10103,7 +10025,7 @@ body.ai-collapsed .charts{
     }
   ]
 }</script>
-<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-03 15:52\n\n## Platform Basics\n\n**dau**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a\u5f53\u524d\u503c 125 / \u76ee\u6807\u503c 5000 / \u671f\u671b\u589e\u957f 2.0%/\u5929  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929DAU\u6ce2\u52a8\u8f83\u5927\uff0c\u6700\u9ad8\u503c137\uff0c\u6700\u4f4e\u503c71\uff0c\u6574\u4f53\u5448\u4e0a\u5347\u8d8b\u52bf\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u65b0\u589e\u3001\u56de\u6d41\u548c\u8001\u7528\u6237\u6d3b\u8dc3\u7684\u5177\u4f53\u6570\u636e\uff0c\u5efa\u8bae\u62c6\u5206\u7528\u6237\u6d3b\u8dc3\u60c5\u51b5\u4ee5\u5206\u6790D1\u56de\u6d41\u5bf9DAU\u7684\u8d21\u732e\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5177\u4f53\u7684retention(d1)\u6570\u636e\uff0c\u5efa\u8bae\u5206\u6790\u5404\u6765\u6e90\u7684\u65b0\u589e\u89c4\u6a21\u4e0eD1\u60c5\u51b5\uff0c\u4ee5\u8bc6\u522b\u5bf9\u6b21\u65e5DAU\u8d21\u732e\u6700\u5927\u7684\u6765\u6e90\u3002  \n3. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11source mix\u53d8\u5316\u7684\u8be6\u7ec6\u6570\u636e\uff0c\u5efa\u8bae\u76d1\u63a7\u65b0\u589e\u5360\u6bd4\u53d8\u5316\u5bf9\u6574\u4f53DAU\u7684\u5f71\u54cd\u3002  \n4. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u201c\u91cf\u5927\u4f46D1\u4f4e\u201d\u7684source\u6570\u636e\uff0c\u5efa\u8bae\u91cd\u70b9\u6392\u67e5\u4f4e\u8d28\u91cf\u65b0\u589e\u6765\u6e90\uff0c\u9632\u6b62\u62c9\u4f4e\u6574\u4f53DAU\u7684\u53ef\u6301\u7eed\u6027\u3002  \n5. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5468\u5185/\u5468\u672b\u4e0e\u5f02\u5e38\u65f6\u95f4\u70b9\u7684DAU\u6ce2\u52a8\u6570\u636e\uff0c\u5efa\u8bae\u7ed3\u5408\u65f6\u95f4\u7ef4\u5ea6\u76d1\u63a7DAU\u53d8\u5316\u6765\u6e90\u3002  \n6. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5f53\u524d\u65b0\u589e\u7ed3\u6784\u4e0eD1\u6c34\u5e73\u7684\u5177\u4f53\u6570\u636e\uff0c\u5efa\u8bae\u8bc4\u4f30\u662f\u5426\u652f\u6491\u76ee\u6807DAU\u7684\u589e\u957f\u8def\u5f84\u3002\n\n**retention(d7)**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a0.0 / 0.25 / \u671f\u671b\u589e\u957f\uff1a0.1%/\u5929  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u7559\u5b58\u7387\u5747\u4e3a0.0\uff0c\u6574\u4f53\u8868\u73b0\u4e0d\u4f73\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u6765\u6e90\u6e20\u9053\u7684\u7559\u5b58\u5dee\u5f02\u6570\u636e\uff0c\u5efa\u8bae\u5206\u6790\u4e0d\u540c\u6765\u6e90\u7684\u7559\u5b58\u60c5\u51b5\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u9996\u5468\u5173\u952e\u884c\u4e3a\u7684\u5f71\u54cd\u6570\u636e\uff0c\u5efa\u8bae\u6536\u96c6\u7528\u6237\u884c\u4e3a\u6570\u636e\u4ee5\u8fdb\u884c\u5206\u6790\u3002\n\n\n## User Growth\n\n**new_user**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a35 / 5000 / 3.0%  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6700\u9ad8\u503c\u4e3a51\uff0c\u6700\u4f4e\u503c\u4e3a15\uff0c\u6574\u4f53\u5448\u4e0a\u5347\u8d8b\u52bf\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u83b7\u5ba2\u6210\u672c\u6570\u636e\uff0c\u5efa\u8bae\u5206\u6790\u5404\u6e20\u9053\u7684\u83b7\u5ba2\u6210\u672c\u4ee5\u4f18\u5316\u9884\u7b97\u5206\u914d\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5404\u6e20\u9053\u7684\u8d28\u91cf\u6570\u636e\uff0c\u5efa\u8bae\u8fdb\u4e00\u6b65\u5206\u6790\u5404\u6e20\u9053\u7684\u8f6c\u5316\u7387\u548c\u7528\u6237\u7559\u5b58\u60c5\u51b5\u3002\n\n**new_activated_user**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a0.3429 / 3000 / \u671f\u671b\u589e\u957f\uff1a3.0%/\u5929  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6574\u4f53\u5448\u4e0a\u5347\u8d8b\u52bf\uff0c\u6700\u4f4e\u503c\u4e3a0.125\uff0c\u6700\u9ad8\u503c\u4e3a0.4706\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u6fc0\u6d3b\u7387\u7684\u8be6\u7ec6\u5206\u89e3\uff0c\u5efa\u8bae\u5206\u6790\u4e0d\u540c\u56fd\u5bb6\u548c\u6765\u6e90\u7684\u6fc0\u6d3b\u7387\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u6fc0\u6d3b\u6d41\u7a0b\u8f6c\u5316\u7684\u8be6\u7ec6\u6570\u636e\uff0c\u5efa\u8bae\u8ddf\u8e2a\u7528\u6237\u5728\u6fc0\u6d3b\u6d41\u7a0b\u4e2d\u7684\u5404\u4e2a\u73af\u8282\u8f6c\u5316\u60c5\u51b5\u3002\n\n\n## Revenue\n\n**daily_income**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a1.744 / 10000 / \u671f\u671b\u589e\u957f5.0%  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6574\u4f53\u6536\u5165\u6ce2\u52a8\u8f83\u5927\uff0c\u6700\u9ad8\u503c\u4e3a10.198\uff0c\u6700\u4f4e\u503c\u4e3a0.13\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11ARPPU\u548c\u4ed8\u8d39\u7528\u6237\u6570\u5b57\u6bb5\uff0c\u5efa\u8bae\u8865\u5145\u76f8\u5173\u6570\u636e\u4ee5\u5206\u6790\u7528\u6237\u4ed8\u8d39\u60c5\u51b5\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5927R\u7528\u6237\u8d21\u732e\u5360\u6bd4\u5b57\u6bb5\uff0c\u5efa\u8bae\u83b7\u53d6\u76f8\u5173\u7ef4\u5ea6\u6570\u636e\u4ee5\u8bc4\u4f30\u9ad8\u4ef7\u503c\u7528\u6237\u7684\u5f71\u54cd\u3002\n\n\n## PK\n\n**average_player_per_match**\n\n[\u5143\u4fe1\u606f\u7f3a\u5931] \u6307\u6807 'average_player_per_match' \u5728 schema_v1 \u4e2d\u672a\u627e\u5230\uff0c\u8bf7\u68c0\u67e5 metric_id \u662f\u5426\u6b63\u786e\n\n**pk_successful_matching**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a0.3832 / 90.0 / 0.0%  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6210\u529f\u5339\u914d\u7387\u6700\u4f4e\u4e3a0.0\uff0c\u6700\u9ad8\u4e3a0.3832\uff0c\u6574\u4f53\u8868\u73b0\u4e0d\u4f73\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5339\u914d\u5931\u8d25\u539f\u56e0\u7684\u8be6\u7ec6\u6570\u636e\uff0c\u5efa\u8bae\u6536\u96c6\u5931\u8d25\u539f\u56e0\u4ee5\u4fbf\u5206\u6790\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u4e0d\u540c\u65f6\u6bb5\u7684\u6210\u529f\u7387\u6570\u636e\uff0c\u5efa\u8bae\u5206\u6790\u4e0d\u540c\u65f6\u95f4\u6bb5\u7684\u5339\u914d\u6210\u529f\u7387\u3002\n\n\n## Daily Challenge\n\n**from_waiting_to_start_match**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a0.6458 / 30.0 / 0.0%  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6574\u4f53\u5448\u73b0\u4e0a\u5347\u8d8b\u52bf\uff0c\u6700\u9ad8\u503c\u4e3a0.7051\uff0c\u6700\u4f4e\u503c\u4e3a0.5128\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u7b49\u5f85\u65f6\u957f\u5206\u5e03\u7684\u8be6\u7ec6\u5b57\u6bb5\uff0c\u5efa\u8bae\u6536\u96c6\u7b49\u5f85\u65f6\u957f\u7684\u5177\u4f53\u6570\u636e\u4ee5\u8fdb\u884c\u5206\u6790\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u4e0d\u540c\u65f6\u6bb5\u7684\u7b49\u5f85\u60c5\u51b5\u6570\u636e\uff0c\u5efa\u8bae\u5206\u6790\u4e0d\u540c\u65f6\u95f4\u6bb5\u7684\u7b49\u5f85\u60c5\u51b5\u4ee5\u8bc6\u522b\u6f5c\u5728\u95ee\u9898\u3002\n\n**book_kix_challenge_uv**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a\u5f53\u524d\u503c / \u76ee\u6807\u503c / \u671f\u671b\u589e\u957f\uff1a0 / 10000 / 2.0%/\u5929  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6574\u4f53\u6ce2\u52a8\u8f83\u5927\uff0c\u6700\u9ad8\u503c\u4e3a0.862\uff0c\u6700\u4f4e\u503c\u4e3a0.456\uff0c\u6574\u4f53\u8868\u73b0\u4e0d\u7a33\u5b9a\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u9884\u7ea6\u7387\u7684\u5177\u4f53\u5b57\u6bb5/\u7ef4\u5ea6\uff0c\u5efa\u8bae\u589e\u52a0\u76f8\u5173\u6570\u636e\u4ee5\u4fbf\u5206\u6790\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u9884\u7ea6\u8f6c\u5316\u7684\u5177\u4f53\u5b57\u6bb5/\u7ef4\u5ea6\uff0c\u5efa\u8bae\u589e\u52a0\u76f8\u5173\u6570\u636e\u4ee5\u4fbf\u5206\u6790\u3002\n\n**finish_kix_challenge_rate**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a0.859375 / 30.0 / \u671f\u671b\u589e\u957f\uff1a1.5%/\u5929  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6574\u4f53\u5448\u4e0b\u964d\u8d8b\u52bf\uff0c\u6700\u9ad8\u503c\u4e3a1.0\uff0c\u6700\u4f4e\u503c\u4e3a0.6923\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u4e0d\u540c\u96be\u5ea6\u4efb\u52a1\u7684\u5b8c\u6210\u7387\u6570\u636e\uff0c\u5efa\u8bae\u5206\u6790\u5404\u96be\u5ea6\u4efb\u52a1\u7684\u5b8c\u6210\u60c5\u51b5\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5361\u70b9\u5206\u6790\u6570\u636e\uff0c\u5efa\u8bae\u8fdb\u4e00\u6b65\u8c03\u67e5\u7528\u6237\u5728\u5b8c\u6210\u4efb\u52a1\u65f6\u7684\u5177\u4f53\u969c\u788d\u3002  \n3. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u65b0\u8001\u7528\u6237\u7684\u5dee\u5f02\u6570\u636e\uff0c\u5efa\u8bae\u5bf9\u7528\u6237\u6765\u6e90\u8fdb\u884c\u5206\u7c7b\u5206\u6790\u4ee5\u4e86\u89e3\u4e0d\u540c\u7528\u6237\u7fa4\u4f53\u7684\u8868\u73b0\u3002\n\n\n## Cash Out\n\n**prize_cash_out_to_successful**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a0.5 / 95.0 / 0.0%  \n\u2022 \u8d8b\u52bf\u53d8\u5316\uff1a\u6700\u8fd15\u5929\u6700\u9ad8\u503c\u4e3a1.0\uff0c\u6700\u4f4e\u503c\u4e3a0.0\uff0c\u6574\u4f53\u5448\u4e0b\u964d\u8d8b\u52bf\u3002  \n\u2022 \u5173\u952e\u6d1e\u5bdf\uff1a  \n1. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u63d0\u73b0\u5931\u8d25\u539f\u56e0\u7684\u5177\u4f53\u6570\u636e\uff0c\u5efa\u8bae\u6536\u96c6\u5e76\u5206\u6790\u63d0\u73b0\u5931\u8d25\u7684\u5177\u4f53\u539f\u56e0\u4ee5\u4f18\u5316\u6d41\u7a0b\u3002  \n2. \u6570\u636e\u4e0d\u8db3\uff1a\u7f3a\u5c11\u5ba1\u6838\u65f6\u6548\u7684\u5177\u4f53\u6570\u636e\uff0c\u5efa\u8bae\u76d1\u63a7\u5ba1\u6838\u65f6\u6548\u4ee5\u63d0\u9ad8\u6210\u529f\u63d0\u73b0\u7387\u3002"</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-03 17:07\n\n## Platform Basics\n\n**dau**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a\u5f53\u524d\u503c 125 / \u76ee\u6807\u503c 5000 / \u5dee\u8ddd 97.5%\n\n\u2022 \u8d8b\u52bf\u5206\u6790\uff1a\u6700\u8fd1\u51e0\u5929DAU\u5448\u73b0\u51fa\u660e\u663e\u7684\u4e0a\u5347\u8d8b\u52bf\uff0c\u4ece1\u670831\u65e5\u768471\u589e\u957f\u52302\u67082\u65e5\u7684125\uff0c\u73af\u6bd4\u589e\u957f\u5e45\u5ea6\u8fbe\u523064.47%\u3002\u6700\u9ad8\u70b9\u4e3a137\uff081\u670830\u65e5\uff09\uff0c\u6700\u4f4e\u70b9\u4e3a71\uff081\u670831\u65e5\uff09\uff0c\u6574\u4f53\u8d8b\u52bf\u4e3a\u4e0a\u5347\u3002\n\n\u2022 \u6df1\u5ea6\u6d1e\u5bdf\uff1a\n1. \u65b0\u589e\u7528\u6237\uff08new_user\uff09\u57282\u67082\u65e5\u8fbe\u523035\uff0c\u8f83\u524d\u4e00\u5929\u768416\u589e\u957f118.75%\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u663e\u8457\u63d0\u5347\uff0c\u8fd9\u53ef\u80fd\u662fDAU\u4e0a\u5347\u7684\u4e3b\u8981\u9a71\u52a8\u529b\u3002\n2. \u5728DAU\u4e2d\uff0c\u6765\u81ea\u4e2d\u56fd\uff08CN\uff09\u7684\u7528\u6237\u8d21\u732e\u6700\u5927\uff0c2\u67082\u65e5\u7684DAU\u4e2d\u670957\u6765\u81ea\u201cothers\u201d\u6765\u6e90\u548c22\u6765\u81ea\u201cOrganic\u201d\uff0c\u663e\u793a\u51fa\u4e2d\u56fd\u5e02\u573a\u7684\u5f3a\u52b2\u8868\u73b0\u3002\n3. D1\u7559\u5b58\u7387\u57282\u67082\u65e5\u4e3a0.5\uff0c\u8868\u660e\u65b0\u7528\u6237\u7684\u56de\u6d41\u60c5\u51b5\u4e00\u822c\uff0c\u9700\u5173\u6ce8\u7559\u5b58\u7b56\u7565\u4ee5\u63d0\u9ad8\u7528\u6237\u7c98\u6027\u3002\n4. \u76ee\u524dDAU\u7684\u589e\u957f\u901f\u5ea6\u82e5\u4fdd\u6301\u572864.47%\uff0c\u9884\u8ba1\u5728\u672a\u6765\u7ea630\u5929\u5185\uff08\u7ea62\u670828\u65e5\uff09\u53ef\u63a5\u8fd1\u76ee\u68075000\uff0c\u4f46\u9700\u6301\u7eed\u5173\u6ce8\u65b0\u589e\u7528\u6237\u548c\u7559\u5b58\u7387\u7684\u53d8\u5316\u3002\n5. \u76d1\u63a7\u201c\u91cf\u5927\u4f46D1\u4f4e\u201d\u7684\u6765\u6e90\uff0c\u5c24\u5176\u662f\u201cothers\u201d\u6765\u6e90\u7684\u7528\u6237\uff0c\u9700\u8bc4\u4f30\u5176\u8d28\u91cf\u4ee5\u9632\u6b62\u4f4e\u8d28\u91cf\u65b0\u589e\u5f71\u54cd\u6574\u4f53DAU\u7684\u53ef\u6301\u7eed\u6027\u3002"</script>
 
 
 <div class="container">
@@ -12209,6 +12131,13 @@ function parseAIAnalysisByMetric(text) {
       bulletPoints.push(m3[1].trim());
       continue;
     }
+
+    // numbered list: 1. xxx
+    const m4 = line.match(/^\d+\.\s*(.+)$/);
+    if (m4) {
+      bulletPoints.push(m4[1].trim());
+      continue;
+    }
   }
 
   flush();
@@ -12252,6 +12181,12 @@ function showAIAnalysisForMetric(metricId, metricName) {
   (analysis.points || []).forEach((pt) => {
     const p = String(pt || '').trim();
     if (!p) return;
+
+    // section header like "深度洞察："
+    if (/^[^:：]+[：:]$/.test(p)) {
+      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
+      return;
+    }
 
     // 支持 "**标题**: 内容" 的结构
     const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
