@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KiX魔鬼看板</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #151b2d;
+            --bg-card: #1a2237;
+            --bg-card-hover: #202945;
+            --bg-tab: #141a2b;
+            --bg-tab-active: #243050;
+
+            --text-primary: #e8edf4;
+            --text-secondary: #8b95ab;
+            --text-muted: #5a6684;
+
+            --accent-critical: #ff4757;
+            --accent-warning: #ffa502;
+            --accent-info: #3742fa;
+            --accent-success: #2ed573;
+            --accent-purple: #a55eea;
+
+            --border-color: #2a3551;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(42, 53, 81, 0.2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(42, 53, 81, 0.2) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        /* 导航栏样式 */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 26, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--border-color);
+            margin: -40px -20px 40px -20px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-info);
+            box-shadow: 0 4px 16px rgba(55, 66, 250, 0.3);
+        }
+
+        .nav-item .nav-icon {
+            font-size: 1.2rem;
+        }
+
+        .nav-item .nav-count {
+            background: var(--bg-secondary);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            margin-left: 4px;
+        }
+
+        .nav-item.critical { border-color: var(--accent-critical); }
+        .nav-item.critical:hover { 
+            border-color: var(--accent-critical);
+            box-shadow: 0 4px 16px rgba(255, 71, 87, 0.4);
+        }
+        .nav-item.critical .nav-count { color: var(--accent-critical); }
+
+        .nav-item.trend { border-color: var(--accent-purple); }
+        .nav-item.trend:hover { 
+            border-color: var(--accent-purple);
+            box-shadow: 0 4px 16px rgba(165, 94, 234, 0.4);
+        }
+        .nav-item.trend .nav-count { color: var(--accent-purple); }
+
+        .nav-item.status { border-color: var(--accent-warning); }
+        .nav-item.status:hover { 
+            border-color: var(--accent-warning);
+            box-shadow: 0 4px 16px rgba(255, 165, 2, 0.4);
+        }
+        .nav-item.status .nav-count { color: var(--accent-warning); }
+
+        .nav-item.sudden { border-color: var(--accent-info); }
+        .nav-item.sudden:hover { 
+            border-color: var(--accent-info);
+            box-shadow: 0 4px 16px rgba(55, 66, 250, 0.4);
+        }
+        .nav-item.sudden .nav-count { color: var(--accent-info); }
+
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .anomaly-section {
+            margin-bottom: 60px;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section-rule {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 400;
+            margin-left: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 900px) {
+            .section-header {
+                flex-wrap: wrap;
+            }
+            .section-rule {
+                order: 3;
+                white-space: normal;
+            }
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-count {
+            margin-left: auto;
+            background: var(--bg-secondary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .critical-error .section-icon {
+            background: linear-gradient(135deg, var(--accent-critical) 0%, #d63031 100%);
+        }
+        .critical-error .section-count {
+            color: var(--accent-critical);
+            border: 1px solid var(--accent-critical);
+        }
+
+        .status-anomaly .section-icon {
+            background: linear-gradient(135deg, var(--accent-warning) 0%, #fd9644 100%);
+        }
+        .status-anomaly .section-count {
+            color: var(--accent-warning);
+            border: 1px solid var(--accent-warning);
+        }
+
+        .sudden-change .section-icon {
+            background: linear-gradient(135deg, #3742fa 0%, #5f27cd 100%);
+        }
+        .sudden-change .section-count {
+            color: var(--accent-info);
+            border: 1px solid var(--accent-info);
+        }
+
+        .trend-deterioration .section-icon {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, #8e44ad 100%);
+        }
+        .trend-deterioration .section-count {
+            color: var(--accent-purple);
+            border: 1px solid var(--accent-purple);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+            gap: 24px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-info);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+        }
+
+        .metric-title {
+            flex: 1;
+        }
+
+        .metric-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .metric-id {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge.critical {
+            background: rgba(255, 71, 87, 0.15);
+            color: var(--accent-critical);
+            border: 1px solid var(--accent-critical);
+        }
+
+        .badge.warning {
+            background: rgba(255, 165, 2, 0.15);
+            color: var(--accent-warning);
+            border: 1px solid var(--accent-warning);
+        }
+
+        .badge.info {
+            background: rgba(55, 66, 250, 0.15);
+            color: var(--accent-info);
+            border: 1px solid var(--accent-info);
+        }
+
+        .badge.trend {
+            background: rgba(165, 94, 234, 0.15);
+            color: var(--accent-purple);
+            border: 1px solid var(--accent-purple);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: var(--bg-tab);
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            background: var(--bg-tab-active);
+            color: var(--text-primary);
+        }
+
+        .tab.active {
+            background: var(--bg-tab-active);
+            color: var(--accent-info);
+            border-color: var(--accent-info);
+        }
+
+        .dimension-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .dimension-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .dimension-controls label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .dimension-controls select {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dimension-controls select:hover {
+            border-color: var(--accent-info);
+        }
+
+        .dimension-controls select:focus {
+            outline: none;
+            border-color: var(--accent-info);
+            box-shadow: 0 0 0 2px rgba(55, 66, 250, 0.2);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 280px;
+            margin-bottom: 16px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .anomaly-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .detail-value.critical { color: var(--accent-critical); }
+        .detail-value.warning { color: var(--accent-warning); }
+        .detail-value.info { color: var(--accent-info); }
+        .detail-value.success { color: var(--accent-success); }
+
+        .anomaly-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .anomaly-tag {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .anomaly-tag.has-critical {
+            background: rgba(255, 71, 87, 0.2);
+            color: var(--accent-critical);
+        }
+
+        .anomaly-tag.has-status {
+            background: rgba(255, 165, 2, 0.2);
+            color: var(--accent-warning);
+        }
+
+        .anomaly-tag.has-sudden {
+            background: rgba(55, 66, 250, 0.2);
+            color: var(--accent-info);
+        }
+
+        .anomaly-tag.has-trend {
+            background: rgba(165, 94, 234, 0.2);
+            color: var(--accent-purple);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+
+        .empty-state-text {
+            font-size: 1.125rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .anomaly-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>KiX魔鬼看板</h1>
+            <p class="subtitle">趁现在还是告警，别等它变成事故。</p>
+        </header>
+
+        <!-- 导航栏 -->
+        <nav class="nav-bar">
+            <div class="nav-container">
+                <a href="#criticalSection" class="nav-item critical">
+                    <span class="nav-icon">🔴</span>
+                    <span>Critical Errors</span>
+                    <span class="nav-count">3</span>
+                </a>
+                <a href="#trendSection" class="nav-item trend">
+                    <span class="nav-icon">📉</span>
+                    <span>Trend Issues</span>
+                    <span class="nav-count">0</span>
+                </a>
+                <a href="#statusSection" class="nav-item status">
+                    <span class="nav-icon">⚠️</span>
+                    <span>Status Anomalies</span>
+                    <span class="nav-count">0</span>
+                </a>
+                <a href="#suddenSection" class="nav-item sudden">
+                    <span class="nav-icon">⚡</span>
+                    <span>Sudden Changes</span>
+                    <span class="nav-count">0</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="anomaly-section critical-error" id="criticalSection">
+            <div class="section-header">
+                <div class="section-icon">🔴</div>
+                <h2>Critical Errors</h2>
+                <div class="section-rule">规则：一旦出现系统报错/错误标记，即视为 Critical</div>
+                <div class="section-count">3</div>
+            </div>
+            <div class="metrics-grid" id="criticalGrid"></div>
+        </div>
+
+        <div class="anomaly-section trend-deterioration" id="trendSection">
+            <div class="section-header">
+                <div class="section-icon">📉</div>
+                <h2>Trend Deterioration</h2>
+                <div class="section-rule">规则：情况一：趋势下行型（数据正在一路走下坡路，越来越差）情况二：高频异常型 （最近这一阵子‘坏’的时间占比太高，可能未来会持续变坏）</div>
+                <div class="section-count">0</div>
+            </div>
+            <div class="metrics-grid" id="trendGrid"></div>
+        </div>
+
+        <div class="anomaly-section status-anomaly" id="statusSection">
+            <div class="section-header">
+                <div class="section-icon">⚠️</div>
+                <h2>Status Anomalies</h2>
+                <div class="section-rule">规则：最新值未达目标值或越界，即标记为异常</div>
+                <div class="section-count">0</div>
+            </div>
+            <div class="metrics-grid" id="statusGrid"></div>
+        </div>
+
+        <div class="anomaly-section sudden-change" id="suddenSection">
+            <div class="section-header">
+                <div class="section-icon">⚡</div>
+                <h2>Sudden Changes</h2>
+                <div class="section-rule">规则：与前一日相比出现明显的坏突变</div>
+                <div class="section-count">0</div>
+            </div>
+            <div class="metrics-grid" id="suddenGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        const DASHBOARD_DATA = {"critical": [{"metric_id": "average_ping_response", "metric_name": "MTR / API PING P90", "datasets": {"by_country": {"data": [{"date": "2026-02-07", "value": 8, "country": "AR", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 214, "country": "US", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0, "country": "TH", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 184, "country": "SG", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 131, "country": "SA", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 104, "country": "MY", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 123, "country": "MM", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 92, "country": "PH", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 293, "country": "IN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0, "country": "IE", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 225, "country": "ID", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 51, "country": "GB", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 132, "country": "EG", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 261, "country": "CN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 59, "country": "JP", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 38, "country": "PH", "baseline_value": 92.0, "delta_pct": -0.5869565217391305, "delta_last": -0.5869565217391305, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "country": "YE", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 201, "country": "US", "baseline_value": 214.0, "delta_pct": -0.0607476635514018, "delta_last": -0.0607476635514018, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 77, "country": "TW", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "country": "TH", "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 13, "country": "MY", "baseline_value": 104.0, "delta_pct": -0.875, "delta_last": -0.875, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 37, "country": "SG", "baseline_value": 184.0, "delta_pct": -0.7989130434782609, "delta_last": -0.7989130434782609, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 47, "country": "MM", "baseline_value": 123.0, "delta_pct": -0.6178861788617886, "delta_last": -0.6178861788617886, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 309, "country": "IN", "baseline_value": 293.0, "delta_pct": 0.0546075085324232, "delta_last": 0.0546075085324232, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 224, "country": "ID", "baseline_value": 225.0, "delta_pct": -0.0044444444444444, "delta_last": -0.0044444444444444, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 48, "country": "GB", "baseline_value": 51.0, "delta_pct": -0.0588235294117647, "delta_last": -0.0588235294117647, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 90, "country": "EG", "baseline_value": 132.0, "delta_pct": -0.3181818181818182, "delta_last": -0.3181818181818182, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 237, "country": "CN", "baseline_value": 261.0, "delta_pct": -0.0919540229885057, "delta_last": -0.0919540229885057, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "country": "MW", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0, "country": "TN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 72, "country": "TH", "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 236, "country": "SG", "baseline_value": 110.5, "delta_pct": 1.1357466063348416, "delta_last": 5.378378378378378, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 85, "country": "SA", "baseline_value": 131.0, "delta_pct": -0.3511450381679389, "delta_last": -0.3511450381679389, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 113, "country": "PK", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 77, "country": "PH", "baseline_value": 65.0, "delta_pct": 0.1846153846153846, "delta_last": 1.0263157894736843, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 92, "country": "MY", "baseline_value": 58.5, "delta_pct": 0.5726495726495726, "delta_last": 6.076923076923077, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 26, "country": "MM", "baseline_value": 85.0, "delta_pct": -0.6941176470588235, "delta_last": -0.4468085106382978, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0, "country": "JP", "baseline_value": 59.0, "delta_pct": -1.0, "delta_last": -1.0, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 197, "country": "GB", "baseline_value": 49.5, "delta_pct": 2.9797979797979797, "delta_last": 3.1041666666666665, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 133, "country": "ID", "baseline_value": 224.5, "delta_pct": -0.4075723830734966, "delta_last": -0.40625, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 72, "country": "FI", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 32, "country": "EG", "baseline_value": 111.0, "delta_pct": -0.7117117117117117, "delta_last": -0.6444444444444445, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 284, "country": "CN", "baseline_value": 249.0, "delta_pct": 0.1405622489959839, "delta_last": 0.1983122362869198, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 41, "country": "AZ", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 15, "country": "AR", "baseline_value": 8.0, "delta_pct": 0.875, "delta_last": 0.875, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 111, "country": "AE", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 55, "country": "TW", "baseline_value": 77.0, "delta_pct": -0.2857142857142857, "delta_last": -0.2857142857142857, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 220, "country": "IN", "baseline_value": 301.0, "delta_pct": -0.2691029900332226, "delta_last": -0.2880258899676375, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 214, "country": "US", "baseline_value": 207.5, "delta_pct": 0.0313253012048192, "delta_last": 0.0646766169154228, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}], "dimensions": ["country"], "file_name": "by_country", "dim_values": {"country": ["AE", "AR", "AZ", "CN", "EG", "FI", "GB", "ID", "IE", "IN", "JP", "MM", "MW", "MY", "PH", "PK", "SA", "SG", "TH", "TN", "TW", "US", "YE"]}}, "by_platform": {"data": [{"date": "2026-02-07", "value": 713, "platform": "android", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 1164, "platform": "ios", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 538, "platform": "android", "baseline_value": 713.0, "delta_pct": -0.2454417952314165, "delta_last": -0.2454417952314165, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 783, "platform": "ios", "baseline_value": 1164.0, "delta_pct": -0.327319587628866, "delta_last": -0.327319587628866, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 793, "platform": "android", "baseline_value": 625.5, "delta_pct": 0.2677857713828936, "delta_last": 0.4739776951672863, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 1282, "platform": "ios", "baseline_value": 973.5, "delta_pct": 0.3168977914740626, "delta_last": 0.6372924648786717, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}], "dimensions": ["platform"], "file_name": "by_platform", "dim_values": {"platform": ["android", "ios"]}}, "by_platform_country": {"data": [{"date": "2026-02-07", "value": 8, "platform_country": "android|AR", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 126, "platform_country": "ios|US", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0, "platform_country": "ios|TH", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 167, "platform_country": "ios|SG", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 131, "platform_country": "ios|SA", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0, "platform_country": "ios|PH", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 95, "platform_country": "ios|MY", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 39, "platform_country": "ios|MM", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 129, "platform_country": "ios|IN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0, "platform_country": "ios|IE", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 185, "platform_country": "ios|ID", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 46, "platform_country": "ios|EG", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 59, "platform_country": "ios|JP", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 88, "platform_country": "android|US", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 187, "platform_country": "ios|CN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 86, "platform_country": "android|EG", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 51, "platform_country": "android|GB", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 40, "platform_country": "android|ID", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 164, "platform_country": "android|IN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 74, "platform_country": "android|CN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 9, "platform_country": "android|MY", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 92, "platform_country": "android|PH", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 17, "platform_country": "android|SG", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 84, "platform_country": "android|MM", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 197, "platform_country": "ios|IN", "baseline_value": 129.0, "delta_pct": 0.5271317829457365, "delta_last": 0.5271317829457365, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "platform_country": "ios|YE", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 108, "platform_country": "ios|US", "baseline_value": 126.0, "delta_pct": -0.1428571428571428, "delta_last": -0.1428571428571428, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 77, "platform_country": "ios|TW", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "platform_country": "ios|TH", "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 37, "platform_country": "ios|SG", "baseline_value": 167.0, "delta_pct": -0.7784431137724551, "delta_last": -0.7784431137724551, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "platform_country": "ios|MY", "baseline_value": 95.0, "delta_pct": -1.0, "delta_last": -1.0, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "platform_country": "ios|MW", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0, "platform_country": "ios|MM", "baseline_value": 39.0, "delta_pct": -1.0, "delta_last": -1.0, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 177, "platform_country": "ios|ID", "baseline_value": 185.0, "delta_pct": -0.0432432432432432, "delta_last": -0.0432432432432432, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 31, "platform_country": "ios|EG", "baseline_value": 46.0, "delta_pct": -0.3260869565217391, "delta_last": -0.3260869565217391, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 156, "platform_country": "ios|CN", "baseline_value": 187.0, "delta_pct": -0.1657754010695187, "delta_last": -0.1657754010695187, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 93, "platform_country": "android|US", "baseline_value": 88.0, "delta_pct": 0.0568181818181818, "delta_last": 0.0568181818181818, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 38, "platform_country": "android|PH", "baseline_value": 92.0, "delta_pct": -0.5869565217391305, "delta_last": -0.5869565217391305, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 13, "platform_country": "android|MY", "baseline_value": 9.0, "delta_pct": 0.4444444444444444, "delta_last": 0.4444444444444444, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 47, "platform_country": "android|MM", "baseline_value": 84.0, "delta_pct": -0.4404761904761904, "delta_last": -0.4404761904761904, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 112, "platform_country": "android|IN", "baseline_value": 164.0, "delta_pct": -0.3170731707317073, "delta_last": -0.3170731707317073, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 47, "platform_country": "android|ID", "baseline_value": 40.0, "delta_pct": 0.175, "delta_last": 0.175, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 48, "platform_country": "android|GB", "baseline_value": 51.0, "delta_pct": -0.0588235294117647, "delta_last": -0.0588235294117647, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 59, "platform_country": "android|EG", "baseline_value": 86.0, "delta_pct": -0.313953488372093, "delta_last": -0.313953488372093, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 81, "platform_country": "android|CN", "baseline_value": 74.0, "delta_pct": 0.0945945945945946, "delta_last": 0.0945945945945946, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 88, "platform_country": "ios|ID", "baseline_value": 181.0, "delta_pct": -0.5138121546961326, "delta_last": -0.5028248587570622, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 108, "platform_country": "ios|IN", "baseline_value": 163.0, "delta_pct": -0.3374233128834356, "delta_last": -0.4517766497461929, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0, "platform_country": "ios|JP", "baseline_value": 59.0, "delta_pct": -1.0, "delta_last": -1.0, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 92, "platform_country": "ios|MY", "baseline_value": 47.5, "delta_pct": 0.936842105263158, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0, "platform_country": "ios|TN", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 85, "platform_country": "ios|SA", "baseline_value": 131.0, "delta_pct": -0.3511450381679389, "delta_last": -0.3511450381679389, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 236, "platform_country": "ios|SG", "baseline_value": 102.0, "delta_pct": 1.3137254901960784, "delta_last": 5.378378378378378, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 72, "platform_country": "ios|TH", "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 72, "platform_country": "ios|FI", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 113, "platform_country": "ios|PK", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 210, "platform_country": "ios|CN", "baseline_value": 171.5, "delta_pct": 0.2244897959183673, "delta_last": 0.3461538461538461, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 45, "platform_country": "android|ID", "baseline_value": 43.5, "delta_pct": 0.0344827586206896, "delta_last": -0.0425531914893617, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 77, "platform_country": "android|PH", "baseline_value": 65.0, "delta_pct": 0.1846153846153846, "delta_last": 1.0263157894736843, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 26, "platform_country": "android|MM", "baseline_value": 65.5, "delta_pct": -0.6030534351145038, "delta_last": -0.4468085106382978, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 112, "platform_country": "android|IN", "baseline_value": 138.0, "delta_pct": -0.1884057971014492, "delta_last": 0.0, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 55, "platform_country": "ios|TW", "baseline_value": 77.0, "delta_pct": -0.2857142857142857, "delta_last": -0.2857142857142857, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 197, "platform_country": "android|GB", "baseline_value": 49.5, "delta_pct": 2.9797979797979797, "delta_last": 3.1041666666666665, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 32, "platform_country": "android|EG", "baseline_value": 72.5, "delta_pct": -0.5586206896551724, "delta_last": -0.4576271186440678, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 74, "platform_country": "android|CN", "baseline_value": 77.5, "delta_pct": -0.0451612903225806, "delta_last": -0.0864197530864197, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 41, "platform_country": "android|AZ", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 15, "platform_country": "android|AR", "baseline_value": 8.0, "delta_pct": 0.875, "delta_last": 0.875, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 111, "platform_country": "android|AE", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 63, "platform_country": "android|US", "baseline_value": 90.5, "delta_pct": -0.3038674033149171, "delta_last": -0.3225806451612903, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 151, "platform_country": "ios|US", "baseline_value": 117.0, "delta_pct": 0.2905982905982906, "delta_last": 0.3981481481481481, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}], "dimensions": ["country", "platform"], "file_name": "by_platform_country", "dim_values": {}}, "overall": {"data": [{"date": "2026-02-07", "value": 78.20833333333333, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 62.904761904761905, "baseline_value": 78.20833333333333, "delta_pct": -0.1956769921607427, "delta_last": -0.1956769921607427, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 86.45833333333333, "baseline_value": 70.55654761904762, "delta_pct": 0.2253764710844897, "delta_last": 0.3744322482967448, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}], "dimensions": [], "file_name": "overall"}}, "overall_data": [{"date": "2026-02-07", "value": 78.20833333333333, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 62.904761904761905, "baseline_value": 78.20833333333333, "delta_pct": -0.1956769921607427, "delta_last": -0.1956769921607427, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 86.45833333333333, "baseline_value": 70.55654761904762, "delta_pct": 0.2253764710844897, "delta_last": 0.3744322482967448, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}], "all_dimensions": ["country", "platform"], "threshold": null, "evaluation_method": "lower_is_better", "actual_time_points": 3, "anomaly_type": "critical", "all_anomaly_types": ["critical", "sudden"], "anomaly_count": 2}, {"metric_id": "network_error", "metric_name": "网络报错次数", "datasets": {"by_error_type": {"data": [{"date": "2026-02-03", "value": 4538, "error_type": "no_network", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-03", "value": 626, "error_type": "other_issue", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 4191, "error_type": "no_network", "baseline_value": 4538.0, "delta_pct": -0.0764654032613486, "delta_last": -0.0764654032613486, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 1076, "error_type": "other_issue", "baseline_value": 626.0, "delta_pct": 0.7188498402555911, "delta_last": 0.7188498402555911, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 5144, "error_type": "no_network", "baseline_value": 4364.5, "delta_pct": 0.1786000687363959, "delta_last": 0.2273920305416368, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 1865, "error_type": "other_issue", "baseline_value": 851.0, "delta_pct": 1.191539365452409, "delta_last": 0.733271375464684, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 2, "bad_ratio": 0.6666666666666666, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 9313, "error_type": "no_network", "baseline_value": 4624.333333333333, "delta_pct": 1.0139119152310243, "delta_last": 0.8104587869362364, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.25, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 3440, "error_type": "other_issue", "baseline_value": 1189.0, "delta_pct": 1.893187552565181, "delta_last": 0.8445040214477212, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 3, "bad_ratio": 0.75, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 5308, "error_type": "no_network", "baseline_value": 5796.5, "delta_pct": -0.0842749935305788, "delta_last": -0.430044024481907, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.2, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 3644, "error_type": "other_issue", "baseline_value": 1751.75, "delta_pct": 1.080205508776937, "delta_last": 0.0593023255813953, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 4, "bad_ratio": 0.8, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 1593, "error_type": "no_network", "baseline_value": 5698.8, "delta_pct": -0.7204674668351232, "delta_last": -0.6998869630746044, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.1666666666666666, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 706, "error_type": "other_issue", "baseline_value": 2130.2, "delta_pct": -0.668575720589616, "delta_last": -0.8062568605927553, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.6666666666666666, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 4829, "error_type": "no_network", "baseline_value": 5014.5, "delta_pct": -0.0369927211087845, "delta_last": 2.0313873195229126, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.1428571428571428, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 2909, "error_type": "other_issue", "baseline_value": 1892.8333333333333, "delta_pct": 0.53684952011975, "delta_last": 3.1203966005665724, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.7142857142857143, "overall_trend_negative": 0, "if_error": 1}], "dimensions": ["error_type"], "file_name": "by_error_type", "dim_values": {"error_type": ["no_network", "other_issue"]}}, "by_platform": {"data": [{"date": "2026-02-03", "value": 5164, "platform": "Android", "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 5267, "platform": "Android", "baseline_value": 5164.0, "delta_pct": 0.0199457784663051, "delta_last": 0.0199457784663051, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 7009, "platform": "Android", "baseline_value": 5215.5, "delta_pct": 0.3438788227399099, "delta_last": 0.330738560850579, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 12753, "platform": "Android", "baseline_value": 5813.333333333333, "delta_pct": 1.19375, "delta_last": 0.8195177628763018, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 2, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 8952, "platform": "Android", "baseline_value": 7548.25, "delta_pct": 0.1859702580068227, "delta_last": -0.2980475182310044, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.4, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 2299, "platform": "Android", "baseline_value": 7829.0, "delta_pct": -0.7063481926171925, "delta_last": -0.7431858802502234, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 7738, "platform": "Android", "baseline_value": 6907.333333333333, "delta_pct": 0.1202586622912846, "delta_last": 2.3658112222705525, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.2857142857142857, "overall_trend_negative": 0, "if_error": 1}], "dimensions": ["platform"], "file_name": "by_platform", "dim_values": {"platform": ["Android"]}}, "overall": {"data": [{"date": "2026-02-03", "value": 5164, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 5267, "baseline_value": 5164.0, "delta_pct": 0.0199457784663051, "delta_last": 0.0199457784663051, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 7009, "baseline_value": 5215.5, "delta_pct": 0.3438788227399099, "delta_last": 0.330738560850579, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 12753, "baseline_value": 5813.333333333333, "delta_pct": 1.19375, "delta_last": 0.8195177628763018, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 2, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 8952, "baseline_value": 7548.25, "delta_pct": 0.1859702580068227, "delta_last": -0.2980475182310044, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.4, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 2299, "baseline_value": 7829.0, "delta_pct": -0.7063481926171925, "delta_last": -0.7431858802502234, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 7738, "baseline_value": 6907.333333333333, "delta_pct": 0.1202586622912846, "delta_last": 2.3658112222705525, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.2857142857142857, "overall_trend_negative": 0, "if_error": 1}], "dimensions": [], "file_name": "overall"}}, "overall_data": [{"date": "2026-02-03", "value": 5164, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 5267, "baseline_value": 5164.0, "delta_pct": 0.0199457784663051, "delta_last": 0.0199457784663051, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 7009, "baseline_value": 5215.5, "delta_pct": 0.3438788227399099, "delta_last": 0.330738560850579, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 12753, "baseline_value": 5813.333333333333, "delta_pct": 1.19375, "delta_last": 0.8195177628763018, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 2, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 8952, "baseline_value": 7548.25, "delta_pct": 0.1859702580068227, "delta_last": -0.2980475182310044, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.4, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 2299, "baseline_value": 7829.0, "delta_pct": -0.7063481926171925, "delta_last": -0.7431858802502234, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 7738, "baseline_value": 6907.333333333333, "delta_pct": 0.1202586622912846, "delta_last": 2.3658112222705525, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.2857142857142857, "overall_trend_negative": 0, "if_error": 1}], "all_dimensions": ["error_type", "platform"], "threshold": null, "evaluation_method": "lower_is_better", "actual_time_points": 7, "anomaly_type": "critical", "all_anomaly_types": ["critical", "sudden"], "anomaly_count": 2}, {"metric_id": "network_error_uv_rate", "metric_name": "网络报错用户比例", "datasets": {"by_platform": {"data": [{"date": "2026-02-03", "value": 0.896551724137931, "platform": "Android", "numerator": 26, "denominator": 29, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-03", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 77, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 0.8409090909090909, "platform": "Android", "numerator": 37, "denominator": 44, "baseline_value": 0.896551724137931, "delta_pct": -0.062062937062937, "delta_last": -0.062062937062937, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 80, "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 0.9264705882352942, "platform": "Android", "numerator": 63, "denominator": 68, "baseline_value": 0.8687304075235109, "delta_pct": 0.0664650163177585, "delta_last": 0.1017488076311605, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 134, "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 0.827433628318584, "platform": "Android", "numerator": 187, "denominator": 226, "baseline_value": 0.8879771344274388, "delta_pct": -0.0681813796341645, "delta_last": -0.106897036100576, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 172, "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0.8205128205128205, "platform": "Android", "numerator": 192, "denominator": 234, "baseline_value": 0.872841257900225, "delta_pct": -0.0599518376494827, "delta_last": -0.008364184834773, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 222, "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0.6710526315789473, "platform": "Android", "numerator": 51, "denominator": 76, "baseline_value": 0.8623755704227442, "delta_pct": -0.2218557034842819, "delta_last": -0.1821546052631578, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 153, "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0.7836538461538461, "platform": "Android", "numerator": 163, "denominator": 208, "baseline_value": 0.8304884139487779, "delta_pct": -0.0563940050316227, "delta_last": 0.1677978883861237, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0.0, "platform": "iPhone", "numerator": 0, "denominator": 163, "baseline_value": 0.0, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}], "dimensions": ["platform"], "file_name": "by_platform", "dim_values": {"platform": ["Android", "iPhone"]}}, "overall": {"data": [{"date": "2026-02-03", "value": 0.2452830188679245, "numerator": 26, "denominator": 106, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 0.2983870967741935, "numerator": 37, "denominator": 124, "baseline_value": 0.2452830188679245, "delta_pct": 0.216501240694789, "delta_last": 0.216501240694789, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 0.3118811881188119, "numerator": 63, "denominator": 202, "baseline_value": 0.271835057821059, "delta_pct": 0.1473177544454699, "delta_last": 0.0452234412630453, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 0.4698492462311557, "numerator": 187, "denominator": 398, "baseline_value": 0.2851837679203099, "delta_pct": 0.6475315185626117, "delta_last": 0.506500757757039, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0.4210526315789473, "numerator": 192, "denominator": 456, "baseline_value": 0.3313501374980214, "delta_pct": 0.2707181435271369, "delta_last": -0.1038558964255559, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 2, "bad_ratio": 0.6, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0.222707423580786, "numerator": 51, "denominator": 229, "baseline_value": 0.3492906363142066, "delta_pct": -0.3624008191835749, "delta_last": -0.4710698689956332, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0.4393530997304582, "numerator": 163, "denominator": 371, "baseline_value": 0.3281934341919698, "delta_pct": 0.3387016739447258, "delta_last": 0.9727815654563716, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5714285714285714, "overall_trend_negative": 0, "if_error": 1}], "dimensions": [], "file_name": "overall"}}, "overall_data": [{"date": "2026-02-03", "value": 0.2452830188679245, "numerator": 26, "denominator": 106, "baseline_value": NaN, "delta_pct": NaN, "delta_last": NaN, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.0, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-04", "value": 0.2983870967741935, "numerator": 37, "denominator": 124, "baseline_value": 0.2452830188679245, "delta_pct": 0.216501240694789, "delta_last": 0.216501240694789, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-05", "value": 0.3118811881188119, "numerator": 63, "denominator": 202, "baseline_value": 0.271835057821059, "delta_pct": 0.1473177544454699, "delta_last": 0.0452234412630453, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.3333333333333333, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-06", "value": 0.4698492462311557, "numerator": 187, "denominator": 398, "baseline_value": 0.2851837679203099, "delta_pct": 0.6475315185626117, "delta_last": 0.506500757757039, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-07", "value": 0.4210526315789473, "numerator": 192, "denominator": 456, "baseline_value": 0.3313501374980214, "delta_pct": 0.2707181435271369, "delta_last": -0.1038558964255559, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 2, "bad_ratio": 0.6, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-08", "value": 0.222707423580786, "numerator": 51, "denominator": 229, "baseline_value": 0.3492906363142066, "delta_pct": -0.3624008191835749, "delta_last": -0.4710698689956332, "sudden_flag": 0, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 0, "streak_len": 0, "bad_ratio": 0.5, "overall_trend_negative": 0, "if_error": 1}, {"date": "2026-02-09", "value": 0.4393530997304582, "numerator": 163, "denominator": 371, "baseline_value": 0.3281934341919698, "delta_pct": 0.3387016739447258, "delta_last": 0.9727815654563716, "sudden_flag": 1, "threshold": NaN, "status_anomaly_flag": 0, "change_threshold": 0.2, "change_anomaly_flag": 1, "streak_len": 1, "bad_ratio": 0.5714285714285714, "overall_trend_negative": 0, "if_error": 1}], "all_dimensions": ["platform"], "threshold": null, "evaluation_method": "lower_is_better", "actual_time_points": 7, "anomaly_type": "critical", "all_anomaly_types": ["critical", "trend", "sudden"], "anomaly_count": 3}], "trend": [], "status": [], "sudden": []};
+        
+        // 全局变量
+        let chartInstances = {};
+        let metricDataMap = {};
+
+        function initializeDashboard() {
+            renderSectionOrHide('criticalSection', 'criticalGrid', DASHBOARD_DATA.critical, 'critical');
+            renderSectionOrHide('trendSection', 'trendGrid', DASHBOARD_DATA.trend, 'trend');
+            renderSectionOrHide('statusSection', 'statusGrid', DASHBOARD_DATA.status, 'status');
+            renderSectionOrHide('suddenSection', 'suddenGrid', DASHBOARD_DATA.sudden, 'sudden');
+        }
+
+        function renderSectionOrHide(sectionId, gridId, metricsList, anomalyType) {
+          const section = document.getElementById(sectionId);
+          if (!metricsList || metricsList.length === 0) {
+            if (section) section.style.display = 'none';
+            return;
+          }
+          renderSection(gridId, metricsList, anomalyType);
+        }
+
+        function renderSection(gridId, metricsList, anomalyType) {
+          const grid = document.getElementById(gridId);
+
+          // ✅ 防止某个 gridId 不存在导致整页 JS 中断（常见：id 拼错/被删）
+          if (!grid) {
+            console.error(`[renderSection] Missing grid element: #${gridId}`);
+            return;
+          }
+
+          if (!metricsList || metricsList.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✓</div><div class="empty-state-text">暂无异常</div></div>';
+            return;
+          }
+
+          grid.innerHTML = metricsList.map((metric, index) => {
+            const cardId = `${gridId}_${index}`;
+            metricDataMap[cardId] = metric;
+            return renderMetricCard(metric, anomalyType, cardId);
+          }).join('');
+
+          metricsList.forEach((metric, index) => {
+            const cardId = `${gridId}_${index}`;
+            initializeMetricCard(cardId, metric, anomalyType);
+          });
+        }
+
+
+        function renderMetricCard(metric, anomalyType, cardId) {
+            const badges = getBadges(metric);  // 传递整个metric对象
+            const datasets = metric.datasets || {};
+            const hasDimensions = Object.keys(datasets).some(k => k !== 'overall');
+
+            // Critical指标：如果有维度，默认显示dimensions tab
+            const showDimensionsFirst = anomalyType === 'critical' && hasDimensions;
+
+            let tabsHtml = '';
+            let tabContentsHtml = '';
+
+            if (hasDimensions) {
+                // 根据是否是Critical来决定哪个tab默认激活
+                const overallActive = !showDimensionsFirst ? 'active' : '';
+                const dimensionsActive = showDimensionsFirst ? 'active' : '';
+
+                tabsHtml = `
+                    <div class="tabs">
+                        <div class="tab ${overallActive}" data-tab="overall" onclick="switchTab('${cardId}', 'overall')">Overall</div>
+                        <div class="tab ${dimensionsActive}" data-tab="dimensions" onclick="switchTab('${cardId}', 'dimensions')">Dimensions</div>
+                    </div>
+                `;
+
+                tabContentsHtml += `
+                    <div class="tab-content ${overallActive}" id="${cardId}_tab_overall">
+                        <div class="chart-container">
+                            <canvas id="${cardId}_chart_overall"></canvas>
+                        </div>
+                    </div>
+                `;
+
+                tabContentsHtml += `
+                    <div class="tab-content ${dimensionsActive}" id="${cardId}_tab_dimensions">
+                        ${renderDimensionControls(cardId, datasets)}
+                        <div class="chart-container">
+                            <canvas id="${cardId}_chart_dimension"></canvas>
+                        </div>
+                    </div>
+                `;
+            } else {
+                tabContentsHtml = `
+                    <div class="chart-container">
+                        <canvas id="${cardId}_chart_overall"></canvas>
+                    </div>
+                `;
+            }
+
+            const stats = calculateMetricStats(metric.overall_data, anomalyType, metric.threshold, metric.evaluation_method);
+
+            return `
+                <div class="metric-card" id="${cardId}" data-metric-id="${metric.metric_id}">
+                    <div class="metric-header">
+                        <div class="metric-title">
+                            <div class="metric-name">${metric.metric_name}</div>
+                            <div class="metric-id">${metric.metric_id}</div>
+                        </div>
+                        <div class="metric-badges">${badges}</div>
+                    </div>
+
+                    ${tabsHtml}
+                    ${tabContentsHtml}
+
+                    <div class="anomaly-details" id="${cardId}_details">
+                        ${renderDetails(stats, metric.overall_data[metric.overall_data.length - 1] || {}, anomalyType, metric.overall_data || [], metric.threshold)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDimensionControls(cardId, datasets) {
+            const availableDatasets = Object.keys(datasets).filter(k => k !== 'overall');
+
+            if (availableDatasets.length === 0) return '';
+
+            const datasetSelectId = `${cardId}_select_dataset`;
+
+            let controlsHtml = '<div class="dimension-controls">';
+
+            controlsHtml += `
+                <div class="dimension-group">
+                    <label for="${datasetSelectId}">维度类型:</label>
+                    <select id="${datasetSelectId}" onchange="onDatasetChange('${cardId}')">
+                        ${availableDatasets.map((ds, idx) => 
+                            `<option value="${ds}" ${idx === 0 ? 'selected' : ''}>${formatDatasetName(ds)}</option>`
+                        ).join('')}
+                    </select>
+                </div>
+            `;
+
+            controlsHtml += `<div id="${cardId}_dim_values_container" style="display: contents;"></div>`;
+            controlsHtml += '</div>';
+            return controlsHtml;
+        }
+
+
+        function formatDatasetName(datasetName) {
+            if (datasetName === 'overall') return 'Overall';
+
+            const name = datasetName.replace(/^by_/, '');
+            const parts = name.split('_').map(p => 
+                p.charAt(0).toUpperCase() + p.slice(1)
+            );
+
+            return parts.join(' ');
+        }
+
+        function onDatasetChange(cardId) {
+            updateDimensionValueSelectors(cardId);
+            updateDimensionChart(cardId, false);
+
+        }
+
+        function updateDimensionValueSelectors(cardId) {
+            const metric = metricDataMap[cardId];
+            if (!metric) return;
+
+            const datasets = metric.datasets || {};
+            const datasetSelectEl = document.getElementById(`${cardId}_select_dataset`);
+            const selectedDataset = datasetSelectEl ? datasetSelectEl.value : null;
+
+            if (!selectedDataset || !datasets[selectedDataset]) return;
+
+            const dataset = datasets[selectedDataset];
+            const dimensions = dataset.dimensions || [];
+            const dimValues = dataset.dim_values || {};
+            const allData = dataset.data || [];
+            const anomalyType = metric.anomaly_type;
+
+            const container = document.getElementById(`${cardId}_dim_values_container`);
+            if (!container) return;
+
+            let html = '';
+            dimensions.forEach(dim => {
+                const values = dimValues[dim] || [];
+                if (values.length === 0) return;
+
+                const selectId = `${cardId}_select_dimval_${dim}`;
+
+                html += `
+                    <div class="dimension-group">
+                        <label for="${selectId}">${formatDimensionName(dim)}:</label>
+                        <select id="${selectId}" onchange="updateDimensionChart('${cardId}')">
+                            ${values.map((val, idx) => {
+                                // 计算该维度值的异常标签（按分类）
+                                const anomalyLabels = getDimValueAnomalyLabels(cardId, allData, dimensions, dim, val, anomalyType);
+                                const labelStr = anomalyLabels.length > 0 ? ' ' + anomalyLabels.join(' ') : '';
+                                return `<option value="${val}" ${idx === 0 ? 'selected' : ''}>${val}${labelStr}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function getDimValueAnomalyLabels(cardId, allData, dimensions, targetDim, targetValue, anomalyType) {
+            // 过滤出该维度值的所有数据
+            const filteredData = allData.filter(record => 
+                String(record[targetDim]) === String(targetValue)
+            );
+
+            if (!filteredData || filteredData.length === 0) return [];
+
+            const latestRecord = filteredData
+                .slice()
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .pop();
+
+            if (!latestRecord) return [];
+
+            const labels = [];
+            if (anomalyType === 'trend') {
+                // 对 trend：按 overall 同样的逻辑判定该维度是否异常
+                const metric = metricDataMap[cardId];
+                const evalMethod = metric ? metric.evaluation_method : 'higher_is_better';
+                const actualPoints = metric ? (metric.actual_time_points || 0) : 0;
+                if (isTrendSeries(filteredData, evalMethod, actualPoints)) {
+                    labels.push('📉');
+                }
+            } else {
+                const metric = metricDataMap[cardId];
+                const evalMethod = metric ? metric.evaluation_method : 'higher_is_better';
+                const metricThreshold = metric ? metric.threshold : null;
+                if (isAnomaly(latestRecord, anomalyType, metricThreshold, evalMethod)) {
+                switch (anomalyType) {
+                    case 'critical':
+                        labels.push('🔴');
+                        break;
+                    case 'status':
+                        labels.push('⚠️');
+                        break;
+                    case 'sudden':
+                        labels.push('⚡');
+                        break;
+                }
+                }
+            }
+
+            return labels;
+        }
+
+        function formatDimensionName(dim) {
+            return dim.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function initializeMetricCard(cardId, metric, anomalyType) {
+            const datasets = metric.datasets || {};
+            const hasDimensions = Object.keys(datasets).some(k => k !== 'overall');
+
+            // Critical指标：如果有维度，默认显示dimensions tab；否则显示overall
+            const shouldShowDimensionsFirst = anomalyType === 'critical' && hasDimensions;
+
+            // 总是渲染overall图表（即使Critical也需要，因为用户可能切换查看）
+            if (datasets.overall) {
+                renderChart(
+                    `${cardId}_chart_overall`,
+                    datasets.overall.data,
+                    anomalyType,
+                    metric.threshold,
+                    metric.evaluation_method,
+                    metric.actual_time_points
+                );
+            }
+
+            if (hasDimensions) {
+                // 初始化维度选择器
+                updateDimensionValueSelectors(cardId);
+
+                // 如果是Critical且有维度，切换到dimensions tab
+                // switchTab内部会调用updateDimensionChart，所以不需要额外调用
+                if (shouldShowDimensionsFirst) {
+                    switchTab(cardId, 'dimensions');
+                } else {
+                    // 非Critical：渲染维度图表但保持在overall tab
+                    updateDimensionChart(cardId, false);
+                    updateOverallDetails(cardId);
+                }
+            } else {
+                // 没有维度，只更新overall的details
+                updateOverallDetails(cardId);
+            }
+        }
+
+        function switchTab(cardId, tabName) {
+          const card = document.getElementById(cardId);
+          if (!card) return;
+
+          const tabs = card.querySelectorAll('.tab');
+          const contents = card.querySelectorAll('.tab-content');
+
+          // 1) 先切换 tab 样式
+          tabs.forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.tab === tabName);
+          });
+
+          contents.forEach(content => {
+            content.classList.toggle('active', content.id === `${cardId}_tab_${tabName}`);
+          });
+
+          // 2) 再根据 tab 更新图/底部详情
+          if (tabName === 'overall') {
+            // overall：刷新 bottom details 为 overall 最新值
+            updateOverallDetails(cardId);
+          } else if (tabName === 'dimensions') {
+            // dimensions：刷新维度图 + 维度 bottom details
+            updateDimensionChart(cardId, true);
+          }
+        }
+
+
+        function updateOverallDetails(cardId) {
+          const metric = metricDataMap[cardId];
+          if (!metric) return;
+
+          const anomalyType = metric.anomaly_type;
+          const overallData = (metric.datasets && metric.datasets.overall && metric.datasets.overall.data)
+            ? metric.datasets.overall.data
+            : (metric.overall_data || []);
+
+          const sorted = (overallData || []).slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+
+          const stats = calculateMetricStats(sorted, anomalyType, metric.threshold, metric.evaluation_method);
+          const latestRecord = sorted[sorted.length - 1] || {};
+
+          const detailsEl = document.getElementById(`${cardId}_details`);
+          if (detailsEl) {
+            detailsEl.innerHTML = renderDetails(stats, latestRecord, anomalyType, sorted, metric.threshold);
+          }
+        }
+
+
+
+        function updateDimensionChart(cardId, updateDetails = true) {
+            const metric = metricDataMap[cardId];
+            if (!metric) return;
+
+            const datasets = metric.datasets || {};
+            const anomalyType = metric.anomaly_type;
+
+            const datasetSelectEl = document.getElementById(`${cardId}_select_dataset`);
+            const selectedDataset = datasetSelectEl ? datasetSelectEl.value : null;
+
+            if (!selectedDataset || !datasets[selectedDataset]) return;
+
+            const dataset = datasets[selectedDataset];
+            const dimensions = dataset.dimensions || [];
+            const allData = dataset.data || [];
+
+            const selectedDimValues = {};
+            dimensions.forEach(dim => {
+                const selectEl = document.getElementById(`${cardId}_select_dimval_${dim}`);
+                if (selectEl) {
+                    selectedDimValues[dim] = selectEl.value;
+                }
+            });
+
+            let filteredData = allData.filter(record => {
+                return Object.keys(selectedDimValues).every(dim => 
+                    String(record[dim]) === String(selectedDimValues[dim])
+                );
+            });
+
+            filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            renderChart(
+                `${cardId}_chart_dimension`,
+                filteredData,
+                anomalyType,
+                metric.threshold,
+                metric.evaluation_method,
+                metric.actual_time_points
+            );
+
+            if (updateDetails) {
+                const stats = calculateMetricStats(filteredData, anomalyType, metric.threshold, metric.evaluation_method);
+                const latestRecord = filteredData[filteredData.length - 1] || {};
+                const detailsEl = document.getElementById(`${cardId}_details`);
+                if (detailsEl) {
+                  detailsEl.innerHTML = renderDetails(stats, latestRecord, anomalyType, filteredData, metric.threshold);
+                }
+            }
+        }
+
+
+        function getBadges(metric) {
+            // 获取该指标的所有异常类型
+            const allAnomalyTypes = metric.all_anomaly_types || [metric.anomaly_type];
+
+            const badgeMap = {
+                'critical': '<span class="badge critical">Critical</span>',
+                'trend': '<span class="badge trend">Trend</span>',
+                'status': '<span class="badge warning">Status</span>',
+                'sudden': '<span class="badge info">Sudden</span>'
+            };
+
+            // 按优先级顺序显示所有标签
+            const badges = allAnomalyTypes
+                .filter(type => badgeMap[type])
+                .map(type => badgeMap[type])
+                .join('');
+
+            return badges;
+        }
+
+        function calculateMetricStats(data, anomalyType, metricThreshold, evaluationMethod) {
+            const anomalyData = data.filter(d => isAnomaly(d, anomalyType, metricThreshold, evaluationMethod));
+
+            const anomalyCount = anomalyData.length;
+            const avgAbsDelta = anomalyData.length > 0
+                ? (anomalyData.reduce((sum, d) => sum + Math.abs(d.delta_pct || 0), 0) / anomalyData.length * 100).toFixed(1)
+                : '0.0';
+
+            return { anomalyCount, avgAbsDelta };
+        }
+
+        function getAnomalyTags(data) {
+            const tags = [];
+
+            const hasCritical = data.some(d => d.if_error === 1);
+            const hasStatus = data.some(d => d.status_anomaly_flag === 1);
+            const hasSudden = data.some(d => d.sudden_flag === 1);
+            // Note: Python has already filtered for Trend anomalies
+            // This is just for visualization tags
+            const hasTrend = data.some(d => record.sudden_flag === 1);
+
+            if (hasCritical) tags.push('<span class="anomaly-tag has-critical">Critical</span>');
+            if (hasStatus) tags.push('<span class="anomaly-tag has-status">Status</span>');
+            if (hasSudden) tags.push('<span class="anomaly-tag has-sudden">Sudden</span>');
+            if (hasTrend) tags.push('<span class="anomaly-tag has-trend">Trend</span>');
+
+            return tags;
+        }
+
+        function normalizeThreshold(value, fallback) {
+            const num = Number(value);
+            if (Number.isFinite(num)) return num;
+            const fb = Number(fallback);
+            if (Number.isFinite(fb)) return fb;
+            return null;
+        }
+
+        function renderDetails(stats, latestRecord, anomalyType, allData, metricThreshold) {
+            const value = latestRecord.value != null ? Number(latestRecord.value).toFixed(2) : 'N/A';
+            const baseline = latestRecord.baseline_value != null ? Number(latestRecord.baseline_value).toFixed(2) : 'N/A';
+            const thresholdValue = normalizeThreshold(latestRecord.threshold, metricThreshold);
+            const threshold = thresholdValue != null ? thresholdValue.toFixed(2) : 'N/A';
+            const streakLen = latestRecord.streak_len != null ? latestRecord.streak_len : 0;
+            const latestDate = latestRecord.date || 'N/A';
+
+            // Δ% (VS BASELINE)
+            const deltaPct = latestRecord.delta_pct != null ? (latestRecord.delta_pct * 100).toFixed(1) + '%' : 'N/A';
+
+            // 获取baseline说明（从所有数据中推断）
+            let baselineDescription = '历史平均值';
+            if (allData && allData.length > 1) {
+                // 简单判断：如果baseline变化较小，可能是固定窗口；如果逐步增长，可能是扩展窗口
+                const firstBaseline = allData[0]?.baseline_value;
+                const lastBaseline = allData[allData.length - 1]?.baseline_value;
+                if (firstBaseline != null && lastBaseline != null) {
+                    // 这里可以根据实际的baseline配置来显示更准确的描述
+                    // 暂时使用通用描述
+                    baselineDescription = '前期数据平均值';
+                }
+            }
+
+            // Critical: 只显示实际值、阈值、异常点、最新值、目标值、最新日期
+            if (anomalyType === 'critical') {
+                return `
+                    <div class="detail-item">
+                        <div class="detail-label">异常点数</div>
+                        <div class="detail-value warning">${stats.anomalyCount}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">最新值</div>
+                        <div class="detail-value">${value}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">目标值</div>
+                        <div class="detail-value info">${threshold}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">最新日期</div>
+                        <div class="detail-value">${latestDate}</div>
+                    </div>
+                `;
+            }
+
+            // Trend/Status/Sudden: 显示最新值、目标值、最新日期、baseline、Δ%、连续变差点数
+            return `
+                <div class="detail-item">
+                    <div class="detail-label">最新值</div>
+                    <div class="detail-value">${value}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">目标值</div>
+                    <div class="detail-value info">${threshold}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">最新日期</div>
+                    <div class="detail-value">${latestDate}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Baseline (${baselineDescription})</div>
+                    <div class="detail-value">${baseline}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Δ% (VS BASELINE)</div>
+                    <div class="detail-value">${deltaPct}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">连续变差点数 (vs Baseline)</div>
+                    <div class="detail-value ${streakLen > 0 ? 'critical' : 'success'}">${streakLen}</div>
+                </div>
+            `;
+        }
+
+        function calculateWeightedBadRatio(records, window = 7) {
+            if (!records || records.length < 2) return 0.0;
+            const sorted = records.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+            const recent = sorted.length >= window ? sorted.slice(-window) : sorted;
+
+            const n = recent.length;
+            let weights;
+            if (n <= 3) {
+                weights = Array(n).fill(1.0);
+            } else if (n <= 5) {
+                weights = [0.7, 0.8, 0.9, 1.0, 1.2].slice(-n);
+            } else {
+                weights = [0.5, 0.7, 0.8, 0.9, 1.0, 1.2, 1.5].slice(-n);
+            }
+
+            let weightedSum = 0.0;
+            let weightTotal = 0.0;
+            for (let i = 0; i < recent.length; i++) {
+                const flag = recent[i].change_anomaly_flag ? Number(recent[i].change_anomaly_flag) : 0;
+                weightedSum += weights[i] * flag;
+                weightTotal += weights[i];
+            }
+            return weightTotal === 0 ? 0.0 : weightedSum / weightTotal;
+        }
+
+        function checkTrendNegative(records, method, window = 7) {
+            if (!records || records.length < 4) return false;
+
+            const sorted = records.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+            const recent = sorted.length >= window ? sorted.slice(-window) : sorted;
+
+            const values = recent
+                .map(r => r.value)
+                .filter(v => v != null)
+                .map(v => Number(v))
+                .filter(v => !Number.isNaN(v));
+
+            if (values.length < 4) return false;
+
+            const n = values.length;
+            const mid = Math.floor(n / 2);
+            const firstHalf = values.slice(0, mid);
+            const lastHalf = values.slice(mid);
+            const avgFirst = firstHalf.reduce((a, b) => a + b, 0) / firstHalf.length;
+            const avgLast = lastHalf.reduce((a, b) => a + b, 0) / lastHalf.length;
+            const slope = (values[values.length - 1] - values[0]) / n;
+
+            if (method === 'higher_is_better') {
+                return avgLast < avgFirst && slope < 0;
+            }
+            if (method === 'lower_is_better') {
+                return avgLast > avgFirst && slope > 0;
+            }
+            return false;
+        }
+
+        function isRecovering(latest, baseline, method, absTol = 0.02, relTol = 0.15) {
+            if (!latest || baseline == null) return false;
+            const value = latest.value != null ? Number(latest.value) : null;
+            const base = baseline != null ? Number(baseline) : null;
+            if (value == null || base == null || Number.isNaN(value) || Number.isNaN(base)) return false;
+
+            if (Math.abs(base) < 1e-9) {
+                return Math.abs(value) < absTol;
+            }
+
+            const rel = Math.abs((value - base) / base);
+            const absd = Math.abs(value - base);
+            return rel < relTol || absd < absTol;
+        }
+
+        function latestIsBad(latestValue, baselineValue, method) {
+            if (latestValue == null || baselineValue == null) return true;
+            if (method === 'higher_is_better') return latestValue < baselineValue;
+            if (method === 'lower_is_better') return latestValue > baselineValue;
+            return true;
+        }
+
+        function isTrendSeries(records, method, actualTimePoints) {
+            if (!records || records.length === 0) return false;
+
+            const sorted = records.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+            const latest = sorted[sorted.length - 1];
+
+            const weightedBadRatio = calculateWeightedBadRatio(sorted, 7);
+            const window = actualTimePoints && actualTimePoints > 0 ? actualTimePoints : 7;
+            const trendNegative = checkTrendNegative(sorted, method, window);
+
+            const baselineValue = latest ? latest.baseline_value : null;
+            const recovering = isRecovering(latest, baselineValue, method);
+
+            const latestValue = latest && latest.value != null ? Number(latest.value) : null;
+            const baseValue = baselineValue != null ? Number(baselineValue) : null;
+
+            const isStatus = latest && latest.status_anomaly_flag === 1;
+            const latestBad = latestIsBad(latestValue, baseValue, method);
+
+            return (weightedBadRatio >= 0.7 || trendNegative) && !isStatus && !recovering && latestBad;
+        }
+
+        function isStatusAnomalyRecord(record, metricThreshold, evaluationMethod) {
+            if (!record) return false;
+            const thresholdValue = normalizeThreshold(record.threshold, metricThreshold);
+            const value = record.value != null ? Number(record.value) : null;
+            if (!Number.isFinite(value) || !Number.isFinite(thresholdValue)) {
+                return record.status_anomaly_flag === 1;
+            }
+            if (evaluationMethod === 'lower_is_better') {
+                return value > thresholdValue;
+            }
+            if (evaluationMethod === 'higher_is_better') {
+                return value < thresholdValue;
+            }
+            return record.status_anomaly_flag === 1;
+        }
+
+        function isCriticalAnomalyRecord(record, metricThreshold, evaluationMethod) {
+            if (!record) return false;
+            const thresholdValue = normalizeThreshold(record.threshold, metricThreshold);
+            const hasThreshold = Number.isFinite(thresholdValue);
+            if (hasThreshold && evaluationMethod) {
+                // 有阈值时，按阈值规则判断是否异常
+                return isStatusAnomalyRecord(record, metricThreshold, evaluationMethod);
+            }
+            return record.if_error === 1;
+        }
+
+        function isTrendRecord(record) {
+            if (!record) return false;
+            const badRatio = record.bad_ratio != null ? Number(record.bad_ratio) : 0;
+            return record.change_anomaly_flag === 1
+                || record.overall_trend_negative === 1
+                || record.streak_len > 0
+                || badRatio >= 0.35;
+        }
+
+        function isAnomaly(record, anomalyType, metricThreshold, evaluationMethod) {
+            switch (anomalyType) {
+                case 'critical':
+                    return isCriticalAnomalyRecord(record, metricThreshold, evaluationMethod);
+                case 'status':
+                    return isStatusAnomalyRecord(record, metricThreshold, evaluationMethod);
+                case 'sudden':
+                    return record.sudden_flag === 1;
+                case 'trend':
+                    // Note: Python has already validated this metric for Trend section
+                    // This function just highlights anomaly points in the chart
+                    // Use simplified check for visualization
+                    return isTrendRecord(record);
+                default:
+                    return false;
+            }
+        }
+
+        function findStreakRanges(data) {
+            // 找出所有 streak_len > 0 的连续区间
+            // 区间从异常前一天开始
+            const ranges = [];
+            let start = null;
+
+            for (let i = 0; i < data.length; i++) {
+                const streakLen = data[i].streak_len || 0;
+
+                if (streakLen > 0) {
+                    if (start === null) {
+                        // 从前一天开始（如果存在）
+                        start = Math.max(0, i - 1);
+                    }
+                } else {
+                    if (start !== null) {
+                        ranges.push({ start, end: i - 1 });
+                        start = null;
+                    }
+                }
+            }
+
+            // 处理最后一个区间
+            if (start !== null) {
+                ranges.push({ start, end: data.length - 1 });
+            }
+
+            return ranges;
+        }
+
+        function renderChart(chartId, data, anomalyType, metricThreshold, evaluationMethod, actualTimePoints) {
+            const ctx = document.getElementById(chartId);
+            if (!ctx) return;
+
+            if (chartInstances[chartId]) {
+                chartInstances[chartId].destroy();
+            }
+
+            const labels = data.map(d => d.date);
+            const values = data.map(d => d.value);
+            const baseline = data.map(d => d.baseline_value);
+            const thresholdFromData = data.length > 0 ? data[data.length - 1]?.threshold : null;
+            const threshold = normalizeThreshold(thresholdFromData, metricThreshold);
+
+            // 所有异常点都用红色标注
+            let anomalyPoints = [];
+            if (anomalyType === 'trend') {
+                const isSeriesTrend = isTrendSeries(data, evaluationMethod || 'higher_is_better', actualTimePoints || 0);
+                anomalyPoints = data.map(d => (isSeriesTrend && isTrendRecord(d)) ? d.value : null);
+            } else {
+                anomalyPoints = data.map(d => isAnomaly(d, anomalyType, metricThreshold, evaluationMethod) ? d.value : null);
+            }
+
+            const datasets = [];
+
+            // Critical: 只显示实际值、阈值、异常点
+            if (anomalyType === 'critical') {
+                // 实际值
+                datasets.push({
+                    label: '实际值',
+                    data: values,
+                    borderColor: '#3742fa',
+                    backgroundColor: 'rgba(55, 66, 250, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 6
+                });
+
+                // 阈值
+                if (threshold != null) {
+                    datasets.push({
+                        label: '阈值',
+                        data: Array(labels.length).fill(threshold),
+                        borderColor: '#ffa502',
+                        borderWidth: 2,
+                        borderDash: [3, 3],
+                        fill: false,
+                        pointRadius: 0
+                    });
+                }
+
+                // 异常点
+                datasets.push({
+                    label: '异常点',
+                    data: anomalyPoints,
+                    borderColor: '#ff4757',
+                    backgroundColor: '#ff4757',
+                    borderWidth: 2,
+                    pointRadius: 6,
+                    pointStyle: 'circle',
+                    showLine: false
+                });
+            } else {
+                // Trend/Status/Sudden: 显示实际值、基线、阈值、异常点、连续变差区域
+
+                // 实际值
+                datasets.push({
+                    label: '实际值',
+                    data: values,
+                    borderColor: '#3742fa',
+                    backgroundColor: 'rgba(55, 66, 250, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 6
+                });
+
+                // 基线
+                datasets.push({
+                    label: '基线',
+                    data: baseline,
+                    borderColor: '#8b95ab',
+                    borderWidth: 1,
+                    borderDash: [5, 5],
+                    fill: false,
+                    tension: 0.4,
+                    pointRadius: 0
+                });
+
+                // 阈值
+                if (threshold != null) {
+                    datasets.push({
+                        label: '阈值',
+                        data: Array(labels.length).fill(threshold),
+                        borderColor: '#ffa502',
+                        borderWidth: 1,
+                        borderDash: [3, 3],
+                        fill: false,
+                        pointRadius: 0
+                    });
+                }
+
+                // 连续变差区间阴影（从前一天开始）
+                const streakRanges = findStreakRanges(data);
+                streakRanges.forEach((range, idx) => {
+                    const streakData = Array(labels.length).fill(null);
+                    for (let i = range.start; i <= range.end; i++) {
+                        streakData[i] = values[i];
+                    }
+
+                    datasets.push({
+                        label: idx === 0 ? '连续变差区域' : '',
+                        data: streakData,
+                        backgroundColor: 'rgba(255, 71, 87, 0.15)',
+                        borderColor: 'rgba(255, 71, 87, 0.3)',
+                        borderWidth: 1,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 0,
+                        showLine: true
+                    });
+                });
+
+                // 所有异常点统一用红色
+                datasets.push({
+                    label: '异常点',
+                    data: anomalyPoints,
+                    borderColor: '#ff4757',
+                    backgroundColor: '#ff4757',
+                    borderWidth: 2,
+                    pointRadius: 6,
+                    pointStyle: 'circle',
+                    showLine: false
+                });
+            }
+
+            chartInstances[chartId] = new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: { 
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                color: '#8b95ab',
+                                font: { size: 11 },
+                                filter: function(legendItem, chartData) {
+                                    return legendItem.text !== '';
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 34, 55, 0.95)',
+                            titleColor: '#e8edf4',
+                            bodyColor: '#8b95ab',
+                            borderColor: '#2a3551',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: true,
+                            callbacks: {
+                                afterBody: function(context) {
+                                    const index = context[0].dataIndex;
+                                    const record = data[index];
+                                    if (!record) return '';
+
+                                    const parts = [];
+
+                                    // 显示与前一个点的变化率
+                                    if (index > 0) {
+                                        const prevValue = data[index - 1].value;
+                                        if (prevValue != null && record.value != null) {
+                                            const changeRate = ((record.value - prevValue) / prevValue * 100).toFixed(1);
+                                            parts.push(`vs 前一天: ${changeRate}%`);
+                                        }
+                                    }
+
+                                    if (record.streak_len && record.streak_len > 0) {
+                                        parts.push(`连续变差: ${record.streak_len} 天`);
+                                    }
+                                    if (record.delta_pct != null) {
+                                        parts.push(`vs Baseline: ${(record.delta_pct * 100).toFixed(1)}%`);
+                                    }
+                                    return parts.join('\n');
+                                }
+                            }
+                        },
+                        // 添加数据标签插件
+                        datalabels: {
+                            display: function(context) {
+                                // 只在数据点显示
+                                return context.dataIndex > 0;
+                            },
+                            align: 'top',
+                            anchor: 'end',
+                            formatter: function(value, context) {
+                                if (context.datasetIndex !== 0) return ''; // 只在实际值线显示
+
+                                const index = context.dataIndex;
+                                if (index === 0) return '';
+
+                                const currentValue = data[index].value;
+                                const prevValue = data[index - 1].value;
+
+                                if (currentValue == null || prevValue == null) return '';
+
+                                const changeRate = ((currentValue - prevValue) / prevValue * 100).toFixed(1);
+                                return changeRate + '%';
+                            },
+                            color: '#8b95ab',
+                            font: {
+                                size: 9,
+                                family: 'JetBrains Mono'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(42, 53, 81, 0.3)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#5a6684',
+                                maxTicksLimit: 10
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(42, 53, 81, 0.3)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#5a6684'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 平滑滚动到指定板块
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化仪表板
+            initializeDashboard();
+
+            // 为导航链接添加平滑滚动
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    
+    </script>
+</body>
+</html>

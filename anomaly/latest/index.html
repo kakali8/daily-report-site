@@ -670,10 +670,19 @@
         let metricDataMap = {};
 
         function initializeDashboard() {
-            renderSection('criticalGrid', DASHBOARD_DATA.critical, 'critical');
-            renderSection('trendGrid', DASHBOARD_DATA.trend, 'trend');
-            renderSection('statusGrid', DASHBOARD_DATA.status, 'status');
-            renderSection('suddenGrid', DASHBOARD_DATA.sudden, 'sudden');
+            renderSectionOrHide('criticalSection', 'criticalGrid', DASHBOARD_DATA.critical, 'critical');
+            renderSectionOrHide('trendSection', 'trendGrid', DASHBOARD_DATA.trend, 'trend');
+            renderSectionOrHide('statusSection', 'statusGrid', DASHBOARD_DATA.status, 'status');
+            renderSectionOrHide('suddenSection', 'suddenGrid', DASHBOARD_DATA.sudden, 'sudden');
+        }
+
+        function renderSectionOrHide(sectionId, gridId, metricsList, anomalyType) {
+          const section = document.getElementById(sectionId);
+          if (!metricsList || metricsList.length === 0) {
+            if (section) section.style.display = 'none';
+            return;
+          }
+          renderSection(gridId, metricsList, anomalyType);
         }
 
         function renderSection(gridId, metricsList, anomalyType) {
