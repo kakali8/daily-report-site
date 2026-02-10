@@ -1,0 +1,3684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KiX server Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;}
+:root {
+  --bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+  --border-light: #f3f4f6;
+  --text: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --accent: #3b82f6;
+  --accent-light: #dbeafe;
+  --accent-dark: #2563eb;
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --maxw: 96%;
+  --pagePadX: 20px;
+  --r: 12px;
+  --r2: 8px;
+}
+
+* { 
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  background: var(--card-bg);
+  padding: 24px 32px;
+  margin: -20px -20px 24px;
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--text);
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-info {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.header-info span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-info strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* 导航栏 */
+.nav-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card-bg);
+  padding: 16px 0;
+  margin: 0 -20px 32px;
+  border-bottom: 2px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-items: center;
+}
+
+/* 搜索框容器 */
+.search-container {
+  position: relative;
+  margin-left: auto; 
+  flex-shrink: 0;
+}
+
+.metric-search-input {
+  width: 280px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.metric-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.metric-search-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* 搜索结果下拉框 */
+.search-results {
+  position: fixed;
+  top: 120px;  /* 固定在页面顶部下方 */
+  right: 20px; /* 右侧对齐 */
+  width: 400px; /* 固定宽度 */
+  max-height: calc(100vh - 140px); /* 最大高度为视口高度减去顶部间距 */
+  overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* 更强的阴影 */
+  display: none;
+  z-index: 9999; /* 更高的层级 */
+}
+
+.search-results.show {
+  display: block;
+}
+
+.search-result-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.15s;
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background: var(--accent-light);
+}
+
+.search-result-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.search-result-domain {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.search-no-results {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* 高亮动画 */
+@keyframes highlight-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    border-color: var(--border);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    border-color: var(--accent);
+  }
+}
+
+.chart-card.highlight {
+  animation: highlight-pulse 1.5s ease-in-out 2;
+  border-color: var(--accent);
+}
+
+.nav-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.nav-tabs::-webkit-scrollbar-track {
+  background: var(--border-light);
+  border-radius: 3px;
+}
+
+.nav-tabs::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.nav-tabs::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.nav-tab {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.nav-tab:hover {
+  background: var(--card-bg);
+  border-color: var(--accent);
+  color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.nav-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: var(--shadow);
+}
+
+/* AI 分析面板（方案A：导航下方固定占位，不遮挡图表） */
+:root { --aiw: {aiw_px}px; --ai-top: 86px; }
+
+/* 两列布局：左侧图表，右侧 AI 面板（不 overlay） */
+.content-layout{
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.main-area{
+  flex: 1 1 auto;
+  min-width: 0; /* 允许内部图表自适应缩放 */
+}
+
+/* AI 面板：从导航栏下方开始 sticky */
+.ai-panel{
+  width: var(--aiw);
+  min-width: var(--aiw);
+  max-width: var(--aiw);
+  flex: 0 0 var(--aiw);
+  position: sticky;
+  top: var(--ai-top);
+  height: calc(100vh - var(--ai-top) - 16px);
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 折叠：AI 面板宽度变 0，主内容占满 */
+body.ai-collapsed .ai-panel{
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  flex: 0 0 0 !important;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 折叠时显示一个小把手（不挡图表） */
+.ai-expand-handle{
+  position: sticky;
+  top: calc(var(--ai-top) + 10px);
+  margin-left: -6px;
+  align-self: flex-start;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  font-weight: 700;
+  cursor: pointer;
+  display: none;
+}
+body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; justify-content:center; }
+
+.ai-panel-header{
+  padding: 14px 14px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0));
+}
+.ai-panel-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ai-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), #4dabf7);
+  box-shadow: 0 0 0 4px rgba(34,139,230,0.12);
+}
+.ai-panel-actions{ display:flex; gap:8px; }
+.ai-panel-btn{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition: all .15s ease;
+}
+.ai-panel-btn:hover{
+  color: var(--text);
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: var(--shadow-sm);
+}
+
+.ai-panel-subtitle{
+  padding: 10px 14px 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.ai-panel-content{
+  padding: 12px 14px 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.ai-panel-content .ai-empty{
+  border: 1px dashed var(--border-light);
+  border-radius: 14px;
+  padding: 14px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.02);
+}
+
+.ai-panel-content .ai-block{
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 12px 12px 10px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 12px;
+}
+
+.ai-panel-content .ai-kv{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 10px;
+  margin: 8px 0 10px;
+}
+.ai-panel-content .ai-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: rgba(34,139,230,0.06);
+  color: var(--text);
+  font-size: 12px;
+}
+.ai-panel-content ul{ padding-left: 18px; margin: 8px 0 0; }
+.ai-panel-content li{ margin: 6px 0; color: var(--text); line-height: 1.55; }
+.ai-panel-content li.ai-section{
+  margin-top: 10px;
+  font-weight: 700;
+  color: #0f172a;
+  list-style: none;
+}
+
+/* Sidebar header / close button */
+
+
+/* AI content typography */
+.ai-metric-title{
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 14px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eef2f7;
+}
+.ai-point{
+  margin: 12px 0;
+  padding: 12px 12px 12px 12px;
+  background: #fbfdff;
+  border: 1px solid #eef2f7;
+  border-left: 4px solid #3b82f6;
+  border-radius: 12px;
+}
+.ai-point-title{
+  color:#1d4ed8;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.ai-point-content{
+  color:#334155;
+  line-height: 1.65;
+  font-size: 13.5px;
+}
+
+
+/* 小屏降级：改回覆盖式（不然内容太窄） */
+@media (max-width: 980px){
+    }
+.ai-metric-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.ai-point {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 3px solid #3b82f6;
+}
+
+.ai-point-title {
+  color: #3b82f6;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.ai-point-content {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  }
+
+/* AI分析内容样式 - 极简版 */
+.ai-analysis-text h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 18px 0 10px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ai-analysis-text h3:first-child {
+  margin-top: 0;
+}
+
+.ai-analysis-text .tldr-section {
+  margin-bottom: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .domain-item {
+  margin: 6px 0 6px 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .domain-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.ai-analysis-text .domain-name::after {
+  content: ": ";
+}
+
+.ai-analysis-text .chain-item {
+  margin: 6px 0 6px 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .confidence-section {
+  margin-top: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.ai-analysis-text strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* 面包屑导航 */
+.metric-detail-breadcrumb {
+  margin: 24px 0 16px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #fbbf24;
+  border-radius: var(--r);
+  box-shadow: var(--shadow-sm);
+}
+
+.breadcrumb-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  color: #d97706;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: #fffbeb;
+  border-color: #d97706;
+  transform: translateX(-2px);
+}
+
+.back-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.breadcrumb-path {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #92400e;
+}
+
+.breadcrumb-item {
+  font-weight: 500;
+}
+
+.breadcrumb-item.current {
+  font-weight: 700;
+  color: #78350f;
+}
+
+.breadcrumb-separator {
+  color: #d97706;
+  font-weight: 600;
+}
+
+/* 详情页模式 */
+.detail-mode .chart-card {
+  cursor: default;
+}
+
+.chart-card.current-metric {
+  border: 2px solid #3b82f6;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.chart-card.related-metric {
+  opacity: 1;
+}
+
+.module-row.hidden-module {
+  display: none;
+}
+
+.module-header.related-section {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-bottom: 2px solid #86efac;
+}
+
+.module-header.related-section h2::before {
+  content: "🔗 ";
+}
+
+/* 模块 */
+.modules {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.module-row {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  scroll-margin-top: 100px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.module-row:hover {
+  box-shadow: var(--shadow);
+}
+
+.module-header {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.module-header h2 {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.module-header p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.module-body {
+  padding: 24px;
+}
+
+.charts {
+  display: grid;
+  /* AI 面板展开时：更倾向 2 列（每卡更宽更易读） */
+  grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+  gap: 24px;
+}
+
+/* AI 面板折叠后：允许更多列，充分利用全宽 */
+body.ai-collapsed .charts{
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+}
+
+@media (max-width: 1100px){
+  .content-layout{ display:block; }
+  .ai-panel{ position: relative; top: 0; height: auto; width: 100%; flex: none; margin-top: 14px; }
+  body.ai-collapsed .ai-panel{ display:none; }
+  body.ai-collapsed .ai-expand-handle{ display:none; }
+  .charts{ grid-template-columns: 1fr !important; }
+}
+
+/* Sidebar 打开时，图表网格从 3 列收敛到 2 列（避免过窄） */
+@media (max-width: 1200px){
+  }
+
+
+@media (max-width: 768px) {
+  .charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 图表卡片 */
+.chart-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  min-height: 380px;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow);
+  border-color: var(--accent-light);
+  transform: translateY(-2px);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.chart-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.ai-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:10px;
+  padding:2px 8px;
+  font-size:12px;
+  font-weight:700;
+  color:#2563eb;
+  background:rgba(37,99,235,0.10);
+  border:1px solid rgba(37,99,235,0.25);
+  border-radius:999px;
+  cursor:pointer;
+  user-select:none;
+}
+.ai-badge:hover{
+  background:rgba(37,99,235,0.16);
+  border-color:rgba(37,99,235,0.35);
+}
+
+
+/* View Details 链接 */
+.view-details-link-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 16px 20px;
+  margin-top: -8px;
+}
+
+.view-details-link {
+  color: #3b82f6;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+.view-details-link:hover {
+  color: #2563eb;
+  transform: translateX(2px);
+}
+
+/* 详情模式下隐藏View Details链接 */
+.detail-mode .view-details-link-wrapper {
+  display: none;
+}
+
+.canvas-wrapper {
+  position: relative;
+  height: 420px;
+  padding: 16px;
+}
+
+/* Chart Tabs Row - contains tabs and filter */
+.chart-tabs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 16px;
+}
+
+/* Chart Tabs */
+
+/* Dim filter (dropdown) */
+.dim-filter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.dim-filter label{
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.dim-select{
+  min-width: 180px;
+  max-width: 360px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+}
+
+.dim-select:focus{
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.dim-hint{
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.chart-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.chart-tab {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.chart-tab:hover {
+  background: var(--card-bg);
+  border-color: var(--accent-light);
+  color: var(--accent);
+}
+
+.chart-tab.active {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+/* KPI卡片 */
+.kpi-card {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: var(--r2);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  color: white;
+}
+
+.kpi-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kpi-value {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+    .funnel-wrap{
+      width:100%;
+      height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+/* 空状态 */
+.empty-module {
+  padding: 80px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  background: var(--border-light);
+  border-radius: var(--r2);
+}
+
+.empty-module-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.3;
+}
+
+/* 动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.module-row {
+  animation: fadeInUp 0.4s ease-out backwards;
+}
+
+.module-row:nth-child(1) { animation-delay: 0.05s; }
+.module-row:nth-child(2) { animation-delay: 0.1s; }
+.module-row:nth-child(3) { animation-delay: 0.15s; }
+.module-row:nth-child(4) { animation-delay: 0.2s; }
+.module-row:nth-child(5) { animation-delay: 0.25s; }
+.module-row:nth-child(6) { animation-delay: 0.3s; }
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .nav-tabs {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .container {
+    padding: 16px;
+  }
+
+  .module-body {
+    padding: 16px;
+  }
+}
+
+/* ====== Layout: 3 charts per row ====== */
+.charts-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 1200px){
+  .charts-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 780px){
+  .charts-grid{ grid-template-columns: repeat(1, minmax(0, 1fr)); }
+}
+
+/* ====== Dim multi-select dropdown ====== */
+.dim-filter{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.dim-filter-label{
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.dim-dd-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+  user-select: none;
+  max-width: 260px;
+}
+.dim-dd-btn:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+.dim-dd-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+.dim-dd-panel{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 320px;
+  max-height: 360px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+  z-index: 50;
+  display: none;
+  overflow: hidden;
+}
+.dim-dd-panel.open{ display: block; }
+.dim-dd-search{
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  outline: none;
+}
+.dim-dd-list{
+  padding: 8px 10px;
+  overflow: auto;
+  max-height: 280px;
+}
+.dim-dd-item{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px;
+  border-radius: 8px;
+}
+.dim-dd-item:hover{
+  background: rgba(59,130,246,0.07);
+}
+.dim-dd-actions{
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  border-top: 1px solid var(--border);
+}
+.dim-dd-actions button{
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+}
+.dim-dd-actions button.primary{
+  border-color: var(--accent);
+  background: var(--accent);
+  color: white;
+}
+
+/* ====== Prevent label clipping ====== */
+.canvas-wrapper{
+  padding: 10px 8px 18px 8px;
+}
+
+
+/* ====== Card header refinements ====== */
+.chart-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.latest-badge{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-light);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+/* More breathing room so labels don't clip */
+.canvas-wrapper{
+  padding: 12px 10px 26px 10px;
+}
+
+</style>
+</head>
+<body>
+<script type="application/json" id="charts-data">{
+  "platform_basics": [],
+  "user_growth": [],
+  "revenue": [],
+  "daily_challenge": [],
+  "pk": [],
+  "viral": [],
+  "cash_out": [],
+  "monitoring": [],
+  "engagement": []
+}</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-10 11:27\n\n## Platform Basics\n\n**dau**\n\n\u2022 \u73b0\u72b6\u4e0e\u76ee\u6807\uff1a\u5f53\u524d\u503c 443 / \u76ee\u6807\u503c 250 / \u5df2\u5b8c\u6210 77.2%\n\n\u2022 \u8d8b\u52bf\u5206\u6790\uff1a\u6700\u8fd1\u51e0\u5929DAU\u5448\u73b0\u6ce2\u52a8\u8d8b\u52bf\uff0c\u6700\u9ad8\u70b9\u4e3a549\uff082026-02-07\uff09\uff0c\u6700\u4f4e\u70b9\u4e3a117\uff082026-02-03\uff09\u3002\u73af\u6bd4\u53d8\u5316\u65b9\u9762\uff0c2026-02-09\u8f83\u524d\u4e00\u5929\u589e\u957f\u4e8669.08%\uff08181\u4eba\uff09\uff0c\u663e\u793a\u51fa\u5f3a\u52b2\u7684\u589e\u957f\u52bf\u5934\u3002\n\n\u2022 \u6df1\u5ea6\u6d1e\u5bdf\uff1a\n1. \u65b0\u7528\u6237\uff08new_user\uff09\u57282026-02-09\u8fbe\u5230275\uff0c\u8f83\u524d\u4e00\u5929\u7684126\u589e\u957f118.25%\uff0c\u662fDAU\u589e\u957f\u7684\u4e3b\u8981\u9a71\u52a8\u56e0\u7d20\u3002\n2. D1\u7559\u5b58\u7387\u57282026-02-09\u964d\u81f34.36%\uff0c\u8f83\u524d\u4e00\u5929\u768417.46%\u5927\u5e45\u4e0b\u964d\uff0c\u53ef\u80fd\u5f71\u54cd\u4e86\u8001\u7528\u6237\u7684\u6d3b\u8dc3\u5ea6\u3002\n3. \u8001\u7528\u6237\u6d3b\u8dc3\uff08DAU - \u65b0\u7528\u6237 - D1\u56de\u6d41\uff09\u57282026-02-09\u4e3a165\uff0c\u663e\u793a\u51fa\u8001\u7528\u6237\u7684\u6d3b\u8dc3\u5ea6\u76f8\u5bf9\u7a33\u5b9a\uff0c\u4f46\u9700\u5173\u6ce8\u7559\u5b58\u7387\u7684\u4e0b\u964d\u3002\n4. \u4e3b\u8981\u6765\u6e90\u5206\u6790\u663e\u793a\uff0c\"Organic\"\u6765\u6e90\u57282026-02-09\u8d21\u732e\u4e86275\u4e2a\u65b0\u7528\u6237\uff0c\u5360\u6bd4\u9ad8\u8fbe100%\uff0c\u800c\"others\"\u6765\u6e90\u7684\u8d21\u732e\u76f8\u5bf9\u8f83\u5c0f\u3002\n5. \u7ed3\u5408\u5f53\u524dDAU\u4e0e\u76ee\u6807\u7684\u5dee\u8ddd\uff0c\u82e5\u4fdd\u6301\u5f53\u524d\u589e\u901f\uff0c\u9884\u8ba1\u5728\u7ea63\u5929\u5185\uff08\u4ee52.5%\u65e5\u589e\u901f\u8ba1\u7b97\uff09\u53ef\u8fbe\u5230\u76ee\u6807250\u3002"</script>
+
+
+<div class="container">
+  <div class="header">
+    <h1>📊 KiX server Dashboard</h1>
+    <div class="header-info">
+      <span>📅 Date: <strong id="dataPeriod">-</strong></span>
+      <span style="margin-left:20px">🕒 Generated: <strong id="generatedAt">-</strong></span>
+    </div>
+  </div>
+
+<nav class="nav-tabs" id="navTabs">
+    <!-- 导航按钮会通过JS插入到这里 -->
+</nav>
+
+  <!-- 指标详情页面包屑 -->
+  <div class="metric-detail-breadcrumb" id="metricBreadcrumb" style="display: none;">
+    <div class="breadcrumb-content">
+      <button class="back-button" onclick="returnToAllMetrics()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>返回全部指标</span>
+      </button>
+      <div class="breadcrumb-path">
+        <span class="breadcrumb-item">全部指标</span>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-item current" id="currentMetricName">指标详情</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-layout" id="contentLayout">
+  <div class="main-area">
+    <div class="modules" id="modulesArea"></div>
+  </div>
+
+  <aside class="ai-panel" id="aiPanel" aria-label="AI Analysis Panel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-title">
+        <span class="ai-dot"></span>
+        <span id="aiPanelTitle">AI 分析</span>
+      </div>
+      <div class="ai-panel-actions">
+        <button class="ai-panel-btn" id="aiCollapseBtn" title="折叠">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="ai-panel-subtitle" id="aiPanelSubtitle">点击任意指标卡片查看对应 AI 分析</div>
+    <div class="ai-panel-content" id="aiSidebarContent"></div>
+  </aside>
+
+  <button class="ai-expand-handle" id="aiExpandBtn" title="展开 AI">
+    AI
+  </button>
+</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+
+
+// =========================
+// Global Chart.js aesthetics
+// =========================
+Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,'Apple Color Emoji','Segoe UI Emoji'";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = "#475569"; // slate-600
+Chart.defaults.plugins.legend.labels.boxWidth = 10;
+Chart.defaults.plugins.legend.labels.boxHeight = 10;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = "circle";
+Chart.defaults.plugins.tooltip.padding = 10;
+Chart.defaults.plugins.tooltip.bodySpacing = 6;
+Chart.defaults.plugins.tooltip.titleSpacing = 6;
+Chart.defaults.plugins.tooltip.displayColors = true;
+
+// 短日期格式化: 将 "2026-01-05" 或 "2026-01-05~2026-01-11" 转换为 "01-05"
+function formatShortDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return dateStr;
+
+  // 如果已经是短格式 (MM-DD 或 MM)，直接返回
+  if (/^\d{2}-\d{2}$/.test(dateStr) || /^\d{2}$/.test(dateStr)) {
+    return dateStr;
+  }
+
+  // 处理周范围格式 "YYYY-MM-DD~YYYY-MM-DD"
+  if (dateStr.includes('~')) {
+    const parts = dateStr.split('~');
+    dateStr = parts[0].trim(); // 取第一个日期
+  }
+
+  // 匹配 YYYY-MM-DD 格式
+  const match = dateStr.match(/^\d{4}-(\d{2}-\d{2})/);
+  if (match) {
+    return match[1]; // 返回 MM-DD 部分
+  }
+
+  // 处理月份格式 YYYY-MM
+  const monthMatch = dateStr.match(/^\d{4}-(\d{2})$/);
+  if (monthMatch) {
+    return monthMatch[1]; // 返回 MM
+  }
+
+  return dateStr; // 其他格式原样返回
+}
+
+// Common axis tick formatting
+function formatTick(v, kind, tab) {
+  const percent = isPercentKind(kind) || isValueUnitPercent(tab);
+
+  // 如果是字符串(可能是日期),进行日期格式化
+  if (typeof v === 'string') {
+    return formatShortDate(v);
+  }
+
+  if (percent) return formatPercentValue(v, tab, 1);
+  return formatNumberCompact(v, { decimals: 2, maxDigits: 6 });
+}
+
+function applyCommonScales(scales, kind) {
+  // x
+  if (scales.x) {
+    scales.x.grid = scales.x.grid || {};
+    scales.x.ticks = scales.x.ticks || {};
+    scales.x.grid.display = false;
+    scales.x.ticks.maxRotation = 0;
+    scales.x.ticks.autoSkip = true;
+    scales.x.ticks.padding = 6;
+  }
+  // y / y1
+  ["y","y1"].forEach(k=>{
+    if (!scales[k]) return;
+    scales[k].ticks = scales[k].ticks || {};
+    scales[k].ticks.padding = 6;
+    scales[k].ticks.callback = (v)=>formatTick(v, kind);
+    scales[k].grid = scales[k].grid || {};
+    if (k === "y") scales[k].grid.color = "#eef2f7";
+  });
+}
+
+// Compute latest value (for badge) — always interpret as "latest point", not sum
+function getLatestValueFromTab(tab) {
+  try {
+    if (!tab || !tab.data) return null;
+
+    // single value
+    if (tab.kind === "single_value" && typeof tab.data.value === "number") return tab.data.value;
+
+    // percent charts: show 100% (semantic "total")
+    if (isPercentKind(tab.kind)) return 100;
+
+    // time-series array: take last finite point (overall line/bar_line uses this)
+    if (Array.isArray(tab.data.values) && tab.data.values.length) {
+      for (let i = tab.data.values.length - 1; i >= 0; i--) {
+        const v = Number(tab.data.values[i]);
+        if (Number.isFinite(v)) return v;
+      }
+    }
+
+    // matrix time-series: take last date row sum (fallback)
+    if (Array.isArray(tab.data.matrix) && tab.data.matrix.length) {
+      for (let i = tab.data.matrix.length - 1; i >= 0; i--) {
+        const row = tab.data.matrix[i] || [];
+        const nums = row.map(x => Number(x)).filter(x => Number.isFinite(x));
+        if (nums.length) return nums.reduce((a,b)=>a+b, 0);
+      }
+    }
+
+    // labels/values (doughnut etc.): treat as total
+    if (Array.isArray(tab.data.values) && tab.data.values.length) {
+      const nums = tab.data.values.map(x => Number(x)).filter(x => Number.isFinite(x));
+      if (nums.length) return nums.reduce((a,b)=>a+b, 0);
+    }
+
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+
+function updateLatestBadge(chartId, tab) {
+  const el = document.getElementById("latest-" + chartId);
+  if (!el) return;
+
+  // 🔥 Funnel badge: 显示百分比而不是分数形式
+  if (tab && tab.kind === "funnel" && tab.data && (tab.data.numerator !== undefined) && (tab.data.denominator !== undefined)) {
+    const n = Number(tab.data.numerator ?? 0) || 0;
+    const d = Number(tab.data.denominator ?? 0) || 0;
+    const percentage = d > 0 ? ((n / d) * 100).toFixed(1) : '0.0';
+    el.textContent = `${percentage}%`;
+    return;
+  }
+
+  const v = getLatestValueFromTab(tab);
+  if (v === null || v === undefined || Number.isNaN(v)) {
+    el.textContent = "-";
+    return;
+  }
+
+  const percent = isPercentTab(tab);
+  if (percent) {
+    el.textContent = formatPercentValue(v, tab, 1);
+    return;
+  }
+
+  const num = Number(v);
+  const abs = Math.abs(num);
+  const decimals = abs < 1 ? 4 : 2;
+  let s = num.toLocaleString(undefined, { maximumFractionDigits: decimals });
+  s = s.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");
+  el.textContent = s;
+}
+
+const CHARTS_BY_DOMAIN = JSON.parse(document.getElementById('charts-data').textContent);
+
+const DOMAIN_TITLES = {
+  "platform_basics": { name: "🏗️ Platform Basics", desc: "平台基础指标" },
+  "user_growth": { name: "📈 User Growth", desc: "用户增长指标" },
+  "revenue": { name: "💰 Revenue", desc: "收入相关指标" },
+  "daily_challenge": { name: "🎯 Daily Challenge", desc: "每日挑战" },
+  "pk": { name: "⚔️ PK", desc: "PK对战" },
+  "viral": { name: "🚀 Viral", desc: "病毒传播" },
+  "cash_out": { name: "💸 Cash out", desc: "提现相关" },
+  "monitoring": { name: "📊 Monitoring", desc: "监控指标" },
+  "engagement": { name: "🎮 Engagement", desc: "用户参与度" }
+
+};
+
+const DEFAULT_TITLE = { name: "📊 Other", desc: "其他指标" };
+const chartInstances = {};
+
+// =========================
+// Number formatting (compact)
+// =========================
+function trimDecimals(v, decimals) {
+  if (decimals === 0) {
+    // 当decimals=0时，直接返回整数，不用正则处理
+    return Math.round(v).toString();
+  }
+  const s = Number(v).toFixed(decimals);
+  // 只处理小数部分的末尾0
+  return s.replace(/\.?0+$/, "");
+}
+
+function formatNumberCompact(x, opts = {}) {
+  const {
+    maxDigits = 4,
+    decimals = 1,  // 默认从2改为1,更简洁
+    isPercent = false,
+    unit = null,
+  } = opts;
+
+  if (x === null || x === undefined || Number.isNaN(x)) return "";
+  let v = Number(x);
+
+  if (isPercent) {
+    // If input is ratio 0~1, convert to %
+    if (Math.abs(v) <= 1) v = v * 100;
+    const d = (decimals === null || decimals === undefined) ? 1 : decimals;
+    let s = `${trimDecimals(v, d)}%`;
+    return s;
+  }
+
+  const abs = Math.abs(v);
+  let s = "";
+  if (abs >= 1e9) s = `${trimDecimals(v / 1e9, 1)}B`;
+  else if (abs >= 1e6) s = `${trimDecimals(v / 1e6, 1)}M`;
+  else if (abs >= 1e3) s = `${trimDecimals(v / 1e3, 1)}K`;
+  else if (abs >= 1) s = `${trimDecimals(v, 0)}`; // 整数不显示小数
+  else s = `${trimDecimals(v, 2)}`; // 小于1的数字保留2位小数
+
+  if (unit) s = `${s} ${unit}`;
+
+  return s;
+}
+
+function isValueUnitPercent(tab) {
+  return tab && tab.meta && String(tab.meta.value_unit || "").toLowerCase() === "percent";
+}
+
+function isPercentTab(tab) {
+  return isPercentKind(tab.kind) || isValueUnitPercent(tab);
+}
+
+function formatPercentValue(value, tab, fallbackDecimals = 1) {
+  if (value === null || value === undefined || Number.isNaN(value)) return "";
+  let v = Number(value);
+  if (Math.abs(v) <= 1) v = v * 100;
+  const d = Math.max(1, (fallbackDecimals === null || fallbackDecimals === undefined) ? 1 : fallbackDecimals);
+  return `${trimDecimals(v, d)}%`;
+}
+
+function renderFunnel(containerSelector, tab, spec) {
+  const el = document.querySelector(containerSelector);
+  if (!el) return;
+
+  const data = tab.data || {};
+
+  // 从 metric_id 解析 layer 名称
+  let layer1Name = "Layer 1 (denominator)";
+  let layer2Name = "Layer 2 (numerator)";
+
+  if (spec && spec.metric_id && spec.metric_id.includes('_to_')) {
+    const parts = spec.metric_id.split('_to_');
+    if (parts.length === 2) {
+      layer1Name = parts[0].replace(/_/g, ' ');
+      layer2Name = parts[1].replace(/_/g, ' ');
+    }
+  }
+
+  // 🔥 因为funnel只支持单选维度值，所以这里简化处理
+  // 检查是否是多维度数据（有dim_labels数组）
+  let layer1, layer2, title;
+
+  if (Array.isArray(data.dim_labels) && data.dim_labels.length > 0) {
+    // 有维度数据：取第一个（因为单选只会有一个）
+    layer1 = Number(data.denominator[0] ?? 0) || 0;
+    layer2 = Number(data.numerator[0] ?? 0) || 0;
+    title = data.dim_labels[0];
+  } else {
+    // Overall数据
+    layer1 = Number(data.denominator ?? 0) || 0;
+    layer2 = Number(data.numerator ?? 0) || 0;
+    title = tab.tab_label || "Funnel";
+  }
+
+  const W = Math.max(260, el.clientWidth || 360);
+  const H = Math.max(180, el.clientHeight || 220);
+
+  d3.select(el).html("");
+  renderSingleFunnel(d3.select(el), title, layer1, layer2, layer1Name, layer2Name, W, H);
+}
+
+function renderSingleFunnel(container, title, layer1, layer2, layer1Name, layer2Name, W, H) {
+  const pad = 14;
+  const barH = 46; // 增加柱子高度以容纳文字
+  const gap = 24; // 增加间距
+
+  const svg = container.append("svg")
+    .attr("width", W)
+    .attr("height", H)
+    .attr("viewBox", `0 0 ${W} ${H}`)
+    .style("flex-shrink", "0");
+
+  const maxV = Math.max(layer1, layer2, 1);
+  const w1 = (W - pad*2) * (layer1 / maxV);
+  const w2 = (W - pad*2) * (layer2 / maxV);
+
+  // Bars (centered)
+  const x1 = (W - w1) / 2;
+  const x2 = (W - w2) / 2;
+
+  const y1 = 50; // 标题下方留更多空间
+  const y2 = y1 + barH + gap;
+
+  // Background rails
+  svg.append("rect")
+    .attr("x", pad).attr("y", y1)
+    .attr("width", W - pad*2).attr("height", barH)
+    .attr("rx", 10).attr("fill", "#f2f5fa");
+
+  svg.append("rect")
+    .attr("x", pad).attr("y", y2)
+    .attr("width", W - pad*2).attr("height", barH)
+    .attr("rx", 10).attr("fill", "#f2f5fa");
+
+  // Filled bars with gradient
+  const gradient1 = svg.append("defs").append("linearGradient")
+    .attr("id", `grad1-${Math.random().toString(36).substr(2, 9)}`)
+    .attr("x1", "0%").attr("y1", "0%")
+    .attr("x2", "100%").attr("y2", "0%");
+  gradient1.append("stop").attr("offset", "0%").attr("style", "stop-color:#6c5ce7;stop-opacity:1");
+  gradient1.append("stop").attr("offset", "100%").attr("style", "stop-color:#a29bfe;stop-opacity:1");
+
+  const gradient2 = svg.append("defs").append("linearGradient")
+    .attr("id", `grad2-${Math.random().toString(36).substr(2, 9)}`)
+    .attr("x1", "0%").attr("y1", "0%")
+    .attr("x2", "100%").attr("y2", "0%");
+  gradient2.append("stop").attr("offset", "0%").attr("style", "stop-color:#00b894;stop-opacity:1");
+  gradient2.append("stop").attr("offset", "100%").attr("style", "stop-color:#55efc4;stop-opacity:1");
+
+  svg.append("rect")
+    .attr("x", x1).attr("y", y1)
+    .attr("width", w1).attr("height", barH)
+    .attr("rx", 10)
+    .attr("fill", `url(#${gradient1.attr("id")})`);
+
+  svg.append("rect")
+    .attr("x", x2).attr("y", y2)
+    .attr("width", w2).attr("height", barH)
+    .attr("rx", 10)
+    .attr("fill", `url(#${gradient2.attr("id")})`);
+
+  // Title with percentage (top)
+  const badgePct = layer1 ? ((layer2 / layer1) * 100).toFixed(1) : '0.0';
+  svg.append("text")
+    .attr("x", W / 2)
+    .attr("y", 28)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#111")
+    .attr("font-size", 14)
+    .attr("font-weight", 700)
+    .text(title);
+
+  svg.append("text")
+    .attr("x", W / 2)
+    .attr("y", 42)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#6b7280")
+    .attr("font-size", 11)
+    .attr("font-weight", 500)
+    .text(`转化率: ${badgePct}%`);
+
+  const fmtInt = (v) => {
+    try { return Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: 0 }); }
+    catch(e) { return String(v || 0); }
+  };
+
+  // 🔥 Layer名称直接放在柱子左侧内部
+  svg.append("text")
+    .attr("x", x1 + 12)
+    .attr("y", y1 + barH/2 + 5)
+    .attr("fill", "#000")
+    .attr("font-size", 12)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(layer1Name);
+
+  svg.append("text")
+    .attr("x", x2 + 12)
+    .attr("y", y2 + barH/2 + 5)
+    .attr("fill", "#000")
+    .attr("font-size", 12)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(layer2Name);
+
+  // 数值放在柱子右侧
+  svg.append("text")
+    .attr("x", x1 + w1 - 12)
+    .attr("y", y1 + barH/2 + 5)
+    .attr("text-anchor", "end")
+    .attr("fill", "#000")
+    .attr("font-size", 14)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(fmtInt(layer1));
+
+  svg.append("text")
+    .attr("x", x2 + w2 - 12)
+    .attr("y", y2 + barH/2 + 5)
+    .attr("text-anchor", "end")
+    .attr("fill", "#000")
+    .attr("font-size", 14)
+    .attr("font-weight", 700)
+    .attr("text-shadow", "0 1px 2px rgba(0,0,0,0.3)")
+    .text(fmtInt(layer2));
+
+  // Arrow + rate in center
+  const midY = y1 + barH + gap/2;
+
+  // 绘制箭头
+  svg.append("defs").append("marker")
+    .attr("id", `arrowhead-${Math.random().toString(36).substr(2, 9)}`)
+    .attr("markerWidth", 10)
+    .attr("markerHeight", 10)
+    .attr("refX", 9)
+    .attr("refY", 3)
+    .attr("orient", "auto")
+    .append("polygon")
+    .attr("points", "0 0, 10 3, 0 6")
+    .attr("fill", "#94a3b8");
+
+  svg.append("line")
+    .attr("x1", W/2)
+    .attr("y1", y1 + barH + 4)
+    .attr("x2", W/2)
+    .attr("y2", y2 - 4)
+    .attr("stroke", "#94a3b8")
+    .attr("stroke-width", 3)
+    .attr("stroke-linecap", "round")
+    .attr("marker-end", `url(#${svg.select("marker").attr("id")})`);
+
+  // 转化率背景圆
+  const rate = layer1 ? (layer2 / layer1) : 0;
+  const ratePct = (Math.abs(rate) <= 1 ? rate*100 : rate);
+  const rateText = (Math.round(ratePct*10)/10).toString().replace(/\.0$/, "") + "%";
+
+  svg.append("circle")
+    .attr("cx", W/2)
+    .attr("cy", midY)
+    .attr("r", 20)
+    .attr("fill", "#fff")
+    .attr("stroke", "#e2e8f0")
+    .attr("stroke-width", 2);
+
+  svg.append("text")
+    .attr("x", W/2)
+    .attr("y", midY + 5)
+    .attr("text-anchor", "middle")
+    .attr("fill", "#3b82f6")
+    .attr("font-size", 13)
+    .attr("font-weight", 800)
+    .text(rateText);
+}
+
+function isPercentKind(kind) {
+  return ["stacked100", "stacked100_area", "horizontal_percent_bar", "doughnut", "funnel"].includes(kind);
+}
+
+// =========================
+// Dim filter state
+// =========================
+const selectedDimsState = {}; // key: chartId-tabId -> [dimLabels]
+
+function dimStateKey(chartId, tabId) {
+  return `${chartId}::${tabId}`;
+}
+
+function getDefaultTopDims(tab, topN = 5) {
+  // Prefer ranked dims (sorted by latest value), then selected_dim_values, then all_dim_values
+  const ranked = (tab.ranked_dim_values || []).filter(x => x !== null && x !== undefined && String(x).trim() !== "");
+  if (ranked.length) return ranked.slice(0, topN);
+
+  const sel = (tab.selected_dim_values || []).filter(x => x !== null && x !== undefined && String(x).trim() !== "");
+  if (sel.length) return sel.slice(0, topN);
+
+  const all = (tab.all_dim_values || []).filter(x => x !== null && x !== undefined && String(x).trim() !== "");
+  return all.slice(0, topN);
+}
+
+function filterTabData(tab, selectedDims) {
+  const t = JSON.parse(JSON.stringify(tab));
+  if (!selectedDims || !selectedDims.length) return t;
+  // Funnel (latest snapshot, possibly with dim_labels arrays)
+  if (t.kind === "funnel" && t.data) {
+    // by-dim funnel payload: {dim_labels, denominator, numerator, values}
+    if (Array.isArray(t.data.dim_labels)) {
+      const keep = t.data.dim_labels
+        .map((l, i) => ({ l, i }))
+        .filter(x => selectedDims.includes(x.l))
+        .map(x => x.i);
+
+      if (!keep.length) return t;
+
+      // 🔥 funnel只支持单选，所以只保留第一个选中的维度值数据
+      const idx = keep[0];
+      t.data = {
+        date: t.data.date,
+        dim_labels: [t.data.dim_labels[idx]],
+        denominator: [t.data.denominator[idx]],
+        numerator: [t.data.numerator[idx]],
+        values: [t.data.values[idx]]
+      };
+      return t;
+    }
+    return t;
+  }
+
+  // Pie-like charts
+  if (t.data && Array.isArray(t.data.labels) && Array.isArray(t.data.values)) {
+    const idx = t.data.labels.map((l, i) => ({ l, i }))
+      .filter(x => selectedDims.includes(x.l))
+      .map(x => x.i);
+    t.data.labels = idx.map(i => t.data.labels[i]);
+    t.data.values = idx.map(i => t.data.values[i]);
+    return t;
+  }
+
+  // Matrix-like charts (time series with multiple dimension series)
+  if (t.data && Array.isArray(t.data.series) && Array.isArray(t.data.matrix) && Array.isArray(t.data.dates)) {
+    const keepIdx = t.data.series
+      .map((s, i) => ({ s, i }))
+      .filter(x => selectedDims.includes(x.s))
+      .map(x => x.i);
+
+    t.data.series = keepIdx.map(i => t.data.series[i]);
+    t.data.matrix = t.data.matrix.map(row => keepIdx.map(i => row[i] ?? 0));
+
+    // ✅ 裁掉“前面全是 0/空”的日期段：从选中维度真正开始有数据的那一天起展示
+    let first = 0;
+    for (let r = 0; r < t.data.matrix.length; r++) {
+      const row = t.data.matrix[r] || [];
+      const hasData = row.some(v => v !== null && v !== undefined && !Number.isNaN(v) && Number(v) !== 0);
+      if (hasData) { first = r; break; }
+      first = r + 1;
+    }
+    if (first > 0 && first < t.data.matrix.length) {
+      t.data.dates = t.data.dates.slice(first);
+      t.data.matrix = t.data.matrix.slice(first);
+    }
+
+    return t;
+  }
+
+  return t;
+}
+
+function setupDimDropdown(chartId, tab) {
+  const canvas = document.getElementById("canvas-" + chartId);
+  if (!canvas) return null;
+
+  const card = canvas.closest(".chart-card");
+  if (!card) return null;
+
+  const box = card.querySelector(".dim-filter");
+  const selectEl = card.querySelector("select.dim-select");
+  const hint = card.querySelector(".dim-hint");
+  if (!box || !selectEl) return null;
+
+  if (!tab.filterable) {
+    box.style.display = "none";
+    if (hint) hint.style.display = "none";
+    return null;
+  }
+
+  box.style.display = "flex";
+  box.style.alignItems = "center";
+  if (hint) hint.style.display = "block";
+
+  const options = (tab.ranked_dim_values && tab.ranked_dim_values.length)
+    ? tab.ranked_dim_values
+    : (tab.all_dim_values && tab.all_dim_values.length)
+      ? tab.all_dim_values
+      : (tab.data && tab.data.series && tab.data.series.length)
+        ? tab.data.series
+        : (tab.data && tab.data.labels && tab.data.labels.length)
+          ? tab.data.labels
+          : [];
+
+  selectEl.innerHTML = "";
+  for (const d of options) {
+    const opt = document.createElement("option");
+    opt.value = d;
+    opt.textContent = d;
+    selectEl.appendChild(opt);
+  }
+
+  const key = dimStateKey(chartId, tab.tab_id);
+  if (!selectedDimsState[key] || !selectedDimsState[key].length) {
+    selectedDimsState[key] = tab.selected_dim_values || getDefaultTopDims(tab, 1);
+  }
+  const current = new Set(selectedDimsState[key]);
+  for (const opt of selectEl.options) opt.selected = current.has(opt.value);
+
+  return selectEl;
+}
+
+function getSelectedDims(selectEl) {
+  return Array.from(selectEl.selectedOptions).map(o => o.value);
+}
+
+
+
+
+// =========================
+// Dim filter dropdown (search + checkbox multi-select)
+// =========================
+function setupDimDropdownV3(chartId, tab, onApply) {
+  const canvas = document.getElementById("canvas-" + chartId);
+  if (!canvas) return null;
+  const card = canvas.closest(".chart-card");
+  if (!card) return null;
+
+  const box = card.querySelector(".dim-filter");
+  if (!box) return null;
+
+  const btn = box.querySelector(".dim-dd-btn");
+  const btnText = box.querySelector(".dim-dd-text");
+  const panel = box.querySelector(".dim-dd-panel");
+  const search = box.querySelector(".dim-dd-search");
+  const list = box.querySelector(".dim-dd-list");
+  const btnClear = box.querySelector(".dim-dd-clear");
+  const btnApply = box.querySelector(".dim-dd-apply");
+
+  if (!btn || !btnText || !panel || !search || !list || !btnClear || !btnApply) return null;
+
+  if (!tab.filterable) {
+    box.style.display = "none";
+    return null;
+  }
+  box.style.display = "flex";
+
+  const options = (tab.ranked_dim_values && tab.ranked_dim_values.length)
+    ? tab.ranked_dim_values
+    : (tab.all_dim_values && tab.all_dim_values.length)
+      ? tab.all_dim_values
+      : (tab.data && tab.data.series && tab.data.series.length)
+        ? tab.data.series
+        : (tab.data && tab.data.labels && tab.data.labels.length)
+          ? tab.data.labels
+          : [];
+
+  const key = dimStateKey(chartId, tab.tab_id);
+  if (!selectedDimsState[key] || !selectedDimsState[key].length) {
+    selectedDimsState[key] = tab.selected_dim_values || getDefaultTopDims(tab, 1);
+  }
+
+  // 🔥 检查是否为funnel类型，funnel只能单选
+  const isFunnelType = tab.kind === "funnel";
+
+  function updateBtnText() {
+    const n = (selectedDimsState[key] || []).length;
+    btnText.textContent = n ? `已选 ${n}` : "未选择";
+  }
+
+  function renderList(filterText="") {
+    const ft = (filterText || "").toLowerCase().trim();
+    list.innerHTML = "";
+    const selected = new Set(selectedDimsState[key] || []);
+    const filtered = ft ? options.filter(x => String(x).toLowerCase().includes(ft)) : options;
+
+    // 🔥 为funnel类型构建维度值->百分比的映射
+    let dimPercentMap = {};
+    if (isFunnelType && tab.data && Array.isArray(tab.data.dim_labels)) {
+      tab.data.dim_labels.forEach((label, idx) => {
+        const denom = Number(tab.data.denominator?.[idx] ?? 0) || 0;
+        const numer = Number(tab.data.numerator?.[idx] ?? 0) || 0;
+        const pct = denom > 0 ? ((numer / denom) * 100).toFixed(1) : '0.0';
+        dimPercentMap[label] = pct;
+      });
+    }
+
+    for (const d of filtered) {
+      const row = document.createElement("label");
+      row.className = "dim-dd-item";
+      row.style.display = "flex";
+      row.style.justifyContent = "space-between";
+      row.style.alignItems = "center";
+      row.style.gap = "8px";
+
+      const leftPart = document.createElement("div");
+      leftPart.style.display = "flex";
+      leftPart.style.alignItems = "center";
+      leftPart.style.gap = "8px";
+      leftPart.style.flex = "1";
+
+      const cb = document.createElement("input");
+
+      // 🔥 funnel类型使用radio单选，其他类型使用checkbox多选
+      cb.type = isFunnelType ? "radio" : "checkbox";
+      cb.name = isFunnelType ? `funnel-${key}` : undefined; // radio需要name分组
+      cb.value = d;
+      cb.checked = selected.has(d);
+
+      cb.onchange = () => {
+        if (isFunnelType) {
+          // 🔥 funnel单选：只保留当前选中的一个
+          selectedDimsState[key] = cb.checked ? [d] : [];
+        } else {
+          // 多选：原有逻辑
+          const s = new Set(selectedDimsState[key] || []);
+          if (cb.checked) s.add(d); else s.delete(d);
+          selectedDimsState[key] = Array.from(s);
+        }
+        updateBtnText();
+
+        // 🔥 funnel单选时需要重新渲染列表以更新radio状态
+        if (isFunnelType) {
+          renderList(filterText);
+        }
+      };
+
+      const text = document.createElement("span");
+      text.textContent = d;
+      text.style.fontSize = "12px";
+      text.style.color = "var(--text)";
+      text.style.flex = "1";
+
+      leftPart.appendChild(cb);
+      leftPart.appendChild(text);
+      row.appendChild(leftPart);
+
+      // 🔥 funnel类型：在右侧显示百分比
+      if (isFunnelType && dimPercentMap[d] !== undefined) {
+        const pctSpan = document.createElement("span");
+        pctSpan.textContent = dimPercentMap[d] + '%';
+        pctSpan.style.fontSize = "11px";
+        pctSpan.style.color = "#6b7280";
+        pctSpan.style.fontWeight = "500";
+        pctSpan.style.minWidth = "45px";
+        pctSpan.style.textAlign = "right";
+        row.appendChild(pctSpan);
+      }
+
+      list.appendChild(row);
+    }
+  }
+
+  function closePanel(){ panel.classList.remove("open"); }
+  function openPanel(){
+    panel.classList.add("open");
+    search.value = "";
+    renderList("");
+    updateBtnText();
+    setTimeout(()=>search.focus(), 0);
+  }
+
+  btn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (panel.classList.contains("open")) closePanel(); else openPanel();
+  };
+
+  document.addEventListener("click", (e) => {
+    if (!panel.classList.contains("open")) return;
+    if (!box.contains(e.target)) closePanel();
+  });
+
+  search.oninput = () => renderList(search.value);
+
+  btnClear.onclick = (e) => {
+    e.preventDefault();
+    selectedDimsState[key] = [];
+    renderList(search.value);
+    updateBtnText();
+  };
+
+  btnApply.onclick = (e) => {
+    e.preventDefault();
+    const selected = (selectedDimsState[key] && selectedDimsState[key].length) ? selectedDimsState[key] : (tab.selected_dim_values || getDefaultTopDims(tab, 1));
+    selectedDimsState[key] = selected;
+    updateBtnText();
+    closePanel();
+    if (typeof onApply === "function") onApply(selected);
+  };
+
+  updateBtnText();
+  renderList("");
+  return { key };
+}
+
+// Chart.js 配色方案 - 白色主题
+const COLORS = [
+  '#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444',
+  '#06b6d4', '#ec4899', '#14b8a6', '#f97316', '#6366f1'
+];
+
+const COLORS_ALPHA = COLORS.map(c => c + '20'); // 透明度20%
+
+// 默认Chart.js配置
+Chart.defaults.color = '#6b7280';
+Chart.defaults.borderColor = '#e5e7eb';
+Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 15;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(31, 41, 55, 0.95)';
+Chart.defaults.plugins.tooltip.titleColor = '#fff';
+Chart.defaults.plugins.tooltip.bodyColor = '#e5e7eb';
+Chart.defaults.plugins.tooltip.borderColor = '#374151';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+// 初始化导航
+function initNavigation() {
+  const navTabs = document.getElementById("navTabs");
+  const domains = Object.keys(DOMAIN_TITLES);
+
+  // 先添加所有导航按钮
+  domains.forEach((domainId, index) => {
+    const info = DOMAIN_TITLES[domainId] || DEFAULT_TITLE;
+    const btn = document.createElement("button");
+    btn.className = "nav-tab" + (index === 0 ? " active" : "");
+    btn.textContent = info.name;
+    btn.dataset.domain = domainId;
+    btn.onclick = () => scrollToModule(domainId);
+    navTabs.appendChild(btn);
+  });
+
+  // 最后添加搜索框（放在右侧）
+  const searchContainer = document.createElement("div");
+  searchContainer.className = "search-container";
+  searchContainer.innerHTML = `
+    <input 
+      type="text" 
+      id="metricSearch" 
+      class="metric-search-input" 
+      placeholder="🔍 搜索指标..."
+      autocomplete="off"
+    />
+    <div class="search-results" id="searchResults"></div>
+  `;
+  navTabs.appendChild(searchContainer);
+
+  // 初始化搜索功能
+  initMetricSearch();
+}
+
+// 🔍 初始化指标搜索功能
+function initMetricSearch() {
+  const searchInput = document.getElementById("metricSearch");
+  const searchResults = document.getElementById("searchResults");
+
+  if (!searchInput || !searchResults) {
+    console.warn("搜索框元素未找到");
+    return;
+  }
+
+  // 构建所有指标的索引
+  const allMetrics = [];
+  try {
+    Object.entries(CHARTS_BY_DOMAIN).forEach(([domain, charts]) => {
+      const domainInfo = DOMAIN_TITLES[domain] || DEFAULT_TITLE;
+      if (charts && Array.isArray(charts)) {
+        charts.forEach(chart => {
+          if (chart && chart.chart_id && chart.title) {
+            allMetrics.push({
+              chartId: chart.chart_id,
+              title: chart.title,
+              domain: domain,
+              domainName: domainInfo.name,
+              metricId: chart.metric_id || ""
+            });
+          }
+        });
+      }
+    });
+    console.log(`✓ 搜索索引已构建，共 ${allMetrics.length} 个指标`);
+  } catch (err) {
+    console.error("构建搜索索引失败:", err);
+    return;
+  }
+
+  let searchTimeout;
+
+  searchInput.addEventListener("input", (e) => {
+    clearTimeout(searchTimeout);
+    const query = e.target.value.trim();
+
+    if (!query) {
+      searchResults.classList.remove("show");
+      searchResults.innerHTML = "";
+      return;
+    }
+
+    // 延迟搜索以优化性能
+    searchTimeout = setTimeout(() => {
+      performSearch(query, allMetrics, searchResults);
+    }, 200);
+  });
+
+  // 点击外部关闭搜索结果
+  document.addEventListener("click", (e) => {
+    if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+      searchResults.classList.remove("show");
+    }
+  });
+
+  searchInput.addEventListener("focus", () => {
+    if (searchInput.value.trim() && searchResults.innerHTML) {
+      searchResults.classList.add("show");
+    }
+  });
+
+  // 支持Enter键选择第一个结果
+  searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const firstItem = searchResults.querySelector(".search-result-item");
+      if (firstItem) {
+        firstItem.click();
+      }
+    }
+  });
+}
+
+// 执行搜索
+function performSearch(query, allMetrics, searchResults) {
+  const lowerQuery = query.toLowerCase();
+
+  // 模糊匹配：标题或metric_id包含查询词
+  const matches = allMetrics.filter(metric => {
+    const titleMatch = metric.title.toLowerCase().includes(lowerQuery);
+    const idMatch = metric.metricId.toLowerCase().includes(lowerQuery);
+    return titleMatch || idMatch;
+  });
+
+  if (matches.length === 0) {
+    searchResults.innerHTML = '<div class="search-no-results">未找到匹配的指标</div>';
+    searchResults.classList.add("show");
+    return;
+  }
+
+  // 限制显示前10个结果
+  const topMatches = matches.slice(0, 10);
+
+  searchResults.innerHTML = topMatches.map(metric => `
+    <div class="search-result-item" data-chart-id="${metric.chartId}">
+      <div class="search-result-title">${highlightMatch(metric.title, query)}</div>
+      <div class="search-result-domain">${metric.domainName}</div>
+    </div>
+  `).join("");
+
+  searchResults.classList.add("show");
+
+  // 绑定点击事件
+  searchResults.querySelectorAll(".search-result-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const chartId = item.dataset.chartId;
+      scrollToAndHighlightChart(chartId);
+      searchResults.classList.remove("show");
+      document.getElementById("metricSearch").value = "";
+    });
+  });
+}
+
+// 高亮匹配的文本
+function highlightMatch(text, query) {
+  if (!text || !query) return text;
+
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const index = lowerText.indexOf(lowerQuery);
+
+  if (index === -1) return text;
+
+  const before = text.substring(0, index);
+  const match = text.substring(index, index + query.length);
+  const after = text.substring(index + query.length);
+
+  return `${before}<mark style="background:#fef08a;color:#854d0e;padding:1px 3px;border-radius:3px;font-weight:600;">${match}</mark>${after}`;
+}
+
+// 滚动到指定图表并高亮
+function scrollToAndHighlightChart(chartId) {
+  // 直接查找带有data-chart-id属性的chart-card
+  const chartCard = document.querySelector(`.chart-card[data-chart-id="${chartId}"]`);
+
+  if (!chartCard) {
+    console.warn(`未找到图表: ${chartId}`);
+    return;
+  }
+
+  // 移除所有现有的高亮
+  document.querySelectorAll(".chart-card.highlight").forEach(el => {
+    el.classList.remove("highlight");
+  });
+
+  // 滚动到图表
+  chartCard.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  // 添加高亮动画
+  setTimeout(() => {
+    chartCard.classList.add("highlight");
+    console.log(`✓ 高亮图表: ${chartId}`);
+
+    // 3秒后移除高亮
+    setTimeout(() => {
+      chartCard.classList.remove("highlight");
+    }, 3000);
+  }, 500);
+}
+
+function scrollToModule(domainId) {
+  const module = document.getElementById("module-" + domainId);
+  if (module) {
+    module.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelectorAll(".nav-tab").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.domain === domainId);
+    });
+  }
+}
+
+// 创建模块
+function createModule(domain, charts) {
+  const info = DOMAIN_TITLES[domain] || DEFAULT_TITLE;
+  const chartCount = charts ? charts.length : 0;
+
+  const module = document.createElement("article");
+  module.className = "module-row";
+  module.id = "module-" + domain;
+
+  module.innerHTML = `
+    <div class="module-header">
+      <h2>${info.name}</h2>
+      <p style="margin:4px 0 0;color:var(--muted);font-size:12px">${info.desc} · ${chartCount} 个图表</p>
+    </div>
+    <div class="module-body">
+      <div class="charts"></div>
+    </div>
+  `;
+
+  return module;
+}
+
+// 创建图表卡片
+function createChartCard(spec) {
+  const card = document.createElement("div");
+  card.className = "chart-card";
+  card.dataset.chartId = spec.chart_id; // 添加chart-id属性用于搜索定位
+  card.dataset.metricId = spec.metric_id || ''; // 添加metric-id属性
+
+  // 处理tabbed类型
+  if (spec.kind === "tabbed" && spec.tabs) {
+    const firstTab = spec.tabs[0];
+
+    // 所有指标都显示view details链接
+    const viewDetailsLink = spec.metric_id ? `
+      <div class="view-details-link-wrapper">
+        <a class="view-details-link" onclick="onViewDetailsClick('${spec.metric_id}', event)" href="javascript:void(0);">
+          view details →
+        </a>
+      </div>
+    ` : '';
+
+    // 构建metric描述行（如果有metric_id和description）
+    const metricInfo = (spec.metric_id && spec.description) ? `
+      <div class="metric-info" style="font-size: 11px; color: #9ca3af; margin-top: 4px; line-height: 1.4;">
+        ${spec.metric_id}: ${spec.description}
+      </div>
+    ` : '';
+
+    card.innerHTML = `
+      <div class="chart-header">
+        <div>
+          <div class="chart-title">${spec.title}${spec.has_ai ? `<span class="ai-badge" data-metric-id="${spec.metric_id}" title="AI 分析">AI</span>` : ``}</div>
+          ${metricInfo}
+        </div>
+        <div class="chart-header-right">
+          ${spec.hide_badge ? "" : `<div class="latest-badge" id="latest-${spec.chart_id}">-</div>`}
+        </div>
+      </div>
+      <div class="chart-tabs-row">
+        <div class="chart-tabs" id="tabs-${spec.chart_id}"></div>
+        <div class="dim-filter" style="display:none;">
+          <span class="dim-filter-label" style="font-size: 12px; color: #6b7280; margin-right: 6px;">筛选:</span>
+          <button class="dim-dd-btn" type="button">
+            <span class="dim-dd-text">未选择</span>
+            <span>▾</span>
+          </button>
+          <div class="dim-dd-panel">
+            <input class="dim-dd-search" type="text" placeholder="搜索维度..." />
+            <div class="dim-dd-list"></div>
+            <div class="dim-dd-actions">
+              <button class="dim-dd-clear" type="button">清空</button>
+              <button class="dim-dd-apply primary" type="button">应用</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="canvas-wrapper" style="height: 420px; padding: 16px;">
+         <div class="funnel-wrap" id="funnel-${spec.chart_id}" style="display:none;"></div>
+         <div class="kpi-wrap" id="kpi-${spec.chart_id}" style="display:none;"></div>
+         <canvas id="canvas-${spec.chart_id}"></canvas>
+       </div>
+      <div class="dim-hint" style="display:none; margin-top: -8px; padding: 0 16px 12px; font-size: 11px; color: #9ca3af;">默认展示Top维度值，可多选切换</div>
+      ${viewDetailsLink}
+    `;
+
+    // 创建tabs
+    const tabsContainer = card.querySelector(".chart-tabs");
+    spec.tabs.forEach((tab, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "chart-tab" + (idx === 0 ? " active" : "");
+      btn.textContent = tab.tab_label;
+      btn.dataset.tabId = tab.tab_id;
+      btn.dataset.chartId = spec.chart_id;
+      btn.onclick = () => switchTab(spec, tab.tab_id);
+      tabsContainer.appendChild(btn);
+    });
+
+    return card;
+  }
+
+  // 普通图表
+  const viewDetailsLink = spec.metric_id ? `
+    <div class="view-details-link-wrapper">
+      <a class="view-details-link" onclick="onViewDetailsClick('${spec.metric_id}', event)" href="javascript:void(0);">
+        view details →
+      </a>
+    </div>
+  ` : '';
+
+  // 构建metric描述行（如果有metric_id和description）
+  const metricInfo = (spec.metric_id && spec.description) ? `
+    <div class="metric-info" style="font-size: 11px; color: #9ca3af; margin-top: 4px; line-height: 1.4;">
+      ${spec.metric_id}: ${spec.description}
+    </div>
+  ` : '';
+
+  card.innerHTML = `
+    <div class="chart-header">
+      <div>
+        <div class="chart-title">${spec.title}${spec.has_ai ? `<span class="ai-badge" data-metric-id="${spec.metric_id}" title="AI 分析">AI</span>` : ``}</div>
+        ${metricInfo}
+      </div>
+    </div>
+    <div class="canvas-wrapper">
+      <canvas id="canvas-${spec.chart_id}"></canvas>
+    </div>
+    ${viewDetailsLink}
+  `;
+
+  // 添加点击显示 AI 分析的功能
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', function(e) {
+    if (!e.target.closest('a') && !e.target.closest('button') && !e.target.closest('.tab-button')) {
+      showAIAnalysisForMetric(spec.metric_id, spec.title);
+    }
+  });
+
+  return card;
+}
+
+function getOverallTabFromSpec(spec) {
+  if (!spec || !Array.isArray(spec.tabs) || !spec.tabs.length) return null;
+  return spec.tabs.find(t => t.tab_id === "overall") || spec.tabs[0];
+}
+
+// 切换Tab
+function switchTab(spec, tabId) {
+  // 更新按钮状态
+  document.querySelectorAll(`[data-chart-id="${spec.chart_id}"]`).forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tabId === tabId);
+  });
+
+  const tab = spec.tabs.find(t => t.tab_id === tabId);
+  if (!tab) return;
+
+  // ✅ Badge 永远显示 overall 的最新值（切到维度tab也不变）
+  const overallTab = getOverallTabFromSpec(spec);
+
+  // 维度筛选（dropdown 面板）
+  setupDimDropdownV3(spec.chart_id, tab, (finalSelected) => {
+    const key = dimStateKey(spec.chart_id, tab.tab_id);
+    selectedDimsState[key] = finalSelected;
+
+    const filtered = filterTabData(tab, finalSelected);
+
+    // 不随维度变化
+    updateLatestBadge(spec.chart_id, overallTab);
+
+    renderTabChart(spec.chart_id, filtered);
+  });
+
+  // 初次渲染：使用Python端传递的selected_dim_values作为默认值
+  let tabToRender = tab;
+  if (tab.filterable) {
+    const key = dimStateKey(spec.chart_id, tab.tab_id);
+    const selected =
+      (selectedDimsState[key] && selectedDimsState[key].length)
+        ? selectedDimsState[key]
+        : (tab.selected_dim_values || getDefaultTopDims(tab, 1));
+    selectedDimsState[key] = selected;
+    tabToRender = filterTabData(tab, selected);
+  }
+
+  // 不随 tab / 维度变化
+  updateLatestBadge(spec.chart_id, overallTab);
+
+  renderTabChart(spec.chart_id, tabToRender);
+}
+
+// 渲染Tab图表
+function renderTabChart(chartId, tab) {
+  const canvas = document.getElementById("canvas-" + chartId);
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  // 销毁旧图表
+  if (chartInstances[chartId]) {
+    chartInstances[chartId].destroy();
+  }
+
+  // reset containers (keep DOM stable)
+  const funnelEl = document.getElementById("funnel-" + chartId);
+  const kpiEl = document.getElementById("kpi-" + chartId);
+  if (funnelEl) funnelEl.style.display = "none";
+  if (kpiEl) kpiEl.style.display = "none";
+  canvas.style.display = "block";
+
+  let chart = null;
+
+  switch(tab.kind) {
+    case "single_value":
+      // KPI: show in kpi container (keep DOM stable for tab switching)
+      const wrap = canvas.parentElement;
+      const kpiEl = document.getElementById("kpi-" + chartId);
+      const funnelEl = document.getElementById("funnel-" + chartId);
+      if (funnelEl) funnelEl.style.display = "none";
+      if (canvas) canvas.style.display = "none";
+      if (kpiEl) {
+        kpiEl.style.display = "flex";
+        kpiEl.innerHTML = `
+          <div class="kpi-card">
+            <div class="kpi-title">${tab.tab_label || '当前值'}</div>
+            <div class="kpi-value">${isPercentTab(tab) ? formatPercentValue((tab.data.value || 0), tab, 1) : formatNumberCompact((tab.data.value || 0), {maxDigits: 6, decimals: 2})}</div>
+          </div>
+        `;
+      }
+      break;
+
+    case "funnel":
+      // Funnel: render into dedicated div (keep canvas for other tabs)
+      const funnelEl2 = document.getElementById("funnel-" + chartId);
+      const kpiEl2 = document.getElementById("kpi-" + chartId);
+      if (kpiEl2) kpiEl2.style.display = "none";
+      if (canvas) canvas.style.display = "none";
+      if (funnelEl2) {
+        funnelEl2.style.display = "flex";
+        // 需要传递spec来获取metric_id
+        const currentSpec = Object.values(CHARTS_BY_DOMAIN).flat().find(s => s.chart_id === chartId);
+        renderFunnel(`#funnel-${chartId}`, tab, currentSpec);
+      }
+      break;
+
+    case "line":
+    case "bar_line":
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: tab.data.dates,
+          datasets: [{
+            label: '趋势',
+            data: tab.data.values,
+            borderColor: COLORS[0],
+            backgroundColor: COLORS_ALPHA[0],
+            tension: 0.4,
+            fill: true,
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: COLORS[0],
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            datalabels: {
+              display: (ctx) => {
+                const v = ctx.dataset.data?.[ctx.dataIndex];
+                return v !== null && v !== undefined && !Number.isNaN(v) && v !== 0;
+              },
+              formatter: (value) => {
+                if (value === null || value === undefined || Number.isNaN(value)) return "";
+                const percent = isPercentTab(tab);
+                if (percent) {
+                  return formatPercentValue(value, tab, 1);
+                }
+                const num = Number(value);
+                const abs = Math.abs(num);
+                const decimals = abs < 1 ? 4 : 2;
+                let s = num.toLocaleString(undefined, { maximumFractionDigits: decimals });
+                s = s.replace(/(\.\d*?[1-9])0+$/, "$1").replace(/\.0+$/, "");
+                return s;
+              },
+              clamp: true,
+              clip: false,
+              padding: 2,
+              anchor: "end",
+              align: (ctx) => (ctx.dataset.type === 'bar' ? 'top' : 'end'),
+      offset: 6,
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return '值: ' + (isPercentTab(tab) ? formatPercentValue(v, tab, 1) : formatNumberCompact(v, { decimals: 2, maxDigits: 8 }));
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#6b7280',
+                padding: 8
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: '#6b7280',
+                padding: 8
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "grouped_bar":
+      // 分组柱状图
+      const groupedDatasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map(row => row[idx] || 0),
+        backgroundColor: COLORS[idx % COLORS.length],
+        borderColor: COLORS[idx % COLORS.length],
+        borderWidth: 0,  // 去掉边框,更现代
+        borderRadius: 4,  // 添加圆角
+        barPercentage: 0.85,  // 增加柱子宽度
+        categoryPercentage: 0.75  // 调整分类间距
+      }));
+
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: { labels: tab.data.dates, datasets: groupedDatasets },
+        options: {
+          layout: { padding: { top: 28, right: 14, bottom: 44, left: 8 } },  // 增加顶部padding以容纳标签
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              display: true,
+              position: 'top',
+              align: 'end',
+              labels: {
+                usePointStyle: true,
+                padding: 12,
+                font: { size: 12 }
+              }
+            },
+            datalabels: {
+              display: (ctx) => {
+                const v = ctx.dataset.data?.[ctx.dataIndex];
+                return v !== null && v !== undefined && !Number.isNaN(v) && v !== 0;
+              },
+              formatter: (value) => {
+                if (value === null || value === undefined || Number.isNaN(value)) return "";
+                if (isPercentTab(tab)) return formatPercentValue(value, tab, 1);
+                return formatNumberCompact(value, { decimals: 0, maxDigits: 5 });
+              },
+              anchor: 'end',
+              align: 'top',
+              offset: 2,
+              clamp: true,
+              font: { size: 10, weight: '500' },
+              color: '#4b5563'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return context.dataset.label + ': ' + (isPercentTab(tab) ? formatPercentValue(v, tab, 1) : formatNumberCompact(v, { decimals: 0, maxDigits: 8 }));
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: { 
+                color: '#6b7280', 
+                callback: function(value, index, ticks) {
+                  // value是索引，需要从labels数组获取实际标签
+                  const label = this.getLabelForValue(value);
+                  return formatShortDate(label);
+                },
+                padding: 6,
+                maxRotation: 45,
+                minRotation: 0
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "multi_line":
+      // 多折线图
+      const multiLineDatasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map(row => row[idx] || 0),
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS_ALPHA[idx % COLORS.length],
+        borderWidth: 2.5,
+        tension: 0.4,
+        fill: false,
+        pointRadius: 3,
+        pointBackgroundColor: COLORS[idx % COLORS.length],
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2
+      }));
+
+      chart = new Chart(ctx, {
+        type: "line",
+        data: { labels: tab.data.dates, datasets: multiLineDatasets },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return context.dataset.label + ': ' + (isPercentTab(tab) ? formatPercentValue(v, tab, 1) : formatNumberCompact(v, { decimals: 2, maxDigits: 8 }));
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: { 
+                color: '#6b7280', 
+                callback: function(value, index, ticks) {
+                  const label = this.getLabelForValue(value);
+                  return formatShortDate(label);
+                },
+                padding: 6,
+                maxRotation: 45,
+                minRotation: 0
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "stacked_area":
+      // 堆叠面积图
+      const stackedDatasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map(row => row[idx] || 0),
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS_ALPHA[idx % COLORS.length],
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+        pointRadius: 0
+      }));
+
+      chart = new Chart(ctx, {
+        type: "line",
+        data: { labels: tab.data.dates, datasets: stackedDatasets },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: { 
+            legend: { 
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return context.dataset.label + ': ' + (isPercentTab(tab) ? formatPercentValue(v, tab, 1) : formatNumberCompact(v, { decimals: 2, maxDigits: 8 }));
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6',
+                drawBorder: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            },
+            x: {
+              stacked: true,
+              grid: {
+                display: false
+              },
+              ticks: { 
+                color: '#6b7280', 
+                callback: function(value, index, ticks) {
+                  const label = this.getLabelForValue(value);
+                  return formatShortDate(label);
+                },
+                padding: 6,
+                maxRotation: 45,
+                minRotation: 0
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "doughnut":
+      // 环形图
+      const total = tab.data.values.reduce((a, b) => a + b, 0);
+      chart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: tab.data.labels,
+          datasets: [{
+            data: tab.data.values,
+            backgroundColor: COLORS,
+            borderColor: '#fff',
+            borderWidth: 2
+          }]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'right',
+              labels: {
+                generateLabels: function(chart) {
+                  const data = chart.data;
+                  return data.labels.map((label, i) => {
+                    const value = data.datasets[0].data[i];
+                    const percent = ((value / total) * 100).toFixed(1);
+                    return {
+                      text: `${label}: ${percent}%`,
+                      fillStyle: data.datasets[0].backgroundColor[i],
+                      hidden: false,
+                      index: i
+                    };
+                  });
+                }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const value = context.parsed;
+                  const percent = ((value / total) * 100).toFixed(1);
+                  return `${context.label}: ${formatNumberCompact(value, {decimals: 2, maxDigits: 8})} (${percent}%)`;
+                }
+              }
+            }
+          }
+        }
+      });
+      break;
+
+    case "horizontal_percent_bar":
+      // 横向百分比条形图
+      const hTotal = tab.data.values.reduce((a, b) => a + b, 0);
+      const percentages = tab.data.values.map(v => (v / hTotal) * 100);
+
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: tab.data.labels,
+          datasets: [{
+            data: percentages,
+            backgroundColor: COLORS,
+            borderColor: COLORS,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          indexAxis: 'y',
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.parsed.x.toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: '#f3f4f6'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                },
+                color: '#6b7280'
+              }
+            },
+            y: {
+              grid: {
+                display: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            }
+          }
+        }
+      });
+      break;
+
+    case "treemap":
+      // 矩形树图 (使用D3.js)
+      canvas.parentElement.innerHTML = `<div id="treemap-${chartId}" style="width:100%;height:320px"></div>`;
+      renderTreemap(chartId, tab.data);
+      break;
+
+    case "grouped_bar_line":
+      // 柱状图+折线图组合
+      const barData = tab.data.series[0];
+      const lineData = tab.data.series[1] || tab.data.series[0];
+
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: tab.data.dates,
+          datasets: [
+            {
+              type: 'bar',
+              label: barData,
+              data: tab.data.matrix.map(row => row[0] || 0),
+              backgroundColor: COLORS_ALPHA[0],
+              borderColor: COLORS[0],
+              borderWidth: 1,
+              yAxisID: 'y'
+            },
+            {
+              type: 'line',
+              label: lineData + ' (趋势)',
+              data: tab.data.matrix.map(row => row[1] || row[0] || 0),
+              borderColor: COLORS[1],
+              backgroundColor: COLORS_ALPHA[1],
+              borderWidth: 2.5,
+              tension: 0.4,
+              fill: false,
+              pointRadius: 4,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  const v = context.parsed && typeof context.parsed.y === "number" ? context.parsed.y : context.raw;
+                  return context.dataset.label + ': ' + (isPercentTab(tab) ? formatPercentValue(v, tab, 1) : formatNumberCompact(v, { decimals: 2, maxDigits: 8 }));
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              beginAtZero: true,
+              grid: {
+                color: '#f3f4f6'
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            },
+            y1: {
+              type: 'linear',
+              display: true,
+              position: 'right',
+              beginAtZero: true,
+              grid: {
+                drawOnChartArea: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            }
+          }
+        }
+      });
+      break;
+
+    case "stacked100":
+    case "stacked100_area":
+      // 百分比堆叠图
+      const isArea = tab.kind === "stacked100_area";
+      const stacked100Datasets = tab.data.series.map((name, idx) => ({
+        label: name,
+        data: tab.data.matrix.map((row, rowIdx) => {
+          const rowTotal = row.reduce((a, b) => a + b, 0);
+          return rowTotal > 0 ? (row[idx] / rowTotal) * 100 : 0;
+        }),
+        borderColor: COLORS[idx % COLORS.length],
+        backgroundColor: COLORS_ALPHA[idx % COLORS.length],
+        borderWidth: isArea ? 2 : 1,
+        tension: isArea ? 0.4 : 0,
+        fill: true,
+        pointRadius: isArea ? 0 : 3
+      }));
+
+      chart = new Chart(ctx, {
+        type: isArea ? "line" : "bar",
+        data: { labels: tab.data.dates, datasets: stacked100Datasets },
+        options: {
+          layout: { padding: { top: 18, right: 14, bottom: 44, left: 8 } },
+          responsive: true,
+          interaction: { mode: 'index', intersect: false },
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              align: 'end'
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  return `${context.dataset.label}: ${context.parsed.y.toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              max: 100,
+              grid: {
+                color: '#f3f4f6'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value + '%';
+                },
+                color: '#6b7280'
+              }
+            },
+            x: {
+              stacked: true,
+              grid: {
+                display: false
+              },
+              ticks: { color: '#6b7280', callback: (v)=>formatTick(v, tab.kind, tab), padding: 6 }
+            }
+          }
+        }
+      });
+      break;
+
+    default:
+      console.warn("Unsupported chart type:", tab.kind);
+      canvas.parentElement.innerHTML = `
+        <div class="empty-module">
+          <div class="empty-module-icon">📊</div>
+          <div>暂不支持 ${tab.kind} 类型图表</div>
+        </div>
+      `;
+  }
+
+  if (chart) {
+    chartInstances[chartId] = chart;
+  }
+}
+
+// 渲染矩形树图
+function renderTreemap(chartId, data) {
+  const container = document.getElementById("treemap-" + chartId);
+  if (!container || !data || !data.labels) return;
+
+  // 构建层次数据
+  const hierarchyData = {
+    name: "root",
+    children: data.labels.map((label, i) => ({
+      name: label,
+      value: data.values[i] || 0
+    }))
+  };
+
+  const width = container.clientWidth;
+  const height = 320;
+
+  const root = d3.hierarchy(hierarchyData)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
+
+  d3.treemap()
+    .size([width, height])
+    .padding(2)
+    (root);
+
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const cell = svg.selectAll("g")
+    .data(root.leaves())
+    .join("g")
+    .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+  cell.append("rect")
+    .attr("width", d => d.x1 - d.x0)
+    .attr("height", d => d.y1 - d.y0)
+    .attr("fill", (d, i) => COLORS[i % COLORS.length])
+    .attr("opacity", 0.8)
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 2);
+
+  cell.append("text")
+    .attr("x", 4)
+    .attr("y", 20)
+    .text(d => d.data.name)
+    .attr("font-size", "12px")
+    .attr("fill", "#fff")
+    .attr("font-weight", "600");
+
+  cell.append("text")
+    .attr("x", 4)
+    .attr("y", 36)
+    .text(d => d.data.value.toLocaleString())
+    .attr("font-size", "11px")
+    .attr("fill", "#fff")
+    .attr("opacity", 0.9);
+}
+
+// 渲染所有图表
+function renderAllCharts() {
+  const container = document.getElementById("modulesArea");
+  container.innerHTML = "";
+
+  Object.entries(CHARTS_BY_DOMAIN).forEach(([domain, charts]) => {
+    const module = createModule(domain, charts);
+    container.appendChild(module);
+
+    const chartsContainer = module.querySelector(".charts");
+
+    if (!charts || charts.length === 0) {
+      chartsContainer.innerHTML = `
+        <div class="empty-module">
+          <div style="font-size:36px;opacity:0.4">📊</div>
+          <div>暂无指标数据</div>
+        </div>
+      `;
+    } else {
+      charts.forEach(spec => {
+        const card = createChartCard(spec);
+        chartsContainer.appendChild(card);
+
+        // 渲染图表
+        if (spec.kind === "tabbed" && spec.tabs && spec.tabs.length > 0) {
+          switchTab(spec, spec.tabs[0].tab_id);
+        }
+      });
+    }
+  });
+}
+
+// AI分析展开/折叠功能
+
+// 全局变量存储 AI 分析数据
+let aiAnalysisData = {};
+let aiActiveMetricId = null;
+
+// 方案A：打开侧边栏时不遮挡图表（主内容让出右侧空间），并触发图表 resize
+
+// =========================
+// Chart resize helper (debounced)
+// =========================
+let __resizeAllChartsTimer = null;
+function scheduleResizeAllCharts(){
+  try {
+    if (__resizeAllChartsTimer) clearTimeout(__resizeAllChartsTimer);
+    __resizeAllChartsTimer = setTimeout(() => {
+      try { window.dispatchEvent(new Event("resize")); } catch(e) {}
+      try {
+        Object.keys(chartInstances || {}).forEach((k) => {
+          const ch = chartInstances[k];
+          if (ch && typeof ch.resize === "function") {
+            try { ch.resize(); } catch(e) {}
+          }
+        });
+      } catch(e) {}
+    }, 80);
+  } catch(e) {}
+}
+
+function setAIPanelCollapsed(collapsed){
+  document.body.classList.toggle("ai-collapsed", !!collapsed);
+  const expandBtn = document.getElementById("aiExpandBtn");
+  if (expandBtn) expandBtn.style.display = collapsed ? "inline-flex" : "none";
+  scheduleResizeAllCharts();
+}
+
+function setAISidebarOpen(open){
+  // 兼容旧函数名：open=true => 展开；open=false => 折叠
+  setAIPanelCollapsed(!open);
+}
+
+function closeAISidebar(){
+  setAIPanelCollapsed(true);
+}
+
+function openAISidebar(){
+  setAIPanelCollapsed(false);
+}
+
+
+// 加载并解析 AI 分析内容
+function loadAIAnalysis() {
+  const el = document.getElementById('ai-summary-data');
+  if (!el) {
+    console.warn('AI summary element not found: #ai-summary-data');
+    aiAnalysisData = {};
+    return;
+  }
+  let aiSummaryText = "";
+  try {
+    aiSummaryText = JSON.parse(el.textContent || '""');
+  } catch (e) {
+    console.error('Failed to JSON.parse ai-summary-data:', e);
+    aiSummaryText = "";
+  }
+  console.log('AI summary raw length:', (aiSummaryText || "").length, 'head:', String(aiSummaryText || "").slice(0, 80));
+  aiAnalysisData = parseAIAnalysisByMetric(aiSummaryText);
+  console.log('AI 分析数据已加载:', Object.keys(aiAnalysisData).length, '个指标');
+  console.log('已加载的指标列表:', Object.keys(aiAnalysisData).join(', '));
+}
+
+// 按指标解析 AI 分析文本
+function parseAIAnalysisByMetric(text) {
+  // text comes from JSON.parse(script[type=application/json]). It may contain literal "\n" sequences
+  // (double-escaped) or Unicode line separators. Normalize aggressively.
+  let t = String(text || "");
+  if (!t || t === "暂无AI分析内容" || t.includes("加载AI分析内容时出错")) return {};
+
+  // normalize line breaks
+  t = t.replace(/\u2028|\u2029/g, "\n");
+  // if still looks like a single line but contains literal backslash-n, unescape once
+  if (!t.includes("\n") && /\n/.test(t)) {
+    t = t.replace(/\r\n/g, "\n").replace(/\n/g, "\n").replace(/\r/g, "\n");
+  }
+  // unify CRLF
+  t = t.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  // strip zero-width chars that break startsWith
+  const stripInvisible = (s) =>
+    s.replace(/^[\uFEFF\u200B\u200C\u200D\u2060]+/, "").replace(/[\u200B\u200C\u200D\u2060]+/g, "");
+
+  const data = {};
+  const lines = t.split("\n");
+  let currentModule = null;
+  let currentMetricId = null;
+  let bulletPoints = [];
+
+  const flush = () => {
+    if (currentMetricId && bulletPoints.length > 0) {
+      data[currentMetricId] = { module: currentModule, points: [...bulletPoints] };
+    }
+    bulletPoints = [];
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = stripInvisible(lines[i] || "").trim();
+    if (!line) continue;
+
+    // module header: ## xxx
+    const m1 = line.match(/^##\s+(.+)$/);
+    if (m1) {
+      flush();
+      currentModule = m1[1].trim();
+      currentMetricId = null;
+      continue;
+    }
+
+    // metric id: **metric_id** (must be a standalone bold line)
+    const m2 = line.match(/^\*\*([^*]+)\*\*$/);
+    if (m2 && !line.includes(":")) {
+      flush();
+      currentMetricId = m2[1].trim();
+      continue;
+    }
+
+    // bullets: • xxx  OR - xxx  OR * xxx
+    const m3 = line.match(/^(?:•|\-|\*)\s*(.+)$/);
+    if (m3) {
+      bulletPoints.push(m3[1].trim());
+      continue;
+    }
+
+    // numbered list: 1. xxx
+    const m4 = line.match(/^\d+\.\s*(.+)$/);
+    if (m4) {
+      bulletPoints.push(m4[1].trim());
+      continue;
+    }
+  }
+
+  flush();
+  return data;
+}
+
+// 显示指标的 AI 分析（右侧固定面板：宽度固定，不遮挡图表）
+function showAIAnalysisForMetric(metricId, metricName) {
+  aiActiveMetricId = (metricId || "").trim();
+
+  const content = document.getElementById('aiSidebarContent');
+  const titleEl = document.getElementById('aiPanelTitle');
+  const subtitleEl = document.getElementById('aiPanelSubtitle');
+
+  if (!content || !titleEl || !subtitleEl) return;
+
+  const key = (metricId || "").trim();
+  const analysis = aiAnalysisData[key];
+
+  // 确保面板展开（方案A：主内容自动适应）
+  setAIPanelCollapsed(false);
+
+  titleEl.textContent = metricName || metricId || "AI 分析";
+  subtitleEl.textContent = analysis
+    ? ("已选指标：" + (metricName || metricId))
+    : ("该指标暂无 AI 分析：" + (metricName || metricId));
+
+  if (!analysis) {
+    content.innerHTML = `
+      <div class="ai-empty">
+        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
+        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
+      </div>
+    `;
+    return;
+  }
+
+  let html = '';
+  html += `<div class="ai-block">`;
+  html += `<ul>`;
+  (analysis.points || []).forEach((pt) => {
+    const p = String(pt || '').trim();
+    if (!p) return;
+
+    // section header like "深度洞察："
+    if (/^[^:：]+[：:]$/.test(p)) {
+      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
+      return;
+    }
+
+    // 支持 "**标题**: 内容" 的结构
+    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
+    if (m) {
+      const t = m[1].trim();
+      const c = (m[2] || '').trim();
+      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
+    } else {
+      html += `<li>${escapeHtml(p)}</li>`;
+    }
+  });
+  html += `</ul>`;
+  html += `</div>`;
+
+  content.innerHTML = html;
+}
+
+// 折叠 AI 面板（不遮挡图表）
+function closeAISidebar() {
+  aiActiveMetricId = null;
+  setAIPanelCollapsed(true);
+}
+
+// HTML转义
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+
+}
+
+// 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析
+function initAISidebarBadgeClick() {
+  // 点击标题右侧 AI 标识：打开/关闭右侧 AI 分析（不遮挡主内容）
+  document.addEventListener("click", (e) => {
+    const badge = e.target.closest(".ai-badge");
+    if (!badge) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const metricId = (badge.getAttribute("data-metric-id") || "").trim();
+    if (!metricId) return;
+
+    const sidebar = document.getElementById('aiSidebar');
+    const isOpen = sidebar.classList.contains('active');
+
+    // 若已经打开且点击的是同一个指标 -> 收起
+    if (isOpen && aiActiveMetricId && aiActiveMetricId === metricId) {
+      closeAISidebar();
+      return;
+    }
+
+    // 取卡片标题（去掉 AI badge 文案）
+    const card = badge.closest(".chart-card");
+    let metricName = metricId;
+    if (card) {
+      const titleEl = card.querySelector(".chart-title");
+      if (titleEl) {
+        const clone = titleEl.cloneNode(true);
+        clone.querySelectorAll(".ai-badge").forEach(x => x.remove());
+        metricName = (clone.textContent || "").trim() || metricId;
+      }
+    }
+
+    showAIAnalysisForMetric(metricId, metricName);
+  }, true);
+}
+
+// =========================
+// URL路由和指标详情页功能
+// =========================
+let isDetailMode = false;
+let currentMetricId = null;
+
+// 从URL获取当前指标ID
+function getMetricIdFromURL() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#metric=')) {
+    return decodeURIComponent(hash.substring(8));
+  }
+  return null;
+}
+
+// 设置URL的指标ID
+function setMetricIdToURL(metricId) {
+  if (metricId) {
+    window.location.hash = 'metric=' + encodeURIComponent(metricId);
+  } else {
+    window.location.hash = '';
+  }
+}
+
+// 获取指标的相关指标列表
+function getRelatedMetrics(metricId) {
+  const allCharts = [];
+  Object.values(CHARTS_BY_DOMAIN).forEach(charts => {
+    allCharts.push(...charts);
+  });
+
+  const chart = allCharts.find(c => c.metric_id === metricId);
+  if (!chart) return [];
+
+  return chart.related_metrics || [];
+}
+
+// 获取指标名称
+function getMetricName(metricId) {
+  const allCharts = [];
+  Object.values(CHARTS_BY_DOMAIN).forEach(charts => {
+    allCharts.push(...charts);
+  });
+
+  const chart = allCharts.find(c => c.metric_id === metricId);
+  return chart ? chart.metric_name : metricId;
+}
+
+// 显示指标详情页
+function showMetricDetail(metricId) {
+  if (!metricId) {
+    returnToAllMetrics();
+    return;
+  }
+
+  isDetailMode = true;
+  currentMetricId = metricId;
+
+  // 显示面包屑
+  const breadcrumb = document.getElementById('metricBreadcrumb');
+  const metricNameEl = document.getElementById('currentMetricName');
+  breadcrumb.style.display = 'block';
+  metricNameEl.textContent = getMetricName(metricId);
+
+  // 获取相关指标
+  const relatedMetrics = getRelatedMetrics(metricId);
+  const allMetricsToShow = [metricId, ...relatedMetrics];
+
+  // 隐藏导航栏
+  const navTabs = document.getElementById('navTabs');
+  if (navTabs) navTabs.style.display = 'none';
+
+  // 添加详情模式class
+  const modulesArea = document.getElementById('modulesArea');
+  modulesArea.classList.add('detail-mode');
+
+  // 遍历所有模块
+  const modules = document.querySelectorAll('.module-row');
+  modules.forEach(module => {
+    const chartsContainer = module.querySelector('.charts');
+    if (!chartsContainer) return;
+
+    const charts = module.querySelectorAll('.chart-card');
+    let hasVisibleChart = false;
+    let currentMetricCard = null;
+    const relatedMetricCards = [];
+    const otherCards = [];
+
+    // 第一遍：分类卡片
+    charts.forEach(card => {
+      const cardMetricId = card.dataset.metricId;
+
+      if (allMetricsToShow.includes(cardMetricId)) {
+        hasVisibleChart = true;
+
+        if (cardMetricId === metricId) {
+          // 当前指标
+          card.style.display = 'block';
+          card.classList.add('current-metric');
+          currentMetricCard = card;
+        } else {
+          // 相关指标
+          card.style.display = 'block';
+          card.classList.add('related-metric');
+          relatedMetricCards.push(card);
+        }
+      } else {
+        // 其他指标（隐藏）
+        card.style.display = 'none';
+        otherCards.push(card);
+      }
+    });
+
+    // 第二遍：重新排序DOM元素
+    // 顺序：当前指标 → 相关指标 → 其他隐藏的指标
+    if (hasVisibleChart && currentMetricCard) {
+      // 先添加当前指标
+      chartsContainer.appendChild(currentMetricCard);
+
+      // 再添加相关指标
+      relatedMetricCards.forEach(card => {
+        chartsContainer.appendChild(card);
+      });
+
+      // 最后添加其他隐藏的指标（保持在DOM中但不可见）
+      otherCards.forEach(card => {
+        chartsContainer.appendChild(card);
+      });
+    }
+
+    // 如果模块没有可见的图表，隐藏整个模块
+    if (!hasVisibleChart) {
+      module.classList.add('hidden-module');
+    } else {
+      module.classList.remove('hidden-module');
+
+      // 如果这个模块包含相关指标，标记模块头
+      const hasRelated = relatedMetricCards.length > 0;
+
+      if (hasRelated) {
+        const moduleHeader = module.querySelector('.module-header');
+        if (moduleHeader) {
+          moduleHeader.classList.add('related-section');
+        }
+      }
+    }
+  });
+
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 返回全部指标视图
+function returnToAllMetrics() {
+  isDetailMode = false;
+  currentMetricId = null;
+
+  // 更新URL
+  setMetricIdToURL(null);
+
+  // 隐藏面包屑
+  const breadcrumb = document.getElementById('metricBreadcrumb');
+  breadcrumb.style.display = 'none';
+
+  // 显示导航栏
+  const navTabs = document.getElementById('navTabs');
+  if (navTabs) navTabs.style.display = 'flex';
+
+  // 移除详情模式class
+  const modulesArea = document.getElementById('modulesArea');
+  modulesArea.classList.remove('detail-mode');
+
+  // 重新渲染所有图表以恢复原始顺序
+  renderAllCharts();
+
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 处理URL变化（浏览器前进后退）
+function handleHashChange() {
+  const metricId = getMetricIdFromURL();
+  if (metricId) {
+    showMetricDetail(metricId);
+  } else if (isDetailMode) {
+    returnToAllMetrics();
+  }
+}
+
+// 点击图表卡片进入详情页
+// 点击View Details按钮进入详情页
+function onViewDetailsClick(metricId, event) {
+  // 阻止事件冒泡
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  // 如果已经在详情模式，不响应点击
+  if (isDetailMode) {
+    return;
+  }
+
+  setMetricIdToURL(metricId);
+  showMetricDetail(metricId);
+}
+
+// 初始化
+function initPage() {
+  initNavigation();
+  renderAllCharts();
+
+  // 点击卡片 -> 在右侧 AI 面板展示对应指标分析（面板为常驻列，不遮挡图表）
+  const modulesArea = document.getElementById("modulesArea");
+  if (modulesArea){
+    modulesArea.addEventListener("click", (ev) => {
+      const card = ev.target.closest(".chart-card");
+      if (!card) return;
+
+      // 避免干扰维度切换/按钮/下拉等交互
+      if (ev.target.closest("button, a, select, option, input, textarea, .dim-tabs, .dim-dropdown, .chart-actions")) return;
+
+      const metricId = card.dataset.metricId;
+      const metricName = card.dataset.metricName || metricId;
+
+      // 如果没有对应 AI，也展示 empty（但仍可展开面板）
+      openAISidebar();
+      showAIAnalysisForMetric(metricId, metricName);
+    });
+  }
+
+  loadAIAnalysis();
+  // AI 面板默认展开
+  setAIPanelCollapsed(false);
+
+  const collapseBtn = document.getElementById("aiCollapseBtn");
+  if (collapseBtn) collapseBtn.addEventListener("click", () => setAIPanelCollapsed(true));
+  const expandBtn = document.getElementById("aiExpandBtn");
+  if (expandBtn) expandBtn.addEventListener("click", () => setAIPanelCollapsed(false));
+
+    initAISidebarBadgeClick();
+initAISidebarBadgeClick();
+
+  document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
+  document.getElementById("generatedAt").textContent = new Date().toLocaleString();
+
+  // 监听URL hash变化
+  window.addEventListener('hashchange', handleHashChange);
+
+
+  // ESC 关闭 AI 侧边栏
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape'){ closeAISidebar(); } });
+// 检查初始URL
+  const initialMetricId = getMetricIdFromURL();
+  if (initialMetricId) {
+    // 延迟执行，确保所有图表已渲染
+    setTimeout(() => showMetricDetail(initialMetricId), 100);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initPage);
+</script>
+
+</body>
+</html>
