@@ -416,191 +416,54 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 }
 
 .ai-panel-content{
-  padding: 12px 14px 20px;
+  padding: 12px 14px 16px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-gutter: stable;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 
-/* ---- empty state ---- */
 .ai-panel-content .ai-empty{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: 1.5px dashed var(--border-light);
-  border-radius: 16px;
-  padding: 32px 18px;
+  border: 1px dashed var(--border-light);
+  border-radius: 14px;
+  padding: 14px;
   color: var(--text-muted);
-  background: rgba(0,0,0,0.015);
-  text-align: center;
-  font-size: 13px;
-}
-.ai-panel-content .ai-empty::before{
-  content: "🤖";
-  font-size: 28px;
-  display: block;
+  background: rgba(0,0,0,0.02);
 }
 
-/* ---- top-level block (one card per section) ---- */
 .ai-panel-content .ai-block{
-  background: #fff;
-  border: 1px solid #e8ecf2;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
-}
-
-/* ---- section header inside a block ---- */
-.ai-section-header{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px 9px;
-  background: linear-gradient(90deg, #f0f5ff 0%, #f8faff 100%);
-  border-bottom: 1px solid #e8ecf2;
-  font-size: 12px;
-  font-weight: 700;
-  color: #1d40b0;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-}
-.ai-section-header .ai-section-dot{
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
-  flex-shrink: 0;
-}
-
-/* ---- bullet list inside block ---- */
-.ai-block-body{
-  padding: 10px 14px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-/* ---- individual point row ---- */
-.ai-point-row{
-  display: flex;
-  gap: 9px;
-  align-items: flex-start;
-  font-size: 13px;
-  color: #1e293b;
-  line-height: 1.6;
-  padding: 7px 10px;
-  border-radius: 10px;
-  background: #f8faff;
-  border: 1px solid #eef1f8;
-  transition: background .12s;
-}
-.ai-point-row:hover{ background: #eef4ff; border-color: #d4e0fb; }
-.ai-point-row .ai-point-icon{
-  flex-shrink: 0;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #dbeafe, #ede9fe);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px;
-  margin-top: 2px;
-  color: #3b82f6;
-  font-weight: 700;
-}
-.ai-point-row .ai-point-text{ flex: 1; min-width: 0; }
-
-/* ---- key-value pill rows (bold-title: content) ---- */
-.ai-kv-row{
-  display: flex;
-  gap: 8px;
-  align-items: baseline;
-  padding: 7px 10px;
-  border-radius: 10px;
-  background: #fff;
-  border: 1px solid #eef1f8;
-  font-size: 13px;
-  line-height: 1.55;
-}
-.ai-kv-row .ai-kv-key{
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 9px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(99,102,241,0.1));
-  border: 1px solid rgba(99,102,241,0.18);
-  color: #3730a3;
-  font-size: 11px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-.ai-kv-row .ai-kv-val{
-  color: #334155;
-  flex: 1;
-  min-width: 0;
-}
-
-/* ---- sub-breakdown rows (新用户 / 留存用户 etc.) ---- */
-.ai-sub-row{
-  margin-left: 6px;
-  padding: 6px 10px 6px 12px;
-  border-left: 3px solid #bfdbfe;
-  border-radius: 0 8px 8px 0;
-  background: #f0f6ff;
-  font-size: 12.5px;
-  color: #374151;
-  line-height: 1.6;
-}
-
-/* ---- dim rows ---- */
-.ai-dim-row-new{
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 8px;
-  align-items: start;
-  background: #f9fafb;
   border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 7px 10px;
-  font-size: 12.5px;
-}
-.ai-dim-label-new{ font-weight: 700; color: #0f172a; }
-.ai-dim-val-new{ color: var(--text); }
-
-/* ---- inline code ---- */
-.ai-panel-content code{
-  background: #eef0f5;
-  padding: 1px 6px;
-  border-radius: 5px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875em;
-  color: #3730a3;
+  border-radius: 14px;
+  padding: 12px 12px 10px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 12px;
 }
 
-/* ---- section divider heading ---- */
-.ai-section-divider{
-  font-size: 11.5px;
-  font-weight: 700;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 8px 0 2px;
-  padding: 0 2px;
+.ai-panel-content .ai-kv{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 10px;
+  margin: 8px 0 10px;
 }
-
-/* legacy selectors kept for compat */
-.ai-panel-content .ai-kv{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0; }
 .ai-panel-content .ai-pill{
-  display:inline-flex; align-items:center; gap:5px;
-  padding: 4px 10px; border-radius: 999px;
-  border: 1px solid rgba(99,102,241,0.2);
-  background: rgba(99,102,241,0.07);
-  color: #3730a3; font-size: 11.5px; font-weight: 600;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-light);
+  background: rgba(34,139,230,0.06);
+  color: var(--text);
+  font-size: 12px;
 }
-.ai-panel-content li.ai-section{ list-style:none; }
+.ai-panel-content ul{ padding-left: 18px; margin: 8px 0 0; }
+.ai-panel-content li{ margin: 6px 0; color: var(--text); line-height: 1.55; }
+.ai-panel-content li.ai-section{
+  margin-top: 10px;
+  font-weight: 700;
+  color: #0f172a;
+  list-style: none;
+}
 
 /* Sidebar header / close button */
 
@@ -1346,10 +1209,10 @@ body.ai-collapsed .charts{
               "02-23"
             ],
             "values": [
-              1.8674863387978144,
+              1.4849726775956285,
               4.716332378223496,
-              2.7033898305084745,
-              0.1101321585903083
+              2.695774647887324,
+              0.1197771587743732
             ]
           }
         }
@@ -1364,7 +1227,7 @@ body.ai-collapsed .charts{
         "pk_start_to_finish"
       ],
       "description": "\u6d3b\u8dc3\u7528\u6237\u5728\u7edf\u8ba1\u5468\u671f\u5185\uff0c\u5e73\u5747\u6210\u529f\u5b8c\u6210\u7684 PK \u573a\u6b21",
-      "has_ai": false
+      "has_ai": true
     }
   ],
   "user_growth": [
@@ -1444,10 +1307,10 @@ body.ai-collapsed .charts{
               0.5122448979591837,
               0.5542857142857143,
               0.5522565320665083,
-              0.5285326086956522,
-              0.5770862800565771,
-              0.553050397877984,
-              0.176
+              0.527891156462585,
+              0.577304964539007,
+              0.5524568393094289,
+              0.3455056179775281
             ]
           }
         },
@@ -1467,8 +1330,8 @@ body.ai-collapsed .charts{
             "CN",
             "SG",
             "PH",
-            "US",
             "MY",
+            "US",
             "HK",
             "NG",
             "IN",
@@ -1478,12 +1341,12 @@ body.ai-collapsed .charts{
             "NP",
             "LB",
             "TN",
-            "ZA",
             "EG",
+            "ZA",
             "IQ",
             "KH",
-            "DZ",
             "PK",
+            "DZ",
             "VN",
             "AE",
             "BR",
@@ -1501,113 +1364,114 @@ body.ai-collapsed .charts{
             "QA",
             "GM",
             "ZM",
-            "IL",
             "SY",
+            "IL",
             "PR",
+            "VE",
             "BD",
             "JP",
             "TR",
-            "MU",
             "TT",
-            "LK",
             "ET",
+            "MU",
+            "LK",
             "GB",
-            "UY",
-            "VE",
-            "AR",
-            "CM",
-            "AL",
-            "FR",
             "EC",
+            "FR",
+            "AL",
+            "AR",
+            "UY",
             "KE",
+            "CM",
+            "HN",
             "ES",
             "DO",
-            "SN",
             "LR",
-            "AU",
             "CA",
+            "SN",
+            "AU",
             "JO",
-            "BT",
-            "TW",
+            "ZW",
             "CD",
-            "FJ",
-            "MV",
+            "NZ",
             "CG",
             "RO",
-            "ZW",
             "KG",
-            "AS",
-            "SB",
             "MR",
+            "MV",
+            "BT",
+            "TW",
+            "SB",
+            "FJ",
+            "AS",
             "AM",
             "HU",
-            "NZ",
             "SL",
-            "HN",
             "PS",
-            "AZ",
+            "IT",
             "BE",
+            "AZ",
             "AF",
             "BH",
             "PT",
-            "IT",
             "IE",
             "CI",
-            "PY",
-            "RW",
-            "XK",
-            "SK",
             "MZ",
-            "AW",
-            "PG",
-            "SR",
+            "PY",
             "SV",
             "TG",
+            "RW",
+            "AW",
+            "PG",
             "TL",
             "VI",
-            "BA",
+            "XK",
             "AO",
+            "SK",
+            "BA",
+            "SR",
             "BS",
-            "GU",
-            "MO",
-            "KW",
+            "GT",
             "BO",
-            "DK",
             "KZ",
-            "BN",
             "GF",
+            "KW",
+            "BJ",
             "MG",
             "MK",
-            "BJ",
+            "BN",
             "CW",
+            "MO",
             "MP",
-            "CR",
             "GP",
+            "CR",
+            "BF",
             "MQ",
+            "GU",
             "BZ",
             "BY",
             "BW",
             "MW",
-            "BF",
-            "SE",
-            "SO",
+            "DK",
             "KR",
-            "TJ",
+            "SO",
+            "SE",
             "GN",
+            "TJ",
             "GR",
             "BB",
             "TZ",
-            "UA",
             "TD",
+            "UG",
             "CZ",
             "CY",
             "CV",
             "CL",
             "CH",
-            "UG",
+            "UA",
             "BG",
-            "GT",
-            "ME",
+            "SS",
+            "GY",
             "NI",
             "NL",
             "NO",
@@ -1617,8 +1481,8 @@ body.ai-collapsed .charts{
             "PE",
             "MM",
             "PL",
+            "ME",
             "LV",
-            "SS",
             "LT",
             "RE",
             "RS",
@@ -1627,134 +1491,133 @@ body.ai-collapsed .charts{
             "SI",
             "NC",
             "HT",
-            "GY",
             "nan"
           ],
           "selected_dim_values": [
-            "NG"
+            "PH"
           ],
           "ranked_dim_values": [
-            "NG",
             "PH",
+            "NG",
             "MY",
             "ID",
-            "IL",
             "US",
+            "IL",
             "CN",
+            "TH",
             "SG",
             "CO",
             "LY",
-            "TH",
             "SN",
             "LA",
+            "HN",
             "ZA",
             "LB",
+            "SY",
+            "VE",
             "DZ",
             "TN",
-            "SY",
+            "EG",
+            "ZM",
+            "CG",
             "QA",
             "SB",
-            "CG",
-            "ZM",
-            "EG",
-            "GH",
             "IQ",
+            "GH",
+            "BR",
             "GE",
             "AE",
-            "BR",
             "VN",
             "JO",
             "NP",
             "DO",
-            "VE",
             "GB",
             "TR",
-            "MU",
-            "HN",
             "AM",
-            "IN",
-            "MN",
-            "MX",
+            "MU",
             "PK",
+            "MN",
+            "IN",
+            "MX",
             "KH",
             "BD",
-            "KG",
-            "JP",
-            "BN",
-            "DK",
-            "MK",
-            "CM",
-            "BT",
-            "KZ",
-            "AF",
-            "VI",
+            "PS",
             "KE",
+            "KG",
             "BO",
+            "AF",
+            "KZ",
+            "JP",
+            "MK",
+            "DK",
+            "BN",
+            "BZ",
+            "BT",
+            "CD",
+            "GM",
             "EC",
             "AL",
-            "BZ",
-            "UZ",
-            "GM",
-            "AU",
-            "CD",
-            "AR",
-            "UY",
             "XK",
-            "PS",
+            "VI",
+            "CM",
+            "UZ",
+            "GT",
+            "UY",
+            "AR",
+            "AU",
             "SA",
             "DE",
             "PR",
-            "ES",
             "CI",
-            "AZ",
+            "ES",
             "PT",
-            "SO",
+            "AZ",
             "SE",
+            "SO",
             "KW",
             "KR",
-            "LK",
             "MR",
+            "LK",
             "FR",
-            "MW",
-            "TW",
+            "IT",
+            "FJ",
+            "TT",
+            "CH",
             "IE",
-            "HU",
+            "ET",
             "TL",
+            "HU",
+            "CL",
+            "TW",
+            "CV",
+            "TZ",
+            "BA",
             "AO",
             "GY",
-            "TT",
-            "UA",
-            "TZ",
-            "IT",
-            "GT",
             "GR",
-            "CH",
             "GF",
-            "FJ",
-            "ET",
-            "CL",
-            "CA",
-            "BA",
+            "UA",
+            "MW",
             "SI",
-            "MV",
             "NC",
             "MT",
             "NL",
             "NZ",
             "OM",
             "PE",
-            "BG",
             "MQ",
             "MA",
+            "BY",
             "LT",
             "LR",
             "PY",
-            "BF",
+            "BG",
             "RO",
             "RS",
             "RU",
-            "BY",
-            "CV"
+            "BF",
+            "CA",
+            "MV"
           ],
           "data": {
             "dates": [
@@ -6416,7 +6279,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.7784090909090909,
+                0.7777777777777778,
                 0.0,
                 0.0,
                 0.0,
@@ -6583,7 +6446,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.735897435897436,
+                0.7371134020618557,
                 0.4166666666666667,
                 0.0,
                 0.0,
@@ -6750,7 +6613,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.7316455696202532,
+                0.7309644670050761,
                 0.0909090909090909,
                 0.0,
                 0.0,
@@ -6822,7 +6685,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.1935483870967742,
+                0.2777777777777778,
                 0.0,
                 0.0,
                 0.0,
@@ -6847,7 +6710,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.25,
                 0.0,
-                0.2142857142857142,
+                0.3529411764705882,
                 0.0,
                 0.0,
                 0.0,
@@ -6860,19 +6723,19 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.1538461538461538,
-                0.0,
+                0.2,
+                0.5,
                 0.0,
                 0.1428571428571428,
                 0.0,
@@ -6885,6 +6748,16 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.4,
                 0.0,
                 0.0,
                 0.0,
@@ -6907,21 +6780,11 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                0.5772357723577236,
+                0.125,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.3125,
-                0.0,
-                0.0,
-                0.0,
-                0.2857142857142857,
+                0.4444444444444444,
                 0.0,
                 0.0,
                 0.0,
@@ -6942,25 +6805,25 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                0.75,
+                0.0,
+                0.0,
+                0.3333333333333333,
+                0.0,
+                0.0,
+                0.0,
+                0.1111111111111111,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.36,
+                0.0,
+                0.0,
                 0.5,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
                 0.1428571428571428,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.125,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0833333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -6985,18 +6848,18 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "invite",
             "minihub",
-            "Organic",
             "others",
+            "Organic",
             "FB",
             "TikTok"
           ],
           "selected_dim_values": [
-            "FB"
+            "invite"
           ],
           "ranked_dim_values": [
+            "invite",
             "FB",
             "Organic",
-            "invite",
             "others",
             "minihub",
             "TikTok"
@@ -7257,7 +7120,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.6181818181818182,
                 0.0,
-                0.3615819209039548
+                0.3597733711048159
               ],
               [
                 0.7253521126760564,
@@ -7265,7 +7128,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.8333333333333334,
                 0.0,
-                0.4173669467787115
+                0.4169014084507042
               ],
               [
                 0.6503496503496503,
@@ -7273,15 +7136,15 @@ body.ai-collapsed .charts{
                 0.0,
                 0.8181818181818182,
                 0.0,
-                0.4147727272727273
+                0.4131054131054131
               ],
               [
-                0.238095238095238,
-                0.4285714285714285,
+                0.5454545454545454,
+                0.5,
                 0.0,
+                1.0,
                 0.0,
-                0.0,
-                0.1444444444444444
+                0.2403433476394849
               ]
             ]
           }
@@ -7369,10 +7232,10 @@ body.ai-collapsed .charts{
               9.167330677290837,
               5.161512027491409,
               7.432258064516129,
-              8.19280205655527,
-              9.338235294117649,
-              6.177458033573141,
-              3.4545454545454546
+              8.213917525773196,
+              9.361179361179362,
+              6.1923076923076925,
+              4.382113821138211
             ]
           }
         },
@@ -7422,20 +7285,21 @@ body.ai-collapsed .charts{
             "AU",
             "KZ",
             "ZW",
-            "RO",
             "TT",
+            "RO",
             "LK",
             "JP",
             "ZM",
             "EC",
+            "PS",
             "MN",
             "VI",
             "PR",
-            "PS",
             "BS",
             "TR",
             "TN",
             "BD",
+            "IT",
             "ET",
             "LR",
             "JO",
@@ -7445,7 +7309,6 @@ body.ai-collapsed .charts{
             "GE",
             "BE",
             "BH",
-            "IT",
             "TW",
             "AO",
             "BO",
@@ -7454,93 +7317,93 @@ body.ai-collapsed .charts{
             "CR",
             "DE",
             "GB",
-            "UY",
-            "AL",
-            "BT",
             "KW",
+            "BT",
+            "AL",
+            "UY",
             "CD",
-            "QA",
+            "SY",
             "IL",
             "DO",
-            "SY",
+            "QA",
             "AZ",
-            "NZ",
             "AF",
+            "NZ",
             "MW",
+            "VE",
             "SL",
             "CM",
-            "AS",
+            "MU",
             "BF",
             "GM",
+            "AS",
             "AR",
-            "MU",
             "KG",
-            "GP",
             "MR",
+            "GP",
             "FJ",
-            "CI",
-            "VE",
             "RW",
             "MO",
+            "CI",
+            "HN",
+            "MG",
             "FR",
             "BJ",
-            "MG",
             "KE",
-            "SK",
             "SR",
             "SV",
-            "MK",
             "MZ",
-            "HN",
+            "SK",
+            "MK",
             "MQ",
             "MV",
-            "GU",
-            "CW",
             "TG",
             "CG",
-            "GF",
-            "BW",
+            "GU",
+            "GT",
+            "CW",
             "MP",
+            "GF",
             "IE",
-            "SO",
+            "BW",
+            "KR",
             "XK",
+            "SO",
+            "BN",
+            "BA",
+            "BZ",
             "PT",
             "SB",
-            "BZ",
-            "KR",
-            "BA",
-            "BN",
-            "AW",
-            "DK",
-            "PG",
-            "PY",
-            "TL",
             "SE",
+            "TL",
             "BY",
+            "DK",
+            "PY",
+            "AW",
+            "PG",
             "TD",
             "SS",
-            "TJ",
             "TZ",
+            "TJ",
             "UA",
             "UG",
             "CH",
             "SI",
-            "AT",
+            "MM",
             "CL",
             "CV",
             "CY",
             "CZ",
             "GN",
             "GR",
-            "GT",
             "GY",
             "HT",
             "LT",
             "LV",
             "BG",
             "ME",
-            "MM",
             "MT",
+            "AT",
             "NC",
             "BB",
             "NI",
@@ -7560,8 +7423,8 @@ body.ai-collapsed .charts{
           ],
           "ranked_dim_values": [
             "MY",
-            "KZ",
             "CN",
+            "KZ",
             "US",
             "PH",
             "IN",
@@ -7572,114 +7435,114 @@ body.ai-collapsed .charts{
             "LY",
             "ZM",
             "MN",
+            "BR",
             "ZA",
             "SN",
-            "BR",
-            "GH",
-            "TR",
-            "IQ",
             "TH",
+            "GH",
+            "IQ",
+            "TR",
             "DZ",
             "BO",
-            "EG",
             "JO",
             "NG",
+            "EG",
             "VN",
             "AM",
             "LB",
             "PS",
-            "IL",
+            "PK",
             "TN",
             "CD",
             "MX",
+            "IL",
             "BD",
             "KH",
-            "PK",
+            "SY",
             "EC",
-            "BT",
             "AZ",
+            "BT",
             "GB",
             "GE",
             "DO",
-            "SY",
             "LA",
+            "IT",
             "NP",
             "CO",
+            "VE",
             "CI",
             "JP",
             "MK",
             "AE",
             "AR",
             "UZ",
+            "HN",
             "DE",
             "MU",
             "KG",
-            "KW",
-            "GM",
             "CG",
             "UY",
-            "QA",
-            "VE",
-            "MR",
+            "GM",
+            "KW",
+            "GT",
             "AF",
-            "HN",
             "KE",
+            "QA",
             "AL",
-            "BN",
-            "SB",
-            "BZ",
-            "SO",
-            "CM",
+            "MR",
             "XK",
-            "KR",
+            "BN",
+            "SO",
+            "BZ",
+            "SB",
             "ES",
-            "LK",
-            "PT",
-            "DK",
-            "FR",
-            "AU",
-            "PR",
+            "CM",
+            "KR",
             "SE",
-            "RU",
+            "AU",
+            "PT",
+            "PR",
+            "LK",
+            "FR",
+            "DK",
+            "GR",
+            "TT",
+            "LT",
+            "BY",
+            "LR",
+            "TL",
+            "BG",
+            "BF",
+            "GY",
+            "GF",
+            "TW",
             "SI",
             "UA",
-            "TZ",
-            "BY",
-            "TT",
-            "TW",
-            "BG",
-            "TL",
-            "BF",
             "BA",
             "AO",
-            "CA",
-            "IE",
-            "RS",
-            "RO",
-            "IT",
-            "GY",
-            "GT",
-            "GR",
-            "GF",
-            "LR",
-            "LT",
-            "FJ",
-            "MA",
-            "ET",
-            "MQ",
-            "MT",
+            "TZ",
             "MV",
-            "MW",
+            "CA",
+            "HU",
+            "MT",
             "NC",
-            "CV",
+            "MQ",
             "NL",
+            "CV",
             "NZ",
             "OM",
-            "HU",
+            "PE",
             "CL",
+            "MW",
             "CH",
             "PY",
-            "PE"
+            "ET",
+            "RO",
+            "RS",
+            "RU",
+            "FJ",
+            "MA",
+            "IE"
           ],
           "data": {
             "dates": [
@@ -10186,7 +10049,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                27.304347826086957,
+                27.30434782608696,
                 0.0,
                 0.0,
                 0.0,
@@ -10208,7 +10071,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                7.810810810810811,
+                7.81081081081081,
                 0.0,
                 0.0,
                 0.0,
@@ -10422,7 +10285,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                24.076923076923077,
+                24.07692307692308,
                 0.0,
                 0.0,
                 0.0,
@@ -11544,7 +11407,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                6.9411764705882355,
+                6.941176470588236,
                 0.0,
                 1.0,
                 0.0,
@@ -11957,7 +11820,7 @@ body.ai-collapsed .charts{
                 2.0,
                 0.0,
                 0.0,
-                3.0833333333333335,
+                3.083333333333333,
                 0.0,
                 0.0,
                 2.5,
@@ -12341,7 +12204,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                9.072992700729928,
+                9.106227106227106,
                 0.0,
                 0.0,
                 0.0,
@@ -12384,7 +12247,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 42.0,
-                2.3333333333333335,
+                2.333333333333333,
                 2.0,
                 6.0,
                 19.0,
@@ -12508,7 +12371,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                9.881533101045296,
+                9.916083916083917,
                 5.4,
                 0.0,
                 0.0,
@@ -12613,7 +12476,7 @@ body.ai-collapsed .charts{
                 4.0,
                 0.0,
                 0.0,
-                3.3333333333333335,
+                3.333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -12675,7 +12538,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                6.249134948096886,
+                6.270833333333333,
                 1.0,
                 0.0,
                 0.0,
@@ -12747,7 +12610,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.6666666666666665,
+                5.2,
                 0.0,
                 0.0,
                 0.0,
@@ -12772,32 +12635,32 @@ body.ai-collapsed .charts{
                 0.0,
                 3.0,
                 0.0,
+                2.833333333333333,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
                 4.0,
                 0.0,
                 0.0,
                 0.0,
+                2.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.5,
-                0.0,
+                1.6666666666666667,
+                10.0,
                 0.0,
                 1.0,
                 0.0,
@@ -12829,6 +12692,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                3.0,
                 0.0,
                 0.0,
                 0.0,
@@ -12841,23 +12705,11 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                4.05,
-                0.0,
-                0.0,
-                0.0,
-                3.5,
+                4.52112676056338,
+                2.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
+                5.25,
                 0.0,
                 0.0,
                 0.0,
@@ -12871,6 +12723,17 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.333333333333333,
+                0.0,
+                0.0,
+                4.0,
                 0.0,
                 0.0,
                 0.0,
@@ -12880,12 +12743,12 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                5.0,
-                0.0,
-                0.0,
+                6.777777777777778,
                 0.0,
                 0.0,
                 4.0,
+                0.0,
+                3.0,
                 0.0,
                 0.0,
                 0.0,
@@ -13081,7 +12944,7 @@ body.ai-collapsed .charts{
                 9.78698224852071
               ],
               [
-                2.3333333333333335,
+                2.333333333333333,
                 8.916666666666666,
                 0.0,
                 8.0,
@@ -13169,7 +13032,7 @@ body.ai-collapsed .charts{
                 4.876712328767123
               ],
               [
-                6.1938325991189425,
+                6.193832599118943,
                 12.05,
                 15.0,
                 45.0,
@@ -13178,35 +13041,35 @@ body.ai-collapsed .charts{
               ],
               [
                 10.719178082191782,
-                7.098765432098766,
+                7.172839506172839,
                 0.0,
                 7.294117647058823,
                 0.0,
-                6.2421875
+                6.244094488188976
               ],
               [
-                12.402912621359222,
+                12.407766990291265,
                 7.473684210526316,
                 0.0,
                 6.8,
                 0.0,
-                5.832214765100671
+                5.864864864864865
               ],
               [
-                7.311827956989247,
+                7.440860215053763,
                 5.482758620689655,
                 0.0,
                 4.185185185185185,
                 0.0,
-                5.376712328767123
+                5.248275862068965
               ],
               [
-                4.066666666666666,
+                4.45,
+                4.833333333333333,
+                0.0,
                 2.0,
                 0.0,
-                0.0,
-                0.0,
-                3.269230769230769
+                4.303571428571429
               ]
             ]
           }
@@ -13280,7 +13143,7 @@ body.ai-collapsed .charts{
               1.302,
               1.744,
               11.358,
-              3.4379999999999997,
+              3.438,
               2.526,
               3.266,
               11.526,
@@ -13291,7 +13154,7 @@ body.ai-collapsed .charts{
               5.286,
               11.146,
               1.17,
-              3.2779999999999996,
+              3.278,
               5.555999999999999,
               2.004,
               4.682,
@@ -13299,7 +13162,7 @@ body.ai-collapsed .charts{
               0.988,
               0.702,
               0.806,
-              0.156
+              0.208
             ]
           }
         }
@@ -13356,7 +13219,8 @@ body.ai-collapsed .charts{
               "02-19",
               "02-20",
               "02-21",
-              "02-22"
+              "02-22",
+              "02-23"
             ],
             "values": [
               6.0,
@@ -13387,7 +13251,8 @@ body.ai-collapsed .charts{
               87.0,
               109.0,
               102.0,
-              103.0
+              103.0,
+              8.0
             ]
           }
         },
@@ -13444,7 +13309,8 @@ body.ai-collapsed .charts{
               "02-19",
               "02-20",
               "02-21",
-              "02-22"
+              "02-22",
+              "02-23"
             ],
             "series": [
               "watch_ad",
@@ -13566,6 +13432,10 @@ body.ai-collapsed .charts{
               [
                 34.0,
                 69.0
+              ],
+              [
+                2.0,
+                6.0
               ]
             ]
           }
@@ -13656,7 +13526,7 @@ body.ai-collapsed .charts{
               4216.0,
               4734.0,
               3546.0,
-              149.0
+              568.0
             ]
           }
         }
@@ -13745,8 +13615,8 @@ body.ai-collapsed .charts{
               3.619745845552297,
               4.58759521218716,
               5.289385474860335,
-              3.8293736501079914,
-              1.3909090909090909
+              3.825242718446602,
+              2.0955882352941178
             ]
           }
         }
@@ -13758,7 +13628,7 @@ body.ai-collapsed .charts{
         "new_user_avg_spend_energy"
       ],
       "description": "\u5e73\u5747\u6bcf\u65e5\u4eba\u5747energy\u6d88\u8017",
-      "has_ai": false
+      "has_ai": true
     }
   ],
   "daily_challenge": [
@@ -13823,7 +13693,7 @@ body.ai-collapsed .charts{
         "finish_kix_challenge_rate"
       ],
       "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
-      "has_ai": false
+      "has_ai": true
     },
     {
       "chart_id": "book_kix_challenge_uv__series__series_daily",
@@ -13870,8 +13740,8 @@ body.ai-collapsed .charts{
               0.8300970873786407,
               1.0762331838565022,
               0.9706180344478216,
-              1.9254079254079255,
-              2.3746478873239436,
+              1.923166472642608,
+              2.002375296912114,
               0.0
             ]
           }
@@ -14058,13 +13928,13 @@ body.ai-collapsed .charts{
               "02-23"
             ],
             "values": [
-              4.1452455590386625,
+              4.145245559038663,
               2.9467625899280576,
               2.3924558587479936,
               3.8587174348697393,
               4.7478991596638656,
               3.586792452830189,
-              2.2589703588143526
+              2.34052757793765
             ]
           }
         },
@@ -14123,7 +13993,7 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 0.0,
-                4.1452455590386625,
+                4.145245559038663,
                 0.0,
                 0.0,
                 0.0,
@@ -14176,7 +14046,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                2.2589703588143526,
+                2.34052757793765,
                 0.0,
                 0.0,
                 0.0,
@@ -14244,7 +14114,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                4.1452455590386625,
+                4.145245559038663,
                 0.0,
                 0.0,
                 0.0
@@ -14299,7 +14169,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.2589703588143526,
+                2.34052757793765,
                 0.0,
                 0.0
               ]
@@ -14369,8 +14239,8 @@ body.ai-collapsed .charts{
                 3.2036727879799667
               ],
               [
-                2.493630573248407,
-                2.0336391437308867
+                2.567237163814181,
+                2.1223529411764708
               ]
             ]
           }
@@ -14383,7 +14253,7 @@ body.ai-collapsed .charts{
         "score_zero_user"
       ],
       "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807",
-      "has_ai": false
+      "has_ai": true
     },
     {
       "chart_id": "kix_reward_uv__series__series_daily",
@@ -16773,7 +16643,7 @@ body.ai-collapsed .charts{
               0.0,
               0.0,
               0.0,
-              0.3661971830985915,
+              0.1830985915492957,
               0.6808510638297872,
               0.6862745098039216,
               0.6981132075471698
@@ -16807,9 +16677,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 474.0,
-            "numerator": 471.0,
-            "value": 0.9936708860759493
+            "denominator": 826.0,
+            "numerator": 822.0,
+            "value": 0.9951573849878934
           }
         }
       ],
@@ -16837,8 +16707,8 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 471.0,
-            "numerator": 471.0,
+            "denominator": 823.0,
+            "numerator": 823.0,
             "value": 1.0
           }
         }
@@ -16867,9 +16737,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 471.0,
-            "numerator": 141.0,
-            "value": 0.29936305732484075
+            "denominator": 823.0,
+            "numerator": 291.0,
+            "value": 0.353584447144593
           }
         }
       ],
@@ -16897,9 +16767,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 141.0,
-            "numerator": 122.0,
-            "value": 0.8652482269503546
+            "denominator": 291.0,
+            "numerator": 261.0,
+            "value": 0.8969072164948454
           }
         }
       ],
@@ -16929,9 +16799,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-22",
-            "denominator": 3709.0,
-            "numerator": 114.0,
-            "value": 0.030736047452143436
+            "denominator": 3801.0,
+            "numerator": 118.0,
+            "value": 0.031044461983688505
           }
         },
         {
@@ -16950,8 +16820,8 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "APK_Download",
             "HQ_Room_Invite",
-            "Gamification_Task",
             "Add_Friend_Invite",
+            "Gamification_Task",
             "Energy_Rescue",
             "HQ_H5_Share",
             "HQ_After_Share",
@@ -16964,8 +16834,8 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "APK_Download",
             "HQ_Room_Invite",
-            "Gamification_Task",
             "Add_Friend_Invite",
+            "Gamification_Task",
             "Energy_Rescue",
             "HQ_H5_Share",
             "HQ_After_Share",
@@ -16987,36 +16857,36 @@ body.ai-collapsed .charts{
             ],
             "denominator": [
               1.0,
-              105.0,
+              108.0,
               41.0,
-              1985.0,
-              8.0,
+              2026.0,
+              10.0,
               60.0,
-              841.0,
+              867.0,
               23.0,
-              645.0
+              665.0
             ],
             "numerator": [
               2.0,
               12.0,
               3.0,
-              32.0,
+              33.0,
               1.0,
               1.0,
-              58.0,
+              61.0,
               4.0,
               1.0
             ],
             "values": [
               2.0,
-              0.11428571428571428,
+              0.1111111111111111,
               0.07317073170731707,
-              0.016120906801007556,
-              0.125,
+              0.016288252714708785,
+              0.1,
               0.016666666666666666,
-              0.06896551724137931,
+              0.07035755478662054,
               0.17391304347826086,
-              0.0015503875968992248
+              0.0015037593984962407
             ]
           }
         }
@@ -17045,9 +16915,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-22",
-            "denominator": 1914.0,
-            "numerator": 156.0,
-            "value": 0.08150470219435736
+            "denominator": 1992.0,
+            "numerator": 157.0,
+            "value": 0.0788152610441767
           }
         },
         {
@@ -17102,19 +16972,19 @@ body.ai-collapsed .charts{
               "HQ_Withdraw_Share"
             ],
             "denominator": [
-              1191.0,
-              129.0,
+              1195.0,
+              132.0,
               55.0,
-              262.0,
+              265.0,
               6.0,
               6.0,
-              260.0,
+              328.0,
               4.0,
               1.0
             ],
             "numerator": [
               139.0,
-              3.0,
+              4.0,
               0.0,
               12.0,
               0.0,
@@ -17124,13 +16994,13 @@ body.ai-collapsed .charts{
               0.0
             ],
             "values": [
-              0.11670864819479429,
-              0.023255813953488372,
+              0.11631799163179916,
+              0.030303030303030304,
               0.0,
-              0.04580152671755725,
+              0.045283018867924525,
               0.0,
               0.0,
-              0.007692307692307693,
+              0.006097560975609756,
               0.0,
               0.0
             ]
@@ -17282,7 +17152,7 @@ body.ai-collapsed .charts{
               0.0486223662884927,
               0.0229885057471264,
               0.019047619047619,
-              0.0
+              0.0064102564102564
             ]
           }
         }
@@ -17294,7 +17164,7 @@ body.ai-collapsed .charts{
         "click_to_invite_sucess"
       ],
       "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b",
-      "has_ai": false
+      "has_ai": true
     },
     {
       "chart_id": "viral_d1_rate__series__series_daily",
@@ -17360,7 +17230,7 @@ body.ai-collapsed .charts{
               0.0,
               0.0,
               0.0,
-              0.4117647058823529,
+              0.3529411764705882,
               0.4234234234234234,
               0.3769230769230769,
               0.3233082706766917,
@@ -17374,7 +17244,7 @@ body.ai-collapsed .charts{
               0.5135135135135135,
               0.146067415730337,
               0.4545454545454545,
-              0.1071428571428571,
+              0.125,
               0.0
             ]
           }
@@ -17465,7 +17335,7 @@ body.ai-collapsed .charts{
               5.0,
               5.0,
               0.0,
-              0.0
+              1.0
             ]
           }
         }
@@ -17555,7 +17425,7 @@ body.ai-collapsed .charts{
               50.0,
               65.0,
               0.0,
-              0.0
+              10.0
             ]
           }
         }
@@ -17584,9 +17454,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-22",
-            "denominator": 1265.0,
-            "numerator": 512.0,
-            "value": 0.40474308300395256
+            "denominator": 1279.0,
+            "numerator": 521.0,
+            "value": 0.4073494917904613
           }
         },
         {
@@ -17617,13 +17487,13 @@ body.ai-collapsed .charts{
               "__NULL__"
             ],
             "denominator": [
-              1265.0
+              1279.0
             ],
             "numerator": [
-              512.0
+              521.0
             ],
             "values": [
-              0.40474308300395256
+              0.4073494917904613
             ]
           }
         }
@@ -18041,7 +17911,7 @@ body.ai-collapsed .charts{
               0.0019214603098354,
               0.0014247043738424,
               0.0009748172217709,
-              0.0
+              0.000901916572717
             ]
           }
         },
@@ -18073,16 +17943,16 @@ body.ai-collapsed .charts{
             "gamification-notice"
           ],
           "selected_dim_values": [
-            "WITHDRAWAL"
+            "ENERGY_6"
           ],
           "ranked_dim_values": [
+            "ENERGY_6",
             "WITHDRAWAL",
             "COMPETITION_2",
             "ENERGY_2",
             "COMPETITION_1",
             "BECOME_FRIEND",
             "COMPETITION_3",
-            "ENERGY_6",
             "GAMIFICATION_3",
             "gamification-notice"
           ],
@@ -18572,14 +18442,14 @@ body.ai-collapsed .charts{
               ],
               [
                 0.0,
+                0.0007976601967561,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
+                1.0,
                 0.0,
                 0.0,
                 0.0,
@@ -18826,7 +18696,7 @@ body.ai-collapsed .charts{
     }
   ]
 }</script>
-<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-23 14:57\n\n## Platform Basics\n\n**dau**\n\n### \u73b0\u72b6\n1. **DAU \u603b\u4f53\u53d8\u5316**\uff1a2026-02-22 \u7684 DAU \u4e3a 934\uff0c\u8f83 2026-02-21 \u7684 906 \u589e\u52a0 28\uff08+3.09%\uff09\uff0c\u8fd9\u6b21\u4e0a\u884c\u4e3b\u8981\u7531\u65b0\u7528\u6237\u62c9\u52a8\u3002\n2. **DAU \u62c6\u5206**\uff1aDAU = \u65b0\u7528\u6237\uff08626\uff0c\u5360\u6bd467.02%\uff0c+26\uff09 + \u7559\u5b58\u7528\u6237\uff0868\uff0c\u5360\u6bd47.28%\uff0c+0\uff09 + \u8001\u7528\u6237\uff08240\uff0c\u5360\u6bd425.7%\uff0c+2\uff09\u3002\n   - \u65b0\u7528\u6237\uff1a+26\uff0c\u5bf9 DAU \u5f62\u6210\u76f4\u63a5\u62c9\u52a8\u3002\u6574\u4f53\u504f\u5f3a\uff0c\u8fd17\u65e5\u5747\u503c\u7ea6 529\uff0c\u4eca\u65e5 626 \u9ad8\u4e8e\u5747\u503c\u3002\u6e20\u9053\u4e0a Organic +36\uff0879\uff09\u6700\u7a81\u51fa\uff0cFB +1\uff08274\uff09\u6709\u5c0f\u5e45\u8865\u5145\u3001others -14\uff08260\uff09\u5bf9\u51b2\uff1b\u56fd\u5bb6\u4e0a BR +43\uff0869\uff09\u4e0e ID +14\uff0823\uff09\u8d21\u732e\u4e3b\u8981\u589e\u91cf\u3002\u5f3a\u9879\u5728 Organic \u4e0e BR\uff0c\u77ed\u677f\u5728 others \u8d70\u5f31\u3002\n   - \u7559\u5b58\u7528\u6237\uff1a+0\uff0c\u5bf9 DAU \u7684\u5f53\u65e5\u589e\u91cf\u6ca1\u6709\u5b9e\u8d28\u8d21\u732e\uff08\u4e2d\u6027\uff09\u3002\u6574\u4f53\u8d70\u5f31\uff0cD1 \u7559\u5b58\u7387\u4ece 11.33% \u964d\u5230 5.75%\uff0c\u4f4e\u4e8e\u8fd17\u65e5\u5747\u503c\u7ea6 8.62%\u3002\u6e20\u9053\u4e0a Organic \u7559\u5b58\u7387 2.53%\uff08\u8f83\u524d\u4e00\u65e5 -11.42 \u4e2a\u70b9\uff09\u4e0e FB 6.57%\uff08-8.08 \u4e2a\u70b9\uff09\u62d6\u7d2f\u660e\u663e\uff1b\u56fd\u5bb6\u4e0a PH 6.40%\uff08-7.06 \u4e2a\u70b9\uff09\u4e0e US 9.68%\uff08-5.40 \u4e2a\u70b9\uff09\u56de\u843d\u3002\u5f31\u9879\u5728 FB/Organic \u7559\u5b58\u4e0b\u6ed1\uff0c\u5f3a\u9879\u4e0d\u8db3\u4ee5\u5bf9\u51b2\u3002\n   - \u8001\u7528\u6237\uff1a+2\uff0c\u5bf9 DAU \u53ea\u6709\u8f7b\u5fae\u62c9\u52a8\uff0c\u66f4\u591a\u662f\u201c\u5b88\u4f4f\u4e0d\u6389\u201d\u3002\u6574\u4f53\u504f\u7a33\uff0c\u4f46\u672a\u5f62\u6210\u989d\u5916\u589e\u91cf\u3002"</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-23 15:21\n\n## Platform Basics\n\n**dau**\n\n1. **DAU\u5927\u5e45\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684DAU\u4e3a510\uff0c\u8f83\u524d\u4e00\u5929\u7684935\u4e0b\u964d\u4e86425\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523045.45%\uff0c\u663e\u793a\u51fa\u7528\u6237\u6d3b\u8dc3\u5ea6\u663e\u8457\u964d\u4f4e\u3002\n\n2. **\u65b0\u7528\u6237\u8d21\u732e\u5360\u6bd4\u9ad8**\uff1a\u57282026\u5e742\u670823\u65e5\u7684DAU\u4e2d\uff0c\u65b0\u7528\u6237\u5360\u6bd4\u4e3a61.96%\uff08316/510\uff09\uff0c\u800c\u8001\u7528\u6237\u5360\u6bd4\u4e3a28.43%\uff08145/510\uff09\uff0c\u8fd9\u8868\u660e\u65b0\u7528\u6237\u7684\u5f15\u5165\u5bf9DAU\u7684\u8d21\u732e\u4ecd\u7136\u91cd\u8981\uff0c\u4f46\u6574\u4f53\u6d3b\u8dc3\u5ea6\u4e0d\u8db3\u3002\n\n3. **D1\u7559\u5b58\u7387\u504f\u4f4e**\uff1a\u524d\u4e00\u5929\u7684\u65b0\u7528\u6237D1\u7559\u5b58\u7387\u4e3a7.83%\uff0849/626\uff09\uff0c\u76f8\u5bf9\u8f83\u4f4e\uff0c\u5bfc\u81f4\u56de\u6d41\u7528\u6237\u4ec5\u5360DAU\u76849.61%\uff0849\uff09\uff0c\u8fd9\u53ef\u80fd\u662fDAU\u4e0b\u964d\u7684\u4e3b\u8981\u539f\u56e0\u4e4b\u4e00\u3002\n\n4. **\u6765\u6e90\u5206\u6790\u663e\u793a\u201cOthers\u201d\u4e3b\u5bfc**\uff1a\u57282026\u5e742\u670823\u65e5\uff0cDAU\u7684\u4e3b\u8981\u6765\u6e90\u4e3a\u201cothers\u201d\uff0c\u5360\u6bd460.78%\uff08309/510\uff09\uff0c\u800c\u201cFB\u201d\u6765\u6e90\u5360\u6bd432.35%\uff08165/510\uff09\uff0c\u663e\u793a\u51fa\u201cothers\u201d\u6e20\u9053\u7684\u5f3a\u52bf\uff0c\u4f46\u4e5f\u9700\u5173\u6ce8\u5176\u53ef\u6301\u7eed\u6027\u3002\n\n5. **\u76ee\u6807\u5dee\u8ddd\u660e\u663e**\uff1a\u5f53\u524dDAU\u76ee\u6807\u4e3a5000\uff0c\u5b9e\u9645\u503c\u4ec5\u4e3a510\uff0c\u5dee\u8ddd\u8fbe\u52304480\uff0c\u8868\u660e\u9700\u8981\u91c7\u53d6\u6709\u6548\u63aa\u65bd\u63d0\u5347\u7528\u6237\u83b7\u53d6\u548c\u7559\u5b58\uff0c\u4ee5\u5b9e\u73b0\u76ee\u6807\u3002\n\n**retention(d1)**\n\n1. **D1\u7559\u5b58\u7387\u4e0b\u964d\u663e\u8457**\uff1a2026\u5e742\u670822\u65e5\u7684D1\u7559\u5b58\u7387\u4e3a7.83%\uff0c\u8f83\u524d\u4e00\u5929\u768411.33%\u4e0b\u964d\u4e8630.93%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u7684\u56de\u8bbf\u610f\u613f\u663e\u8457\u51cf\u5f31\u3002\n\n2. **\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e0eD1\u7559\u5b58\u7387\u5448\u8d1f\u76f8\u5173**\uff1a\u57282026\u5e742\u670822\u65e5\uff0c\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e3a8.63%\uff0c\u8f83\u524d\u4e00\u5929\u76849.83%\u4e0b\u964d\uff0c\u4e14D1\u7559\u5b58\u7387\u4e5f\u968f\u4e4b\u4e0b\u964d\uff0c\u8868\u660e\u65b0\u6fc0\u6d3b\u7528\u6237\u7684\u51cf\u5c11\u53ef\u80fd\u5f71\u54cd\u4e86\u7559\u5b58\u7387\u3002\n\n3. **\u65b0\u7528\u6237\u8fdb\u5165\u5f15\u5bfc\u8def\u5f84\u8f6c\u5316\u7387\u8f83\u9ad8**\uff1a2026\u5e742\u670822\u65e5\u7684\u65b0\u7528\u6237\u8fdb\u5165\u5f15\u5bfc\u7387\u4e3a96.89%\uff0c\u800c\u65b0\u7528\u6237\u5f15\u5bfc\u5f00\u59cb\u70b9\u51fb\u7387\u4e3a59.91%\uff0c\u663e\u793a\u51fa\u7528\u6237\u5728\u8fdb\u5165\u540e\u4ecd\u6709\u8f83\u9ad8\u7684\u53c2\u4e0e\u5ea6\uff0c\u4f46\u540e\u7eed\u8f6c\u5316\u7387\u53ef\u80fd\u5b58\u5728\u6d41\u5931\u73af\u8282\u3002\n\n4. **\u6311\u6218\u7559\u5b58\u7387\u4e0eD1\u7559\u5b58\u7387\u65e0\u660e\u663e\u5173\u8054**\uff1a2026\u5e742\u670822\u65e5\u7684\u65b0\u7528\u6237\u6311\u6218\u7559\u5b58\u7387\u4e3a0.00%\uff0c\u800c\u524d\u4e00\u5929\u4e3a33.33%\uff0c\u4e24\u8005\u6ce2\u52a8\u5e76\u4e0d\u4e00\u81f4\uff0c\u8868\u660e\u6311\u6218\u6d3b\u52a8\u5bf9D1\u7559\u5b58\u7684\u5f71\u54cd\u6709\u9650\u3002\n\n5. **\u6765\u6e90\u5206\u6790\u663e\u793a\u9080\u8bf7\u6765\u6e90\u4e0b\u964d**\uff1a\u57282026\u5e742\u670822\u65e5\uff0c\u6765\u81ea\u9080\u8bf7\u7684\u7528\u6237\u5360\u6bd4\u4e3a30.77%\uff0c\u8f83\u524d\u4e00\u5929\u768440.00%\u663e\u8457\u4e0b\u964d\uff0c\u53ef\u80fd\u662f\u5bfc\u81f4D1\u7559\u5b58\u7387\u4e0b\u964d\u7684\u4e00\u4e2a\u91cd\u8981\u56e0\u7d20\u3002\n\n**average_meaningful_battles_per_user**\n\n1. **\u4eba\u5747\u6210\u529f PK \u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684\u4eba\u5747\u6210\u529f PK \u964d\u81f30.12\uff0c\u8f83\u524d\u4e00\u5929\u76842.70\u4e0b\u964d\u4e8695.56%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u6f0f\u6597\u73af\u8282\u540c\u6b65\u6ce2\u52a8**\uff1a\u57282\u670822\u65e5\u52302\u670823\u65e5\u4e4b\u95f4\uff0cpk_ready_to_start \u4ece0.62\u964d\u81f30.35\uff0c\u4e0b\u964d\u5e45\u5ea6\u4e3a43.16%\uff0c\u4e0e\u4eba\u5747\u6210\u529f PK \u7684\u4e0b\u964d\u8d8b\u52bf\u4e00\u81f4\uff0c\u63d0\u793a\u8be5\u73af\u8282\u53ef\u80fd\u662f\u94fe\u8def\u74f6\u9888\u3002\n\n3. **\u5b8c\u6210\u7387\u63d0\u5347\u4f46\u53c2\u4e0e\u7387\u4e0b\u964d**\uff1a\u5c3d\u7ba1pk_start_to_finish\u57282\u670823\u65e5\u63d0\u5347\u81f30.90\uff0c\u4f46pk_ready_to_start\u7684\u663e\u8457\u4e0b\u964d\u8868\u660e\uff0c\u867d\u7136\u5b8c\u6210\u7387\u6709\u6240\u63d0\u9ad8\uff0c\u4f46\u7528\u6237\u7684\u53c2\u4e0e\u610f\u613f\u5374\u5728\u51cf\u5f31\uff0c\u53ef\u80fd\u5b58\u5728\u7ed3\u6784\u6027\u95ee\u9898\u3002\n\n4. **\u5339\u914d\u6210\u529f\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1apk_successful_matching\u57282\u670823\u65e5\u4e3a91.47%\uff0c\u4e0e\u524d\u4e00\u5929\u768492.28%\u53d8\u5316\u4e0d\u5927\uff0c\u8868\u660e\u5339\u914d\u8d28\u91cf\u672a\u53d7\u5f71\u54cd\uff0c\u95ee\u9898\u53ef\u80fd\u51fa\u5728\u7528\u6237\u7684\u6d3b\u8dc3\u5ea6\u4e0a\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u5206\u6790**\uff1a\u4eba\u5747\u6210\u529f PK \u57282\u670821\u65e5\u8fbe\u52304.72\u7684\u5cf0\u503c\u540e\u8fc5\u901f\u4e0b\u6ed1\uff0c\u7ed3\u5408pk_ready_to_start\u7684\u4e0b\u964d\uff0c\u53ef\u80fd\u662f\u94fe\u8def\u8d28\u91cf\u6ce2\u52a8\u5bfc\u81f4\u7528\u6237\u4f53\u9a8c\u4e0b\u964d\uff0c\u9700\u8fdb\u4e00\u6b65\u8c03\u67e5\u7528\u6237\u53cd\u9988\u3002\n\n\n## User Growth\n\n**new_user**\n\n1. **\u65b0\u589e\u7528\u6237\u6574\u4f53\u8d8b\u52bf\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb7\u5929\u5185\uff0c\u65b0\u589e\u7528\u6237\u6570\u91cf\u4ece752\u4e0b\u964d\u81f3316\uff0c\u73af\u6bd4\u4e0b\u964d49.52%\uff0c\u663e\u793a\u51fa\u7528\u6237\u589e\u957f\u7684\u660e\u663e\u62d0\u70b9\u3002\n\n2. **\u4e3b\u8981\u6765\u6e90\u5206\u6790**\uff1a\u57282026\u5e742\u670823\u65e5\uff0c\"others\"\u6765\u6e90\u8d21\u732e\u4e86197\u4e2a\u65b0\u589e\u7528\u6237\uff0c\u5360\u6bd462.34%\uff0c\u800c\"FB\"\u6765\u6e90\u8d21\u732e106\u4e2a\u7528\u6237\uff0c\u5360\u6bd433.49%\uff0c\u663e\u793a\u51fa\"others\"\u6765\u6e90\u7684\u4e3b\u5bfc\u5730\u4f4d\u3002\n\n3. **\u5730\u533a\u5206\u5e03\u53d8\u5316**\uff1a\u57282026\u5e742\u670823\u65e5\uff0c\u83f2\u5f8b\u5bbe\uff08PH\uff09\u4ee595\u4e2a\u65b0\u589e\u7528\u6237\u4f4d\u5c45\u7b2c\u4e00\uff0c\u5176\u6b21\u662f\u5df4\u897f\uff08BR\uff0932\u4e2a\u7528\u6237\uff0c\u663e\u793a\u51fa\u83f2\u5f8b\u5bbe\u5728\u65b0\u589e\u7528\u6237\u4e2d\u7684\u6301\u7eed\u4f18\u52bf\u3002\n\n4. **\u75c5\u6bd2\u4f20\u64ad\u7528\u6237\u5360\u6bd4\u4e0b\u964d**\uff1a\u622a\u81f32026\u5e742\u670823\u65e5\uff0cviral_new_uv\u4e3a0.0064\uff0c\u8f83\u524d\u4e00\u5929\u76840.0190\u4e0b\u964d\u4e8666.35%\uff0c\u8868\u660e\u75c5\u6bd2\u4f20\u64ad\u7684\u6548\u679c\u663e\u8457\u51cf\u5f31\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u5206\u6790**\uff1a\u65b0\u589e\u7528\u6237\u57282026\u5e742\u670819\u65e5\u8fbe\u5230752\u7684\u5cf0\u503c\u540e\uff0c\u968f\u5373\u51fa\u73b0\u5927\u5e45\u4e0b\u6ed1\uff0c\u53cd\u6620\u51fa\u77ed\u671f\u5185\u7528\u6237\u83b7\u53d6\u7684\u6ce2\u52a8\u6027\u8f83\u5927\uff0c\u53ef\u80fd\u9700\u8981\u4f18\u5316\u7528\u6237\u83b7\u53d6\u7b56\u7565\u4ee5\u7a33\u5b9a\u589e\u957f\u3002\n\n\n## Daily Challenge\n\n**participate_kix_challenge_uv**\n\n1. **\u53c2\u8d5b\u4eba\u6570\u6301\u7eed\u4e0b\u964d**\uff1a\u6700\u8fd1\u4e09\u5929\u7684\u53c2\u8d5b\u4eba\u6570\u4ece66\u4e0b\u964d\u523056\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u4e3a-15.15%\uff0c\u663e\u793a\u51fa\u660e\u663e\u7684\u4e0b\u6ed1\u8d8b\u52bf\u3002\n\n2. **\u9884\u7ea6\u8f6c\u5316\u7387\u4e0a\u5347\u4f46\u53c2\u8d5b\u4eba\u6570\u4e0b\u964d**\uff1a\u5c3d\u7ba1\u9884\u7ea6\u8f6c\u5316\u7387\uff08book_kix_challenge_uv\uff09\u5728\u6700\u8fd1\u4e00\u5929\u4e0a\u5347\u81f32.00\uff0c\u4f46\u53c2\u8d5b\u4eba\u6570\u5374\u4e0b\u964d\u81f356\uff0c\u8868\u660e\u9884\u7ea6\u73af\u8282\u7684\u63d0\u5347\u672a\u80fd\u6709\u6548\u8f6c\u5316\u4e3a\u53c2\u8d5b\u4eba\u6570\u3002\n\n3. **\u5019\u573a\u8f6c\u5316\u6548\u7387\u4e0b\u964d**\uff1a\u4ece\u5019\u573a\u5230\u5f00\u8d5b\u7684\u6548\u7387\uff08from_waiting_to_start_match\uff09\u5728\u6700\u8fd1\u4e00\u5929\u964d\u81f30.82\uff0c\u8f83\u524d\u4e00\u5929\u76840.88\u4e0b\u964d\u4e866.29%\uff0c\u53ef\u80fd\u5f71\u54cd\u4e86\u53c2\u8d5b\u4eba\u6570\u7684\u8fdb\u4e00\u6b65\u589e\u957f\u3002\n\n4. **\u8d5b\u4e8b\u5b8c\u6210\u7387\u7a33\u5b9a**\uff1a\u5c3d\u7ba1\u53c2\u8d5b\u4eba\u6570\u4e0b\u964d\uff0c\u8d5b\u4e8b\u5b8c\u6210\u7387\uff08finish_kix_challenge_rate\uff09\u4fdd\u6301\u572892.86%\u5de6\u53f3\uff0c\u663e\u793a\u51fa\u53c2\u4e0e\u8005\u7684\u5b8c\u6210\u610f\u613f\u8f83\u5f3a\uff0c\u4f46\u6574\u4f53\u53c2\u4e0e\u4eba\u6570\u7684\u51cf\u5c11\u53ef\u80fd\u5f71\u54cd\u8d5b\u4e8b\u7684\u6d3b\u8dc3\u5ea6\u3002\n\n5. **\u65b0\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u4e0b\u964d**\uff1a\u65b0\u7528\u6237\u53c2\u8d5b\u53c2\u4e0e\u7387\uff08new_user_challenge_rate\uff09\u5728\u6700\u8fd1\u4e00\u5929\u964d\u81f30.58%\uff0c\u8f83\u524d\u4e00\u5929\u76841.28%\u4e0b\u964d\u4e8654.91%\uff0c\u8868\u660e\u65b0\u7528\u6237\u7684\u53c2\u4e0e\u610f\u613f\u663e\u8457\u51cf\u5f31\uff0c\u53ef\u80fd\u9700\u8981\u9488\u5bf9\u65b0\u7528\u6237\u7684\u6fc0\u52b1\u63aa\u65bd\u3002\n\n**kix_train_times**\n\n1. **\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u4e0b\u964d\u8d8b\u52bf**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0ckix_train_times \u4ece4.7479\u4e0b\u964d\u81f32.3405\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523034.75%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u964d\u4f4e\u3002\n\n2. **\u6e38\u620f\u540d\u79f0\u5f71\u54cd\u5206\u6790**\uff1a\u57282026\u5e742\u670821\u65e5\uff0c\u6e38\u620f\u201cTofu Cat\u201d\u7684kix_train_times\u4e3a4.7479\uff0c\u8fdc\u9ad8\u4e8e\u5176\u4ed6\u6e38\u620f\uff0c\u8868\u660e\u8be5\u6e38\u620f\u5728\u7528\u6237\u53c2\u4e0e\u5ea6\u4e0a\u8868\u73b0\u7a81\u51fa\uff0c\u800c\u57282\u670823\u65e5\u201cSpin Maze Save Xmas\u201d\u7684kix_train_times\u4ec5\u4e3a2.3405\uff0c\u663e\u793a\u51fa\u4e0d\u540c\u6e38\u620f\u95f4\u7684\u53c2\u4e0e\u5ea6\u5dee\u5f02\u3002\n\n3. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u76f8\u5173\u6027**\uff1a\u57282\u670822\u65e5\uff0ckix_train_times\u4e3a3.5868\uff0c\u800cmedian_game_seconds\u4e3a152.0\u79d2\uff0c\u663e\u793a\u51fa\u4e24\u8005\u5728\u4e00\u5b9a\u7a0b\u5ea6\u4e0a\u540c\u6b65\u6ce2\u52a8\uff0c\u63d0\u793a\u8bad\u7ec3\u5f3a\u5ea6\u53ef\u80fd\u4e0e\u6e38\u620f\u65f6\u957f\u76f8\u5173\u3002\n\n4. **\u96f6\u5206\u7528\u6237\u5360\u6bd4\u53d8\u5316**\uff1a\u57282\u670822\u65e5\uff0cscore_zero_user\u4e3a10.45%\uff0c\u76f8\u6bd4\u4e8e2\u670821\u65e5\u768414.29%\u6709\u6240\u4e0b\u964d\uff0c\u6697\u793a\u8bad\u7ec3\u5f3a\u5ea6\u7684\u964d\u4f4e\u53ef\u80fd\u4e0e\u96f6\u5206\u7528\u6237\u5360\u6bd4\u7684\u51cf\u5c11\u5b58\u5728\u4e00\u5b9a\u5173\u8054\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u7a33\u5b9a\u6027\u8bc4\u4f30**\uff1akix_train_times\u5728\u8fc7\u53bb7\u5929\u5185\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u6700\u9ad8\u503c\u4e3a4.7479\uff0c\u6700\u4f4e\u503c\u4e3a2.3405\uff0c\u663e\u793a\u51fa\u8bad\u7ec3\u5f3a\u5ea6\u7684\u4e0d\u7a33\u5b9a\u6027\uff0c\u53ef\u80fd\u5f71\u54cd\u7528\u6237\u7684\u6301\u7eed\u53c2\u4e0e\u3002\n\n**new_user_challenge_rate**\n\n1. **\u53c2\u4e0e\u7387\u6301\u7eed\u4e0b\u964d**\uff1a\u6700\u8fd1\u51e0\u5929\uff0cnew_user_challenge_rate \u4ece 0.0306% \u964d\u81f3 0.0058%\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u5230 54.91%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u7684\u79ef\u6781\u6027\u663e\u8457\u51cf\u5f31\u3002\n\n2. **\u9884\u7ea6\u4e0e\u53c2\u4e0e\u7387\u76f8\u5173\u6027**\uff1a\u5728\u540c\u4e00\u65f6\u95f4\u6bb5\u5185\uff0cnew_user_kix_challenge_book_rate \u4ece 0.4530% \u964d\u81f3 0.3365%\uff0c\u4e0b\u964d\u5e45\u5ea6\u4e3a 25.71%\uff0c\u4e0e\u53c2\u4e0e\u7387\u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u7b26\uff0c\u8868\u660e\u9884\u7ea6\u884c\u4e3a\u53ef\u80fd\u4e0e\u53c2\u4e0e\u7387\u5b58\u5728\u4e00\u5b9a\u7684\u76f8\u5173\u6027\u3002\n\n3. **\u6765\u6e90\u5206\u6790\u663e\u793a TikTok \u8d21\u732e\u7a81\u51fa**\uff1a\u5728 2026-02-16\uff0cnew_user_challenge_rate \u7684\u4e3b\u8981\u6765\u6e90\u4e3a TikTok\uff0c\u5360\u6bd4 50%\uff0c\u800c\u5728 2026-02-22\uff0cOrganic \u7684\u5360\u6bd4\u63d0\u5347\u81f3 55.56%\uff0c\u663e\u793a\u51fa\u4e0d\u540c\u6765\u6e90\u5bf9\u53c2\u4e0e\u7387\u7684\u5f71\u54cd\u53d8\u5316\u3002\n\n4. **\u5730\u533a\u53c2\u4e0e\u7387\u5dee\u5f02\u660e\u663e**\uff1a\u5728 2026-02-22\uff0cID \u7684\u53c2\u4e0e\u7387\u4e3a 9.09%\uff0c\u663e\u8457\u9ad8\u4e8e\u5176\u4ed6\u56fd\u5bb6\uff0c\u5982 PH \u7684\u53c2\u4e0e\u7387\u4ec5\u4e3a 0.87%\uff0c\u663e\u793a\u51fa\u4e0d\u540c\u56fd\u5bb6\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u7684\u79ef\u6781\u6027\u5dee\u5f02\u3002\n\n5. **\u5206\u5b50\u5206\u6bcd\u53d8\u5316\u5f71\u54cd\u53c2\u4e0e\u7387**\uff1a\u5728 2026-02-22\uff0c\u53c2\u4e0e\u4eba\u6570\uff08numerator\uff09\u4e3a 3\uff0c\u7528\u6237\u603b\u6570\uff08denominator\uff09\u4e3a 519\uff0c\u5bfc\u81f4\u53c2\u4e0e\u7387\u964d\u81f3 0.58%\u3002\u76f8\u8f83\u4e8e\u524d\u4e00\u5929\u7684 9 \u4eba\u53c2\u4e0e\u548c 702 \u4eba\u603b\u7528\u6237\uff0c\u53c2\u4e0e\u7387\u663e\u8457\u4e0b\u964d\uff0c\u53cd\u6620\u51fa\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u7684\u610f\u613f\u51cf\u5f31\u3002\n\n\n## Viral\n\n**viral_new_uv**\n\n1. **Viral\u65b0\u7528\u6237\u5360\u6bd4\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684viral_new_uv\u4e3a0.0064\uff0c\u8f83\u524d\u4e00\u5929\u76840.0190\u4e0b\u964d\u4e8666.35%\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u66dd\u5149\u5230\u70b9\u51fb\u8f6c\u5316\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1a\u57282026\u5e742\u670822\u65e5\uff0cinvitation_impression_to_click\u7684\u8f6c\u5316\u7387\u4e3a0.0310\uff0c\u8868\u660e\u5c3d\u7ba1viral\u65b0\u7528\u6237\u5360\u6bd4\u4e0b\u964d\uff0c\u66dd\u5149\u5230\u70b9\u51fb\u7684\u6548\u7387\u5e76\u672a\u53d7\u5230\u5f71\u54cd\u3002\n\n3. **\u70b9\u51fb\u5230\u9080\u8bf7\u6210\u529f\u8f6c\u5316\u7387\u672a\u53d7\u5f71\u54cd**\uff1a2026\u5e742\u670822\u65e5\u7684click_to_invite_sucess\u4e3a0.1980\uff0c\u663e\u793a\u51fa\u5373\u4f7fviral\u65b0\u7528\u6237\u5360\u6bd4\u4e0b\u964d\uff0c\u70b9\u51fb\u8f6c\u5316\u4e3a\u9080\u8bf7\u6210\u529f\u7684\u6548\u7387\u4f9d\u7136\u4fdd\u6301\u5728\u8f83\u9ad8\u6c34\u5e73\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u4e0e\u7a33\u5b9a\u6027\u5206\u6790**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cviral_new_uv\u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u5c24\u5176\u662f2\u670820\u65e5\u7684\u5cf0\u503c0.0486\u4e0e2\u670823\u65e5\u7684\u4f4e\u8c370.0064\u5f62\u6210\u9c9c\u660e\u5bf9\u6bd4\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u6781\u4e0d\u7a33\u5b9a\u6027\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4\u5206\u6790**\uff1a2\u670823\u65e5viral_new_uv\u663e\u8457\u4e0b\u964d\u81f30.0064\uff0c\u9700\u5173\u6ce8\u524d\u4e00\u5929\u7684invitation_impression_to_click\u548cclick_to_invite_sucess\u662f\u5426\u540c\u6b65\u8d70\u5f31\uff0c\u4ee5\u5b9a\u4f4d\u53ef\u80fd\u7684\u6f0f\u6597\u73af\u8282\u3002\n\n\n## Revenue\n\n**average_energy_spend_per_active_user**\n\n1. **\u4eba\u5747\u80fd\u8017\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684\u4eba\u5747\u80fd\u8017\u4e3a2.10\uff0c\u8f83\u524d\u4e00\u5929\u76843.83\u4e0b\u964d\u4e8645.22%\uff0c\u663e\u793a\u51fa\u7528\u6237\u80fd\u8017\u7684\u6025\u5267\u51cf\u5c11\u3002\n\n2. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u80fd\u8017\u5448\u8d1f\u76f8\u5173**\uff1a\u57282\u670823\u65e5\uff0ckix_train_times\u4e3a2.34\uff0c\u8f83\u524d\u4e00\u5929\u76843.59\u4e0b\u964d\u4e8634.75%\uff0c\u4e0e\u4eba\u5747\u80fd\u8017\u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u7b26\uff0c\u6697\u793a\u8bad\u7ec3\u5f3a\u5ea6\u53ef\u80fd\u4e0e\u80fd\u91cf\u6d88\u8017\u5448\u8d1f\u76f8\u5173\u3002\n\n3. **\u65b0\u7528\u6237\u80fd\u8017\u6301\u7eed\u4e0b\u964d**\uff1a\u65b0\u7528\u6237\u7684\u5e73\u5747\u80fd\u8017\u57282\u670823\u65e5\u4e3a4.38\uff0c\u8f83\u524d\u4e00\u5929\u76846.19\u4e0b\u964d\u4e8629.23%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u7684\u80fd\u8017\u8d8b\u52bf\u4e0e\u6574\u4f53\u4eba\u5747\u80fd\u8017\u4e00\u81f4\uff0c\u5747\u5448\u4e0b\u964d\u6001\u52bf\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u663e\u8457**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0c\u4eba\u5747\u80fd\u8017\u7ecf\u5386\u4e86\u4ece5.29\uff082\u670821\u65e5\uff09\u52302.10\uff082\u670823\u65e5\uff09\u7684\u6025\u5267\u4e0b\u964d\uff0c\u663e\u793a\u51fa\u660e\u663e\u7684\u6ce2\u52a8\uff0c\u53ef\u80fd\u4e0e\u7528\u6237\u6d3b\u8dc3\u5ea6\u6216\u884c\u4e3a\u53d8\u5316\u6709\u5173\u3002\n\n5. **\u5f02\u5e38\u65e5\u9700\u5173\u6ce8**\uff1a2\u670823\u65e5\u7684\u4eba\u5747\u80fd\u8017\u663e\u8457\u4f4e\u4e8e\u524d\u51e0\u5929\u7684\u6c34\u5e73\uff0c\u5efa\u8bae\u8fdb\u4e00\u6b65\u5206\u6790\u8be5\u65e5\u7684\u7528\u6237\u884c\u4e3a\u548c\u8bad\u7ec3\u6d3b\u52a8\uff0c\u4ee5\u786e\u5b9a\u662f\u5426\u5b58\u5728\u5bfc\u81f4\u80fd\u8017\u5f02\u5e38\u4e0b\u964d\u7684\u56e0\u7d20\u3002"</script>
 
 
 <div class="container">
@@ -21019,13 +20889,6 @@ function parseAIAnalysisByMetric(text) {
       continue;
     }
 
-    // section header inside metric: ### xxx (or more #)
-    const m1b = line.match(/^#{3,6}\s+(.+)$/);
-    if (m1b && currentMetricId) {
-      bulletPoints.push(m1b[1].trim() + "：");
-      continue;
-    }
-
     // metric id: **metric_id** (must be a standalone bold line)
     const m2 = line.match(/^\*\*([^*]+)\*\*$/);
     if (m2 && !line.includes(":")) {
@@ -21047,11 +20910,6 @@ function parseAIAnalysisByMetric(text) {
       bulletPoints.push(m4[1].trim());
       continue;
     }
-
-    // fallback: treat plain paragraph lines inside a metric as bullet points
-    if (currentMetricId) {
-      bulletPoints.push(line);
-    }
   }
 
   flush();
@@ -21071,6 +20929,7 @@ function showAIAnalysisForMetric(metricId, metricName) {
   const key = (metricId || "").trim();
   const analysis = aiAnalysisData[key];
 
+  // 确保面板展开（方案A：主内容自动适应）
   setAIPanelCollapsed(false);
 
   titleEl.textContent = metricName || metricId || "AI 分析";
@@ -21079,89 +20938,41 @@ function showAIAnalysisForMetric(metricId, metricName) {
     : ("该指标暂无 AI 分析：" + (metricName || metricId));
 
   if (!analysis) {
-    content.innerHTML = `<div class="ai-empty"><div style="font-size:13px;font-weight:600;margin-bottom:4px;">暂无 AI 分析</div><div style="font-size:12px;">该指标在 angel_ai_summary.txt 中没有对应条目。</div></div>`;
+    content.innerHTML = `
+      <div class="ai-empty">
+        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
+        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
+      </div>
+    `;
     return;
   }
 
-  /* ---- Group points into sections ---- */
-  const SECTION_ICONS = { "关键结论": "💡", "维度拆解": "🔍", "深度洞察": "📊", "趋势": "📈", "拆分": "🔢", "默认": "📝" };
-  const getSectionIcon = (title) => {
-    for (const [k, v] of Object.entries(SECTION_ICONS)) {
-      if (title.includes(k)) return v;
-    }
-    return SECTION_ICONS["默认"];
-  };
-
-  const sections = [];
-  let curSection = { title: null, points: [] };
-
+  let html = '';
+  html += `<div class="ai-block">`;
+  html += `<ul>`;
   (analysis.points || []).forEach((pt) => {
     const p = String(pt || '').trim();
     if (!p) return;
     if (p.startsWith("现状与目标") || p.startsWith("趋势分析")) return;
 
-    // section header: "深度洞察：" or "**维度拆解**"
-    const mSectionColon = /^([^:：*]{2,20})[：:]$/.exec(p);
-    const mSectionBold = /^\*\*(.+?)\*\*$/.exec(p);
-    if (mSectionColon || mSectionBold) {
-      if (curSection.points.length > 0 || curSection.title) sections.push({ ...curSection });
-      curSection = { title: (mSectionColon ? mSectionColon[1] : mSectionBold[1]).trim(), points: [] };
+    // section header like "深度洞察："
+    if (/^[^:：]+[：:]$/.test(p)) {
+      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
       return;
     }
 
-    curSection.points.push(p);
-  });
-  if (curSection.points.length > 0 || curSection.title) sections.push({ ...curSection });
-
-  // If no sections were created, put everything in one unnamed section
-  if (sections.length === 0) {
-    content.innerHTML = `<div class="ai-empty"><div style="font-size:13px;">暂无可展示内容</div></div>`;
-    return;
-  }
-
-  let html = '';
-
-  sections.forEach((sec, si) => {
-    const icon = sec.title ? getSectionIcon(sec.title) : "📝";
-    html += `<div class="ai-block">`;
-    if (sec.title) {
-      html += `<div class="ai-section-header"><span class="ai-section-dot"></span>${escapeHtml(sec.title)}</div>`;
+    // 支持 "**标题**: 内容" 的结构
+    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
+    if (m) {
+      const t = m[1].trim();
+      const c = (m[2] || '').trim();
+      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
+    } else {
+      html += `<li>${escapeHtml(p)}</li>`;
     }
-    html += `<div class="ai-block-body">`;
-
-    sec.points.forEach((p, pi) => {
-      // "**key**: value" → kv pill row
-      const mKV = p.match(/^\*\*(.+?)\*\*\s*[：:]\s*(.+)$/);
-      if (mKV) {
-        const k = mKV[1].trim();
-        const v = (mKV[2] || '').trim();
-        html += `<div class="ai-kv-row"><span class="ai-kv-key">${escapeHtml(k)}</span><span class="ai-kv-val">${markdownInlineToHtml(v)}</span></div>`;
-        return;
-      }
-
-      // dim rows under 维度拆解
-      if (sec.title && sec.title.includes("维度拆解") && /`(country|source)`/i.test(p)) {
-        const parts = p.split("：");
-        if (parts.length >= 2) {
-          const label = parts[0].trim();
-          const value = parts.slice(1).join("：").trim();
-          html += `<div class="ai-dim-row-new"><span class="ai-dim-label-new">${markdownInlineToHtml(label)}</span><span class="ai-dim-val-new">${markdownInlineToHtml(value)}</span></div>`;
-          return;
-        }
-      }
-
-      // user breakdown lines
-      if (/^(新用户|留存用户|老用户)[：:]/.test(p)) {
-        html += `<div class="ai-sub-row">${markdownInlineToHtml(p)}</div>`;
-        return;
-      }
-
-      // generic bullet point
-      html += `<div class="ai-point-row"><span class="ai-point-icon">${pi + 1}</span><span class="ai-point-text">${markdownInlineToHtml(p)}</span></div>`;
-    });
-
-    html += `</div></div>`;
   });
+  html += `</ul>`;
+  html += `</div>`;
 
   content.innerHTML = html;
 }
@@ -21179,15 +20990,6 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 
-}
-
-// Very small inline markdown: **bold**, `code`
-function markdownInlineToHtml(text) {
-  const safe = escapeHtml(text);
-  // code first
-  let out = safe.replace(/`([^`]+)`/g, '<code>$1</code>');
-  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  return out;
 }
 
 // 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析
