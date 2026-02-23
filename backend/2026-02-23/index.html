@@ -416,54 +416,191 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 }
 
 .ai-panel-content{
-  padding: 12px 14px 16px;
+  padding: 12px 14px 20px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-gutter: stable;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* ---- empty state ---- */
 .ai-panel-content .ai-empty{
-  border: 1px dashed var(--border-light);
-  border-radius: 14px;
-  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px dashed var(--border-light);
+  border-radius: 16px;
+  padding: 32px 18px;
   color: var(--text-muted);
-  background: rgba(0,0,0,0.02);
+  background: rgba(0,0,0,0.015);
+  text-align: center;
+  font-size: 13px;
+}
+.ai-panel-content .ai-empty::before{
+  content: "🤖";
+  font-size: 28px;
+  display: block;
 }
 
+/* ---- top-level block (one card per section) ---- */
 .ai-panel-content .ai-block{
-  border: 1px solid var(--border-light);
-  border-radius: 14px;
-  padding: 12px 12px 10px;
   background: #fff;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 12px;
+  border: 1px solid #e8ecf2;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
 }
 
-.ai-panel-content .ai-kv{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px 10px;
-  margin: 8px 0 10px;
-}
-.ai-panel-content .ai-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border-light);
-  background: rgba(34,139,230,0.06);
-  color: var(--text);
+/* ---- section header inside a block ---- */
+.ai-section-header{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 9px;
+  background: linear-gradient(90deg, #f0f5ff 0%, #f8faff 100%);
+  border-bottom: 1px solid #e8ecf2;
   font-size: 12px;
-}
-.ai-panel-content ul{ padding-left: 18px; margin: 8px 0 0; }
-.ai-panel-content li{ margin: 6px 0; color: var(--text); line-height: 1.55; }
-.ai-panel-content li.ai-section{
-  margin-top: 10px;
   font-weight: 700;
-  color: #0f172a;
-  list-style: none;
+  color: #1d40b0;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
+.ai-section-header .ai-section-dot{
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  flex-shrink: 0;
+}
+
+/* ---- bullet list inside block ---- */
+.ai-block-body{
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---- individual point row ---- */
+.ai-point-row{
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.6;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #f8faff;
+  border: 1px solid #eef1f8;
+  transition: background .12s;
+}
+.ai-point-row:hover{ background: #eef4ff; border-color: #d4e0fb; }
+.ai-point-row .ai-point-icon{
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  margin-top: 2px;
+  color: #3b82f6;
+  font-weight: 700;
+}
+.ai-point-row .ai-point-text{ flex: 1; min-width: 0; }
+
+/* ---- key-value pill rows (bold-title: content) ---- */
+.ai-kv-row{
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #eef1f8;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.ai-kv-row .ai-kv-key{
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(99,102,241,0.1));
+  border: 1px solid rgba(99,102,241,0.18);
+  color: #3730a3;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ai-kv-row .ai-kv-val{
+  color: #334155;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- sub-breakdown rows (新用户 / 留存用户 etc.) ---- */
+.ai-sub-row{
+  margin-left: 6px;
+  padding: 6px 10px 6px 12px;
+  border-left: 3px solid #bfdbfe;
+  border-radius: 0 8px 8px 0;
+  background: #f0f6ff;
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* ---- dim rows ---- */
+.ai-dim-row-new{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 8px;
+  align-items: start;
+  background: #f9fafb;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12.5px;
+}
+.ai-dim-label-new{ font-weight: 700; color: #0f172a; }
+.ai-dim-val-new{ color: var(--text); }
+
+/* ---- inline code ---- */
+.ai-panel-content code{
+  background: #eef0f5;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875em;
+  color: #3730a3;
+}
+
+/* ---- section divider heading ---- */
+.ai-section-divider{
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 8px 0 2px;
+  padding: 0 2px;
+}
+
+/* legacy selectors kept for compat */
+.ai-panel-content .ai-kv{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0; }
+.ai-panel-content .ai-pill{
+  display:inline-flex; align-items:center; gap:5px;
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid rgba(99,102,241,0.2);
+  background: rgba(99,102,241,0.07);
+  color: #3730a3; font-size: 11.5px; font-weight: 600;
+}
+.ai-panel-content li.ai-section{ list-style:none; }
 
 /* Sidebar header / close button */
 
@@ -1210,64 +1347,64 @@ body.ai-collapsed .charts{
             "AF",
             "CN",
             "PK",
-            "BM",
-            "EG",
-            "ID",
+            "PH",
             "SG",
+            "ID",
+            "BM",
             "NG",
-            "US",
+            "MY",
             "SA",
             "IL",
-            "MY",
-            "MN",
-            "TR",
+            "US",
             "VN",
             "IN",
+            "TR",
             "BT",
+            "IQ",
+            "EG",
+            "MN",
             "PR",
             "CO",
-            "IQ",
-            "PH",
-            "GB",
             "UZ",
-            "VE",
+            "SN",
             "KG",
-            "NP",
+            "GH",
             "IT",
             "LB",
             "AR",
             "CI",
+            "GB",
             "CR",
             "MX",
             "ZW",
             "EC",
-            "BD",
             "JO",
+            "NP",
             "GE",
-            "AE",
             "ZM",
+            "AE",
             "XK",
+            "VE",
+            "BD",
             "TL",
+            "ZA",
             "LY",
             "DZ",
             "GT",
-            "GH",
             "CL",
-            "HN",
             "JP",
             "AL",
             "OM",
             "BR",
-            "JM",
             "KW",
+            "FR",
+            "JM",
             "LA",
             "TH",
             "DE",
             "NC",
             "KZ",
-            "FR",
-            "SN",
-            "ZA",
+            "AS",
             "KH",
             "KR"
           ],
@@ -1279,64 +1416,64 @@ body.ai-collapsed .charts{
             "AF",
             "CN",
             "PK",
-            "BM",
-            "EG",
-            "ID",
+            "PH",
             "SG",
+            "ID",
+            "BM",
             "NG",
-            "US",
+            "MY",
             "SA",
             "IL",
-            "MY",
-            "MN",
-            "TR",
+            "US",
             "VN",
             "IN",
+            "TR",
             "BT",
+            "IQ",
+            "EG",
+            "MN",
             "PR",
             "CO",
-            "IQ",
-            "PH",
-            "GB",
             "UZ",
-            "VE",
+            "SN",
             "KG",
-            "NP",
+            "GH",
             "IT",
             "LB",
             "AR",
             "CI",
+            "GB",
             "CR",
             "MX",
             "ZW",
             "EC",
-            "BD",
             "JO",
+            "NP",
             "GE",
-            "AE",
             "ZM",
+            "AE",
             "XK",
+            "VE",
+            "BD",
             "TL",
+            "ZA",
             "LY",
             "DZ",
             "GT",
-            "GH",
             "CL",
-            "HN",
             "JP",
             "AL",
             "OM",
             "BR",
-            "JM",
             "KW",
+            "FR",
+            "JM",
             "LA",
             "TH",
             "DE",
             "NC",
             "KZ",
-            "FR",
-            "SN",
-            "ZA",
+            "AS",
             "KH",
             "KR"
           ],
@@ -1352,6 +1489,7 @@ body.ai-collapsed .charts{
               "AF",
               "AL",
               "AR",
+              "AS",
               "BD",
               "BM",
               "BR",
@@ -1371,7 +1509,6 @@ body.ai-collapsed .charts{
               "GH",
               "GM",
               "GT",
-              "HN",
               "ID",
               "IL",
               "IN",
@@ -1420,7 +1557,8 @@ body.ai-collapsed .charts{
                 0.0,
                 121.0,
                 0.0,
-                70.0,
+                0.0,
+                72.0,
                 0.0,
                 0.0,
                 0.0,
@@ -1432,17 +1570,16 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                29.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
+                100.0,
                 75.0,
-                0.0,
                 0.0,
                 297.0,
                 0.0,
-                0.0,
-                0.0,
+                50.0,
+                120.0,
                 0.0,
                 0.0,
                 11.0,
@@ -1457,26 +1594,26 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                118.0,
+                157.0,
                 0.0,
-                72.0,
+                90.0,
+                44.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                187.0,
+                598.0,
+                59.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                75.0,
+                238.0,
+                157.0,
                 0.0,
                 0.0,
                 0.0,
+                88.0,
                 0.0,
                 0.0,
+                110.0,
+                0.0,
+                85.0,
                 0.0,
                 128.0
               ],
@@ -1484,6 +1621,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1434.0,
                 64.0,
+                0.0,
                 0.0,
                 24.0,
                 88.0,
@@ -1504,7 +1642,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 77.0,
-                0.0,
                 159.0,
                 149.0,
                 93.0,
@@ -1551,6 +1688,7 @@ body.ai-collapsed .charts{
                 36.0,
                 0.0,
                 16.0,
+                0.0,
                 65.0,
                 465.0,
                 0.0,
@@ -1569,7 +1707,6 @@ body.ai-collapsed .charts{
                 98.0,
                 72.0,
                 3225.0,
-                0.0,
                 0.0,
                 156.0,
                 161.0,
@@ -1617,30 +1754,30 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 21.0,
-                29.0,
-                93.0,
+                0.0,
+                0.0,
+                0.0,
                 0.0,
                 0.0,
                 41.0,
                 0.0,
-                422.0,
+                703.0,
                 42.0,
                 0.0,
                 0.0,
                 78.0,
                 0.0,
-                394.0,
-                0.0,
-                82.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                70.0,
+                0.0,
+                0.0,
+                0.0,
                 26.0,
                 133.0,
                 93.0,
-                120.0,
+                85.0,
                 72.0,
                 0.0,
                 31.0,
@@ -1653,26 +1790,26 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                98.0,
+                0.0,
                 0.0,
                 97.0,
                 0.0,
                 0.0,
-                113.0,
                 0.0,
-                24.0,
+                0.0,
+                0.0,
                 0.0,
                 108.0,
                 212.0,
-                55.0,
+                93.0,
                 19.0,
                 36.0,
                 0.0,
                 82.0,
-                141.0,
+                88.0,
                 0.0,
-                97.0,
-                67.0,
+                0.0,
+                21.0,
                 0.0,
                 0.0,
                 0.0,
@@ -1699,64 +1836,64 @@ body.ai-collapsed .charts{
             "ios \u00d7 AF",
             "ios \u00d7 CN",
             "ios \u00d7 PK",
-            "ios \u00d7 BM",
-            "ios \u00d7 EG",
-            "ios \u00d7 ID",
+            "ios \u00d7 PH",
             "ios \u00d7 SG",
+            "ios \u00d7 ID",
+            "ios \u00d7 BM",
             "ios \u00d7 NG",
-            "ios \u00d7 US",
+            "ios \u00d7 MY",
             "ios \u00d7 SA",
             "ios \u00d7 IL",
-            "ios \u00d7 MY",
-            "ios \u00d7 MN",
-            "ios \u00d7 TR",
+            "ios \u00d7 US",
             "ios \u00d7 VN",
             "ios \u00d7 IN",
+            "ios \u00d7 TR",
             "ios \u00d7 BT",
+            "ios \u00d7 IQ",
+            "ios \u00d7 EG",
+            "ios \u00d7 MN",
             "ios \u00d7 PR",
             "ios \u00d7 CO",
-            "ios \u00d7 IQ",
-            "ios \u00d7 PH",
-            "ios \u00d7 GB",
             "ios \u00d7 UZ",
-            "ios \u00d7 VE",
+            "ios \u00d7 SN",
             "ios \u00d7 KG",
-            "ios \u00d7 NP",
+            "ios \u00d7 GH",
             "ios \u00d7 IT",
             "ios \u00d7 LB",
             "ios \u00d7 AR",
             "ios \u00d7 CI",
+            "ios \u00d7 GB",
             "ios \u00d7 CR",
             "ios \u00d7 MX",
             "ios \u00d7 ZW",
             "ios \u00d7 EC",
-            "ios \u00d7 BD",
             "ios \u00d7 JO",
+            "ios \u00d7 NP",
             "ios \u00d7 GE",
-            "ios \u00d7 AE",
             "ios \u00d7 ZM",
+            "ios \u00d7 AE",
             "ios \u00d7 XK",
+            "ios \u00d7 VE",
+            "ios \u00d7 BD",
             "ios \u00d7 TL",
+            "ios \u00d7 ZA",
             "ios \u00d7 LY",
             "ios \u00d7 DZ",
             "ios \u00d7 GT",
-            "ios \u00d7 GH",
             "ios \u00d7 CL",
-            "ios \u00d7 HN",
             "ios \u00d7 JP",
             "ios \u00d7 AL",
             "ios \u00d7 OM",
             "ios \u00d7 BR",
-            "ios \u00d7 JM",
             "ios \u00d7 KW",
+            "ios \u00d7 FR",
+            "ios \u00d7 JM",
             "ios \u00d7 LA",
             "ios \u00d7 TH",
             "ios \u00d7 DE",
             "ios \u00d7 NC",
             "ios \u00d7 KZ",
-            "ios \u00d7 FR",
-            "ios \u00d7 SN",
-            "ios \u00d7 ZA",
+            "ios \u00d7 AS",
             "ios \u00d7 KH",
             "ios \u00d7 KR"
           ],
@@ -1768,64 +1905,64 @@ body.ai-collapsed .charts{
             "ios \u00d7 AF",
             "ios \u00d7 CN",
             "ios \u00d7 PK",
-            "ios \u00d7 BM",
-            "ios \u00d7 EG",
-            "ios \u00d7 ID",
+            "ios \u00d7 PH",
             "ios \u00d7 SG",
+            "ios \u00d7 ID",
+            "ios \u00d7 BM",
             "ios \u00d7 NG",
-            "ios \u00d7 US",
+            "ios \u00d7 MY",
             "ios \u00d7 SA",
             "ios \u00d7 IL",
-            "ios \u00d7 MY",
-            "ios \u00d7 MN",
-            "ios \u00d7 TR",
+            "ios \u00d7 US",
             "ios \u00d7 VN",
             "ios \u00d7 IN",
+            "ios \u00d7 TR",
             "ios \u00d7 BT",
+            "ios \u00d7 IQ",
+            "ios \u00d7 EG",
+            "ios \u00d7 MN",
             "ios \u00d7 PR",
             "ios \u00d7 CO",
-            "ios \u00d7 IQ",
-            "ios \u00d7 PH",
-            "ios \u00d7 GB",
             "ios \u00d7 UZ",
-            "ios \u00d7 VE",
+            "ios \u00d7 SN",
             "ios \u00d7 KG",
-            "ios \u00d7 NP",
+            "ios \u00d7 GH",
             "ios \u00d7 IT",
             "ios \u00d7 LB",
             "ios \u00d7 AR",
             "ios \u00d7 CI",
+            "ios \u00d7 GB",
             "ios \u00d7 CR",
             "ios \u00d7 MX",
             "ios \u00d7 ZW",
             "ios \u00d7 EC",
-            "ios \u00d7 BD",
             "ios \u00d7 JO",
+            "ios \u00d7 NP",
             "ios \u00d7 GE",
-            "ios \u00d7 AE",
             "ios \u00d7 ZM",
+            "ios \u00d7 AE",
             "ios \u00d7 XK",
+            "ios \u00d7 VE",
+            "ios \u00d7 BD",
             "ios \u00d7 TL",
+            "ios \u00d7 ZA",
             "ios \u00d7 LY",
             "ios \u00d7 DZ",
             "ios \u00d7 GT",
-            "ios \u00d7 GH",
             "ios \u00d7 CL",
-            "ios \u00d7 HN",
             "ios \u00d7 JP",
             "ios \u00d7 AL",
             "ios \u00d7 OM",
             "ios \u00d7 BR",
-            "ios \u00d7 JM",
             "ios \u00d7 KW",
+            "ios \u00d7 FR",
+            "ios \u00d7 JM",
             "ios \u00d7 LA",
             "ios \u00d7 TH",
             "ios \u00d7 DE",
             "ios \u00d7 NC",
             "ios \u00d7 KZ",
-            "ios \u00d7 FR",
-            "ios \u00d7 SN",
-            "ios \u00d7 ZA",
+            "ios \u00d7 AS",
             "ios \u00d7 KH",
             "ios \u00d7 KR"
           ],
@@ -1841,6 +1978,7 @@ body.ai-collapsed .charts{
               "ios \u00d7 AF",
               "ios \u00d7 AL",
               "ios \u00d7 AR",
+              "ios \u00d7 AS",
               "ios \u00d7 BD",
               "ios \u00d7 BM",
               "ios \u00d7 BR",
@@ -1860,7 +1998,6 @@ body.ai-collapsed .charts{
               "ios \u00d7 GH",
               "ios \u00d7 GM",
               "ios \u00d7 GT",
-              "ios \u00d7 HN",
               "ios \u00d7 ID",
               "ios \u00d7 IL",
               "ios \u00d7 IN",
@@ -1909,7 +2046,8 @@ body.ai-collapsed .charts{
                 0.0,
                 121.0,
                 0.0,
-                70.0,
+                0.0,
+                72.0,
                 0.0,
                 0.0,
                 0.0,
@@ -1921,17 +2059,16 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                29.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
+                100.0,
                 75.0,
-                0.0,
                 0.0,
                 297.0,
                 0.0,
-                0.0,
-                0.0,
+                50.0,
+                120.0,
                 0.0,
                 0.0,
                 11.0,
@@ -1946,26 +2083,26 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                118.0,
+                157.0,
                 0.0,
-                72.0,
+                90.0,
+                44.0,
                 0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                187.0,
+                598.0,
+                59.0,
                 0.0,
                 0.0,
-                0.0,
-                0.0,
-                75.0,
+                238.0,
+                157.0,
                 0.0,
                 0.0,
                 0.0,
+                88.0,
                 0.0,
                 0.0,
+                110.0,
+                0.0,
+                85.0,
                 0.0,
                 128.0
               ],
@@ -1973,6 +2110,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1434.0,
                 64.0,
+                0.0,
                 0.0,
                 24.0,
                 88.0,
@@ -1993,7 +2131,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 77.0,
-                0.0,
                 159.0,
                 149.0,
                 93.0,
@@ -2040,6 +2177,7 @@ body.ai-collapsed .charts{
                 36.0,
                 0.0,
                 16.0,
+                0.0,
                 65.0,
                 465.0,
                 0.0,
@@ -2058,7 +2196,6 @@ body.ai-collapsed .charts{
                 98.0,
                 72.0,
                 3225.0,
-                0.0,
                 0.0,
                 156.0,
                 161.0,
@@ -2106,30 +2243,30 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 21.0,
-                29.0,
-                93.0,
+                0.0,
+                0.0,
+                0.0,
                 0.0,
                 0.0,
                 41.0,
                 0.0,
-                422.0,
+                703.0,
                 42.0,
                 0.0,
                 0.0,
                 78.0,
                 0.0,
-                394.0,
-                0.0,
-                82.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                70.0,
+                0.0,
+                0.0,
+                0.0,
                 26.0,
                 133.0,
                 93.0,
-                120.0,
+                85.0,
                 72.0,
                 0.0,
                 31.0,
@@ -2142,26 +2279,26 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                98.0,
+                0.0,
                 0.0,
                 97.0,
                 0.0,
                 0.0,
-                113.0,
                 0.0,
-                24.0,
+                0.0,
+                0.0,
                 0.0,
                 108.0,
                 212.0,
-                55.0,
+                93.0,
                 19.0,
                 36.0,
                 0.0,
                 82.0,
-                141.0,
+                88.0,
                 0.0,
-                97.0,
-                67.0,
+                0.0,
+                21.0,
                 0.0,
                 0.0,
                 0.0,
@@ -2203,7 +2340,7 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                105.8
+                122.48
               ],
               [
                 138.35714285714286
@@ -2212,7 +2349,7 @@ body.ai-collapsed .charts{
                 203.2051282051282
               ],
               [
-                96.53333333333332
+                99.0952380952381
               ]
             ]
           }
@@ -2253,11 +2390,11 @@ body.ai-collapsed .charts{
             "values": [
               2617.0,
               8137.0,
-              12649.0,
-              20297.0,
-              21365.0,
-              16268.0,
-              9537.0
+              12648.0,
+              20289.0,
+              21328.0,
+              16034.0,
+              4012.0
             ]
           }
         },
@@ -2309,23 +2446,23 @@ body.ai-collapsed .charts{
               ],
               [
                 5741.0,
-                6908.0
+                6907.0
               ],
               [
-                12389.0,
-                7908.0
+                12385.0,
+                7904.0
               ],
               [
-                10896.0,
-                10469.0
+                10862.0,
+                10466.0
               ],
               [
-                7491.0,
-                8777.0
+                7280.0,
+                8754.0
               ],
               [
-                5058.0,
-                4479.0
+                2449.0,
+                1563.0
               ]
             ]
           }
@@ -2372,19 +2509,19 @@ body.ai-collapsed .charts{
                 8137.0
               ],
               [
-                12649.0
+                12648.0
               ],
               [
-                20297.0
+                20289.0
               ],
               [
-                21365.0
+                21328.0
               ],
               [
-                16268.0
+                16034.0
               ],
               [
-                9537.0
+                4012.0
               ]
             ]
           }
@@ -2425,11 +2562,11 @@ body.ai-collapsed .charts{
             "values": [
               0.1172413793103448,
               0.3622641509433962,
-              0.5471167369901547,
+              0.547887323943662,
               0.5323645970937912,
-              0.6013888888888889,
-              0.638121546961326,
-              0.5821596244131455
+              0.6,
+              0.6352288488210819,
+              0.5248868778280543
             ]
           }
         },
@@ -2488,15 +2625,15 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.9291845493562232,
+                0.927038626609442,
                 0.0
               ],
               [
-                0.9094488188976378,
+                0.906930693069307,
                 0.0
               ],
               [
-                0.915129151291513,
+                0.8992248062015504,
                 0.0
               ]
             ]
@@ -2552,11 +2689,11 @@ body.ai-collapsed .charts{
               0.611183355006502,
               0.6510638297872341,
               0.7,
-              0.7703631010794897,
+              0.7711198428290766,
               0.7364939360529217,
               0.6879910213243546,
-              0.7537796976241901,
-              0.6861435726210351
+              0.7545945945945945,
+              0.6396648044692738
             ]
           }
         },
@@ -2643,7 +2780,7 @@ body.ai-collapsed .charts{
               ],
               [
                 0.9515151515151516,
-                0.5992366412213741
+                0.6003824091778203
               ],
               [
                 0.958139534883721,
@@ -2654,12 +2791,12 @@ body.ai-collapsed .charts{
                 0.4082568807339449
               ],
               [
-                0.9714285714285714,
+                0.9732824427480916,
                 0.4688279301745636
               ],
               [
-                0.9321428571428572,
-                0.4702194357366771
+                0.9185185185185184,
+                0.4708520179372197
               ]
             ]
           }
@@ -2708,7 +2845,7 @@ body.ai-collapsed .charts{
               73.5,
               10.0,
               3.6666666666666665,
-              3.333333333333333,
+              3.3333333333333335,
               4.4375,
               9.234375,
               27.291666666666668,
@@ -2718,7 +2855,7 @@ body.ai-collapsed .charts{
               15.958333333333334,
               3.0,
               2.6666666666666665,
-              3.6666666666666665
+              3.0
             ]
           }
         },
@@ -2836,9 +2973,9 @@ body.ai-collapsed .charts{
                 5.0
               ],
               [
-                2.0,
+                1.0,
                 5.0,
-                4.0
+                3.0
               ]
             ]
           }
@@ -2852,7 +2989,7 @@ body.ai-collapsed .charts{
     }
   ]
 }</script>
-<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-23 18:21\n\n## Platform Basics\n\n**dau**\n\n1. **DAU\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684DAU\u4e3a601\uff0c\u8f83\u524d\u4e00\u5929\u7684935\u4e0b\u964d\u4e86334\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523035.72%\uff0c\u663e\u793a\u51fa\u7528\u6237\u6d3b\u8dc3\u5ea6\u7684\u663e\u8457\u4e0b\u6ed1\u3002\n\n2. **\u65b0\u7528\u6237\u8d21\u732e\u5360\u6bd4\u9ad8**\uff1a\u57282\u670823\u65e5\u7684DAU\u4e2d\uff0c383\u540d\u65b0\u7528\u6237\u5360\u6bd463.73%\uff0c\u800c\u56de\u6d41\u7528\u6237\u4ec5\u4e3a53\u540d\uff0c\u5360\u6bd48.82%\uff0c\u8fd9\u8868\u660e\u65b0\u7528\u6237\u7684\u5f15\u5165\u5bf9DAU\u7684\u8d21\u732e\u8f83\u5927\uff0c\u4f46\u56de\u6d41\u7528\u6237\u7684\u6bd4\u4f8b\u504f\u4f4e\uff0c\u53ef\u80fd\u5f71\u54cd\u957f\u671f\u7559\u5b58\u3002\n\n3. **\u7559\u5b58\u7387\u4e0b\u964d**\uff1a\u524d\u4e00\u5929\u7684D1\u7559\u5b58\u7387\u4e3a8.47%\uff0c\u8f83\u524d\u4e00\u5929\u768411.33%\u4e0b\u964d\u4e862.86\u4e2a\u767e\u5206\u70b9\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u7684\u7559\u5b58\u60c5\u51b5\u4e0d\u4f73\uff0c\u9700\u5173\u6ce8\u65b0\u7528\u6237\u7684\u9996\u65e5\u4f53\u9a8c\u548c\u7559\u5b58\u7b56\u7565\u3002\n\n4. **\u5730\u533a\u5206\u5e03\u53d8\u5316**\uff1a\u57282\u670823\u65e5\uff0cDAU\u7684\u4e3b\u8981\u6765\u6e90\u56fd\u4e3a\u7f8e\u56fd\uff08232\uff09\u3001\u5df4\u897f\uff0841\uff09\u548c\u9a6c\u6765\u897f\u4e9a\uff0834\uff09\uff0c\u5176\u4e2d\u7f8e\u56fd\u7684\u7528\u6237\u5360\u6bd4\u6700\u9ad8\uff0c\u663e\u793a\u51fa\u7f8e\u56fd\u5e02\u573a\u7684\u6d3b\u8dc3\u5ea6\u4ecd\u7136\u8f83\u5f3a\u3002\n\n5. **\u6765\u6e90\u5206\u6790\u663e\u793a\u4f9d\u8d56\u6027**\uff1a\u57282\u670823\u65e5\uff0cDAU\u7684\u4e3b\u8981\u6765\u6e90\u4e3a\u201cothers\u201d\uff08348\uff09\u548c\u201cFB\u201d\uff08212\uff09\uff0c\u8fd9\u4e24\u8005\u5408\u8ba1\u5360DAU\u768493.3%\uff0c\u663e\u793a\u51fa\u5bf9\u7279\u5b9a\u6765\u6e90\u7684\u9ad8\u5ea6\u4f9d\u8d56\uff0c\u9700\u8003\u8651\u591a\u5143\u5316\u7528\u6237\u83b7\u53d6\u6e20\u9053\u3002\n\n**retention(d1)**\n\n1. **D1\u7559\u5b58\u7387\u4e0b\u964d\u663e\u8457**\uff1a2026\u5e742\u670822\u65e5\u7684D1\u7559\u5b58\u7387\u4e3a8.47%\uff0c\u8f83\u524d\u4e00\u5929\u768411.33%\u4e0b\u964d\u4e8625.3%\uff0c\u663e\u793a\u51fa\u7528\u6237\u56de\u8bbf\u610f\u613f\u7684\u660e\u663e\u51cf\u5f31\u3002\n\n2. **\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u540c\u6b65\u4e0b\u964d**\uff1a2026\u5e742\u670822\u65e5\u7684\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e3a8.63%\uff0c\u8f83\u524d\u4e00\u5929\u76849.83%\u4e0b\u964d\u4e8612.28%\uff0c\u4e0eD1\u7559\u5b58\u7387\u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u4e00\u81f4\uff0c\u8868\u660e\u65b0\u7528\u6237\u7684\u6709\u6548\u5bf9\u6218\u53c2\u4e0e\u5ea6\u964d\u4f4e\u3002\n\n3. **\u65b0\u7528\u6237\u8fdb\u5165\u5f15\u5bfc\u7387\u9ad8**\uff1a2026\u5e742\u670822\u65e5\u7684\u65b0\u7528\u6237\u8fdb\u5165\u5f15\u5bfc\u7387\u4e3a96.85%\uff0c\u663e\u793a\u51fa\u7528\u6237\u5728\u9996\u6b21\u63a5\u89e6\u65f6\u7684\u9ad8\u53c2\u4e0e\u5ea6\uff0c\u4f46\u540e\u7eed\u8f6c\u5316\u7387\u672a\u80fd\u6709\u6548\u8ddf\u8fdb\uff0c\u53ef\u80fd\u5bfc\u81f4\u7559\u5b58\u7387\u4e0b\u964d\u3002\n\n4. **\u6311\u6218\u7559\u5b58\u7387\u5927\u5e45\u4e0b\u964d**\uff1a2026\u5e742\u670822\u65e5\u7684\u65b0\u7528\u6237\u6311\u6218\u7559\u5b58\u7387\u4e3a0.0%\uff0c\u76f8\u6bd4\u4e8e\u524d\u4e00\u5929\u768430%\u5927\u5e45\u4e0b\u964d\uff0c\u8868\u660e\u7528\u6237\u5728\u53c2\u4e0e\u6311\u6218\u540e\u7684\u7559\u5b58\u60c5\u51b5\u6781\u4e3a\u4e0d\u7406\u60f3\uff0c\u53ef\u80fd\u662f\u6d41\u5931\u7684\u5173\u952e\u73af\u8282\u3002\n\n5. **\u6765\u6e90\u5206\u6790\u663e\u793a\u9080\u8bf7\u6e20\u9053\u8868\u73b0\u4f18\u5f02**\uff1a\u57282026\u5e742\u670822\u65e5\uff0c\u6765\u81ea\u9080\u8bf7\u7684\u7528\u6237\u5360\u6bd4\u4e3a38.46%\uff0c\u662f\u4e3b\u8981\u6765\u6e90\uff0c\u663e\u793a\u51fa\u9080\u8bf7\u6e20\u9053\u5728\u7528\u6237\u83b7\u53d6\u4e2d\u7684\u91cd\u8981\u6027\uff0c\u4f46\u5176\u540e\u7eed\u7559\u5b58\u8868\u73b0\u9700\u52a0\u5f3a\u3002\n\n**average_meaningful_battles_per_user**\n\n1. **\u4eba\u5747\u6210\u529f PK \u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684\u4eba\u5747\u6210\u529f PK \u964d\u81f30.11\uff0c\u8f83\u524d\u4e00\u5929\u76842.70\u4e0b\u964d\u4e8695.95%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u6f0f\u6597\u73af\u8282\u540c\u6b65\u6ce2\u52a8**\uff1a\u57282\u670823\u65e5\uff0cpk_ready_to_start\u7684\u6bd4\u4f8b\u964d\u81f30.37\uff0c\u8f83\u524d\u4e00\u5929\u76840.62\u4e0b\u964d\u4e8640.0%\uff0c\u4e0e\u4eba\u5747\u6210\u529f PK \u7684\u4e0b\u964d\u8d8b\u52bf\u4e00\u81f4\uff0c\u63d0\u793a\u8be5\u73af\u8282\u53ef\u80fd\u662f\u94fe\u8def\u74f6\u9888\u3002\n\n3. **\u5339\u914d\u6210\u529f\u7387\u5c0f\u5e45\u4e0b\u964d**\uff1a2\u670823\u65e5\u7684pk_successful_matching\u4e3a0.89\uff0c\u8f83\u524d\u4e00\u5929\u76840.92\u4e0b\u964d\u4e863.28%\uff0c\u867d\u7136\u4e0b\u964d\u5e45\u5ea6\u4e0d\u5927\uff0c\u4f46\u4e0e\u4eba\u5747\u6210\u529f PK \u7684\u5927\u5e45\u4e0b\u964d\u5f62\u6210\u5bf9\u6bd4\uff0c\u53ef\u80fd\u5f71\u54cd\u4e86\u7528\u6237\u7684\u6574\u4f53\u4f53\u9a8c\u3002\n\n4. **\u8fdb\u5165\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1apk_click_to_enter\u57282\u670823\u65e5\u7684\u503c\u4e3a0.996\uff0c\u663e\u793a\u51fa\u7528\u6237\u70b9\u51fb\u8fdb\u5165\u7684\u610f\u613f\u4f9d\u7136\u8f83\u9ad8\uff0c\u8868\u660e\u95ee\u9898\u53ef\u80fd\u51fa\u5728\u540e\u7eed\u73af\u8282\u800c\u975e\u7528\u6237\u521d\u59cb\u53c2\u4e0e\u610f\u613f\u3002\n\n5. **\u5b8c\u6210\u7387\u63d0\u5347\u4f46\u7528\u6237\u53c2\u4e0e\u4e0d\u8db3**\uff1apk_start_to_finish\u57282\u670823\u65e5\u7684\u5b8c\u6210\u7387\u4e3a91.48%\uff0c\u8f83\u524d\u4e00\u5929\u768473.67%\u63d0\u5347\u4e8624.17%\uff0c\u4f46\u7531\u4e8e\u4eba\u5747\u6210\u529f PK \u7684\u5927\u5e45\u4e0b\u964d\uff0c\u8bf4\u660e\u5c3d\u7ba1\u5b8c\u6210\u7387\u63d0\u9ad8\uff0c\u7528\u6237\u53c2\u4e0e\u7684\u6570\u91cf\u5374\u663e\u8457\u4e0d\u8db3\uff0c\u53ef\u80fd\u9700\u8981\u4f18\u5316\u7528\u6237\u4f53\u9a8c\u4ee5\u63d0\u5347\u6574\u4f53\u53c2\u4e0e\u5ea6\u3002\n\n\n## User Growth\n\n**new_user**\n\n1. **\u65b0\u7528\u6237\u6574\u4f53\u8d8b\u52bf\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0cnew_user\u7684\u6570\u91cf\u4ece752\u4e0b\u964d\u81f3383\uff0c\u65e5\u73af\u6bd4\u53d8\u5316\u4e3a-243\uff0c\u964d\u5e45\u8fbe\u523038.82%\uff0c\u663e\u793a\u51fa\u65b0\u589e\u7528\u6237\u89c4\u6a21\u7684\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u4e3b\u8981\u6765\u6e90\u5206\u6790**\uff1a\u57282026\u5e742\u670823\u65e5\uff0cnew_user\u7684\u4e3b\u8981\u6765\u6e90\u4e3a\u201cothers\u201d\uff0c\u8d21\u732e\u4e86223\u4e2a\u7528\u6237\uff0c\u5360\u6bd458.3%\uff1b\u800c\u201cFB\u201d\u6765\u6e90\u5219\u8d21\u732e\u4e86144\u4e2a\u7528\u6237\uff0c\u5360\u6bd437.6%\uff0c\u663e\u793a\u51fa\u201cothers\u201d\u6765\u6e90\u7684\u4e3b\u5bfc\u5730\u4f4d\u3002\n\n3. **\u5730\u533a\u5206\u5e03\u53d8\u5316**\uff1a\u57282026\u5e742\u670823\u65e5\uff0c\u83f2\u5f8b\u5bbe\uff08PH\uff09\u4ecd\u7136\u662f\u6700\u5927\u7684\u7528\u6237\u6765\u6e90\u56fd\uff0c\u8d21\u732e\u4e86134\u4e2a\u65b0\u7528\u6237\uff0c\u5360\u603b\u6570\u768434.9%\uff1b\u800c\u5df4\u897f\uff08BR\uff09\u548c\u7f8e\u56fd\uff08US\uff09\u5206\u522b\u8d21\u732e\u4e8636\u548c22\u4e2a\u7528\u6237\uff0c\u663e\u793a\u51fa\u83f2\u5f8b\u5bbe\u7684\u7528\u6237\u589e\u957f\u4f9d\u7136\u5f3a\u52b2\u3002\n\n4. **viral_new_uv\u7684\u6ce2\u52a8**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0cviral_new_uv\u7684\u6bd4\u4f8b\u4ece0.0486\u4e0b\u964d\u81f30.0045\uff0c\u964d\u5e45\u8fbe\u523090.7%\uff0c\u8868\u660e\u75c5\u6bd2\u4f20\u64ad\u5e26\u6765\u7684\u65b0\u7528\u6237\u589e\u957f\u663e\u8457\u51cf\u5f31\uff0c\u53ef\u80fd\u5f71\u54cd\u6574\u4f53\u7528\u6237\u589e\u957f\u7684\u7a33\u5b9a\u6027\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u5206\u6790**\uff1a\u57282026\u5e742\u670819\u65e5\uff0cnew_user\u8fbe\u5230\u4e86752\u7684\u5cf0\u503c\uff0c\u968f\u540e\u51fa\u73b0\u4e86\u660e\u663e\u7684\u4e0b\u964d\u8d8b\u52bf\uff0c\u53ef\u80fd\u4e0e\u5e02\u573a\u6d3b\u52a8\u6216\u63a8\u5e7f\u7b56\u7565\u7684\u53d8\u5316\u6709\u5173\uff0c\u9700\u8981\u8fdb\u4e00\u6b65\u5206\u6790\u5177\u4f53\u539f\u56e0\u3002\n\n\n## Daily Challenge\n\n**participate_kix_challenge_uv**\n\n1. **\u53c2\u8d5b\u4eba\u6570\u6301\u7eed\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\uff0c\u53c2\u8d5b\u4eba\u6570\u4ece66\u4e0b\u964d\u81f356\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u4e3a-15.15%\uff0c\u663e\u793a\u51fa\u53c2\u8d5b\u4eba\u6570\u7684\u6301\u7eed\u4e0b\u6ed1\u8d8b\u52bf\u3002\n\n2. **\u9884\u7ea6\u8f6c\u5316\u7387\u4e0b\u964d\u5f71\u54cd\u53c2\u8d5b\u4eba\u6570**\uff1a\u5728\u53c2\u8d5b\u4eba\u6570\u4e0b\u964d\u7684\u540c\u65f6\uff0c\u9884\u7ea6\u8f6c\u5316\u7387\u4e5f\u4ece1.923\u4e0b\u964d\u81f31.861\uff0c\u73af\u6bd4\u4e0b\u964d-3.24%\uff0c\u8fd9\u8868\u660e\u9884\u7ea6\u73af\u8282\u7684\u8f6c\u5316\u53ef\u80fd\u4e0e\u53c2\u8d5b\u4eba\u6570\u7684\u51cf\u5c11\u5b58\u5728\u76f8\u5173\u6027\u3002\n\n3. **\u5019\u573a\u8f6c\u5316\u6548\u7387\u964d\u4f4e**\uff1a\u5019\u573a\u5230\u5f00\u8d5b\u7684\u6548\u7387\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\u4e5f\u51fa\u73b0\u4e86\u4e0b\u964d\uff0c\u4ece0.916\u4e0b\u964d\u81f30.824\uff0c\u73af\u6bd4\u4e0b\u964d-6.29%\uff0c\u8fd9\u53ef\u80fd\u5bfc\u81f4\u53c2\u8d5b\u4eba\u6570\u7684\u8fdb\u4e00\u6b65\u51cf\u5c11\u3002\n\n4. **\u8d5b\u4e8b\u5b8c\u6210\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1a\u5c3d\u7ba1\u53c2\u8d5b\u4eba\u6570\u4e0b\u964d\uff0c\u8d5b\u4e8b\u5b8c\u6210\u7387\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\u4fdd\u6301\u5728\u7ea692.86%\uff0c\u663e\u793a\u51fa\u5b8c\u6210\u6548\u7387\u76f8\u5bf9\u7a33\u5b9a\uff0c\u53ef\u80fd\u8868\u660e\u53c2\u8d5b\u8005\u7684\u53c2\u4e0e\u8d28\u91cf\u672a\u53d7\u5f71\u54cd\u3002\n\n5. **\u65b0\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u4e0b\u964d**\uff1a\u65b0\u7528\u6237\u53c2\u8d5b\u53c2\u4e0e\u7387\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\u4ece0.0306\u4e0b\u964d\u81f30.0050\uff0c\u73af\u6bd4\u4e0b\u964d-64.55%\uff0c\u8fd9\u8868\u660e\u65b0\u7528\u6237\u7684\u53c2\u4e0e\u5ea6\u663e\u8457\u964d\u4f4e\uff0c\u53ef\u80fd\u9700\u8981\u9488\u5bf9\u65b0\u7528\u6237\u7684\u6fc0\u52b1\u63aa\u65bd\u8fdb\u884c\u4f18\u5316\u3002\n\n**kix_train_times**\n\n1. **\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u4e0b\u964d\u8d8b\u52bf**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0ckix_train_times \u4ece 4.7479 \u964d\u81f3 2.4345\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u5230 32.13%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u964d\u4f4e\u3002\n\n2. **\u6e38\u620f\u540d\u79f0\u5f71\u54cd\u5206\u6790**\uff1a\u5728 2026-02-21\uff0c\u6e38\u620f \"Tofu Cat\" \u7684 kix_train_times \u8fbe\u5230\u6700\u9ad8\u503c 4.7479\uff0c\u800c\u5728 2026-02-23\uff0c\"Spin Maze Save Xmas\" \u7684\u503c\u964d\u81f3\u6700\u4f4e 2.4345\uff0c\u8868\u660e\u4e0d\u540c\u6e38\u620f\u5bf9\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u5f71\u54cd\u663e\u8457\u3002\n\n3. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u76f8\u5173\u6027**\uff1a\u5728 2026-02-22\uff0ckix_train_times \u4e3a 3.5868 \u65f6\uff0cmedian_game_seconds \u4e3a 152.0\uff0c\u663e\u793a\u51fa\u4e24\u8005\u5728\u6b64\u65e5\u671f\u7684\u540c\u6b65\u6ce2\u52a8\uff0c\u53ef\u80fd\u6697\u793a\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u5b58\u5728\u4e00\u5b9a\u7684\u76f8\u5173\u6027\u3002\n\n4. **\u96f6\u5206\u7528\u6237\u5360\u6bd4\u53d8\u5316**\uff1a\u5728 2026-02-22\uff0cscore_zero_user \u4e3a 10.45%\uff0c\u800c\u5728 2026-02-21 \u4e3a 14.29%\uff0c\u8fd9\u8868\u660e\u968f\u7740 kix_train_times \u7684\u4e0b\u964d\uff0c\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4e5f\u6709\u6240\u51cf\u5c11\uff0c\u53ef\u80fd\u53cd\u6620\u51fa\u7528\u6237\u4f53\u9a8c\u7684\u6539\u5584\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u7a33\u5b9a\u6027\u8bc4\u4f30**\uff1akix_train_times \u5728\u8fc7\u53bb7\u5929\u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u6700\u9ad8\u503c\u4e3a 4.7479\uff0c\u6700\u4f4e\u503c\u4e3a 2.4345\uff0c\u663e\u793a\u51fa\u8bad\u7ec3\u5f3a\u5ea6\u7684\u4e0d\u7a33\u5b9a\u6027\uff0c\u53ef\u80fd\u9700\u8981\u8fdb\u4e00\u6b65\u5206\u6790\u7528\u6237\u884c\u4e3a\u4ee5\u627e\u51fa\u539f\u56e0\u3002\n\n**new_user_challenge_rate**\n\n1. **\u53c2\u4e0e\u7387\u6301\u7eed\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cnew_user_challenge_rate \u4ece 0.0306% \u964d\u81f3 0.0050%\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u5230 64.55%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u7684\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u9884\u7ea6\u4e0e\u53c2\u4e0e\u76f8\u5173\u6027**\uff1a\u5728\u540c\u4e00\u65f6\u95f4\u6bb5\u5185\uff0cnew_user_kix_challenge_book_rate \u4e5f\u51fa\u73b0\u4e0b\u964d\uff0c\u4ece 0.4523 \u964d\u81f3 0.3412\uff0c\u8868\u660e\u9884\u7ea6\u884c\u4e3a\u7684\u51cf\u5c11\u53ef\u80fd\u4e0e\u53c2\u4e0e\u7387\u7684\u4e0b\u964d\u5b58\u5728\u76f8\u5173\u6027\u3002\n\n3. **\u6765\u6e90\u5206\u6790\u663e\u793a TikTok \u8d21\u732e\u663e\u8457**\uff1a\u5728 2026-02-16\uff0cTikTok \u7684\u53c2\u4e0e\u7387\u4e3a 50%\uff0c\u662f\u6240\u6709\u6765\u6e90\u4e2d\u6700\u9ad8\u7684\uff0c\u663e\u793a\u51fa\u5176\u5728\u65b0\u7528\u6237\u6311\u6218\u6d3b\u52a8\u4e2d\u7684\u91cd\u8981\u6027\u3002\n\n4. **\u5730\u533a\u53c2\u4e0e\u7387\u5dee\u5f02\u660e\u663e**\uff1a\u5728 2026-02-21\uff0cSG \u7684\u53c2\u4e0e\u7387\u4e3a 50%\uff0c\u8fdc\u9ad8\u4e8e\u5176\u4ed6\u56fd\u5bb6\uff0c\u663e\u793a\u51fa\u4e0d\u540c\u5730\u533a\u5728\u65b0\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u4e2d\u7684\u663e\u8457\u5dee\u5f02\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4**\uff1a\u5728 2026-02-22\uff0c\u53c2\u4e0e\u7387\u964d\u81f3 0.0050%\uff0c\u800c\u524d\u4e00\u5929\u7684\u9884\u7ea6\u7387\u4e3a 0.4523\uff0c\u663e\u793a\u51fa\u9884\u7ea6\u884c\u4e3a\u7684\u663e\u8457\u4e0b\u964d\u53ef\u80fd\u5bfc\u81f4\u4e86\u53c2\u4e0e\u7387\u7684\u5f02\u5e38\u6ce2\u52a8\u3002\n\n\n## Viral\n\n**viral_new_uv**\n\n1. **Viral \u65b0\u7528\u6237\u5360\u6bd4\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684 viral_new_uv \u964d\u81f3 0.0045\uff0c\u8f83\u524d\u4e00\u5929\u7684 0.0190 \u4e0b\u964d\u4e86 76.14%\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u66dd\u5149\u5230\u70b9\u51fb\u8f6c\u5316\u7387\u7a33\u5b9a**\uff1a2026\u5e742\u670822\u65e5\u7684 invitation_impression_to_click \u4e3a 0.0317\uff0c\u8868\u660e\u5c3d\u7ba1 viral_new_uv \u4e0b\u964d\uff0c\u66dd\u5149\u5230\u70b9\u51fb\u7684\u8f6c\u5316\u7387\u4fdd\u6301\u76f8\u5bf9\u7a33\u5b9a\uff0c\u53ef\u80fd\u610f\u5473\u7740\u7528\u6237\u5bf9\u5185\u5bb9\u7684\u5174\u8da3\u672a\u51cf\u3002\n\n3. **\u70b9\u51fb\u5230\u9080\u8bf7\u6210\u529f\u8f6c\u5316\u7387\u4fdd\u6301\u9ad8\u4f4d**\uff1a2026\u5e742\u670822\u65e5\u7684 click_to_invite_sucess \u4e3a 0.2014\uff0c\u663e\u793a\u51fa\u5373\u4f7f viral_new_uv \u4e0b\u964d\uff0c\u7528\u6237\u5728\u70b9\u51fb\u540e\u4ecd\u7136\u6709\u8f83\u9ad8\u7684\u9080\u8bf7\u6210\u529f\u7387\uff0c\u8868\u660e\u9080\u8bf7\u5185\u5bb9\u7684\u5438\u5f15\u529b\u4f9d\u7136\u5b58\u5728\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u4e0e\u7a33\u5b9a\u6027\u5206\u6790**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cviral_new_uv \u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u5c24\u5176\u662f\u4ece 0.0486 \u964d\u81f3 0.0045\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u6781\u7aef\u4e0d\u7a33\u5b9a\uff0c\u53ef\u80fd\u9700\u8981\u91cd\u65b0\u8bc4\u4f30\u7528\u6237\u83b7\u53d6\u7b56\u7565\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4\u5206\u6790**\uff1a\u5728 viral_new_uv \u663e\u8457\u4e0b\u964d\u7684 2\u670823\u65e5\uff0c\u867d\u7136 invitation_impression_to_click \u548c click_to_invite_sucess \u7684\u8868\u73b0\u76f8\u5bf9\u7a33\u5b9a\uff0c\u4f46 viral \u65b0\u7528\u6237\u7684\u51cf\u5c11\u53ef\u80fd\u4f1a\u5f71\u54cd\u672a\u6765\u7684\u7528\u6237\u589e\u957f\u548c\u7559\u5b58\u7b56\u7565\u3002\n\n\n## Revenue\n\n**average_energy_spend_per_active_user**\n\n1. **\u4eba\u5747\u80fd\u8017\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684\u4eba\u5747\u80fd\u8017\u4e3a2.17\uff0c\u8f83\u524d\u4e00\u5929\u76843.82\u4e0b\u964d\u4e8643.08%\uff0c\u663e\u793a\u51fa\u7528\u6237\u7684\u80fd\u91cf\u6d88\u8017\u51fa\u73b0\u4e86\u660e\u663e\u7684\u4e0b\u6ed1\u3002\n\n2. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u80fd\u8017\u5448\u53cd\u5411\u5173\u7cfb**\uff1a\u57282\u670821\u65e5\u548c2\u670822\u65e5\uff0ckix_train_times\u5206\u522b\u4e3a4.75\u548c3.59\uff0c\u800c\u4eba\u5747\u80fd\u8017\u5728\u8fd9\u4e24\u5929\u5206\u522b\u4e3a5.29\u548c3.82\uff0c\u8868\u660e\u8bad\u7ec3\u5f3a\u5ea6\u7684\u4e0b\u964d\u53ef\u80fd\u4e0e\u80fd\u8017\u7684\u51cf\u5c11\u6709\u5173\u3002\n\n3. **\u65b0\u7528\u6237\u80fd\u8017\u8d8b\u52bf\u4e0d\u4e00\u81f4**\uff1a\u65b0\u7528\u6237\u7684\u5e73\u5747\u80fd\u8017\u57282\u670823\u65e5\u4e3a4.18\uff0c\u8f83\u524d\u4e00\u5929\u76846.19\u4e0b\u964d\u4e8632.43%\uff0c\u800c\u6574\u4f53\u4eba\u5747\u80fd\u8017\u540c\u6837\u4e0b\u964d\uff0c\u663e\u793a\u65b0\u7528\u6237\u7684\u80fd\u8017\u53d8\u5316\u4e0e\u6574\u4f53\u8d8b\u52bf\u4e00\u81f4\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u660e\u663e**\uff1a\u57282\u670821\u65e5\u52302\u670823\u65e5\u4e4b\u95f4\uff0c\u4eba\u5747\u80fd\u8017\u7ecf\u5386\u4e86\u4ece5.29\u52302.17\u7684\u6025\u5267\u4e0b\u964d\uff0c\u8868\u660e\u7528\u6237\u7684\u80fd\u91cf\u6d88\u8017\u5b58\u5728\u77ed\u671f\u6ce2\u52a8\uff0c\u53ef\u80fd\u4e0e\u7528\u6237\u6d3b\u8dc3\u5ea6\u6216\u6d3b\u52a8\u7c7b\u578b\u7684\u53d8\u5316\u6709\u5173\u3002\n\n5. **\u5f02\u5e38\u65e5\u80fd\u8017\u53d8\u5316\u9700\u5173\u6ce8**\uff1a2\u670823\u65e5\u7684\u4eba\u5747\u80fd\u8017\u964d\u81f3\u6700\u4f4e\u70b92.17\uff0c\u5efa\u8bae\u8fdb\u4e00\u6b65\u5206\u6790\u8be5\u65e5\u7684\u7528\u6237\u884c\u4e3a\u548c\u8bad\u7ec3\u6d3b\u52a8\uff0c\u4ee5\u786e\u5b9a\u662f\u5426\u5b58\u5728\u5bfc\u81f4\u80fd\u8017\u5f02\u5e38\u4e0b\u964d\u7684\u56e0\u7d20\u3002"</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-23 18:35\n\n## Platform Basics\n\n**dau**\n\n\u2022 \u5206\u6790\u5931\u8d25\uff1aHTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by"</script>
 
 
 <div class="container">
@@ -5045,6 +5182,13 @@ function parseAIAnalysisByMetric(text) {
       continue;
     }
 
+    // section header inside metric: ### xxx (or more #)
+    const m1b = line.match(/^#{3,6}\s+(.+)$/);
+    if (m1b && currentMetricId) {
+      bulletPoints.push(m1b[1].trim() + "：");
+      continue;
+    }
+
     // metric id: **metric_id** (must be a standalone bold line)
     const m2 = line.match(/^\*\*([^*]+)\*\*$/);
     if (m2 && !line.includes(":")) {
@@ -5066,6 +5210,11 @@ function parseAIAnalysisByMetric(text) {
       bulletPoints.push(m4[1].trim());
       continue;
     }
+
+    // fallback: treat plain paragraph lines inside a metric as bullet points
+    if (currentMetricId) {
+      bulletPoints.push(line);
+    }
   }
 
   flush();
@@ -5085,7 +5234,6 @@ function showAIAnalysisForMetric(metricId, metricName) {
   const key = (metricId || "").trim();
   const analysis = aiAnalysisData[key];
 
-  // 确保面板展开（方案A：主内容自动适应）
   setAIPanelCollapsed(false);
 
   titleEl.textContent = metricName || metricId || "AI 分析";
@@ -5094,41 +5242,89 @@ function showAIAnalysisForMetric(metricId, metricName) {
     : ("该指标暂无 AI 分析：" + (metricName || metricId));
 
   if (!analysis) {
-    content.innerHTML = `
-      <div class="ai-empty">
-        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
-        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
-      </div>
-    `;
+    content.innerHTML = `<div class="ai-empty"><div style="font-size:13px;font-weight:600;margin-bottom:4px;">暂无 AI 分析</div><div style="font-size:12px;">该指标在 angel_ai_summary.txt 中没有对应条目。</div></div>`;
     return;
   }
 
-  let html = '';
-  html += `<div class="ai-block">`;
-  html += `<ul>`;
+  /* ---- Group points into sections ---- */
+  const SECTION_ICONS = { "关键结论": "💡", "维度拆解": "🔍", "深度洞察": "📊", "趋势": "📈", "拆分": "🔢", "默认": "📝" };
+  const getSectionIcon = (title) => {
+    for (const [k, v] of Object.entries(SECTION_ICONS)) {
+      if (title.includes(k)) return v;
+    }
+    return SECTION_ICONS["默认"];
+  };
+
+  const sections = [];
+  let curSection = { title: null, points: [] };
+
   (analysis.points || []).forEach((pt) => {
     const p = String(pt || '').trim();
     if (!p) return;
     if (p.startsWith("现状与目标") || p.startsWith("趋势分析")) return;
 
-    // section header like "深度洞察："
-    if (/^[^:：]+[：:]$/.test(p)) {
-      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
+    // section header: "深度洞察：" or "**维度拆解**"
+    const mSectionColon = /^([^:：*]{2,20})[：:]$/.exec(p);
+    const mSectionBold = /^\*\*(.+?)\*\*$/.exec(p);
+    if (mSectionColon || mSectionBold) {
+      if (curSection.points.length > 0 || curSection.title) sections.push({ ...curSection });
+      curSection = { title: (mSectionColon ? mSectionColon[1] : mSectionBold[1]).trim(), points: [] };
       return;
     }
 
-    // 支持 "**标题**: 内容" 的结构
-    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
-    if (m) {
-      const t = m[1].trim();
-      const c = (m[2] || '').trim();
-      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
-    } else {
-      html += `<li>${escapeHtml(p)}</li>`;
-    }
+    curSection.points.push(p);
   });
-  html += `</ul>`;
-  html += `</div>`;
+  if (curSection.points.length > 0 || curSection.title) sections.push({ ...curSection });
+
+  // If no sections were created, put everything in one unnamed section
+  if (sections.length === 0) {
+    content.innerHTML = `<div class="ai-empty"><div style="font-size:13px;">暂无可展示内容</div></div>`;
+    return;
+  }
+
+  let html = '';
+
+  sections.forEach((sec, si) => {
+    const icon = sec.title ? getSectionIcon(sec.title) : "📝";
+    html += `<div class="ai-block">`;
+    if (sec.title) {
+      html += `<div class="ai-section-header"><span class="ai-section-dot"></span>${escapeHtml(sec.title)}</div>`;
+    }
+    html += `<div class="ai-block-body">`;
+
+    sec.points.forEach((p, pi) => {
+      // "**key**: value" → kv pill row
+      const mKV = p.match(/^\*\*(.+?)\*\*\s*[：:]\s*(.+)$/);
+      if (mKV) {
+        const k = mKV[1].trim();
+        const v = (mKV[2] || '').trim();
+        html += `<div class="ai-kv-row"><span class="ai-kv-key">${escapeHtml(k)}</span><span class="ai-kv-val">${markdownInlineToHtml(v)}</span></div>`;
+        return;
+      }
+
+      // dim rows under 维度拆解
+      if (sec.title && sec.title.includes("维度拆解") && /`(country|source)`/i.test(p)) {
+        const parts = p.split("：");
+        if (parts.length >= 2) {
+          const label = parts[0].trim();
+          const value = parts.slice(1).join("：").trim();
+          html += `<div class="ai-dim-row-new"><span class="ai-dim-label-new">${markdownInlineToHtml(label)}</span><span class="ai-dim-val-new">${markdownInlineToHtml(value)}</span></div>`;
+          return;
+        }
+      }
+
+      // user breakdown lines
+      if (/^(新用户|留存用户|老用户)[：:]/.test(p)) {
+        html += `<div class="ai-sub-row">${markdownInlineToHtml(p)}</div>`;
+        return;
+      }
+
+      // generic bullet point
+      html += `<div class="ai-point-row"><span class="ai-point-icon">${pi + 1}</span><span class="ai-point-text">${markdownInlineToHtml(p)}</span></div>`;
+    });
+
+    html += `</div></div>`;
+  });
 
   content.innerHTML = html;
 }
@@ -5146,6 +5342,15 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 
+}
+
+// Very small inline markdown: **bold**, `code`
+function markdownInlineToHtml(text) {
+  const safe = escapeHtml(text);
+  // code first
+  let out = safe.replace(/`([^`]+)`/g, '<code>$1</code>');
+  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return out;
 }
 
 // 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析

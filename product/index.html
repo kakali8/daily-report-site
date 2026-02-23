@@ -416,54 +416,191 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 }
 
 .ai-panel-content{
-  padding: 12px 14px 16px;
+  padding: 12px 14px 20px;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-gutter: stable;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/* ---- empty state ---- */
 .ai-panel-content .ai-empty{
-  border: 1px dashed var(--border-light);
-  border-radius: 14px;
-  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px dashed var(--border-light);
+  border-radius: 16px;
+  padding: 32px 18px;
   color: var(--text-muted);
-  background: rgba(0,0,0,0.02);
+  background: rgba(0,0,0,0.015);
+  text-align: center;
+  font-size: 13px;
+}
+.ai-panel-content .ai-empty::before{
+  content: "🤖";
+  font-size: 28px;
+  display: block;
 }
 
+/* ---- top-level block (one card per section) ---- */
 .ai-panel-content .ai-block{
-  border: 1px solid var(--border-light);
-  border-radius: 14px;
-  padding: 12px 12px 10px;
   background: #fff;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 12px;
+  border: 1px solid #e8ecf2;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
 }
 
-.ai-panel-content .ai-kv{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px 10px;
-  margin: 8px 0 10px;
-}
-.ai-panel-content .ai-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border-light);
-  background: rgba(34,139,230,0.06);
-  color: var(--text);
+/* ---- section header inside a block ---- */
+.ai-section-header{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 9px;
+  background: linear-gradient(90deg, #f0f5ff 0%, #f8faff 100%);
+  border-bottom: 1px solid #e8ecf2;
   font-size: 12px;
-}
-.ai-panel-content ul{ padding-left: 18px; margin: 8px 0 0; }
-.ai-panel-content li{ margin: 6px 0; color: var(--text); line-height: 1.55; }
-.ai-panel-content li.ai-section{
-  margin-top: 10px;
   font-weight: 700;
-  color: #0f172a;
-  list-style: none;
+  color: #1d40b0;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
+.ai-section-header .ai-section-dot{
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  flex-shrink: 0;
+}
+
+/* ---- bullet list inside block ---- */
+.ai-block-body{
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ---- individual point row ---- */
+.ai-point-row{
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: #1e293b;
+  line-height: 1.6;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #f8faff;
+  border: 1px solid #eef1f8;
+  transition: background .12s;
+}
+.ai-point-row:hover{ background: #eef4ff; border-color: #d4e0fb; }
+.ai-point-row .ai-point-icon{
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  margin-top: 2px;
+  color: #3b82f6;
+  font-weight: 700;
+}
+.ai-point-row .ai-point-text{ flex: 1; min-width: 0; }
+
+/* ---- key-value pill rows (bold-title: content) ---- */
+.ai-kv-row{
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #eef1f8;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.ai-kv-row .ai-kv-key{
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(99,102,241,0.1));
+  border: 1px solid rgba(99,102,241,0.18);
+  color: #3730a3;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ai-kv-row .ai-kv-val{
+  color: #334155;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- sub-breakdown rows (新用户 / 留存用户 etc.) ---- */
+.ai-sub-row{
+  margin-left: 6px;
+  padding: 6px 10px 6px 12px;
+  border-left: 3px solid #bfdbfe;
+  border-radius: 0 8px 8px 0;
+  background: #f0f6ff;
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* ---- dim rows ---- */
+.ai-dim-row-new{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 8px;
+  align-items: start;
+  background: #f9fafb;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12.5px;
+}
+.ai-dim-label-new{ font-weight: 700; color: #0f172a; }
+.ai-dim-val-new{ color: var(--text); }
+
+/* ---- inline code ---- */
+.ai-panel-content code{
+  background: #eef0f5;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875em;
+  color: #3730a3;
+}
+
+/* ---- section divider heading ---- */
+.ai-section-divider{
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 8px 0 2px;
+  padding: 0 2px;
+}
+
+/* legacy selectors kept for compat */
+.ai-panel-content .ai-kv{ display:flex; flex-wrap:wrap; gap:6px; margin:4px 0; }
+.ai-panel-content .ai-pill{
+  display:inline-flex; align-items:center; gap:5px;
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid rgba(99,102,241,0.2);
+  background: rgba(99,102,241,0.07);
+  color: #3730a3; font-size: 11.5px; font-weight: 600;
+}
+.ai-panel-content li.ai-section{ list-style:none; }
 
 /* Sidebar header / close button */
 
@@ -1263,7 +1400,7 @@ body.ai-collapsed .charts{
               0.113031914893617,
               0.0993265993265993,
               0.1133333333333333,
-              0.084664536741214,
+              0.0575079872204472,
               0.0
             ]
           }
@@ -1566,12 +1703,12 @@ body.ai-collapsed .charts{
                 0.0656934306569343
               ],
               [
-                0.1131386861313868,
-                0.0379746835443038,
+                0.0656934306569343,
+                0.0253164556962025,
                 0.0,
-                0.3846153846153846,
+                0.3076923076923077,
                 0.0,
-                0.0538461538461538
+                0.0461538461538461
               ],
               [
                 0.0,
@@ -1596,7 +1733,7 @@ body.ai-collapsed .charts{
         "dnu_paly_rate_d0"
       ],
       "description": "\u65b0\u7528\u6237 D1 \u7559\u5b58",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "retention_d7___series__series_daily",
@@ -1670,7 +1807,7 @@ body.ai-collapsed .charts{
               0.05,
               0.029090909090909,
               0.019163763066202,
-              0.0211864406779661,
+              0.0084745762711864,
               0.0,
               0.0,
               0.0,
@@ -1937,7 +2074,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0217391304347826
+                0.008695652173913
               ],
               [
                 0.0,
@@ -2029,10 +2166,10 @@ body.ai-collapsed .charts{
               "02-23"
             ],
             "values": [
-              1.2363387978142075,
+              1.8674863387978144,
               4.716332378223496,
-              2.695774647887324,
-              0.1090487238979118
+              2.7033898305084745,
+              0.1101321585903083
             ]
           }
         }
@@ -2047,7 +2184,7 @@ body.ai-collapsed .charts{
         "pk_start_to_finish"
       ],
       "description": "\u6d3b\u8dc3\u7528\u6237\u5728\u7edf\u8ba1\u5468\u671f\u5185\uff0c\u5e73\u5747\u6210\u529f\u5b8c\u6210\u7684 PK \u573a\u6b21",
-      "has_ai": true
+      "has_ai": false
     }
   ],
   "user_growth": [
@@ -2069,7 +2206,7 @@ body.ai-collapsed .charts{
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.9685181020912976
+            "value": 0.9695336301851418
           }
         },
         {
@@ -2086,7 +2223,7 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "KW",
-            "MK",
+            "PE",
             "NZ",
             "NP",
             "NL",
@@ -2098,8 +2235,7 @@ body.ai-collapsed .charts{
             "MT",
             "MR",
             "MQ",
-            "ME",
-            "JP",
+            "MK",
             "MA",
             "LY",
             "LT",
@@ -2112,8 +2248,8 @@ body.ai-collapsed .charts{
             "KR",
             "KG",
             "OM",
-            "PE",
             "PR",
+            "JP",
             "PS",
             "XK",
             "VI",
@@ -2140,67 +2276,66 @@ body.ai-collapsed .charts{
             "PT",
             "KE",
             "ZM",
-            "AZ",
-            "BY",
-            "BN",
+            "BR",
+            "AO",
+            "AR",
+            "CA",
             "BO",
             "EC",
-            "BR",
-            "BT",
+            "CD",
+            "AZ",
             "DK",
             "DE",
             "CV",
-            "BZ",
-            "CD",
+            "BG",
+            "BA",
             "CO",
-            "AM",
+            "BD",
             "CM",
-            "AO",
+            "BF",
             "CL",
             "CI",
-            "CH",
-            "CG",
             "ES",
-            "CA",
             "FJ",
+            "CG",
+            "AM",
+            "BT",
             "AL",
-            "BA",
-            "BD",
             "IL",
             "IE",
-            "BF",
+            "BY",
             "HU",
-            "BG",
-            "HK",
+            "BZ",
             "GY",
             "GT",
             "GR",
             "GM",
             "GH",
             "GF",
-            "AR",
+            "BN",
             "GE",
             "GB",
+            "CH",
             "IN",
             "EG",
             "VN",
+            "PH",
             "JO",
             "ID",
-            "PH",
             "US",
             "IQ",
-            "MN",
             "DZ",
+            "MN",
+            "AE",
             "MX",
-            "SA",
             "SG",
+            "SA",
             "IT",
-            "ZA",
             "DO",
             "MY",
-            "KH",
+            "ZA",
             "PK",
-            "AE",
+            "KH",
             "CN",
             "HN",
             "PY",
@@ -2214,7 +2349,7 @@ body.ai-collapsed .charts{
           ],
           "ranked_dim_values": [
             "KW",
-            "MK",
+            "PE",
             "NZ",
             "NP",
             "NL",
@@ -2226,8 +2361,7 @@ body.ai-collapsed .charts{
             "MT",
             "MR",
             "MQ",
-            "ME",
-            "JP",
+            "MK",
             "MA",
             "LY",
             "LT",
@@ -2240,8 +2374,8 @@ body.ai-collapsed .charts{
             "KR",
             "KG",
             "OM",
-            "PE",
             "PR",
+            "JP",
             "PS",
             "XK",
             "VI",
@@ -2268,67 +2402,66 @@ body.ai-collapsed .charts{
             "PT",
             "KE",
             "ZM",
-            "AZ",
-            "BY",
-            "BN",
+            "BR",
+            "AO",
+            "AR",
+            "CA",
             "BO",
             "EC",
-            "BR",
-            "BT",
+            "CD",
+            "AZ",
             "DK",
             "DE",
             "CV",
-            "BZ",
-            "CD",
+            "BG",
+            "BA",
             "CO",
-            "AM",
+            "BD",
             "CM",
-            "AO",
+            "BF",
             "CL",
             "CI",
-            "CH",
-            "CG",
             "ES",
-            "CA",
             "FJ",
+            "CG",
+            "AM",
+            "BT",
             "AL",
-            "BA",
-            "BD",
             "IL",
             "IE",
-            "BF",
+            "BY",
             "HU",
-            "BG",
-            "HK",
+            "BZ",
             "GY",
             "GT",
             "GR",
             "GM",
             "GH",
             "GF",
-            "AR",
+            "BN",
             "GE",
             "GB",
+            "CH",
             "IN",
             "EG",
             "VN",
+            "PH",
             "JO",
             "ID",
-            "PH",
             "US",
             "IQ",
-            "MN",
             "DZ",
+            "MN",
+            "AE",
             "MX",
-            "SA",
             "SG",
+            "SA",
             "IT",
-            "ZA",
             "DO",
             "MY",
-            "KH",
+            "ZA",
             "PK",
-            "AE",
+            "KH",
             "CN",
             "HN",
             "PY",
@@ -2388,7 +2521,6 @@ body.ai-collapsed .charts{
               "GR",
               "GT",
               "GY",
-              "HK",
               "HN",
               "HU",
               "ID",
@@ -2412,7 +2544,6 @@ body.ai-collapsed .charts{
               "LT",
               "LY",
               "MA",
-              "ME",
               "MK",
               "MN",
               "MQ",
@@ -2468,7 +2599,7 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                0.8888888888888888,
+                0.9411764705882352,
                 1.0,
                 1.0,
                 1.0,
@@ -2501,7 +2632,7 @@ body.ai-collapsed .charts{
                 0.9090909090909092,
                 0.9473684210526316,
                 1.0,
-                0.9891304347826086,
+                0.9886363636363636,
                 1.0,
                 0.6666666666666666,
                 1.0,
@@ -2514,15 +2645,14 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
+                0.8,
                 1.0,
-                0.8333333333333334,
-                1.0,
-                0.9778761061946902,
+                0.9776785714285714,
                 1.0,
                 1.0,
-                0.990950226244344,
-                0.9647058823529412,
-                0.9333333333333332,
+                0.9908256880733946,
+                0.9634146341463414,
+                0.9285714285714286,
                 0.9782608695652174,
                 1.0,
                 1.0,
@@ -2539,8 +2669,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                1.0,
-                0.95,
+                0.9444444444444444,
                 1.0,
                 1.0,
                 1.0,
@@ -2548,7 +2677,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 0.9411764705882352,
-                0.9029126213592232,
+                0.902200488997555,
                 1.0,
                 1.0,
                 1.0,
@@ -2556,17 +2685,17 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.9765990639625584,
-                0.8923076923076924,
+                0.9791208791208792,
+                0.9,
                 1.0,
                 1.0,
                 1.0,
-                0.8,
+                0.75,
                 1.0,
                 1.0,
                 1.0,
                 1.0,
-                0.9387755102040816,
+                0.9375,
                 1.0,
                 1.0,
                 0.9375,
@@ -2582,14 +2711,14 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.9702970297029704,
+                0.972508591065292,
                 1.0,
                 1.0,
                 1.0,
                 1.0,
-                0.9813084112149532,
+                0.9805825242718448,
                 1.0,
-                0.9090909090909092,
+                0.9,
                 1.0
               ]
             ]
@@ -2640,12 +2769,12 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                0.98989898989899,
-                0.9853249475890984,
+                0.9900166389351082,
+                0.9850427350427352,
                 1.0,
-                0.9933774834437086,
+                0.9932885906040269,
                 1.0,
-                0.9527590313616514
+                0.9548254620123204
               ]
             ]
           }
@@ -2675,7 +2804,7 @@ body.ai-collapsed .charts{
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.5934525191548642
+            "value": 0.6018854242204495
           }
         },
         {
@@ -2692,256 +2821,252 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "ZM",
-            "CV",
-            "DO",
+            "HN",
             "EC",
+            "MA",
             "ET",
             "FJ",
             "FR",
+            "SB",
+            "RU",
             "PR",
-            "PE",
             "GM",
             "GR",
-            "NZ",
-            "HN",
+            "PE",
             "HU",
+            "DK",
             "IE",
+            "NZ",
             "MT",
             "MR",
-            "MQ",
-            "MK",
             "KG",
-            "MA",
+            "MQ",
             "AF",
             "KZ",
             "LA",
             "LK",
-            "DK",
             "LR",
-            "RU",
-            "BZ",
-            "AO",
-            "XK",
-            "VI",
-            "UZ",
+            "DO",
+            "MK",
             "UA",
+            "XK",
             "BF",
             "BG",
             "BN",
-            "TZ",
+            "CV",
+            "UZ",
+            "VI",
             "BT",
-            "TT",
+            "TZ",
+            "BZ",
             "TW",
+            "CD",
+            "TT",
+            "AR",
+            "TL",
             "SO",
             "CM",
-            "CD",
-            "SB",
+            "AO",
             "SI",
-            "TL",
-            "NP",
-            "NG",
-            "CN",
+            "MN",
             "PK",
+            "NG",
+            "NP",
+            "CN",
             "JO",
             "DE",
             "AL",
-            "MN",
-            "LB",
-            "AM",
+            "ZA",
             "TN",
-            "IN",
+            "LB",
             "EG",
-            "VN",
+            "AM",
+            "IN",
             "KH",
+            "VN",
+            "ID",
+            "RO",
             "DZ",
             "ES",
-            "RO",
-            "ID",
-            "LY",
             "AE",
-            "IQ",
-            "ZA",
+            "LY",
             "AZ",
+            "SY",
             "PS",
+            "IQ",
+            "BD",
+            "SA",
             "GH",
             "US",
-            "SA",
             "CI",
-            "BD",
-            "TH",
-            "PY",
-            "MV",
             "GE",
+            "MV",
+            "TH",
             "SG",
             "MY",
-            "SY",
             "GB",
-            "MX",
-            "SN",
-            "OM",
-            "KE",
-            "SE",
-            "AR",
-            "RS",
-            "IL",
-            "QA",
-            "AU",
             "TR",
+            "MX",
+            "PY",
+            "SE",
+            "RS",
+            "QA",
             "BY",
-            "VE",
+            "SN",
             "BR",
+            "KE",
+            "OM",
+            "IL",
+            "AU",
             "CO",
+            "VE",
             "IT",
             "CA",
             "MU",
             "KW",
-            "CG",
             "GF",
-            "BO",
+            "CG",
             "UY",
+            "BO",
             "CL",
             "PH",
             "KR",
-            "GT",
             "PT",
             "JP",
-            "CH",
-            "NC",
-            "ME",
-            "MW",
             "GY",
-            "HK",
+            "NC",
             "BA",
             "NL",
-            "LT"
+            "CH",
+            "LT",
+            "MW",
+            "GT"
           ],
           "selected_dim_values": [
             "ZM"
           ],
           "ranked_dim_values": [
             "ZM",
-            "CV",
-            "DO",
+            "HN",
             "EC",
+            "MA",
             "ET",
             "FJ",
             "FR",
+            "SB",
+            "RU",
             "PR",
-            "PE",
             "GM",
             "GR",
-            "NZ",
-            "HN",
+            "PE",
             "HU",
+            "DK",
             "IE",
+            "NZ",
             "MT",
             "MR",
-            "MQ",
-            "MK",
             "KG",
-            "MA",
+            "MQ",
             "AF",
             "KZ",
             "LA",
             "LK",
-            "DK",
             "LR",
-            "RU",
-            "BZ",
-            "AO",
-            "XK",
-            "VI",
-            "UZ",
+            "DO",
+            "MK",
             "UA",
+            "XK",
             "BF",
             "BG",
             "BN",
-            "TZ",
+            "CV",
+            "UZ",
+            "VI",
             "BT",
-            "TT",
+            "TZ",
+            "BZ",
             "TW",
+            "CD",
+            "TT",
+            "AR",
+            "TL",
             "SO",
             "CM",
-            "CD",
-            "SB",
+            "AO",
             "SI",
-            "TL",
-            "NP",
-            "NG",
-            "CN",
+            "MN",
             "PK",
+            "NG",
+            "NP",
+            "CN",
             "JO",
             "DE",
             "AL",
-            "MN",
-            "LB",
-            "AM",
+            "ZA",
             "TN",
-            "IN",
+            "LB",
             "EG",
-            "VN",
+            "AM",
+            "IN",
             "KH",
+            "VN",
+            "ID",
+            "RO",
             "DZ",
             "ES",
-            "RO",
-            "ID",
-            "LY",
             "AE",
-            "IQ",
-            "ZA",
+            "LY",
             "AZ",
+            "SY",
             "PS",
+            "IQ",
+            "BD",
+            "SA",
             "GH",
             "US",
-            "SA",
             "CI",
-            "BD",
-            "TH",
-            "PY",
-            "MV",
             "GE",
+            "MV",
+            "TH",
             "SG",
             "MY",
-            "SY",
             "GB",
-            "MX",
-            "SN",
-            "OM",
-            "KE",
-            "SE",
-            "AR",
-            "RS",
-            "IL",
-            "QA",
-            "AU",
             "TR",
+            "MX",
+            "PY",
+            "SE",
+            "RS",
+            "QA",
             "BY",
-            "VE",
+            "SN",
             "BR",
+            "KE",
+            "OM",
+            "IL",
+            "AU",
             "CO",
+            "VE",
             "IT",
             "CA",
             "MU",
             "KW",
-            "CG",
             "GF",
-            "BO",
+            "CG",
             "UY",
+            "BO",
             "CL",
             "PH",
             "KR",
-            "GT",
             "PT",
             "JP",
-            "CH",
-            "NC",
-            "ME",
-            "MW",
             "GY",
-            "HK",
+            "NC",
             "BA",
             "NL",
-            "LT"
+            "CH",
+            "LT",
+            "MW",
+            "GT"
           ],
           "data": {
             "dates": [
@@ -2994,7 +3119,6 @@ body.ai-collapsed .charts{
               "GR",
               "GT",
               "GY",
-              "HK",
               "HN",
               "HU",
               "ID",
@@ -3018,7 +3142,6 @@ body.ai-collapsed .charts{
               "LT",
               "LY",
               "MA",
-              "ME",
               "MK",
               "MN",
               "MQ",
@@ -3077,18 +3200,18 @@ body.ai-collapsed .charts{
                 0.8125,
                 1.0,
                 0.9,
-                0.875,
+                0.8571428571428571,
                 1.0,
-                0.6666666666666666,
+                1.0,
                 0.6666666666666666,
                 0.8,
                 0.0,
-                0.75,
+                0.782608695652174,
                 1.0,
                 1.0,
                 1.0,
                 0.5,
-                0.6477987421383647,
+                0.6666666666666666,
                 1.0,
                 0.6666666666666666,
                 1.0,
@@ -3107,7 +3230,7 @@ body.ai-collapsed .charts{
                 1.0,
                 0.8333333333333334,
                 1.0,
-                0.8571428571428571,
+                0.8620689655172413,
                 0.8333333333333334,
                 1.0,
                 1.0,
@@ -3118,35 +3241,33 @@ body.ai-collapsed .charts{
                 0.7777777777777778,
                 1.0,
                 1.0,
-                0.3333333333333333,
                 0.0,
                 0.0,
                 1.0,
                 1.0,
-                0.832579185520362,
+                0.8401826484018264,
                 1.0,
                 0.6666666666666666,
-                0.8584474885844748,
-                0.8048780487804879,
-                0.6428571428571429,
+                0.8564814814814815,
+                0.7974683544303798,
+                0.6153846153846154,
                 0.9111111111111112,
                 0.25,
                 0.6666666666666666,
                 1.0,
                 0.8461538461538461,
                 0.3333333333333333,
-                0.5454545454545454,
+                0.5,
                 1.0,
                 1.0,
-                0.875,
+                0.8666666666666667,
                 1.0,
                 1.0,
                 0.0,
-                0.8125,
+                0.8,
                 1.0,
-                0.0,
                 1.0,
-                0.8947368421052632,
+                0.9411764705882352,
                 1.0,
                 1.0,
                 1.0,
@@ -3154,48 +3275,48 @@ body.ai-collapsed .charts{
                 0.75,
                 0.0,
                 0.6875,
-                0.7150537634408602,
+                0.7181571815718157,
                 0.0,
                 0.9230769230769232,
                 0.0,
-                0.9230769230769232,
+                0.92,
                 1.0,
                 0.6666666666666666,
                 1.0,
-                0.3487752928647497,
-                0.913793103448276,
+                0.3569023569023569,
+                0.925925925925926,
                 1.0,
-                0.7906976744186046,
+                0.8,
                 0.25,
-                0.75,
+                0.6666666666666666,
                 0.6666666666666666,
                 0.8333333333333334,
                 0.6666666666666666,
                 1.0,
-                0.7608695652173914,
+                0.7777777777777778,
                 1.0,
                 0.6666666666666666,
                 0.7333333333333333,
                 1.0,
                 0.6666666666666666,
                 1.0,
-                0.7142857142857143,
-                0.75,
+                0.8,
+                0.7391304347826086,
                 1.0,
                 0.875,
-                0.6666666666666666,
+                0.6949152542372882,
                 1.0,
                 1.0,
                 1.0,
                 1.0,
-                0.7653061224489796,
+                0.7667844522968198,
                 0.5,
                 1.0,
-                0.6666666666666666,
+                0.625,
                 1.0,
-                0.8476190476190476,
+                0.8415841584158416,
                 1.0,
-                0.8,
+                0.8888888888888888,
                 1.0
               ]
             ]
@@ -3246,12 +3367,12 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                0.3343799058084772,
-                0.6234042553191489,
+                0.3436974789915966,
+                0.6225596529284165,
                 0.75,
-                0.66,
+                0.6621621621621622,
                 0.7777777777777778,
-                0.72
+                0.7251612903225807
               ]
             ]
           }
@@ -3311,8 +3432,7 @@ body.ai-collapsed .charts{
               "02-19",
               "02-20",
               "02-21",
-              "02-22",
-              "02-23"
+              "02-22"
             ],
             "values": [
               6.0,
@@ -3343,8 +3463,7 @@ body.ai-collapsed .charts{
               87.0,
               109.0,
               102.0,
-              103.0,
-              14.0
+              103.0
             ]
           }
         },
@@ -3401,8 +3520,7 @@ body.ai-collapsed .charts{
               "02-19",
               "02-20",
               "02-21",
-              "02-22",
-              "02-23"
+              "02-22"
             ],
             "series": [
               "watch_ad",
@@ -3524,10 +3642,6 @@ body.ai-collapsed .charts{
               [
                 34.0,
                 69.0
-              ],
-              [
-                5.0,
-                9.0
               ]
             ]
           }
@@ -3618,7 +3732,7 @@ body.ai-collapsed .charts{
               4216.0,
               4734.0,
               3546.0,
-              805.0
+              149.0
             ]
           }
         }
@@ -3703,12 +3817,12 @@ body.ai-collapsed .charts{
               4.819174757281553,
               4.807743658210948,
               5.231132075471698,
-              3.2121982210927573,
+              3.2162849872773536,
               3.619745845552297,
               4.58759521218716,
               5.289385474860335,
-              3.8170075349838535,
-              2.1725067385444743
+              3.8293736501079914,
+              1.3909090909090909
             ]
           }
         }
@@ -3720,7 +3834,7 @@ body.ai-collapsed .charts{
         "new_user_avg_spend_energy"
       ],
       "description": "\u5e73\u5747\u6bcf\u65e5\u4eba\u5747energy\u6d88\u8017",
-      "has_ai": true
+      "has_ai": false
     }
   ],
   "daily_challenge": [
@@ -3785,7 +3899,7 @@ body.ai-collapsed .charts{
         "finish_kix_challenge_rate"
       ],
       "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "book_kix_challenge_uv__series__series_daily",
@@ -3829,12 +3943,12 @@ body.ai-collapsed .charts{
               0.5538461538461539,
               0.927710843373494,
               1.5483870967741935,
-              0.8292919495635306,
+              0.8300970873786407,
               1.0762331838565022,
               0.9706180344478216,
-              1.923166472642608,
-              1.8609271523178808,
-              46.61764705882353
+              1.9254079254079255,
+              2.3746478873239436,
+              0.0
             ]
           }
         }
@@ -4020,13 +4134,13 @@ body.ai-collapsed .charts{
               "02-23"
             ],
             "values": [
-              4.145245559038663,
+              4.1452455590386625,
               2.9467625899280576,
               2.3924558587479936,
               3.8587174348697393,
               4.7478991596638656,
               3.586792452830189,
-              2.434452871072589
+              2.2589703588143526
             ]
           }
         },
@@ -4048,8 +4162,8 @@ body.ai-collapsed .charts{
             "778",
             "441",
             "576",
-            "1252",
-            "1402"
+            "1402",
+            "1252"
           ],
           "selected_dim_values": [
             "1338"
@@ -4060,8 +4174,8 @@ body.ai-collapsed .charts{
             "778",
             "441",
             "576",
-            "1252",
-            "1402"
+            "1402",
+            "1252"
           ],
           "data": {
             "dates": [
@@ -4085,7 +4199,7 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 0.0,
-                4.145245559038663,
+                4.1452455590386625,
                 0.0,
                 0.0,
                 0.0,
@@ -4138,7 +4252,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                2.434452871072589,
+                2.2589703588143526,
                 0.0,
                 0.0,
                 0.0,
@@ -4167,8 +4281,8 @@ body.ai-collapsed .charts{
             "Animals Crush",
             "Nutmeg Football",
             "Sushi Frenzy",
-            "Spin Maze Save Xmas",
-            "HangGlider"
+            "HangGlider",
+            "Spin Maze Save Xmas"
           ],
           "selected_dim_values": [
             "Tofu Cat"
@@ -4179,8 +4293,8 @@ body.ai-collapsed .charts{
             "Animals Crush",
             "Nutmeg Football",
             "Sushi Frenzy",
-            "Spin Maze Save Xmas",
-            "HangGlider"
+            "HangGlider",
+            "Spin Maze Save Xmas"
           ],
           "data": {
             "dates": [
@@ -4206,7 +4320,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                4.145245559038663,
+                4.1452455590386625,
                 0.0,
                 0.0,
                 0.0
@@ -4261,7 +4375,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.434452871072589,
+                2.2589703588143526,
                 0.0,
                 0.0
               ]
@@ -4331,8 +4445,8 @@ body.ai-collapsed .charts{
                 3.2036727879799667
               ],
               [
-                2.684090909090909,
-                2.20703933747412
+                2.493630573248407,
+                2.0336391437308867
               ]
             ]
           }
@@ -4345,7 +4459,7 @@ body.ai-collapsed .charts{
         "score_zero_user"
       ],
       "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "median_game_seconds__series__series_daily",
@@ -5181,7 +5295,7 @@ body.ai-collapsed .charts{
               0.0,
               0.0,
               0.0,
-              0.0,
+              0.3661971830985915,
               0.6808510638297872,
               0.6862745098039216,
               0.6981132075471698
@@ -5555,7 +5669,7 @@ body.ai-collapsed .charts{
                 0.0,
                 2.0,
                 7.0,
-                3.555555555555556,
+                3.5555555555555554,
                 14.0,
                 8.0,
                 3.0,
@@ -6445,7 +6559,7 @@ body.ai-collapsed .charts{
               0.9144893111638956,
               0.9073455759599331,
               0.9228171731789676,
-              0.8925619834710744
+              0.9363636363636364
             ]
           }
         },
@@ -6470,10 +6584,10 @@ body.ai-collapsed .charts{
             "Drift Bus",
             "Pupper Jones",
             "Golden Move Quest",
-            "Crossy Chicken",
             "Frog Super Bubbles",
-            "Defuse the bombs",
+            "Crossy Chicken",
             "Animal Jump",
+            "Defuse the bombs",
             "Spin Maze Save Xmas",
             "Brainrot Merge Fellas",
             "Tally Up Pot",
@@ -6484,17 +6598,17 @@ body.ai-collapsed .charts{
             "Shoot The Apple",
             "The Last Battle",
             "Sushi Frenzy",
-            "Zombie Survivor",
             "Sea Treasure",
             "Sky Speedster",
             "Candy Monster",
             "HangGlider",
+            "Zombie Survivor",
             "Mini Golf",
             "King Of Drift",
-            "Deadly Race",
             "Deep Sea 2048",
             "Tennis Dash",
             "Block Breaker",
+            "Deadly Race",
             "Snipe Shooting 3D",
             "Pixel Journey",
             "Jelly Blast",
@@ -6521,40 +6635,40 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "Golden Move Quest",
             "Sling Tomb",
-            "Drift Bus",
             "Pupper Jones",
+            "Drift Bus",
+            "Frog Super Bubbles",
             "Happy Bird",
             "Squid Head Kick",
             "Shoot The Apple",
-            "Crossy Chicken",
             "Animal Jump",
-            "Zombie Survivor",
-            "Frog Super Bubbles",
-            "Defuse the bombs",
+            "Crossy Chicken",
             "Spin Maze Save Xmas",
             "Tofu Cat",
             "Cards Fusion",
             "Brainrot Merge Fellas",
+            "Defuse the bombs",
             "Tally Up Pot",
             "Animals Crush",
             "Monkey Mart",
+            "Zombie Survivor",
             "HangGlider",
-            "Sky Speedster",
-            "Gold Miner",
             "The Last Battle",
+            "Gold Miner",
+            "Sky Speedster",
             "Nutmeg Football",
             "King Of Drift",
             "Sea Treasure",
-            "Deadly Race",
             "Sushi Frenzy",
+            "Deadly Race",
             "Snipe Shooting 3D",
             "Jelly Blast",
             "Candy Monster",
-            "Deep Sea 2048",
             "Mini Golf",
-            "Fast Driver",
+            "Deep Sea 2048",
             "Punch Box",
             "Pixel Journey",
+            "Fast Driver",
             "Block Breaker",
             "Tennis Dash"
           ],
@@ -8213,7 +8327,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.9583333333333334,
+                1.0,
                 0.0,
                 0.0,
                 0.0,
@@ -8225,37 +8339,37 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 1.0,
-                0.75,
-                0.0,
-                0.8571428571428571,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.75,
-                0.0,
-                0.8333333333333334,
-                0.0,
-                1.0,
-                1.0,
-                0.0,
-                0.0,
-                1.0,
-                0.75,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.8888888888888888,
-                1.0,
-                0.9107142857142856,
                 0.5,
-                0.8,
                 0.0,
-                0.8932038834951457,
-                0.90625,
+                0.6666666666666666,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                0.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                0.75,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                1.0,
+                0.9285714285714286,
+                0.0,
+                1.0,
+                0.0,
+                0.9454545454545454,
+                0.9375,
                 0.0,
                 1.0,
                 0.0,
@@ -8263,7 +8377,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 0.0,
-                1.0,
+                0.0,
                 0.0
               ]
             ]
@@ -8477,7 +8591,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.8925619834710744,
+                0.9363636363636364,
                 0.0,
                 0.0
               ]
@@ -8509,9 +8623,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 1073.0,
-            "numerator": 1069.0,
-            "value": 0.9962721342031687
+            "denominator": 474.0,
+            "numerator": 471.0,
+            "value": 0.9936708860759493
           }
         }
       ],
@@ -8539,8 +8653,8 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 1069.0,
-            "numerator": 1069.0,
+            "denominator": 471.0,
+            "numerator": 471.0,
             "value": 1.0
           }
         }
@@ -8569,9 +8683,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 1069.0,
-            "numerator": 399.0,
-            "value": 0.37324602432179604
+            "denominator": 471.0,
+            "numerator": 141.0,
+            "value": 0.29936305732484075
           }
         }
       ],
@@ -8599,9 +8713,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-23",
-            "denominator": 399.0,
-            "numerator": 365.0,
-            "value": 0.9147869674185464
+            "denominator": 141.0,
+            "numerator": 122.0,
+            "value": 0.8652482269503546
           }
         }
       ],
@@ -8689,8 +8803,8 @@ body.ai-collapsed .charts{
               0.6941678520625889,
               0.6701570680628273,
               0.7478260869565218,
-              0.6633165829145728,
-              0.69377990430622
+              0.6649916247906198,
+              0.6833333333333333
             ]
           }
         }
@@ -8752,35 +8866,35 @@ body.ai-collapsed .charts{
             ],
             "values": [
               0.45,
-              3.666666666666666,
+              3.666666666666667,
               11.501316666666668,
               9.461111111111112,
-              3.4311594202898554,
-              8.889665666666668,
-              7.598888888888889,
+              3.4311594202898545,
+              8.889665666666666,
+              7.59888888888889,
               2.148,
-              14.162987820512823,
-              2.6797101449275367,
-              12.288840196078432,
+              14.16298782051282,
+              2.679710144927536,
+              12.28884019607843,
               10.313580864197531,
-              7.211132952622673,
-              7.117644100294984,
+              7.211132952622674,
+              7.117644100294986,
               10.615720512820513,
               3.9218469734660033,
-              5.422462,
-              7.8346021938441375,
+              5.422462000000001,
+              7.834602193844139,
               7.075171098104794,
-              6.607161144179895,
-              5.179284965222044,
+              6.607161144179893,
+              5.179284965222043,
               5.827091057692308,
               5.956132098765432,
               5.423697583333333,
-              4.029268304431599,
+              4.029268304431598,
               5.872195566619251,
-              6.118281995346132,
+              6.118281995346131,
               5.832267652173913,
-              5.293023366834172,
-              5.7356139553429015
+              5.306088693467337,
+              2.6356880555555553
             ]
           }
         }
@@ -8842,35 +8956,35 @@ body.ai-collapsed .charts{
             ],
             "values": [
               3.830890521978021,
-              9.012361006289304,
-              10.863941221826808,
+              9.05507361769352,
+              10.90274101190476,
               13.90228598870057,
               13.894673311184947,
               12.860678878878876,
               6.779580392156865,
               7.502473886639675,
-              15.584853630363048,
-              12.5087746277205,
+              15.636459105960276,
+              12.551908333333328,
               11.599706775956289,
               11.806864213564218,
-              9.831186844636838,
-              9.019001085383495,
+              9.845393762042384,
+              9.03207210144927,
               8.07174070247934,
-              6.639199351230422,
-              7.476287003968252,
+              6.639199351230424,
+              7.485197953913385,
               9.060780494399388,
-              9.016227110443776,
-              7.990425501792116,
-              6.413153243416832,
+              9.016227110443769,
+              7.990425501792122,
+              6.413153243416831,
               8.217569539007089,
               9.371019115413809,
-              7.998530057932257,
-              6.749656343967732,
+              8.009237594823732,
+              6.7645398199191495,
               8.090199897390788,
               8.604982800387605,
               7.567627286432163,
-              7.055280821256035,
-              8.74291402877698
+              7.097102572815531,
+              4.6355098958333345
             ]
           }
         }
@@ -8932,35 +9046,35 @@ body.ai-collapsed .charts{
             ],
             "values": [
               0.1868131868131868,
-              0.2877358490566037,
-              0.3914590747330961,
+              0.2890995260663507,
+              0.3928571428571428,
               0.4677966101694915,
               0.4584717607973422,
               0.4984984984984985,
               0.3739495798319328,
               0.3765182186234818,
-              0.4785478547854785,
-              0.4570446735395189,
+              0.4801324503311258,
+              0.4586206896551724,
               0.4852459016393443,
               0.6060606060606061,
-              0.6623376623376623,
-              0.6164978292329957,
+              0.6632947976878613,
+              0.6173913043478261,
               0.53099173553719,
               0.5973154362416108,
-              0.6142857142857143,
+              0.6150178784266984,
               0.7601390498261877,
               0.7177177177177178,
               0.6881720430107527,
               0.6290944123314065,
               0.6404255319148936,
               0.642369020501139,
-              0.6443850267379679,
-              0.6270627062706271,
+              0.6452476572958501,
+              0.6284454244762955,
               0.6754617414248021,
               0.6560077519379846,
               0.7105527638190955,
-              0.6512077294685991,
-              0.6690647482014388
+              0.6553398058252428,
+              0.6015625
             ]
           }
         }
@@ -8991,9 +9105,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-22",
-            "denominator": 3848.0,
-            "numerator": 122.0,
-            "value": 0.03170478170478171
+            "denominator": 3709.0,
+            "numerator": 114.0,
+            "value": 0.030736047452143436
           }
         },
         {
@@ -9011,8 +9125,8 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "APK_Download",
-            "Gamification_Task",
             "HQ_Room_Invite",
+            "Gamification_Task",
             "Add_Friend_Invite",
             "Energy_Rescue",
             "HQ_H5_Share",
@@ -9025,8 +9139,8 @@ body.ai-collapsed .charts{
           ],
           "ranked_dim_values": [
             "APK_Download",
-            "Gamification_Task",
             "HQ_Room_Invite",
+            "Gamification_Task",
             "Add_Friend_Invite",
             "Energy_Rescue",
             "HQ_H5_Share",
@@ -9049,36 +9163,36 @@ body.ai-collapsed .charts{
             ],
             "denominator": [
               1.0,
-              108.0,
+              105.0,
               41.0,
-              2047.0,
-              10.0,
+              1985.0,
+              8.0,
               60.0,
-              884.0,
+              841.0,
               23.0,
-              674.0
+              645.0
             ],
             "numerator": [
               2.0,
-              13.0,
+              12.0,
               3.0,
-              34.0,
-              2.0,
+              32.0,
               1.0,
-              62.0,
+              1.0,
+              58.0,
               4.0,
               1.0
             ],
             "values": [
               2.0,
-              0.12037037037037036,
+              0.11428571428571428,
               0.07317073170731707,
-              0.016609672691744015,
-              0.2,
+              0.016120906801007556,
+              0.125,
               0.016666666666666666,
-              0.07013574660633484,
+              0.06896551724137931,
               0.17391304347826086,
-              0.001483679525222552
+              0.0015503875968992248
             ]
           }
         }
@@ -9107,9 +9221,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-22",
-            "denominator": 2010.0,
-            "numerator": 159.0,
-            "value": 0.0791044776119403
+            "denominator": 1914.0,
+            "numerator": 156.0,
+            "value": 0.08150470219435736
           }
         },
         {
@@ -9164,21 +9278,21 @@ body.ai-collapsed .charts{
               "HQ_Withdraw_Share"
             ],
             "denominator": [
-              1195.0,
-              134.0,
-              56.0,
-              269.0,
-              13.0,
+              1191.0,
+              129.0,
+              55.0,
+              262.0,
               6.0,
-              332.0,
+              6.0,
+              260.0,
               4.0,
               1.0
             ],
             "numerator": [
-              140.0,
-              4.0,
+              139.0,
+              3.0,
               0.0,
-              13.0,
+              12.0,
               0.0,
               0.0,
               2.0,
@@ -9186,13 +9300,13 @@ body.ai-collapsed .charts{
               0.0
             ],
             "values": [
-              0.11715481171548117,
-              0.029850746268656716,
+              0.11670864819479429,
+              0.023255813953488372,
               0.0,
-              0.048327137546468404,
+              0.04580152671755725,
               0.0,
               0.0,
-              0.006024096385542169,
+              0.007692307692307693,
               0.0,
               0.0
             ]
@@ -9314,7 +9428,7 @@ body.ai-collapsed .charts{
               0.0486223662884927,
               0.0229885057471264,
               0.019047619047619,
-              0.0045454545454545
+              0.0
             ]
           }
         }
@@ -9326,7 +9440,7 @@ body.ai-collapsed .charts{
         "click_to_invite_sucess"
       ],
       "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b",
-      "has_ai": true
+      "has_ai": false
     },
     {
       "chart_id": "viral_d1_rate__series__series_daily",
@@ -9392,7 +9506,7 @@ body.ai-collapsed .charts{
               0.0,
               0.0,
               0.0,
-              0.3529411764705882,
+              0.4117647058823529,
               0.4234234234234234,
               0.3769230769230769,
               0.3233082706766917,
@@ -9406,7 +9520,7 @@ body.ai-collapsed .charts{
               0.5135135135135135,
               0.146067415730337,
               0.4545454545454545,
-              0.1785714285714285,
+              0.1071428571428571,
               0.0
             ]
           }
@@ -9497,7 +9611,7 @@ body.ai-collapsed .charts{
               5.0,
               5.0,
               0.0,
-              2.0
+              0.0
             ]
           }
         }
@@ -9587,7 +9701,7 @@ body.ai-collapsed .charts{
               50.0,
               65.0,
               0.0,
-              20.0
+              0.0
             ]
           }
         }
@@ -9616,9 +9730,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-22",
-            "denominator": 1280.0,
-            "numerator": 538.0,
-            "value": 0.4203125
+            "denominator": 1265.0,
+            "numerator": 512.0,
+            "value": 0.40474308300395256
           }
         },
         {
@@ -9649,13 +9763,13 @@ body.ai-collapsed .charts{
               "__NULL__"
             ],
             "denominator": [
-              1280.0
+              1265.0
             ],
             "numerator": [
-              538.0
+              512.0
             ],
             "values": [
-              0.4203125
+              0.40474308300395256
             ]
           }
         }
@@ -9927,7 +10041,7 @@ body.ai-collapsed .charts{
               0.0019214603098354,
               0.0014247043738424,
               0.0009748172217709,
-              0.0008756567425569
+              0.0
             ]
           }
         },
@@ -9959,16 +10073,16 @@ body.ai-collapsed .charts{
             "gamification-notice"
           ],
           "selected_dim_values": [
-            "ENERGY_6"
+            "WITHDRAWAL"
           ],
           "ranked_dim_values": [
-            "ENERGY_6",
             "WITHDRAWAL",
             "COMPETITION_2",
             "ENERGY_2",
             "COMPETITION_1",
             "BECOME_FRIEND",
             "COMPETITION_3",
+            "ENERGY_6",
             "GAMIFICATION_3",
             "gamification-notice"
           ],
@@ -10458,14 +10572,14 @@ body.ai-collapsed .charts{
               ],
               [
                 0.0,
-                0.0007976601967561,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.5,
+                0.0,
+                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -10712,7 +10826,7 @@ body.ai-collapsed .charts{
     }
   ]
 }</script>
-<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-23 18:21\n\n## Platform Basics\n\n**dau**\n\n1. **DAU\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684DAU\u4e3a601\uff0c\u8f83\u524d\u4e00\u5929\u7684935\u4e0b\u964d\u4e86334\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523035.72%\uff0c\u663e\u793a\u51fa\u7528\u6237\u6d3b\u8dc3\u5ea6\u7684\u663e\u8457\u4e0b\u6ed1\u3002\n\n2. **\u65b0\u7528\u6237\u8d21\u732e\u5360\u6bd4\u9ad8**\uff1a\u57282\u670823\u65e5\u7684DAU\u4e2d\uff0c383\u540d\u65b0\u7528\u6237\u5360\u6bd463.73%\uff0c\u800c\u56de\u6d41\u7528\u6237\u4ec5\u4e3a53\u540d\uff0c\u5360\u6bd48.82%\uff0c\u8fd9\u8868\u660e\u65b0\u7528\u6237\u7684\u5f15\u5165\u5bf9DAU\u7684\u8d21\u732e\u8f83\u5927\uff0c\u4f46\u56de\u6d41\u7528\u6237\u7684\u6bd4\u4f8b\u504f\u4f4e\uff0c\u53ef\u80fd\u5f71\u54cd\u957f\u671f\u7559\u5b58\u3002\n\n3. **\u7559\u5b58\u7387\u4e0b\u964d**\uff1a\u524d\u4e00\u5929\u7684D1\u7559\u5b58\u7387\u4e3a8.47%\uff0c\u8f83\u524d\u4e00\u5929\u768411.33%\u4e0b\u964d\u4e862.86\u4e2a\u767e\u5206\u70b9\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u7684\u7559\u5b58\u60c5\u51b5\u4e0d\u4f73\uff0c\u9700\u5173\u6ce8\u65b0\u7528\u6237\u7684\u9996\u65e5\u4f53\u9a8c\u548c\u7559\u5b58\u7b56\u7565\u3002\n\n4. **\u5730\u533a\u5206\u5e03\u53d8\u5316**\uff1a\u57282\u670823\u65e5\uff0cDAU\u7684\u4e3b\u8981\u6765\u6e90\u56fd\u4e3a\u7f8e\u56fd\uff08232\uff09\u3001\u5df4\u897f\uff0841\uff09\u548c\u9a6c\u6765\u897f\u4e9a\uff0834\uff09\uff0c\u5176\u4e2d\u7f8e\u56fd\u7684\u7528\u6237\u5360\u6bd4\u6700\u9ad8\uff0c\u663e\u793a\u51fa\u7f8e\u56fd\u5e02\u573a\u7684\u6d3b\u8dc3\u5ea6\u4ecd\u7136\u8f83\u5f3a\u3002\n\n5. **\u6765\u6e90\u5206\u6790\u663e\u793a\u4f9d\u8d56\u6027**\uff1a\u57282\u670823\u65e5\uff0cDAU\u7684\u4e3b\u8981\u6765\u6e90\u4e3a\u201cothers\u201d\uff08348\uff09\u548c\u201cFB\u201d\uff08212\uff09\uff0c\u8fd9\u4e24\u8005\u5408\u8ba1\u5360DAU\u768493.3%\uff0c\u663e\u793a\u51fa\u5bf9\u7279\u5b9a\u6765\u6e90\u7684\u9ad8\u5ea6\u4f9d\u8d56\uff0c\u9700\u8003\u8651\u591a\u5143\u5316\u7528\u6237\u83b7\u53d6\u6e20\u9053\u3002\n\n**retention(d1)**\n\n1. **D1\u7559\u5b58\u7387\u4e0b\u964d\u663e\u8457**\uff1a2026\u5e742\u670822\u65e5\u7684D1\u7559\u5b58\u7387\u4e3a8.47%\uff0c\u8f83\u524d\u4e00\u5929\u768411.33%\u4e0b\u964d\u4e8625.3%\uff0c\u663e\u793a\u51fa\u7528\u6237\u56de\u8bbf\u610f\u613f\u7684\u660e\u663e\u51cf\u5f31\u3002\n\n2. **\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u540c\u6b65\u4e0b\u964d**\uff1a2026\u5e742\u670822\u65e5\u7684\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e3a8.63%\uff0c\u8f83\u524d\u4e00\u5929\u76849.83%\u4e0b\u964d\u4e8612.28%\uff0c\u4e0eD1\u7559\u5b58\u7387\u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u4e00\u81f4\uff0c\u8868\u660e\u65b0\u7528\u6237\u7684\u6709\u6548\u5bf9\u6218\u53c2\u4e0e\u5ea6\u964d\u4f4e\u3002\n\n3. **\u65b0\u7528\u6237\u8fdb\u5165\u5f15\u5bfc\u7387\u9ad8**\uff1a2026\u5e742\u670822\u65e5\u7684\u65b0\u7528\u6237\u8fdb\u5165\u5f15\u5bfc\u7387\u4e3a96.85%\uff0c\u663e\u793a\u51fa\u7528\u6237\u5728\u9996\u6b21\u63a5\u89e6\u65f6\u7684\u9ad8\u53c2\u4e0e\u5ea6\uff0c\u4f46\u540e\u7eed\u8f6c\u5316\u7387\u672a\u80fd\u6709\u6548\u8ddf\u8fdb\uff0c\u53ef\u80fd\u5bfc\u81f4\u7559\u5b58\u7387\u4e0b\u964d\u3002\n\n4. **\u6311\u6218\u7559\u5b58\u7387\u5927\u5e45\u4e0b\u964d**\uff1a2026\u5e742\u670822\u65e5\u7684\u65b0\u7528\u6237\u6311\u6218\u7559\u5b58\u7387\u4e3a0.0%\uff0c\u76f8\u6bd4\u4e8e\u524d\u4e00\u5929\u768430%\u5927\u5e45\u4e0b\u964d\uff0c\u8868\u660e\u7528\u6237\u5728\u53c2\u4e0e\u6311\u6218\u540e\u7684\u7559\u5b58\u60c5\u51b5\u6781\u4e3a\u4e0d\u7406\u60f3\uff0c\u53ef\u80fd\u662f\u6d41\u5931\u7684\u5173\u952e\u73af\u8282\u3002\n\n5. **\u6765\u6e90\u5206\u6790\u663e\u793a\u9080\u8bf7\u6e20\u9053\u8868\u73b0\u4f18\u5f02**\uff1a\u57282026\u5e742\u670822\u65e5\uff0c\u6765\u81ea\u9080\u8bf7\u7684\u7528\u6237\u5360\u6bd4\u4e3a38.46%\uff0c\u662f\u4e3b\u8981\u6765\u6e90\uff0c\u663e\u793a\u51fa\u9080\u8bf7\u6e20\u9053\u5728\u7528\u6237\u83b7\u53d6\u4e2d\u7684\u91cd\u8981\u6027\uff0c\u4f46\u5176\u540e\u7eed\u7559\u5b58\u8868\u73b0\u9700\u52a0\u5f3a\u3002\n\n**average_meaningful_battles_per_user**\n\n1. **\u4eba\u5747\u6210\u529f PK \u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684\u4eba\u5747\u6210\u529f PK \u964d\u81f30.11\uff0c\u8f83\u524d\u4e00\u5929\u76842.70\u4e0b\u964d\u4e8695.95%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u6f0f\u6597\u73af\u8282\u540c\u6b65\u6ce2\u52a8**\uff1a\u57282\u670823\u65e5\uff0cpk_ready_to_start\u7684\u6bd4\u4f8b\u964d\u81f30.37\uff0c\u8f83\u524d\u4e00\u5929\u76840.62\u4e0b\u964d\u4e8640.0%\uff0c\u4e0e\u4eba\u5747\u6210\u529f PK \u7684\u4e0b\u964d\u8d8b\u52bf\u4e00\u81f4\uff0c\u63d0\u793a\u8be5\u73af\u8282\u53ef\u80fd\u662f\u94fe\u8def\u74f6\u9888\u3002\n\n3. **\u5339\u914d\u6210\u529f\u7387\u5c0f\u5e45\u4e0b\u964d**\uff1a2\u670823\u65e5\u7684pk_successful_matching\u4e3a0.89\uff0c\u8f83\u524d\u4e00\u5929\u76840.92\u4e0b\u964d\u4e863.28%\uff0c\u867d\u7136\u4e0b\u964d\u5e45\u5ea6\u4e0d\u5927\uff0c\u4f46\u4e0e\u4eba\u5747\u6210\u529f PK \u7684\u5927\u5e45\u4e0b\u964d\u5f62\u6210\u5bf9\u6bd4\uff0c\u53ef\u80fd\u5f71\u54cd\u4e86\u7528\u6237\u7684\u6574\u4f53\u4f53\u9a8c\u3002\n\n4. **\u8fdb\u5165\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1apk_click_to_enter\u57282\u670823\u65e5\u7684\u503c\u4e3a0.996\uff0c\u663e\u793a\u51fa\u7528\u6237\u70b9\u51fb\u8fdb\u5165\u7684\u610f\u613f\u4f9d\u7136\u8f83\u9ad8\uff0c\u8868\u660e\u95ee\u9898\u53ef\u80fd\u51fa\u5728\u540e\u7eed\u73af\u8282\u800c\u975e\u7528\u6237\u521d\u59cb\u53c2\u4e0e\u610f\u613f\u3002\n\n5. **\u5b8c\u6210\u7387\u63d0\u5347\u4f46\u7528\u6237\u53c2\u4e0e\u4e0d\u8db3**\uff1apk_start_to_finish\u57282\u670823\u65e5\u7684\u5b8c\u6210\u7387\u4e3a91.48%\uff0c\u8f83\u524d\u4e00\u5929\u768473.67%\u63d0\u5347\u4e8624.17%\uff0c\u4f46\u7531\u4e8e\u4eba\u5747\u6210\u529f PK \u7684\u5927\u5e45\u4e0b\u964d\uff0c\u8bf4\u660e\u5c3d\u7ba1\u5b8c\u6210\u7387\u63d0\u9ad8\uff0c\u7528\u6237\u53c2\u4e0e\u7684\u6570\u91cf\u5374\u663e\u8457\u4e0d\u8db3\uff0c\u53ef\u80fd\u9700\u8981\u4f18\u5316\u7528\u6237\u4f53\u9a8c\u4ee5\u63d0\u5347\u6574\u4f53\u53c2\u4e0e\u5ea6\u3002\n\n\n## User Growth\n\n**new_user**\n\n1. **\u65b0\u7528\u6237\u6574\u4f53\u8d8b\u52bf\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0cnew_user\u7684\u6570\u91cf\u4ece752\u4e0b\u964d\u81f3383\uff0c\u65e5\u73af\u6bd4\u53d8\u5316\u4e3a-243\uff0c\u964d\u5e45\u8fbe\u523038.82%\uff0c\u663e\u793a\u51fa\u65b0\u589e\u7528\u6237\u89c4\u6a21\u7684\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u4e3b\u8981\u6765\u6e90\u5206\u6790**\uff1a\u57282026\u5e742\u670823\u65e5\uff0cnew_user\u7684\u4e3b\u8981\u6765\u6e90\u4e3a\u201cothers\u201d\uff0c\u8d21\u732e\u4e86223\u4e2a\u7528\u6237\uff0c\u5360\u6bd458.3%\uff1b\u800c\u201cFB\u201d\u6765\u6e90\u5219\u8d21\u732e\u4e86144\u4e2a\u7528\u6237\uff0c\u5360\u6bd437.6%\uff0c\u663e\u793a\u51fa\u201cothers\u201d\u6765\u6e90\u7684\u4e3b\u5bfc\u5730\u4f4d\u3002\n\n3. **\u5730\u533a\u5206\u5e03\u53d8\u5316**\uff1a\u57282026\u5e742\u670823\u65e5\uff0c\u83f2\u5f8b\u5bbe\uff08PH\uff09\u4ecd\u7136\u662f\u6700\u5927\u7684\u7528\u6237\u6765\u6e90\u56fd\uff0c\u8d21\u732e\u4e86134\u4e2a\u65b0\u7528\u6237\uff0c\u5360\u603b\u6570\u768434.9%\uff1b\u800c\u5df4\u897f\uff08BR\uff09\u548c\u7f8e\u56fd\uff08US\uff09\u5206\u522b\u8d21\u732e\u4e8636\u548c22\u4e2a\u7528\u6237\uff0c\u663e\u793a\u51fa\u83f2\u5f8b\u5bbe\u7684\u7528\u6237\u589e\u957f\u4f9d\u7136\u5f3a\u52b2\u3002\n\n4. **viral_new_uv\u7684\u6ce2\u52a8**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0cviral_new_uv\u7684\u6bd4\u4f8b\u4ece0.0486\u4e0b\u964d\u81f30.0045\uff0c\u964d\u5e45\u8fbe\u523090.7%\uff0c\u8868\u660e\u75c5\u6bd2\u4f20\u64ad\u5e26\u6765\u7684\u65b0\u7528\u6237\u589e\u957f\u663e\u8457\u51cf\u5f31\uff0c\u53ef\u80fd\u5f71\u54cd\u6574\u4f53\u7528\u6237\u589e\u957f\u7684\u7a33\u5b9a\u6027\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u5206\u6790**\uff1a\u57282026\u5e742\u670819\u65e5\uff0cnew_user\u8fbe\u5230\u4e86752\u7684\u5cf0\u503c\uff0c\u968f\u540e\u51fa\u73b0\u4e86\u660e\u663e\u7684\u4e0b\u964d\u8d8b\u52bf\uff0c\u53ef\u80fd\u4e0e\u5e02\u573a\u6d3b\u52a8\u6216\u63a8\u5e7f\u7b56\u7565\u7684\u53d8\u5316\u6709\u5173\uff0c\u9700\u8981\u8fdb\u4e00\u6b65\u5206\u6790\u5177\u4f53\u539f\u56e0\u3002\n\n\n## Daily Challenge\n\n**participate_kix_challenge_uv**\n\n1. **\u53c2\u8d5b\u4eba\u6570\u6301\u7eed\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\uff0c\u53c2\u8d5b\u4eba\u6570\u4ece66\u4e0b\u964d\u81f356\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u4e3a-15.15%\uff0c\u663e\u793a\u51fa\u53c2\u8d5b\u4eba\u6570\u7684\u6301\u7eed\u4e0b\u6ed1\u8d8b\u52bf\u3002\n\n2. **\u9884\u7ea6\u8f6c\u5316\u7387\u4e0b\u964d\u5f71\u54cd\u53c2\u8d5b\u4eba\u6570**\uff1a\u5728\u53c2\u8d5b\u4eba\u6570\u4e0b\u964d\u7684\u540c\u65f6\uff0c\u9884\u7ea6\u8f6c\u5316\u7387\u4e5f\u4ece1.923\u4e0b\u964d\u81f31.861\uff0c\u73af\u6bd4\u4e0b\u964d-3.24%\uff0c\u8fd9\u8868\u660e\u9884\u7ea6\u73af\u8282\u7684\u8f6c\u5316\u53ef\u80fd\u4e0e\u53c2\u8d5b\u4eba\u6570\u7684\u51cf\u5c11\u5b58\u5728\u76f8\u5173\u6027\u3002\n\n3. **\u5019\u573a\u8f6c\u5316\u6548\u7387\u964d\u4f4e**\uff1a\u5019\u573a\u5230\u5f00\u8d5b\u7684\u6548\u7387\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\u4e5f\u51fa\u73b0\u4e86\u4e0b\u964d\uff0c\u4ece0.916\u4e0b\u964d\u81f30.824\uff0c\u73af\u6bd4\u4e0b\u964d-6.29%\uff0c\u8fd9\u53ef\u80fd\u5bfc\u81f4\u53c2\u8d5b\u4eba\u6570\u7684\u8fdb\u4e00\u6b65\u51cf\u5c11\u3002\n\n4. **\u8d5b\u4e8b\u5b8c\u6210\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1a\u5c3d\u7ba1\u53c2\u8d5b\u4eba\u6570\u4e0b\u964d\uff0c\u8d5b\u4e8b\u5b8c\u6210\u7387\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\u4fdd\u6301\u5728\u7ea692.86%\uff0c\u663e\u793a\u51fa\u5b8c\u6210\u6548\u7387\u76f8\u5bf9\u7a33\u5b9a\uff0c\u53ef\u80fd\u8868\u660e\u53c2\u8d5b\u8005\u7684\u53c2\u4e0e\u8d28\u91cf\u672a\u53d7\u5f71\u54cd\u3002\n\n5. **\u65b0\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u4e0b\u964d**\uff1a\u65b0\u7528\u6237\u53c2\u8d5b\u53c2\u4e0e\u7387\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\u4ece0.0306\u4e0b\u964d\u81f30.0050\uff0c\u73af\u6bd4\u4e0b\u964d-64.55%\uff0c\u8fd9\u8868\u660e\u65b0\u7528\u6237\u7684\u53c2\u4e0e\u5ea6\u663e\u8457\u964d\u4f4e\uff0c\u53ef\u80fd\u9700\u8981\u9488\u5bf9\u65b0\u7528\u6237\u7684\u6fc0\u52b1\u63aa\u65bd\u8fdb\u884c\u4f18\u5316\u3002\n\n**kix_train_times**\n\n1. **\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u4e0b\u964d\u8d8b\u52bf**\uff1a\u5728\u8fc7\u53bb7\u5929\u4e2d\uff0ckix_train_times \u4ece 4.7479 \u964d\u81f3 2.4345\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u5230 32.13%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u964d\u4f4e\u3002\n\n2. **\u6e38\u620f\u540d\u79f0\u5f71\u54cd\u5206\u6790**\uff1a\u5728 2026-02-21\uff0c\u6e38\u620f \"Tofu Cat\" \u7684 kix_train_times \u8fbe\u5230\u6700\u9ad8\u503c 4.7479\uff0c\u800c\u5728 2026-02-23\uff0c\"Spin Maze Save Xmas\" \u7684\u503c\u964d\u81f3\u6700\u4f4e 2.4345\uff0c\u8868\u660e\u4e0d\u540c\u6e38\u620f\u5bf9\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u5f71\u54cd\u663e\u8457\u3002\n\n3. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u76f8\u5173\u6027**\uff1a\u5728 2026-02-22\uff0ckix_train_times \u4e3a 3.5868 \u65f6\uff0cmedian_game_seconds \u4e3a 152.0\uff0c\u663e\u793a\u51fa\u4e24\u8005\u5728\u6b64\u65e5\u671f\u7684\u540c\u6b65\u6ce2\u52a8\uff0c\u53ef\u80fd\u6697\u793a\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u5b58\u5728\u4e00\u5b9a\u7684\u76f8\u5173\u6027\u3002\n\n4. **\u96f6\u5206\u7528\u6237\u5360\u6bd4\u53d8\u5316**\uff1a\u5728 2026-02-22\uff0cscore_zero_user \u4e3a 10.45%\uff0c\u800c\u5728 2026-02-21 \u4e3a 14.29%\uff0c\u8fd9\u8868\u660e\u968f\u7740 kix_train_times \u7684\u4e0b\u964d\uff0c\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4e5f\u6709\u6240\u51cf\u5c11\uff0c\u53ef\u80fd\u53cd\u6620\u51fa\u7528\u6237\u4f53\u9a8c\u7684\u6539\u5584\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u7a33\u5b9a\u6027\u8bc4\u4f30**\uff1akix_train_times \u5728\u8fc7\u53bb7\u5929\u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u6700\u9ad8\u503c\u4e3a 4.7479\uff0c\u6700\u4f4e\u503c\u4e3a 2.4345\uff0c\u663e\u793a\u51fa\u8bad\u7ec3\u5f3a\u5ea6\u7684\u4e0d\u7a33\u5b9a\u6027\uff0c\u53ef\u80fd\u9700\u8981\u8fdb\u4e00\u6b65\u5206\u6790\u7528\u6237\u884c\u4e3a\u4ee5\u627e\u51fa\u539f\u56e0\u3002\n\n**new_user_challenge_rate**\n\n1. **\u53c2\u4e0e\u7387\u6301\u7eed\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cnew_user_challenge_rate \u4ece 0.0306% \u964d\u81f3 0.0050%\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u5230 64.55%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u7684\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u9884\u7ea6\u4e0e\u53c2\u4e0e\u76f8\u5173\u6027**\uff1a\u5728\u540c\u4e00\u65f6\u95f4\u6bb5\u5185\uff0cnew_user_kix_challenge_book_rate \u4e5f\u51fa\u73b0\u4e0b\u964d\uff0c\u4ece 0.4523 \u964d\u81f3 0.3412\uff0c\u8868\u660e\u9884\u7ea6\u884c\u4e3a\u7684\u51cf\u5c11\u53ef\u80fd\u4e0e\u53c2\u4e0e\u7387\u7684\u4e0b\u964d\u5b58\u5728\u76f8\u5173\u6027\u3002\n\n3. **\u6765\u6e90\u5206\u6790\u663e\u793a TikTok \u8d21\u732e\u663e\u8457**\uff1a\u5728 2026-02-16\uff0cTikTok \u7684\u53c2\u4e0e\u7387\u4e3a 50%\uff0c\u662f\u6240\u6709\u6765\u6e90\u4e2d\u6700\u9ad8\u7684\uff0c\u663e\u793a\u51fa\u5176\u5728\u65b0\u7528\u6237\u6311\u6218\u6d3b\u52a8\u4e2d\u7684\u91cd\u8981\u6027\u3002\n\n4. **\u5730\u533a\u53c2\u4e0e\u7387\u5dee\u5f02\u660e\u663e**\uff1a\u5728 2026-02-21\uff0cSG \u7684\u53c2\u4e0e\u7387\u4e3a 50%\uff0c\u8fdc\u9ad8\u4e8e\u5176\u4ed6\u56fd\u5bb6\uff0c\u663e\u793a\u51fa\u4e0d\u540c\u5730\u533a\u5728\u65b0\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u4e2d\u7684\u663e\u8457\u5dee\u5f02\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4**\uff1a\u5728 2026-02-22\uff0c\u53c2\u4e0e\u7387\u964d\u81f3 0.0050%\uff0c\u800c\u524d\u4e00\u5929\u7684\u9884\u7ea6\u7387\u4e3a 0.4523\uff0c\u663e\u793a\u51fa\u9884\u7ea6\u884c\u4e3a\u7684\u663e\u8457\u4e0b\u964d\u53ef\u80fd\u5bfc\u81f4\u4e86\u53c2\u4e0e\u7387\u7684\u5f02\u5e38\u6ce2\u52a8\u3002\n\n\n## Viral\n\n**viral_new_uv**\n\n1. **Viral \u65b0\u7528\u6237\u5360\u6bd4\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684 viral_new_uv \u964d\u81f3 0.0045\uff0c\u8f83\u524d\u4e00\u5929\u7684 0.0190 \u4e0b\u964d\u4e86 76.14%\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u66dd\u5149\u5230\u70b9\u51fb\u8f6c\u5316\u7387\u7a33\u5b9a**\uff1a2026\u5e742\u670822\u65e5\u7684 invitation_impression_to_click \u4e3a 0.0317\uff0c\u8868\u660e\u5c3d\u7ba1 viral_new_uv \u4e0b\u964d\uff0c\u66dd\u5149\u5230\u70b9\u51fb\u7684\u8f6c\u5316\u7387\u4fdd\u6301\u76f8\u5bf9\u7a33\u5b9a\uff0c\u53ef\u80fd\u610f\u5473\u7740\u7528\u6237\u5bf9\u5185\u5bb9\u7684\u5174\u8da3\u672a\u51cf\u3002\n\n3. **\u70b9\u51fb\u5230\u9080\u8bf7\u6210\u529f\u8f6c\u5316\u7387\u4fdd\u6301\u9ad8\u4f4d**\uff1a2026\u5e742\u670822\u65e5\u7684 click_to_invite_sucess \u4e3a 0.2014\uff0c\u663e\u793a\u51fa\u5373\u4f7f viral_new_uv \u4e0b\u964d\uff0c\u7528\u6237\u5728\u70b9\u51fb\u540e\u4ecd\u7136\u6709\u8f83\u9ad8\u7684\u9080\u8bf7\u6210\u529f\u7387\uff0c\u8868\u660e\u9080\u8bf7\u5185\u5bb9\u7684\u5438\u5f15\u529b\u4f9d\u7136\u5b58\u5728\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u4e0e\u7a33\u5b9a\u6027\u5206\u6790**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cviral_new_uv \u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u5c24\u5176\u662f\u4ece 0.0486 \u964d\u81f3 0.0045\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u7684\u6781\u7aef\u4e0d\u7a33\u5b9a\uff0c\u53ef\u80fd\u9700\u8981\u91cd\u65b0\u8bc4\u4f30\u7528\u6237\u83b7\u53d6\u7b56\u7565\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4\u5206\u6790**\uff1a\u5728 viral_new_uv \u663e\u8457\u4e0b\u964d\u7684 2\u670823\u65e5\uff0c\u867d\u7136 invitation_impression_to_click \u548c click_to_invite_sucess \u7684\u8868\u73b0\u76f8\u5bf9\u7a33\u5b9a\uff0c\u4f46 viral \u65b0\u7528\u6237\u7684\u51cf\u5c11\u53ef\u80fd\u4f1a\u5f71\u54cd\u672a\u6765\u7684\u7528\u6237\u589e\u957f\u548c\u7559\u5b58\u7b56\u7565\u3002\n\n\n## Revenue\n\n**average_energy_spend_per_active_user**\n\n1. **\u4eba\u5747\u80fd\u8017\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670823\u65e5\u7684\u4eba\u5747\u80fd\u8017\u4e3a2.17\uff0c\u8f83\u524d\u4e00\u5929\u76843.82\u4e0b\u964d\u4e8643.08%\uff0c\u663e\u793a\u51fa\u7528\u6237\u7684\u80fd\u91cf\u6d88\u8017\u51fa\u73b0\u4e86\u660e\u663e\u7684\u4e0b\u6ed1\u3002\n\n2. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u80fd\u8017\u5448\u53cd\u5411\u5173\u7cfb**\uff1a\u57282\u670821\u65e5\u548c2\u670822\u65e5\uff0ckix_train_times\u5206\u522b\u4e3a4.75\u548c3.59\uff0c\u800c\u4eba\u5747\u80fd\u8017\u5728\u8fd9\u4e24\u5929\u5206\u522b\u4e3a5.29\u548c3.82\uff0c\u8868\u660e\u8bad\u7ec3\u5f3a\u5ea6\u7684\u4e0b\u964d\u53ef\u80fd\u4e0e\u80fd\u8017\u7684\u51cf\u5c11\u6709\u5173\u3002\n\n3. **\u65b0\u7528\u6237\u80fd\u8017\u8d8b\u52bf\u4e0d\u4e00\u81f4**\uff1a\u65b0\u7528\u6237\u7684\u5e73\u5747\u80fd\u8017\u57282\u670823\u65e5\u4e3a4.18\uff0c\u8f83\u524d\u4e00\u5929\u76846.19\u4e0b\u964d\u4e8632.43%\uff0c\u800c\u6574\u4f53\u4eba\u5747\u80fd\u8017\u540c\u6837\u4e0b\u964d\uff0c\u663e\u793a\u65b0\u7528\u6237\u7684\u80fd\u8017\u53d8\u5316\u4e0e\u6574\u4f53\u8d8b\u52bf\u4e00\u81f4\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u660e\u663e**\uff1a\u57282\u670821\u65e5\u52302\u670823\u65e5\u4e4b\u95f4\uff0c\u4eba\u5747\u80fd\u8017\u7ecf\u5386\u4e86\u4ece5.29\u52302.17\u7684\u6025\u5267\u4e0b\u964d\uff0c\u8868\u660e\u7528\u6237\u7684\u80fd\u91cf\u6d88\u8017\u5b58\u5728\u77ed\u671f\u6ce2\u52a8\uff0c\u53ef\u80fd\u4e0e\u7528\u6237\u6d3b\u8dc3\u5ea6\u6216\u6d3b\u52a8\u7c7b\u578b\u7684\u53d8\u5316\u6709\u5173\u3002\n\n5. **\u5f02\u5e38\u65e5\u80fd\u8017\u53d8\u5316\u9700\u5173\u6ce8**\uff1a2\u670823\u65e5\u7684\u4eba\u5747\u80fd\u8017\u964d\u81f3\u6700\u4f4e\u70b92.17\uff0c\u5efa\u8bae\u8fdb\u4e00\u6b65\u5206\u6790\u8be5\u65e5\u7684\u7528\u6237\u884c\u4e3a\u548c\u8bad\u7ec3\u6d3b\u52a8\uff0c\u4ee5\u786e\u5b9a\u662f\u5426\u5b58\u5728\u5bfc\u81f4\u80fd\u8017\u5f02\u5e38\u4e0b\u964d\u7684\u56e0\u7d20\u3002"</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-23 18:35\n\n## Platform Basics\n\n**dau**\n\n\u2022 \u5206\u6790\u5931\u8d25\uff1aHTTPSConnectionPool(host='openrouter.ai', port=443): Max retries exceeded with url: /api/v1/chat/completions (Caused by"</script>
 
 
 <div class="container">
@@ -12905,6 +13019,13 @@ function parseAIAnalysisByMetric(text) {
       continue;
     }
 
+    // section header inside metric: ### xxx (or more #)
+    const m1b = line.match(/^#{3,6}\s+(.+)$/);
+    if (m1b && currentMetricId) {
+      bulletPoints.push(m1b[1].trim() + "：");
+      continue;
+    }
+
     // metric id: **metric_id** (must be a standalone bold line)
     const m2 = line.match(/^\*\*([^*]+)\*\*$/);
     if (m2 && !line.includes(":")) {
@@ -12926,6 +13047,11 @@ function parseAIAnalysisByMetric(text) {
       bulletPoints.push(m4[1].trim());
       continue;
     }
+
+    // fallback: treat plain paragraph lines inside a metric as bullet points
+    if (currentMetricId) {
+      bulletPoints.push(line);
+    }
   }
 
   flush();
@@ -12945,7 +13071,6 @@ function showAIAnalysisForMetric(metricId, metricName) {
   const key = (metricId || "").trim();
   const analysis = aiAnalysisData[key];
 
-  // 确保面板展开（方案A：主内容自动适应）
   setAIPanelCollapsed(false);
 
   titleEl.textContent = metricName || metricId || "AI 分析";
@@ -12954,41 +13079,89 @@ function showAIAnalysisForMetric(metricId, metricName) {
     : ("该指标暂无 AI 分析：" + (metricName || metricId));
 
   if (!analysis) {
-    content.innerHTML = `
-      <div class="ai-empty">
-        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
-        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
-      </div>
-    `;
+    content.innerHTML = `<div class="ai-empty"><div style="font-size:13px;font-weight:600;margin-bottom:4px;">暂无 AI 分析</div><div style="font-size:12px;">该指标在 angel_ai_summary.txt 中没有对应条目。</div></div>`;
     return;
   }
 
-  let html = '';
-  html += `<div class="ai-block">`;
-  html += `<ul>`;
+  /* ---- Group points into sections ---- */
+  const SECTION_ICONS = { "关键结论": "💡", "维度拆解": "🔍", "深度洞察": "📊", "趋势": "📈", "拆分": "🔢", "默认": "📝" };
+  const getSectionIcon = (title) => {
+    for (const [k, v] of Object.entries(SECTION_ICONS)) {
+      if (title.includes(k)) return v;
+    }
+    return SECTION_ICONS["默认"];
+  };
+
+  const sections = [];
+  let curSection = { title: null, points: [] };
+
   (analysis.points || []).forEach((pt) => {
     const p = String(pt || '').trim();
     if (!p) return;
     if (p.startsWith("现状与目标") || p.startsWith("趋势分析")) return;
 
-    // section header like "深度洞察："
-    if (/^[^:：]+[：:]$/.test(p)) {
-      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
+    // section header: "深度洞察：" or "**维度拆解**"
+    const mSectionColon = /^([^:：*]{2,20})[：:]$/.exec(p);
+    const mSectionBold = /^\*\*(.+?)\*\*$/.exec(p);
+    if (mSectionColon || mSectionBold) {
+      if (curSection.points.length > 0 || curSection.title) sections.push({ ...curSection });
+      curSection = { title: (mSectionColon ? mSectionColon[1] : mSectionBold[1]).trim(), points: [] };
       return;
     }
 
-    // 支持 "**标题**: 内容" 的结构
-    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
-    if (m) {
-      const t = m[1].trim();
-      const c = (m[2] || '').trim();
-      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
-    } else {
-      html += `<li>${escapeHtml(p)}</li>`;
-    }
+    curSection.points.push(p);
   });
-  html += `</ul>`;
-  html += `</div>`;
+  if (curSection.points.length > 0 || curSection.title) sections.push({ ...curSection });
+
+  // If no sections were created, put everything in one unnamed section
+  if (sections.length === 0) {
+    content.innerHTML = `<div class="ai-empty"><div style="font-size:13px;">暂无可展示内容</div></div>`;
+    return;
+  }
+
+  let html = '';
+
+  sections.forEach((sec, si) => {
+    const icon = sec.title ? getSectionIcon(sec.title) : "📝";
+    html += `<div class="ai-block">`;
+    if (sec.title) {
+      html += `<div class="ai-section-header"><span class="ai-section-dot"></span>${escapeHtml(sec.title)}</div>`;
+    }
+    html += `<div class="ai-block-body">`;
+
+    sec.points.forEach((p, pi) => {
+      // "**key**: value" → kv pill row
+      const mKV = p.match(/^\*\*(.+?)\*\*\s*[：:]\s*(.+)$/);
+      if (mKV) {
+        const k = mKV[1].trim();
+        const v = (mKV[2] || '').trim();
+        html += `<div class="ai-kv-row"><span class="ai-kv-key">${escapeHtml(k)}</span><span class="ai-kv-val">${markdownInlineToHtml(v)}</span></div>`;
+        return;
+      }
+
+      // dim rows under 维度拆解
+      if (sec.title && sec.title.includes("维度拆解") && /`(country|source)`/i.test(p)) {
+        const parts = p.split("：");
+        if (parts.length >= 2) {
+          const label = parts[0].trim();
+          const value = parts.slice(1).join("：").trim();
+          html += `<div class="ai-dim-row-new"><span class="ai-dim-label-new">${markdownInlineToHtml(label)}</span><span class="ai-dim-val-new">${markdownInlineToHtml(value)}</span></div>`;
+          return;
+        }
+      }
+
+      // user breakdown lines
+      if (/^(新用户|留存用户|老用户)[：:]/.test(p)) {
+        html += `<div class="ai-sub-row">${markdownInlineToHtml(p)}</div>`;
+        return;
+      }
+
+      // generic bullet point
+      html += `<div class="ai-point-row"><span class="ai-point-icon">${pi + 1}</span><span class="ai-point-text">${markdownInlineToHtml(p)}</span></div>`;
+    });
+
+    html += `</div></div>`;
+  });
 
   content.innerHTML = html;
 }
@@ -13006,6 +13179,15 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 
+}
+
+// Very small inline markdown: **bold**, `code`
+function markdownInlineToHtml(text) {
+  const safe = escapeHtml(text);
+  // code first
+  let out = safe.replace(/`([^`]+)`/g, '<code>$1</code>');
+  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return out;
 }
 
 // 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析
