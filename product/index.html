@@ -377,7 +377,7 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
   display:flex;
   align-items:center;
   gap:10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--text);
 }
@@ -424,7 +424,7 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 
 .ai-panel-content .ai-empty{
   border: 1px dashed var(--border-light);
-  border-radius: 14px;
+  border-radius: 13px;
   padding: 14px;
   color: var(--text-muted);
   background: rgba(0,0,0,0.02);
@@ -463,6 +463,67 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
   font-weight: 700;
   color: #0f172a;
   list-style: none;
+}
+
+.ai-panel-content .ai-meta{
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.ai-panel-content .ai-section-title{
+  margin: 14px 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  border-left: 3px solid var(--accent);
+  padding-left: 8px;
+}
+.ai-panel-content .ai-item{
+  padding: 10px 10px 8px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  background: #f9fafb;
+  margin-bottom: 10px;
+}
+.ai-panel-content .ai-item-title{
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+.ai-panel-content .ai-item-detail{
+  color: #374151;
+  line-height: 1.55;
+}
+.ai-panel-content .ai-subsection{
+  margin-top: 8px;
+}
+.ai-panel-content .ai-subtitle{
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+.ai-panel-content .ai-list{
+  margin: 4px 0 0;
+  padding-left: 18px;
+}
+.ai-panel-content .ai-strategy{
+  padding: 8px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  background: #fff;
+  margin: 6px 0;
+}
+.ai-panel-content .ai-strategy-title{
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+.ai-panel-content .ai-strategy-ref,
+.ai-panel-content .ai-strategy-eff{
+  color: #4b5563;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 /* Sidebar header / close button */
@@ -531,51 +592,182 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 @media (max-width: 768px) {
   }
 
-/* AI分析内容样式 - 极简版 */
-.ai-analysis-text h3 {
-  font-size: 15px;
-  font-weight: 600;
+/* AI分析内容样式 - 改版 */
+.ai-section-block {
+  margin-bottom: 16px;
+}
+
+.ai-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.ai-section-label .ai-section-icon {
+  font-size: 13px;
+}
+
+.ai-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.ai-card-title {
+  font-size: 13px;
+  font-weight: 700;
   color: #111827;
-  margin: 18px 0 10px 0;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 5px;
+  line-height: 1.4;
 }
 
-.ai-analysis-text h3:first-child {
-  margin-top: 0;
+.ai-card-detail {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.6;
 }
 
-.ai-analysis-text .tldr-section {
+/* 好消息卡片 - 绿色左边框 */
+.ai-card.good {
+  border-left: 3px solid #10b981;
+  background: #f0fdf4;
+}
+.ai-card.good .ai-card-title { color: #065f46; }
+
+/* 坏消息卡片 - 红色左边框 */
+.ai-card.bad {
+  border-left: 3px solid #ef4444;
+  background: #fff5f5;
+}
+.ai-card.bad .ai-card-title { color: #991b1b; }
+
+/* 单点跟踪卡片 - 蓝色左边框 */
+.ai-card.neutral {
+  border-left: 3px solid #3b82f6;
+  background: #f8faff;
+}
+.ai-card.neutral .ai-card-title { color: #1e40af; }
+
+.ai-card-subsection {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.ai-card-subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.ai-card-insights {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.ai-card-insights li {
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.55;
+  margin-bottom: 4px;
+}
+
+/* 深度洞察 - 每条用小卡片包裹 */
+.ai-insight-card {
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-bottom: 7px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #374151;
+  line-height: 1.55;
+}
+
+/* 深度洞察标题旁的"核心"角标 */
+.ai-core-tag {
+  display: none;
+}
+
+/* 建议策略 - 数字序号行 */
+.ai-strategy-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.ai-strategy-num {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.ai-strategy-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ai-strategy-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+
+.ai-strategy-meta {
+  font-size: 11.5px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.ai-strategy-meta span {
+  display: block;
+}
+
+.ai-strategy-meta strong {
+  color: #374151;
+  font-weight: 600;
+}
+
+.ai-meta-row {
+  font-size: 11px;
+  color: var(--text-muted);
   margin-bottom: 12px;
-  color: #6b7280;
-  line-height: 1.6;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.ai-analysis-text .domain-item {
-  margin: 6px 0 6px 0;
-  color: #4b5563;
-  line-height: 1.6;
-}
-
-.ai-analysis-text .domain-name {
-  font-weight: 600;
-  color: #111827;
-}
-
-.ai-analysis-text .domain-name::after {
-  content: ": ";
-}
-
-.ai-analysis-text .chain-item {
-  margin: 6px 0 6px 0;
-  color: #4b5563;
-  line-height: 1.6;
-}
-
-.ai-analysis-text .confidence-section {
-  margin-top: 12px;
-  color: #6b7280;
-  line-height: 1.6;
+.ai-meta-tag {
+  background: var(--border-light);
+  border-radius: 4px;
+  padding: 2px 7px;
 }
 
 .ai-analysis-text strong {
@@ -1263,7 +1455,7 @@ body.ai-collapsed .charts{
               0.1129770992366412,
               0.1180124223602484,
               0.0820895522388059,
-              0.1145374449339207,
+              0.1123348017621145,
               0.0
             ]
           }
@@ -1565,7 +1757,7 @@ body.ai-collapsed .charts{
                 0.0728744939271255
               ],
               [
-                0.1392405063291139,
+                0.1329113924050632,
                 0.1297709923664122,
                 0.0,
                 0.2,
@@ -1594,8 +1786,7 @@ body.ai-collapsed .charts{
         "new_user_intro_start_click_rate",
         "dnu_paly_rate_d0"
       ],
-      "description": "\u65b0\u7528\u6237 D1 \u7559\u5b58",
-      "has_ai": true
+      "description": "\u65b0\u7528\u6237 D1 \u7559\u5b58"
     },
     {
       "chart_id": "retention_d7___series__series_daily",
@@ -2000,8 +2191,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Platform Basics",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237 D7 \u7559\u5b58",
-      "has_ai": false
+      "description": "\u65b0\u7528\u6237 D7 \u7559\u5b58"
     },
     {
       "chart_id": "average_meaningful_battles_per_user__series__series_daily",
@@ -2027,10 +2217,10 @@ body.ai-collapsed .charts{
               "02-27"
             ],
             "values": [
-              2.850684931506849,
+              2.9726027397260273,
               4.568914956011731,
               2.361842105263158,
-              0.2063037249283667
+              0.1964809384164222
             ]
           }
         }
@@ -2044,8 +2234,7 @@ body.ai-collapsed .charts{
         "pk_ready_to_start",
         "pk_start_to_finish"
       ],
-      "description": "\u6d3b\u8dc3\u7528\u6237\u5728\u7edf\u8ba1\u5468\u671f\u5185\uff0c\u5e73\u5747\u6210\u529f\u5b8c\u6210\u7684 PK \u573a\u6b21",
-      "has_ai": true
+      "description": "\u6d3b\u8dc3\u7528\u6237\u5728\u7edf\u8ba1\u5468\u671f\u5185\uff0c\u5e73\u5747\u6210\u529f\u5b8c\u6210\u7684 PK \u573a\u6b21"
     }
   ],
   "user_growth": [
@@ -2067,7 +2256,7 @@ body.ai-collapsed .charts{
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.9714481498401096
+            "value": 0.97163769441903
           }
         },
         {
@@ -2471,7 +2660,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.9780439121756488,
+                0.978,
                 1.0,
                 1.0,
                 1.0,
@@ -2534,7 +2723,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.9408866995073892,
+                0.945273631840796,
                 1.0,
                 1.0,
                 1.0,
@@ -2542,7 +2731,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.9730224051211706,
+                0.972985347985348,
                 0.8703703703703703,
                 1.0,
                 1.0,
@@ -2626,12 +2815,12 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                0.9871244635193132,
+                0.9871007371007372,
                 0.9944954128440368,
                 1.0,
                 0.981012658227848,
                 1.0,
-                0.9519136408243376
+                0.9523341523341524
               ]
             ]
           }
@@ -2640,8 +2829,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "User Growth",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u7387",
-      "has_ai": false
+      "description": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u7387"
     },
     {
       "chart_id": "new_user_intro_start_click_rate__series__value_daily",
@@ -2661,7 +2849,7 @@ body.ai-collapsed .charts{
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.5083470491417823
+            "value": 0.5089453860640302
           }
         },
         {
@@ -3065,7 +3253,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 1.0,
-                0.5183673469387755,
+                0.5194274028629857,
                 0.5,
                 1.0,
                 0.8333333333333334,
@@ -3128,7 +3316,7 @@ body.ai-collapsed .charts{
                 1.0,
                 0.0,
                 0.3571428571428571,
-                0.3769633507853403,
+                0.3789473684210526,
                 0.0,
                 0.8333333333333334,
                 0.0,
@@ -3136,7 +3324,7 @@ body.ai-collapsed .charts{
                 1.0,
                 0.6666666666666666,
                 0.5,
-                0.3359962406015037,
+                0.3364705882352941,
                 0.8723404255319149,
                 1.0,
                 1.0,
@@ -3220,12 +3408,12 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                0.3341614906832298,
+                0.3347853142501555,
                 0.514760147601476,
                 0.0,
                 0.5806451612903226,
                 1.0,
-                0.6453608247422681
+                0.6460268317853457
               ]
             ]
           }
@@ -3234,8 +3422,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "User Growth",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u70b9\u51fbstart\u6309\u94ae\u7387",
-      "has_ai": false
+      "description": "\u65b0\u7528\u6237\u70b9\u51fbstart\u6309\u94ae\u7387"
     }
   ],
   "revenue": [
@@ -3318,7 +3505,7 @@ body.ai-collapsed .charts{
               109.0,
               103.0,
               176.0,
-              27.0
+              26.0
             ]
           }
         },
@@ -3501,7 +3688,7 @@ body.ai-collapsed .charts{
               ],
               [
                 5.0,
-                22.0
+                21.0
               ]
             ]
           }
@@ -3510,8 +3697,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Revenue",
       "related_metrics": [],
-      "description": "\u7528\u6237\u89c2\u770b\u5e7f\u544a\u610f\u613f",
-      "has_ai": false
+      "description": "\u7528\u6237\u89c2\u770b\u5e7f\u544a\u610f\u613f"
     },
     {
       "chart_id": "spend_energy_daily__series__series_daily",
@@ -3592,7 +3778,7 @@ body.ai-collapsed .charts{
               5045.0,
               4043.0,
               3225.0,
-              882.0
+              837.0
             ]
           }
         }
@@ -3600,8 +3786,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Revenue",
       "related_metrics": [],
-      "description": "\u6bcf\u65e5energy\u6d88\u8017\u4e2a\u6570",
-      "has_ai": false
+      "description": "\u6bcf\u65e5energy\u6d88\u8017\u4e2a\u6570"
     },
     {
       "chart_id": "average_energy_spend_per_active_user__series__series_daily",
@@ -3674,7 +3859,7 @@ body.ai-collapsed .charts{
               4.801333333333333,
               5.222919937205652,
               3.2121982210927573,
-              3.605647517039922,
+              3.6056475170399223,
               4.58759521218716,
               5.283482142857143,
               3.792513368983957,
@@ -3682,7 +3867,7 @@ body.ai-collapsed .charts{
               5.674915635545557,
               4.972939729397294,
               4.777777777777778,
-              3.605691056910569
+              3.606837606837607
             ]
           }
         }
@@ -3693,8 +3878,7 @@ body.ai-collapsed .charts{
         "kix_train_times",
         "new_user_avg_spend_energy"
       ],
-      "description": "\u5e73\u5747\u6bcf\u65e5\u4eba\u5747energy\u6d88\u8017",
-      "has_ai": true
+      "description": "\u5e73\u5747\u6bcf\u65e5\u4eba\u5747energy\u6d88\u8017"
     }
   ],
   "daily_challenge": [
@@ -3758,8 +3942,7 @@ body.ai-collapsed .charts{
         "from_waiting_to_start_match",
         "finish_kix_challenge_rate"
       ],
-      "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
-      "has_ai": true
+      "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf"
     },
     {
       "chart_id": "book_kix_challenge_uv__series__series_daily",
@@ -3807,7 +3990,7 @@ body.ai-collapsed .charts{
               1.6022944550669216,
               1.9272517321016167,
               3.4717477003942183,
-              4.396747967479675,
+              4.462046204620462,
               0.0
             ]
           }
@@ -3816,8 +3999,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002",
-      "has_ai": false
+      "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002"
     },
     {
       "chart_id": "from_waiting_to_start_match__series__series_daily",
@@ -3906,8 +4088,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u662f\u6307\u5728\u5019\u573a\u540e\uff0c\u6210\u529f\u5f00\u59cb\u6bd4\u8d5b\u7684\u7528\u6237\u4e0e\u603b\u6b21\u6570\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u5019\u573a\u4f53\u9a8c\u7684\u6d41\u7545\u6027\u3002",
-      "has_ai": false
+      "description": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u662f\u6307\u5728\u5019\u573a\u540e\uff0c\u6210\u529f\u5f00\u59cb\u6bd4\u8d5b\u7684\u7528\u6237\u4e0e\u603b\u6b21\u6570\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u5019\u573a\u4f53\u9a8c\u7684\u6d41\u7545\u6027\u3002"
     },
     {
       "chart_id": "finish_kix_challenge_rate__series__series_daily",
@@ -3964,8 +4145,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5b8c\u6210\u7ed3\u7b97\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\uff0c\u53cd\u6620\u8d5b\u4e8b\u7684\u53c2\u4e0e\u60c5\u51b5\u3002",
-      "has_ai": false
+      "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5b8c\u6210\u7ed3\u7b97\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\uff0c\u53cd\u6620\u8d5b\u4e8b\u7684\u53c2\u4e0e\u60c5\u51b5\u3002"
     },
     {
       "chart_id": "kix_train_times__series__series_daily",
@@ -4000,7 +4180,7 @@ body.ai-collapsed .charts{
               3.932937181663837,
               5.957256461232604,
               3.7213983050847457,
-              3.563768115942029
+              3.57879234167894
             ]
           }
         },
@@ -4114,7 +4294,7 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 0.0,
-                3.563768115942029,
+                3.57879234167894,
                 0.0,
                 0.0,
                 0.0,
@@ -4231,7 +4411,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                3.563768115942029,
+                3.57879234167894,
                 0.0,
                 0.0,
                 0.0,
@@ -4289,24 +4469,24 @@ body.ai-collapsed .charts{
                 3.2036727879799667
               ],
               [
-                2.690205011389521,
+                2.6902050113895215,
                 2.46422893481717
               ],
               [
-                3.9906367041198494,
-                3.885093167701864
+                3.9906367041198503,
+                3.8850931677018634
               ],
               [
                 6.428260869565217,
                 5.56043956043956
               ],
               [
-                3.95774647887324,
+                3.957746478873239,
                 3.527027027027027
               ],
               [
-                4.388724035608309,
-                2.776203966005666
+                4.394029850746269,
+                2.7848837209302326
               ]
             ]
           }
@@ -4318,8 +4498,7 @@ body.ai-collapsed .charts{
         "median_game_seconds",
         "score_zero_user"
       ],
-      "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807",
-      "has_ai": true
+      "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807"
     },
     {
       "chart_id": "median_game_seconds__series__series_daily",
@@ -4993,8 +5172,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u6bcf\u65e5KiX challeng\u6e38\u620f\u65f6\u957f",
-      "has_ai": false
+      "description": "\u6bcf\u65e5KiX challeng\u6e38\u620f\u65f6\u957f"
     },
     {
       "chart_id": "score_zero_user__series__series_daily",
@@ -5081,8 +5259,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u96f6\u5206\u5360\u6bd4",
-      "has_ai": false
+      "description": "\u96f6\u5206\u5360\u6bd4"
     },
     {
       "chart_id": "kix_challenge_retention__series__series_daily",
@@ -5167,8 +5344,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u7559\u5b58\u7387",
-      "has_ai": false
+      "description": "\u7559\u5b58\u7387"
     },
     {
       "chart_id": "new_user_average_train_times__series__series_daily",
@@ -5183,7 +5359,7 @@ body.ai-collapsed .charts{
           "tab_label": "Overall",
           "kind": "line",
           "meta": {
-            "metric_nature": "additive",
+            "metric_nature": "ratio",
             "value_unit": "players"
           },
           "data": {
@@ -5203,19 +5379,19 @@ body.ai-collapsed .charts{
               "02-26"
             ],
             "values": [
-              6.773640764579347,
-              3.188782728660326,
-              6.439490559369754,
-              3.1375258375258377,
-              2.4909161393623043,
-              5.57974987974988,
-              4.344437407265513,
-              4.134073656990323,
-              2.614745502227146,
-              6.480015717734236,
-              5.374183398344889,
-              2.8637729827115885,
-              2.567724867724868
+              10.159375,
+              4.708487084870849,
+              6.555555555555555,
+              3.2364532019704435,
+              3.300947867298578,
+              6.840390879478828,
+              8.528061224489797,
+              5.399390243902439,
+              3.1710526315789473,
+              5.930693069306931,
+              6.651685393258427,
+              4.885714285714286,
+              3.5576923076923075
             ]
           }
         },
@@ -5227,7 +5403,7 @@ body.ai-collapsed .charts{
             "dims": [
               "country"
             ],
-            "metric_nature": "additive",
+            "metric_nature": "ratio",
             "value_unit": "players"
           },
           "filterable": true,
@@ -5625,7 +5801,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.333333333333333,
+                2.3333333333333335,
                 2.0,
                 0.0,
                 0.0,
@@ -5646,7 +5822,7 @@ body.ai-collapsed .charts{
                 0.0,
                 3.0,
                 0.0,
-                29.33333333333333,
+                29.333333333333332,
                 9.333333333333334,
                 0.0,
                 7.0,
@@ -5659,7 +5835,7 @@ body.ai-collapsed .charts{
                 2.6666666666666665,
                 0.0,
                 0.0,
-                3.333333333333333,
+                3.3333333333333335,
                 0.0,
                 6.0,
                 0.0,
@@ -5728,7 +5904,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.333333333333333,
+                3.3333333333333335,
                 1.0,
                 2.7,
                 3.0,
@@ -5882,7 +6058,7 @@ body.ai-collapsed .charts{
                 0.0,
                 6.0,
                 0.0,
-                2.333333333333333,
+                2.3333333333333335,
                 0.0,
                 0.0,
                 78.0,
@@ -5916,7 +6092,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.333333333333333,
+                3.3333333333333335,
                 0.0,
                 0.0,
                 0.0,
@@ -5938,7 +6114,7 @@ body.ai-collapsed .charts{
                 1.0,
                 5.0,
                 0.0,
-                1.8571428571428568,
+                1.8571428571428572,
                 0.0,
                 0.0,
                 0.0,
@@ -5980,7 +6156,7 @@ body.ai-collapsed .charts{
                 2.0,
                 0.0,
                 0.0,
-                2.833333333333333,
+                2.8333333333333335,
                 0.0,
                 0.0,
                 0.0,
@@ -6234,7 +6410,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.851851851851852,
+                3.851851851851851,
                 0.0,
                 0.0,
                 6.0,
@@ -6501,9 +6677,9 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.333333333333333,
+                2.3333333333333335,
                 0.0,
-                2.833333333333333,
+                2.8333333333333335,
                 2.0,
                 0.0,
                 0.0,
@@ -6567,7 +6743,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.333333333333333,
+                2.3333333333333335,
                 2.0,
                 0.0,
                 2.6666666666666665,
@@ -6616,7 +6792,7 @@ body.ai-collapsed .charts{
                 3.0,
                 6.0,
                 0.0,
-                3.7142857142857135,
+                3.7142857142857144,
                 0.0,
                 0.0,
                 0.0,
@@ -6997,12 +7173,12 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.142857142857143,
+                3.0714285714285716,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                4.0,
+                3.988235294117647,
                 0.0,
                 0.0,
                 0.0,
@@ -7042,8 +7218,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u5e73\u5747\u5404\u56fd\u7528\u6237\u7ec3\u4e60\u6b21\u6570",
-      "has_ai": false
+      "description": "\u5e73\u5747\u5404\u56fd\u7528\u6237\u7ec3\u4e60\u6b21\u6570"
     }
   ],
   "pk": [
@@ -7126,7 +7301,7 @@ body.ai-collapsed .charts{
               0.9380214541120382,
               0.92109634551495,
               0.9465045592705168,
-              0.9698275862068966
+              0.9688888888888888
             ]
           }
         },
@@ -8867,7 +9042,7 @@ body.ai-collapsed .charts{
                 1.0,
                 0.0,
                 0.0,
-                0.9751434034416826,
+                0.9743589743589745,
                 0.0,
                 0.0,
                 0.0,
@@ -8896,7 +9071,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 0.0,
-                0.9777777777777776,
+                0.9770114942528736,
                 0.0,
                 1.0,
                 0.0,
@@ -9123,7 +9298,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.9698275862068966,
+                0.9688888888888888,
                 0.0,
                 0.0
               ]
@@ -9134,8 +9309,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u6210\u529f\u8fdb\u5165\u5bf9\u6218\u7684\u5339\u914d\u6bd4\u4f8b",
-      "has_ai": false
+      "description": "\u6210\u529f\u8fdb\u5165\u5bf9\u6218\u7684\u5339\u914d\u6bd4\u4f8b"
     },
     {
       "chart_id": "pk_click_to_enter__series__value_daily",
@@ -9155,17 +9329,16 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-27",
-            "denominator": 1097.0,
-            "numerator": 1094.0,
-            "value": 0.9972652689152234
+            "denominator": 1060.0,
+            "numerator": 1057.0,
+            "value": 0.9971698113207547
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "PK \u8bf7\u6c42\u6210\u529f\u8fdb\u5165\u7684\u6bd4\u4f8b",
-      "has_ai": false
+      "description": "PK \u8bf7\u6c42\u6210\u529f\u8fdb\u5165\u7684\u6bd4\u4f8b"
     },
     {
       "chart_id": "pk_enter_to_ready__series__value_daily",
@@ -9185,8 +9358,8 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-27",
-            "denominator": 1094.0,
-            "numerator": 1094.0,
+            "denominator": 1057.0,
+            "numerator": 1057.0,
             "value": 1.0
           }
         }
@@ -9194,8 +9367,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5173\u6ce8\u91cd\u70b9: \u51c6\u5907\u7387",
-      "has_ai": false
+      "description": "\u5173\u6ce8\u91cd\u70b9: \u51c6\u5907\u7387"
     },
     {
       "chart_id": "pk_ready_to_start__series__value_daily",
@@ -9215,17 +9387,16 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-27",
-            "denominator": 1094.0,
-            "numerator": 573.0,
-            "value": 0.5237659963436929
+            "denominator": 1057.0,
+            "numerator": 557.0,
+            "value": 0.5269631031220435
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5173\u6ce8\u91cd\u70b9: \u5f00\u73a9\u7387",
-      "has_ai": false
+      "description": "\u5173\u6ce8\u91cd\u70b9: \u5f00\u73a9\u7387"
     },
     {
       "chart_id": "pk_start_to_finish__series__value_daily",
@@ -9245,17 +9416,16 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-27",
-            "denominator": 573.0,
-            "numerator": 551.0,
-            "value": 0.9616055846422339
+            "denominator": 557.0,
+            "numerator": 537.0,
+            "value": 0.9640933572710951
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5173\u6ce8\u5b8c\u6210\u7387",
-      "has_ai": false
+      "description": "\u5173\u6ce8\u5b8c\u6210\u7387"
     },
     {
       "chart_id": "dnu_paly_rate_d0__series__series_daily",
@@ -9336,7 +9506,7 @@ body.ai-collapsed .charts{
               0.6654343807763401,
               0.6780684104627767,
               0.7380952380952381,
-              0.7628865979381443
+              0.7578947368421053
             ]
           }
         }
@@ -9344,8 +9514,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u8fdb\u6765\u7b2c\u4e00\u5929\u73a9\u6e38\u620f\u7387",
-      "has_ai": false
+      "description": "\u65b0\u7528\u6237\u8fdb\u6765\u7b2c\u4e00\u5929\u73a9\u6e38\u620f\u7387"
     },
     {
       "chart_id": "dnu_avg_play_minute_d0__series__series_daily",
@@ -9397,36 +9566,36 @@ body.ai-collapsed .charts{
               "02-27"
             ],
             "values": [
-              3.288888888888889,
+              3.2888888888888896,
               8.715358496732026,
               7.598888888888889,
               2.148,
-              14.16298782051282,
+              14.162987820512818,
               2.679710144927536,
-              12.288840196078432,
-              10.284271983640084,
-              7.192876919831222,
+              12.28884019607843,
+              10.284271983640082,
+              7.1928769198312255,
               7.075898387096775,
               10.615720512820513,
-              3.912115343258892,
-              5.422462,
-              7.81924022875817,
+              3.912115343258893,
+              5.4224619999999994,
+              7.819240228758171,
               7.075171098104794,
               6.607161144179893,
-              5.1709848290598295,
-              5.827091057692309,
-              5.9561320987654325,
-              5.4236975833333325,
+              5.170984829059829,
+              5.827091057692307,
+              5.956132098765431,
+              5.423697583333333,
               4.032124034749034,
-              5.87219556661925,
-              6.118281995346132,
+              5.872195566619251,
+              6.118281995346131,
               5.842428397212545,
               5.293023366834172,
-              4.9294068256194485,
+              4.929406825619448,
               4.781102310536044,
-              5.1230191817572095,
+              5.123019181757209,
               7.702503791887124,
-              5.485555154639176
+              5.173663157894738
             ]
           }
         }
@@ -9434,8 +9603,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u7b2c\u4e00\u5929\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f",
-      "has_ai": false
+      "description": "\u65b0\u7528\u6237\u7b2c\u4e00\u5929\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f"
     },
     {
       "chart_id": "dau_avg_paly_time_minute__series__series_daily",
@@ -9499,7 +9667,7 @@ body.ai-collapsed .charts{
               8.980014048991348,
               7.972903061224492,
               6.577398293439714,
-              7.397033078131131,
+              7.397033078131133,
               9.00858705837174,
               8.96239888888889,
               7.939204825498574,
@@ -9515,8 +9683,8 @@ body.ai-collapsed .charts{
               7.10212896541442,
               8.149614264112897,
               8.810361294462782,
-              11.052448875918715,
-              12.076451446759265
+              11.052448875918712,
+              12.4841493939394
             ]
           }
         }
@@ -9524,8 +9692,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5e73\u53f0\u6240\u6709\u7528\u6237\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f",
-      "has_ai": false
+      "description": "\u5e73\u53f0\u6240\u6709\u7528\u6237\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f"
     },
     {
       "chart_id": "dau_play_rate__series__series_daily",
@@ -9606,7 +9773,7 @@ body.ai-collapsed .charts{
               0.6481854838709677,
               0.6600660066006601,
               0.7029831387808041,
-              0.7048611111111112
+              0.7018181818181818
             ]
           }
         }
@@ -9614,8 +9781,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "dau\u4e2d\u73a9\u6e38\u620f\u7684\u6bd4\u4f8b",
-      "has_ai": false
+      "description": "dau\u4e2d\u73a9\u6e38\u620f\u7684\u6bd4\u4f8b"
     }
   ],
   "viral": [
@@ -9637,9 +9803,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-26",
-            "denominator": 3166.0,
-            "numerator": 136.0,
-            "value": 0.04295641187618446
+            "denominator": 3160.0,
+            "numerator": 135.0,
+            "value": 0.04272151898734177
           }
         },
         {
@@ -9704,9 +9870,9 @@ body.ai-collapsed .charts{
               13.0,
               58.0,
               0.0,
-              805.0,
+              801.0,
               12.0,
-              613.0
+              611.0
             ],
             "numerator": [
               12.0,
@@ -9716,7 +9882,7 @@ body.ai-collapsed .charts{
               1.0,
               1.0,
               4.0,
-              70.0,
+              69.0,
               2.0,
               0.0
             ],
@@ -9728,7 +9894,7 @@ body.ai-collapsed .charts{
               0.07692307692307693,
               0.017241379310344827,
               0.0,
-              0.08695652173913043,
+              0.08614232209737828,
               0.16666666666666666,
               0.0
             ]
@@ -9738,8 +9904,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "\u7528\u6237\u662f\u5426\u613f\u610f\u5c1d\u8bd5\u5206\u4eab",
-      "has_ai": false
+      "description": "\u7528\u6237\u662f\u5426\u613f\u610f\u5c1d\u8bd5\u5206\u4eab"
     },
     {
       "chart_id": "click_to_invite_sucess__series__value_daily",
@@ -9759,9 +9924,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-02-26",
-            "denominator": 932.0,
+            "denominator": 930.0,
             "numerator": 32.0,
-            "value": 0.034334763948497854
+            "value": 0.034408602150537634
           }
         },
         {
@@ -9826,7 +9991,7 @@ body.ai-collapsed .charts{
               7.0,
               1.0,
               18.0,
-              324.0,
+              322.0,
               2.0,
               0.0
             ],
@@ -9860,8 +10025,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "\u70b9\u51fb->\u9080\u8bf7\u6210\u529f",
-      "has_ai": false
+      "description": "\u70b9\u51fb->\u9080\u8bf7\u6210\u529f"
     },
     {
       "chart_id": "minisite_click_to_invite_sucess__series__value_daily",
@@ -9890,8 +10054,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "Minisite\u70b9\u51fb->\u9080\u8bf7\u6210\u529f",
-      "has_ai": false
+      "description": "Minisite\u70b9\u51fb->\u9080\u8bf7\u6210\u529f"
     },
     {
       "chart_id": "viral_new_uv__series__series_daily",
@@ -9972,7 +10135,7 @@ body.ai-collapsed .charts{
               0.0263620386643233,
               0.0386100386100386,
               0.0464547677261613,
-              0.0275229357798165
+              0.0194174757281553
             ]
           }
         }
@@ -9983,8 +10146,7 @@ body.ai-collapsed .charts{
         "invitation_impression_to_click",
         "click_to_invite_sucess"
       ],
-      "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b",
-      "has_ai": true
+      "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b"
     },
     {
       "chart_id": "viral_d1_rate__series__series_daily",
@@ -10050,7 +10212,7 @@ body.ai-collapsed .charts{
               0.0,
               0.0,
               0.0,
-              0.2288135593220339,
+              0.2372881355932203,
               0.5510204081632653,
               0.5428571428571428,
               0.5769230769230769,
@@ -10064,7 +10226,7 @@ body.ai-collapsed .charts{
               0.3529411764705882,
               0.5068493150684932,
               0.4395604395604395,
-              0.2409638554216867,
+              0.216867469879518,
               0.0
             ]
           }
@@ -10073,8 +10235,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "viral\u6765\u6e90\u7528\u6237\u7684\u7559\u5b58",
-      "has_ai": false
+      "description": "viral\u6765\u6e90\u7528\u6237\u7684\u7559\u5b58"
     },
     {
       "chart_id": "viral_reward_uv__series__series_daily",
@@ -10163,8 +10324,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "viral\u5956\u52b1\u7528\u6237\u6570",
-      "has_ai": false
+      "description": "viral\u5956\u52b1\u7528\u6237\u6570"
     },
     {
       "chart_id": "viral_reward_energy__series__series_daily",
@@ -10253,8 +10413,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "viral\u5956\u52b1\u80fd\u91cf",
-      "has_ai": false
+      "description": "viral\u5956\u52b1\u80fd\u91cf"
     },
     {
       "chart_id": "viral__popup_show_click_rate__series__value_daily",
@@ -10321,8 +10480,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "\u5f39\u7a97\u662f\u5426\u6709\u5438\u5f15\u529b",
-      "has_ai": false
+      "description": "\u5f39\u7a97\u662f\u5426\u6709\u5438\u5f15\u529b"
     }
   ],
   "cash_out": [
@@ -10413,8 +10571,7 @@ body.ai-collapsed .charts{
       "related_metrics": [
         "kix_challenge_redeem_uv"
       ],
-      "description": "\u73b0\u91d1\u5151\u5956\u60c5\u51b5",
-      "has_ai": false
+      "description": "\u73b0\u91d1\u5151\u5956\u60c5\u51b5"
     },
     {
       "chart_id": "prize_cash_out_to_successful__series__value_daily",
@@ -10501,8 +10658,7 @@ body.ai-collapsed .charts{
       "related_metrics": [
         "kix_challenge_redeem_uv"
       ],
-      "description": "\u63d0\u73b0\u6210\u529f\u7387\u662f\u6307\u5728\u6240\u6709\u63d0\u73b0\u8bf7\u6c42\u4e2d\u6210\u529f\u63d0\u73b0\u7684\u6bd4\u4f8b\u3002",
-      "has_ai": false
+      "description": "\u63d0\u73b0\u6210\u529f\u7387\u662f\u6307\u5728\u6240\u6709\u63d0\u73b0\u8bf7\u6c42\u4e2d\u6210\u529f\u63d0\u73b0\u7684\u6bd4\u4f8b\u3002"
     }
   ],
   "engagement": [
@@ -11136,8 +11292,7 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Engagement",
       "related_metrics": [],
-      "description": "\u6bcf\u5929\u63a8\u9001\u70b9\u51fb\u60c5\u51b5",
-      "has_ai": false
+      "description": "\u6bcf\u5929\u63a8\u9001\u70b9\u51fb\u60c5\u51b5"
     },
     {
       "chart_id": "push_notification_to_challenge__series__series_daily",
@@ -11365,12 +11520,11 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Engagement",
       "related_metrics": [],
-      "description": "\u6bcf\u5929\u70b9\u51fb\u63a8\u9001\u540e\u6210\u529f\u53c2\u4e0e\u6bd4\u8d5b\u7684\u4eba\u6570\u6bd4\u4f8b",
-      "has_ai": false
+      "description": "\u6bcf\u5929\u70b9\u51fb\u63a8\u9001\u540e\u6210\u529f\u53c2\u4e0e\u6bd4\u8d5b\u7684\u4eba\u6570\u6bd4\u4f8b"
     }
   ]
 }</script>
-<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-02-27 17:22\n\n## Platform Basics\n\n**dau**\n\n1. **DAU\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670827\u65e5\u7684DAU\u4e3a382\uff0c\u8f83\u524d\u4e00\u5929\u7684733\u4e0b\u964d\u4e86351\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523047.89%\uff0c\u663e\u793a\u51fa\u7528\u6237\u6d3b\u8dc3\u5ea6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u65b0\u7528\u6237\u8d21\u732e\u5360\u6bd4\u504f\u4f4e**\uff1a\u57282026\u5e742\u670827\u65e5\u7684DAU\u4e2d\uff0c\u4eca\u65e5\u65b0\u7528\u6237\u5360\u6bd4\u4e3a47.12%\uff08180/382\uff09\uff0c\u800c\u56de\u6d41\u7528\u6237\u5360\u6bd4\u4e3a13.61%\uff0852/382\uff09\uff0c\u8001\u7528\u6237\u5360\u6bd4\u4e3a39.27%\uff08150/382\uff09\uff0c\u8fd9\u8868\u660e\u65b0\u7528\u6237\u7684\u5f15\u5165\u672a\u80fd\u6709\u6548\u63d0\u5347\u6574\u4f53\u6d3b\u8dc3\u5ea6\u3002\n\n3. **\u7559\u5b58\u7387\u6709\u6240\u56de\u5347**\uff1a\u524d\u4e00\u5929\u7684D1\u7559\u5b58\u7387\u4e3a11.45%\uff0c\u8f83\u524d\u4e00\u5929\u76848.21%\u6709\u6240\u4e0a\u5347\uff0c\u5c3d\u7ba1\u7559\u5b58\u7387\u63d0\u5347\uff0c\u4f46\u7531\u4e8e\u65b0\u7528\u6237\u6570\u91cf\u5927\u5e45\u51cf\u5c11\uff0c\u6574\u4f53DAU\u4ecd\u672a\u80fd\u6062\u590d\u3002\n\n4. **\u6765\u6e90\u5206\u6790\u663e\u793aFB\u7684\u5f3a\u52b2\u8868\u73b0**\uff1a\u57282026\u5e742\u670827\u65e5\uff0c\u6765\u81eaFB\u7684\u7528\u6237\u4e3a168\uff0c\u5360DAU\u768443.92%\uff0c\u6210\u4e3a\u4e3b\u8981\u6765\u6e90\uff0c\u800c\u201cothers\u201d\u6765\u6e90\u7684\u7528\u6237\u4e3a149\uff0c\u536039.02%\uff0c\u663e\u793a\u51faFB\u5728\u7528\u6237\u83b7\u53d6\u4e2d\u7684\u91cd\u8981\u6027\u3002\n\n5. **\u5730\u533a\u5206\u5e03\u53d8\u5316\u660e\u663e**\uff1a2026\u5e742\u670827\u65e5\uff0c\u6765\u81ea\u7f8e\u56fd\u7684\u7528\u6237\u4ec5\u4e3a13\uff0c\u8f83\u524d\u4e00\u5929\u7684307\u5927\u5e45\u4e0b\u964d\uff0c\u663e\u793a\u51fa\u7f8e\u56fd\u5e02\u573a\u7684\u7528\u6237\u6d3b\u8dc3\u5ea6\u663e\u8457\u51cf\u5f31\uff0c\u800c\u9a6c\u6765\u897f\u4e9a\u7684\u7528\u6237\u6570\u4e3a71\uff0c\u6210\u4e3a\u4e3b\u8981\u6d3b\u8dc3\u5730\u533a\u4e4b\u4e00\u3002\n\n**retention(d1)**\n\n1. **D1\u7559\u5b58\u7387\u663e\u8457\u63d0\u5347**\uff1a2026\u5e742\u670826\u65e5\u7684D1\u7559\u5b58\u7387\u4e3a11.45%\uff0c\u8f83\u524d\u4e00\u5929\u76848.21%\u63d0\u5347\u4e8639.53%\uff0c\u663e\u793a\u51fa\u7528\u6237\u56de\u8bbf\u610f\u613f\u7684\u589e\u5f3a\u3002\n\n2. **\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e0b\u964d**\uff1a2026\u5e742\u670826\u65e5\u7684\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e3a6.39%\uff0c\u76f8\u6bd4\u524d\u4e00\u5929\u768410.26%\u4e0b\u964d\u4e8637.75%\uff0c\u53ef\u80fd\u5f71\u54cd\u4e86\u7559\u5b58\u7387\u7684\u8fdb\u4e00\u6b65\u63d0\u5347\u3002\n\n3. **\u65b0\u7528\u6237\u6311\u6218\u7559\u5b58\u76f8\u5173\u6027**\uff1a2026\u5e742\u670826\u65e5\u7684\u65b0\u7528\u6237\u6311\u6218\u7559\u5b58\u7387\u4e3a31.25%\uff0c\u4e0eD1\u7559\u5b58\u7387\u7684\u4e0a\u5347\u8d8b\u52bf\u76f8\u7b26\uff0c\u8868\u660e\u53c2\u4e0e\u6311\u6218\u7684\u7528\u6237\u66f4\u6709\u53ef\u80fd\u56de\u8bbf\u3002\n\n4. **\u6765\u6e90\u5206\u6790\u663e\u793a\u9080\u8bf7\u6e20\u9053\u8868\u73b0\u7a81\u51fa**\uff1a\u57282026\u5e742\u670826\u65e5\uff0c\u9080\u8bf7\u6765\u6e90\u7684D1\u7559\u5b58\u7387\u4e3a20.0%\uff0c\u662f\u6240\u6709\u6765\u6e90\u4e2d\u6700\u9ad8\u7684\uff0c\u663e\u793a\u51fa\u9080\u8bf7\u6e20\u9053\u5bf9\u7528\u6237\u7559\u5b58\u7684\u79ef\u6781\u5f71\u54cd\u3002\n\n5. **\u9996\u65e5\u8def\u5f84\u8f6c\u5316\u7387\u7a33\u5b9a**\uff1a2026\u5e742\u670826\u65e5\u7684\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u9762\u7684\u8f6c\u5316\u7387\u4e3a97.14%\uff0c\u800c\u65b0\u7528\u6237\u70b9\u51fb\u4ecb\u7ecd\u9875\u9762\u7684\u8f6c\u5316\u7387\u4e3a50.83%\uff0c\u8868\u660e\u7528\u6237\u5728\u521d\u59cb\u63a5\u89e6\u9636\u6bb5\u7684\u53c2\u4e0e\u5ea6\u8f83\u9ad8\uff0c\u4f46\u540e\u7eed\u8f6c\u5316\u4ecd\u9700\u4f18\u5316\u3002\n\n**average_meaningful_battles_per_user**\n\n1. **\u4eba\u5747\u6210\u529f PK \u663e\u8457\u4e0b\u964d**\uff1a2026\u5e742\u670827\u65e5\u7684\u4eba\u5747\u6210\u529f PK \u964d\u81f30.206\uff0c\u8f83\u524d\u4e00\u5929\u76842.362\u4e0b\u964d\u4e8691.27%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6025\u5267\u4e0b\u6ed1\u3002\n\n2. **\u6f0f\u6597\u73af\u8282\u8868\u73b0\u4e0d\u4e00**\uff1a\u57282\u670827\u65e5\uff0cpk_ready_to_start\u7684\u6bd4\u4f8b\u4e3a0.524\uff0c\u8f83\u524d\u4e00\u5929\u76840.672\u4e0b\u964d\u4e8622.01%\uff0c\u800cpk_start_to_finish\u7684\u6bd4\u4f8b\u5219\u4e0a\u5347\u81f30.962\uff0c\u589e\u52a0\u4e8629.02%\uff0c\u8868\u660e\u5728\u51c6\u5907\u5230\u5f00\u59cb\u7684\u73af\u8282\u5b58\u5728\u660e\u663e\u7684\u74f6\u9888\u3002\n\n3. **\u5339\u914d\u6210\u529f\u7387\u6301\u7eed\u4e0a\u5347**\uff1a\u5c3d\u7ba1\u4eba\u5747\u6210\u529f PK \u4e0b\u964d\uff0cpk_successful_matching\u57282\u670827\u65e5\u8fbe\u5230\u4e860.970\uff0c\u8f83\u524d\u4e00\u5929\u76840.947\u4e0a\u5347\u4e862.46%\uff0c\u8bf4\u660e\u5339\u914d\u8d28\u91cf\u5728\u63d0\u5347\uff0c\u4f46\u672a\u80fd\u8f6c\u5316\u4e3a\u7528\u6237\u7684\u6d3b\u8dc3\u5ea6\u3002\n\n4. **\u8fdb\u5165\u7387\u4fdd\u6301\u7a33\u5b9a**\uff1apk_click_to_enter\u7684\u6bd4\u4f8b\u5728\u6700\u8fd1\u51e0\u5929\u4fdd\u6301\u572899%\u4ee5\u4e0a\uff0c2\u670827\u65e5\u4e3a0.997\uff0c\u663e\u793a\u7528\u6237\u70b9\u51fb\u8fdb\u5165\u7684\u610f\u613f\u672a\u51cf\uff0c\u4f46\u540e\u7eed\u73af\u8282\u7684\u8f6c\u5316\u5374\u663e\u8457\u4e0b\u964d\u3002\n\n5. **\u94fe\u8def\u8d28\u91cf\u6ce2\u52a8\u5f71\u54cd\u7528\u6237\u4f53\u9a8c**\uff1a\u57282\u670827\u65e5\uff0cpk_ready_to_start\u548cpk_start_to_finish\u7684\u8868\u73b0\u5dee\u5f02\u660e\u663e\uff0c\u524d\u8005\u4e0b\u964d\u800c\u540e\u8005\u4e0a\u5347\uff0c\u53ef\u80fd\u5bfc\u81f4\u7528\u6237\u5728\u5bf9\u6218\u4f53\u9a8c\u4e2d\u7684\u4e0d\u6ee1\uff0c\u4ece\u800c\u5f71\u54cd\u4eba\u5747\u6210\u529f PK \u7684\u8868\u73b0\u3002\n\n\n## User Growth\n\n**new_user**\n\n1. **\u65b0\u589e\u7528\u6237\u6574\u4f53\u8d8b\u52bf\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb7\u5929\u5185\uff0c\u65b0\u589e\u7528\u6237\u6570\u91cf\u4ece655\u4e0b\u964d\u81f3180\uff0c\u73af\u6bd4\u4e0b\u964d\u4e8660.35%\uff0c\u663e\u793a\u51fa\u7528\u6237\u589e\u957f\u7684\u660e\u663e\u62d0\u70b9\u3002\n\n2. **\u83f2\u5f8b\u5bbe\u662f\u4e3b\u8981\u7528\u6237\u6765\u6e90**\uff1a\u57282026\u5e742\u670821\u65e5\uff0c\u83f2\u5f8b\u5bbe\u7684\u65b0\u589e\u7528\u6237\u4e3a299\uff0c\u5360\u5f53\u65e5\u603b\u65b0\u589e\u7528\u6237\u7684\u7ea649.8%\uff0c\u663e\u793a\u51fa\u8be5\u56fd\u5728\u7528\u6237\u589e\u957f\u4e2d\u7684\u91cd\u8981\u5730\u4f4d\u3002\n\n3. **\u793e\u4ea4\u5a92\u4f53FB\u8d21\u732e\u663e\u8457**\uff1a\u57282026\u5e742\u670827\u65e5\uff0cFB\u6765\u6e90\u7684\u65b0\u589e\u7528\u6237\u4e3a117\uff0c\u5360\u5f53\u5929\u603b\u65b0\u589e\u7528\u6237\u768465%\uff0c\u8868\u660eFB\u662f\u6700\u4e3b\u8981\u7684\u7528\u6237\u83b7\u53d6\u6e20\u9053\u3002\n\n4. **\u65b0\u7528\u6237\u7559\u5b58\u7387\u4e0b\u964d**\uff1a\u6839\u636eviral_new_uv\u6570\u636e\uff0c2026\u5e742\u670827\u65e5\u7684\u75c5\u6bd2\u65b0\u7528\u6237\u5360\u6bd4\u4e3a2.75%\uff0c\u8f83\u524d\u4e00\u5929\u76844.65%\u4e0b\u964d\u4e8640.75%\uff0c\u663e\u793a\u51fa\u7528\u6237\u7684\u4f20\u64ad\u6548\u679c\u51cf\u5f31\u3002\n\n5. **\u65b0\u589e\u7528\u6237\u5730\u57df\u5206\u5e03\u53d8\u5316**\uff1a\u57282026\u5e742\u670827\u65e5\uff0c\u9a6c\u6765\u897f\u4e9a\u7684\u65b0\u589e\u7528\u6237\u4e3a71\uff0c\u6210\u4e3a\u65b0\u589e\u7528\u6237\u6700\u591a\u7684\u56fd\u5bb6\uff0c\u800c\u83f2\u5f8b\u5bbe\u7684\u65b0\u589e\u7528\u6237\u964d\u81f359\uff0c\u663e\u793a\u51fa\u7528\u6237\u6765\u6e90\u7684\u5730\u57df\u53d8\u5316\u3002\n\n\n## Daily Challenge\n\n**participate_kix_challenge_uv**\n\n1. **\u53c2\u8d5b\u4eba\u6570\u6301\u7eed\u589e\u957f**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0c\u53c2\u8d5b\u4eba\u6570\u4ece61\u589e\u957f\u81f381\uff0c\u73af\u6bd4\u589e\u957f\u5e45\u5ea6\u4e3a32.8%\uff0881-61\uff09\uff0c\u663e\u793a\u51fa\u53c2\u8d5b\u6d3b\u52a8\u7684\u5438\u5f15\u529b\u5728\u589e\u5f3a\u3002\n\n2. **\u9884\u7ea6\u8f6c\u5316\u7387\u663e\u8457\u63d0\u5347**\uff1a\u9884\u7ea6\u7387\u5728\u6700\u8fd1\u4e00\u5929\u8fbe\u5230\u4e864.40\uff0c\u8f83\u524d\u4e00\u5929\u76843.47\u589e\u957f\u4e8626.64%\uff0c\u8fd9\u8868\u660e\u9884\u7ea6\u73af\u8282\u7684\u4f18\u5316\u53ef\u80fd\u76f4\u63a5\u4fc3\u8fdb\u4e86\u53c2\u8d5b\u4eba\u6570\u7684\u589e\u52a0\u3002\n\n3. **\u8d5b\u4e8b\u5b8c\u6210\u7387\u7a33\u5b9a**\uff1a\u5b8c\u6210\u7387\u5728\u6700\u65b0\u4e00\u5929\u4e3a97.53%\uff0c\u8f83\u524d\u4e00\u5929\u768487.34%\u6709\u663e\u8457\u63d0\u5347\uff0c\u8868\u660e\u53c2\u8d5b\u8005\u7684\u53c2\u4e0e\u5ea6\u548c\u8d5b\u4e8b\u7684\u987a\u5229\u8fdb\u884c\u6709\u4e86\u660e\u663e\u6539\u5584\u3002\n\n4. **\u5019\u573a\u8f6c\u5316\u6548\u7387\u4fdd\u6301\u9ad8\u4f4d**\uff1a\u4ece\u5019\u573a\u5230\u5f00\u8d5b\u7684\u8f6c\u5316\u7387\u5728\u6700\u65b0\u4e00\u5929\u4e3a92.05%\uff0c\u4e0e\u524d\u4e00\u5929\u768491.86%\u57fa\u672c\u6301\u5e73\uff0c\u663e\u793a\u51fa\u8d5b\u4e8b\u7ec4\u7ec7\u7684\u9ad8\u6548\u6027\u3002\n\n5. **\u65b0\u7528\u6237\u53c2\u4e0e\u5ea6\u4e0b\u964d**\uff1a\u65b0\u7528\u6237\u53c2\u8d5b\u7387\u5728\u6700\u65b0\u4e00\u5929\u964d\u81f30.54%\uff0c\u8f83\u524d\u4e00\u5929\u76843.24%\u5927\u5e45\u4e0b\u964d\uff0c\u63d0\u793a\u65b0\u7528\u6237\u7684\u53c2\u4e0e\u4f53\u9a8c\u53ef\u80fd\u9700\u8981\u8fdb\u4e00\u6b65\u4f18\u5316\u4ee5\u63d0\u5347\u7559\u5b58\u7387\u3002\n\n**kix_train_times**\n\n1. **\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u4e0b\u964d\u8d8b\u52bf**\uff1a\u5728\u8fc7\u53bb\u4e03\u5929\u4e2d\uff0ckix_train_times \u4ece 4.75 \u964d\u81f3 3.56\uff0c\u73af\u6bd4\u4e0b\u964d 4.24%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6301\u7eed\u4e0b\u964d\u3002\n\n2. **\u6e38\u620f\u540d\u79f0\u5f71\u54cd\u5206\u6790**\uff1a\u5728 2026-02-25\uff0c\u6e38\u620f \"Drift Bus\" \u7684 kix_train_times \u8fbe\u5230\u6700\u9ad8\u503c 5.96\uff0c\u800c\u5728 2026-02-27\uff0c\"Cards Fusion\" \u7684\u503c\u964d\u81f3 3.56\uff0c\u8868\u660e\u4e0d\u540c\u6e38\u620f\u5bf9\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u5f71\u54cd\u663e\u8457\u3002\n\n3. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u76f8\u5173\u6027**\uff1a\u5728 2026-02-26\uff0ckix_train_times \u4e3a 3.72\uff0c\u800c median_game_seconds \u4e3a 178\uff0c\u663e\u793a\u51fa\u4e24\u8005\u5728\u4e00\u5b9a\u7a0b\u5ea6\u4e0a\u7684\u540c\u6b65\u6ce2\u52a8\uff0c\u53ef\u80fd\u6697\u793a\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u5b58\u5728\u76f8\u5173\u6027\u3002\n\n4. **\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb\u4e03\u5929\u4e2d\uff0cscore_zero_user \u4ece 14.29% \u964d\u81f3 6.90%\uff0c\u4e0e kix_train_times \u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u53cd\uff0c\u8868\u660e\u8bad\u7ec3\u5f3a\u5ea6\u53ef\u80fd\u4e0e\u96f6\u5206\u7528\u6237\u5360\u6bd4\u53d8\u5316\u4e0d\u76f8\u5173\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u7a33\u5b9a\u6027\u8bc4\u4f30**\uff1akix_train_times \u7684\u6ce2\u52a8\u5e45\u5ea6\u5728 2.56 \u5230 5.96 \u4e4b\u95f4\uff0c\u663e\u793a\u51fa\u8f83\u5927\u7684\u4e0d\u7a33\u5b9a\u6027\uff0c\u53ef\u80fd\u9700\u8981\u5173\u6ce8\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6ce2\u52a8\u539f\u56e0\u3002\n\n**new_user_challenge_rate**\n\n1. **\u53c2\u4e0e\u7387\u6025\u5267\u4e0b\u964d**\uff1a2026\u5e742\u670826\u65e5\u7684 new_user_challenge_rate \u964d\u81f3 0.0054\uff0c\u8f83\u524d\u4e00\u5929\u7684 0.0324 \u4e0b\u964d\u4e86 83.37%\uff0c\u663e\u793a\u51fa\u53c2\u4e0e\u7387\u7684\u663e\u8457\u4e0b\u6ed1\u3002\n\n2. **\u9884\u7ea6\u4e0e\u53c2\u4e0e\u7387\u76f8\u5173\u6027**\uff1a\u57282026\u5e742\u670826\u65e5\uff0cnew_user_kix_challenge_book_rate \u4e3a 0.4744\uff0c\u8f83\u524d\u4e00\u5929\u7684 0.4283 \u4e0a\u5347\u4e86 10.75%\uff0c\u8868\u660e\u9884\u7ea6\u884c\u4e3a\u4e0e\u53c2\u4e0e\u7387\u7684\u53d8\u5316\u5b58\u5728\u4e00\u5b9a\u7684\u6b63\u76f8\u5173\u6027\u3002\n\n3. **\u6765\u6e90\u5206\u6790\u663e\u793a\u201c\u9080\u8bf7\u201d\u6e20\u9053\u8868\u73b0\u7a81\u51fa**\uff1a\u57282026\u5e742\u670826\u65e5\uff0c\u6765\u81ea\u201cinvite\u201d\u6e20\u9053\u7684\u53c2\u4e0e\u7387\u4e3a 0.0241\uff0c\u5c3d\u7ba1\u6574\u4f53\u53c2\u4e0e\u7387\u4e0b\u964d\uff0c\u4f46\u8be5\u6765\u6e90\u4ecd\u7136\u662f\u4e3b\u8981\u8d21\u732e\u8005\u3002\n\n4. **\u5730\u533a\u53c2\u4e0e\u7387\u5dee\u5f02\u660e\u663e**\uff1a2026\u5e742\u670821\u65e5\uff0cSG \u7684\u53c2\u4e0e\u7387\u9ad8\u8fbe 0.5\uff0c\u8fdc\u8d85\u5176\u4ed6\u56fd\u5bb6\uff0c\u663e\u793a\u51fa\u8be5\u5730\u533a\u7528\u6237\u7684\u53c2\u4e0e\u5ea6\u663e\u8457\u9ad8\u4e8e\u5176\u4ed6\u56fd\u5bb6\u3002\n\n5. **\u6ce2\u52a8\u539f\u56e0\u53ef\u80fd\u4e0e\u7528\u6237\u884c\u4e3a\u53d8\u5316\u6709\u5173**\uff1a\u5728\u53c2\u4e0e\u7387\u4e0b\u964d\u7684\u540c\u65f6\uff0c\u89c2\u5bdf\u5230\u65b0\u7528\u6237\u7684\u9884\u7ea6\u7387\u5728\u540c\u4e00\u65f6\u95f4\u6bb5\u5185\u6709\u6240\u4e0a\u5347\uff0c\u53ef\u80fd\u6697\u793a\u7528\u6237\u5728\u9884\u7ea6\u540e\u672a\u80fd\u6709\u6548\u53c2\u4e0e\u6311\u6218\uff0c\u9700\u8fdb\u4e00\u6b65\u5206\u6790\u7528\u6237\u4f53\u9a8c\u548c\u53c2\u4e0e\u6d41\u7a0b\u3002\n\n\n## Viral\n\n**viral_new_uv**\n\n1. **Viral\u65b0\u7528\u6237\u5360\u6bd4\u4e0b\u964d**\uff1a\u6700\u8fd1\u51e0\u5929\uff0cviral_new_uv \u4ece 0.0465 \u964d\u81f3 0.0275\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u5230 40.75%\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u6e20\u9053\u7684\u6709\u6548\u6027\u53ef\u80fd\u5728\u51cf\u5f31\u3002\n\n2. **\u66dd\u5149\u5230\u70b9\u51fb\u8f6c\u5316\u7387\u4f4e\u8ff7**\uff1a\u5728 2026-02-26\uff0cinvitation_impression_to_click \u7684\u8f6c\u5316\u7387\u4e3a 4.30%\uff0c\u4e0e viral_new_uv \u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u547c\u5e94\uff0c\u8868\u660e\u66dd\u5149\u7684\u70b9\u51fb\u6548\u7387\u53ef\u80fd\u53d7\u5230\u5f71\u54cd\u3002\n\n3. **\u70b9\u51fb\u5230\u9080\u8bf7\u6210\u529f\u8f6c\u5316\u7a33\u5b9a**\uff1aclick_to_invite_sucess \u5728 2026-02-26 \u8fbe\u5230 89.54%\uff0c\u5c3d\u7ba1 viral_new_uv \u4e0b\u964d\uff0c\u4f46\u9080\u8bf7\u6210\u529f\u7387\u4fdd\u6301\u9ad8\u4f4d\uff0c\u8bf4\u660e\u9080\u8bf7\u673a\u5236\u4ecd\u7136\u6709\u6548\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u4e0e\u7a33\u5b9a\u6027**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cviral_new_uv \u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u5c24\u5176\u662f 2026-02-26 \u7684 0.0275 \u4f4e\u4e8e\u524d\u51e0\u5929\u7684\u5e73\u5747\u6c34\u5e73\uff0c\u63d0\u793a\u9700\u8981\u5173\u6ce8\u7528\u6237\u83b7\u53d6\u7b56\u7565\u7684\u8c03\u6574\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4**\uff1a\u5728 2026-02-26\uff0cviral_new_uv \u663e\u8457\u4e0b\u964d\u81f3 0.0275\uff0c\u540c\u65f6 invitation_impression_to_click \u548c click_to_invite_sucess \u7684\u8868\u73b0\u672a\u540c\u6b65\u8d70\u5f31\uff0c\u53ef\u80fd\u8868\u660e\u7528\u6237\u83b7\u53d6\u7684\u8d28\u91cf\u4e0b\u964d\uff0c\u800c\u975e\u8f6c\u5316\u6d41\u7a0b\u7684\u95ee\u9898\u3002\n\n\n## Revenue\n\n**average_energy_spend_per_active_user**\n\n1. **\u4eba\u5747\u80fd\u8017\u6301\u7eed\u4e0b\u964d**\uff1a\u6700\u8fd1\u51e0\u5929\u4eba\u5747\u80fd\u8017\u4ece4.9729\u4e0b\u964d\u81f33.6057\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523024.53%\uff0c\u663e\u793a\u51fa\u7528\u6237\u7684\u80fd\u91cf\u6d88\u8017\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u80fd\u8017\u76f8\u5173\u6027**\uff1a\u57282\u670825\u65e5\uff0ckix_train_times\u8fbe\u52305.9573\u7684\u9ad8\u5cf0\u65f6\uff0c\u4eba\u5747\u80fd\u8017\u4e3a4.9729\uff0c\u968f\u540e\u57282\u670826\u65e5\u548c27\u65e5\uff0ckix_train_times\u4e0b\u964d\u81f33.7214\u548c3.5638\uff0c\u800c\u4eba\u5747\u80fd\u8017\u4e5f\u968f\u4e4b\u4e0b\u964d\uff0c\u8868\u660e\u8bad\u7ec3\u5f3a\u5ea6\u53ef\u80fd\u4e0e\u80fd\u91cf\u6d88\u8017\u5448\u73b0\u4e00\u5b9a\u7684\u76f8\u5173\u6027\u3002\n\n3. **\u65b0\u7528\u6237\u80fd\u8017\u4e0e\u6574\u4f53\u8d8b\u52bf\u4e0d\u4e00\u81f4**\uff1a\u65b0\u7528\u6237\u7684\u5e73\u5747\u80fd\u8017\u57282\u670827\u65e5\u4e3a4.2647\uff0c\u8f83\u524d\u4e00\u5929\u76845.9844\u4e0b\u964d\u4e8628.74%\uff0c\u800c\u6574\u4f53\u4eba\u5747\u80fd\u8017\u540c\u6837\u4e0b\u964d\uff0c\u663e\u793a\u65b0\u7528\u6237\u7684\u80fd\u8017\u53d8\u5316\u4e0e\u6574\u4f53\u8d8b\u52bf\u4e00\u81f4\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u5206\u6790**\uff1a\u57282\u670824\u65e5\uff0c\u4eba\u5747\u80fd\u8017\u4e3a5.6749\uff0c\u968f\u540e\u57282\u670825\u65e5\u964d\u81f34.9729\uff0c\u51fa\u73b0\u4e86\u660e\u663e\u7684\u6ce2\u52a8\uff0c\u53ef\u80fd\u4e0e\u5f53\u5929\u7684\u8bad\u7ec3\u5f3a\u5ea6\u6216\u7528\u6237\u6d3b\u52a8\u6709\u5173\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4**\uff1a\u57282\u670821\u65e5\uff0c\u4eba\u5747\u80fd\u8017\u4e3a5.2835\uff0c\u968f\u540e\u57282\u670822\u65e5\u964d\u81f33.7925\uff0c\u4e14kix_train_times\u5728\u6b64\u671f\u95f4\u4e5f\u6709\u6ce2\u52a8\uff0c\u63d0\u793a\u53ef\u80fd\u5b58\u5728\u7528\u6237\u884c\u4e3a\u7684\u53d8\u5316\u5f71\u54cd\u4e86\u80fd\u8017\u6c34\u5e73\u3002"</script>
+<script type="application/json" id="ai-module-analysis-data">{"modules": {"daily_challenge": {"meta": {"run_date": "2026-02-26", "date_range": "2026-02-20 to 2026-02-26", "model": "not_provided"}, "single_point": [{"title": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf(participate_kix_challenge_uv)", "detail": "\u76ee\u6807=100\uff0c\u6700\u65b0(2026-02-26)=81\uff0c\u5dee\u8ddd=-19\u3002\u53c2\u8d5b\u89c4\u6a21\u8f83\u76ee\u6807\u5c1119\u4eba\uff0c\u4f46\u76f8\u8f832026-02-22\u768456\u4eba\u5df2\u660e\u663e\u56de\u5347\uff0c\u8bf4\u660e\u9884\u7ea6\u4e0e\u5f00\u8d5b\u73af\u8282\u6539\u5584\u6b63\u5728\u5411\u53c2\u8d5b\u4eba\u6570\u4f20\u5bfc\u3002"}, {"title": "\u8d5b\u4e8b\u5b8c\u6210\u7387(finish_kix_challenge_rate)", "detail": "\u76ee\u6807=100.00%\uff0c\u6700\u65b0(2026-02-26)=97.53%\uff0c\u5dee\u8ddd=-2.47%\u3002\u5b8c\u8d5b\u7387\u5df2\u63a5\u8fd1\u76ee\u6807\uff0c\u4f46\u540e\u94fe\u8def\u7559\u5b58\uff08\u59822026-02-25\u7559\u5b5873.26%\uff09\u4ecd\u672a\u540c\u6b65\u8d70\u5f3a\uff0c\u5b58\u5728\u201c\u5b8c\u8d5b\u9ad8\u3001\u6b21\u65e5\u590d\u8d5b\u504f\u5f31\u201d\u7684\u65ad\u70b9\u3002"}], "good_news": [{"title": "\u5168\u91cf\u94fe\u8def\u57282026-02-22\u52302026-02-26\u51fa\u73b0\u8fde\u7eed\u4fee\u590d", "detail": "\u9884\u7ea6\u7387(book_kix_challenge_uv)\u4ece2026-02-22\u76841.85%\u5347\u81f32026-02-26\u76844.46%\uff0c\u540c\u671f\u53c2\u8d5b\u4eba\u6570(participate_kix_challenge_uv)\u4ece56\u5347\u81f381\uff0c\u5f00\u73a9\u7387(from_waiting_to_start_match)\u4ece82.35%\u5347\u81f392.05%\uff0c\u5b8c\u6210\u7387(finish_kix_challenge_rate)\u4ece92.86%\u5347\u81f397.53%\uff0c\u4f53\u73b0\u201c\u9884\u7ea6 -> \u53c2\u8d5b -> \u5b8c\u8d5b\u201d\u5168\u94fe\u8def\u5171\u632f\u4e0a\u884c\u3002"}, {"title": "\u6bd4\u8d5b\u4f53\u9a8c\u6539\u5584\u652f\u6491\u5b8c\u8d5b\u7aef\u8d70\u5f3a", "detail": "\u96f6\u5206\u7528\u6237\u5360\u6bd4(score_zero_user)\u4ece2026-02-21\u768414.29%\u964d\u81f32026-02-26\u76846.90%\uff0cChallenge\u6e38\u620f\u65f6\u957f\u4e2d\u4f4d\u6570(median_game_seconds)\u4ece2026-02-21\u7684135\u5347\u81f32026-02-26\u7684178\uff0c\u540c\u671f\u5b8c\u6210\u7387\u4ece2026-02-21\u768493.10%\u63d0\u5347\u81f32026-02-26\u768497.53%\uff0c\u8bf4\u660e\u4f53\u9a8c\u8d28\u91cf\u63d0\u5347\u6b63\u5728\u8f6c\u5316\u4e3a\u66f4\u9ad8\u7684\u7ed3\u7b97\u5b8c\u6210\u3002"}, {"title": "\u5b8c\u8d5b\u540e\u5151\u73b0\u8986\u76d6\u9762\u6269\u5927\uff0c\u6709\u52a9\u4e8e\u590d\u8d5b\u5fc3\u667a", "detail": "\u53c2\u8d5b\u4eba\u6570\u4ece2026-02-20\u768463\u5347\u81f32026-02-26\u768481\uff0c\u540c\u65f6\u5956\u52b1\u4eba\u6570(kix_reward_uv)\u4ece23\u5347\u81f330\u3001\u5151\u5956\u4eba\u6570(kix_challenge_redeem_uv)\u4ece17\u5347\u81f328\uff1b\u4e14\u5151\u5956\u4eba\u6570/\u5956\u52b1\u4eba\u6570\u75312026-02-20\u768473.91%\u63d0\u5347\u52302026-02-26\u768493.33%\uff0c\u8868\u660e\u201c\u5b8c\u8d5b -> \u9886\u5956/\u5151\u5956\u201d\u540e\u6bb5\u89e6\u8fbe\u66f4\u5145\u5206\u3002"}], "bad_news": []}}, "error": ""}</script>
 
 
 <div class="container">
@@ -11424,7 +11578,7 @@ body.ai-collapsed .charts{
         </button>
       </div>
     </div>
-    <div class="ai-panel-subtitle" id="aiPanelSubtitle">点击任意指标卡片查看对应 AI 分析</div>
+    <div class="ai-panel-subtitle" id="aiPanelSubtitle">点击任意模块或模块内指标卡片查看对应 AI 分析</div>
     <div class="ai-panel-content" id="aiSidebarContent"></div>
   </aside>
 
@@ -12557,7 +12711,7 @@ function createChartCard(spec) {
     card.innerHTML = `
       <div class="chart-header">
         <div>
-          <div class="chart-title">${spec.title}${spec.has_ai ? `<span class="ai-badge" data-metric-id="${spec.metric_id}" title="AI 分析">AI</span>` : ``}</div>
+          <div class="chart-title">${spec.title}</div>
           ${metricInfo}
         </div>
         <div class="chart-header-right">
@@ -13448,9 +13602,10 @@ function renderAllCharts() {
 
 // AI分析展开/折叠功能
 
-// 全局变量存储 AI 分析数据
-let aiAnalysisData = {};
-let aiActiveMetricId = null;
+// 全局变量存储 AI 模块分析数据
+let aiModuleAnalysisData = {};
+let aiModuleAnalysisError = "";
+let aiActiveModuleId = null;
 
 // 方案A：打开侧边栏时不遮挡图表（主内容让出右侧空间），并触发图表 resize
 
@@ -13496,103 +13651,104 @@ function openAISidebar(){
 }
 
 
-// 加载并解析 AI 分析内容
-function loadAIAnalysis() {
-  const el = document.getElementById('ai-summary-data');
+// 加载 AI 模块分析内容
+function loadAIAnalysisData() {
+  const el = document.getElementById('ai-module-analysis-data');
   if (!el) {
-    console.warn('AI summary element not found: #ai-summary-data');
-    aiAnalysisData = {};
+    console.warn('AI analysis element not found: #ai-module-analysis-data');
+    aiModuleAnalysisData = {};
+    aiModuleAnalysisError = "";
     return;
   }
-  let aiSummaryText = "";
+  let payload = { modules: {}, error: "" };
   try {
-    aiSummaryText = JSON.parse(el.textContent || '""');
+    payload = JSON.parse(el.textContent || '{}');
   } catch (e) {
-    console.error('Failed to JSON.parse ai-summary-data:', e);
-    aiSummaryText = "";
+    console.error('Failed to JSON.parse ai-module-analysis-data:', e);
   }
-  console.log('AI summary raw length:', (aiSummaryText || "").length, 'head:', String(aiSummaryText || "").slice(0, 80));
-  aiAnalysisData = parseAIAnalysisByMetric(aiSummaryText);
-  console.log('AI 分析数据已加载:', Object.keys(aiAnalysisData).length, '个指标');
-  console.log('已加载的指标列表:', Object.keys(aiAnalysisData).join(', '));
+  aiModuleAnalysisData = payload.modules || {};
+  aiModuleAnalysisError = payload.error || "";
+  console.log('AI 模块分析已加载:', Object.keys(aiModuleAnalysisData).length, '个模块');
 }
 
-// 按指标解析 AI 分析文本
-function parseAIAnalysisByMetric(text) {
-  // text comes from JSON.parse(script[type=application/json]). It may contain literal "\n" sequences
-  // (double-escaped) or Unicode line separators. Normalize aggressively.
-  let t = String(text || "");
-  if (!t || t === "暂无AI分析内容" || t.includes("加载AI分析内容时出错")) return {};
-
-  // normalize line breaks
-  t = t.replace(/\u2028|\u2029/g, "\n");
-  // if still looks like a single line but contains literal backslash-n, unescape once
-  if (!t.includes("\n") && /\n/.test(t)) {
-    t = t.replace(/\r\n/g, "\n").replace(/\n/g, "\n").replace(/\r/g, "\n");
-  }
-  // unify CRLF
-  t = t.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-
-  // strip zero-width chars that break startsWith
-  const stripInvisible = (s) =>
-    s.replace(/^[\uFEFF\u200B\u200C\u200D\u2060]+/, "").replace(/[\u200B\u200C\u200D\u2060]+/g, "");
-
-  const data = {};
-  const lines = t.split("\n");
-  let currentModule = null;
-  let currentMetricId = null;
-  let bulletPoints = [];
-
-  const flush = () => {
-    if (currentMetricId && bulletPoints.length > 0) {
-      data[currentMetricId] = { module: currentModule, points: [...bulletPoints] };
-    }
-    bulletPoints = [];
-  };
-
-  for (let i = 0; i < lines.length; i++) {
-    let line = stripInvisible(lines[i] || "").trim();
-    if (!line) continue;
-
-    // module header: ## xxx
-    const m1 = line.match(/^##\s+(.+)$/);
-    if (m1) {
-      flush();
-      currentModule = m1[1].trim();
-      currentMetricId = null;
-      continue;
-    }
-
-    // metric id: **metric_id** (must be a standalone bold line)
-    const m2 = line.match(/^\*\*([^*]+)\*\*$/);
-    if (m2 && !line.includes(":")) {
-      flush();
-      currentMetricId = m2[1].trim();
-      continue;
-    }
-
-    // bullets: • xxx  OR - xxx  OR * xxx
-    const m3 = line.match(/^(?:•|\-|\*)\s*(.+)$/);
-    if (m3) {
-      bulletPoints.push(m3[1].trim());
-      continue;
-    }
-
-    // numbered list: 1. xxx
-    const m4 = line.match(/^\d+\.\s*(.+)$/);
-    if (m4) {
-      bulletPoints.push(m4[1].trim());
-      continue;
-    }
-  }
-
-  flush();
-  return data;
+function renderMeta(meta) {
+  if (!meta) return '';
+  const parts = [];
+  if (meta.run_date) parts.push(escapeHtml(meta.run_date));
+  if (meta.date_range) parts.push(escapeHtml(meta.date_range));
+  if (meta.model) parts.push(escapeHtml(meta.model));
+  if (!parts.length) return '';
+  return `<div class="ai-meta-row">${parts.map(p => `<span class="ai-meta-tag">${p}</span>`).join('')}</div>`;
 }
 
-// 显示指标的 AI 分析（右侧固定面板：宽度固定，不遮挡图表）
-function showAIAnalysisForMetric(metricId, metricName) {
-  aiActiveMetricId = (metricId || "").trim();
+function renderSimpleItems(items, cardClass) {
+  if (!items || !items.length) return '';
+  return items.map((it) => {
+    const title = escapeHtml(it.title || '');
+    const detail = escapeHtml(it.detail || '');
+    return `
+      <div class="ai-card ${cardClass}">
+        ${title ? `<div class="ai-card-title">${title}</div>` : ''}
+        ${detail ? `<div class="ai-card-detail">${detail}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderBadNewsItems(items) {
+  if (!items || !items.length) return '';
+  return items.map((it) => {
+    const title = escapeHtml(it.title || '');
+    const detail = escapeHtml(it.detail || '');
+
+    // 深度洞察：每条用卡片包裹
+    const insightsList = (it.insights || []);
+    const insights = insightsList.map(s => `
+      <div class="ai-insight-card">${escapeHtml(String(s))}</div>
+    `).join('');
+
+    // 建议策略：数字序号列表
+    const strategiesList = (it.strategies || []);
+    const strategies = strategiesList.map((s, idx) => {
+      const st = escapeHtml(s.strategy || '');
+      const ref = escapeHtml(s.reference || '');
+      const eff = escapeHtml(s.effect || '');
+      return `
+        <div class="ai-strategy-row">
+          <div class="ai-strategy-num">${idx + 1}</div>
+          <div class="ai-strategy-body">
+            <div class="ai-strategy-name">${st}</div>
+            ${(ref || eff) ? `<div class="ai-strategy-meta">
+              ${ref ? `<span><strong>参考：</strong>${ref}</span>` : ''}
+              ${eff ? `<span><strong>效果：</strong>${eff}</span>` : ''}
+            </div>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    return `
+      <div class="ai-card bad">
+        ${title ? `<div class="ai-card-title">${title}</div>` : ''}
+        ${detail ? `<div class="ai-card-detail">${detail}</div>` : ''}
+        ${insights ? `
+          <div class="ai-card-subsection">
+            <div class="ai-card-subsection-title">深度洞察<span class="ai-core-tag">核心</span></div>
+            ${insights}
+          </div>` : ''}
+        ${strategies ? `
+          <div class="ai-card-subsection">
+            <div class="ai-card-subsection-title">AI建议策略（调试中，仅供参考）</div>
+            ${strategies}
+          </div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// 显示模块的 AI 分析（右侧固定面板：宽度固定，不遮挡图表）
+function renderModuleAnalysis(moduleId, moduleName) {
+  aiActiveModuleId = (moduleId || "").trim();
 
   const content = document.getElementById('aiSidebarContent');
   const titleEl = document.getElementById('aiPanelTitle');
@@ -13600,60 +13756,85 @@ function showAIAnalysisForMetric(metricId, metricName) {
 
   if (!content || !titleEl || !subtitleEl) return;
 
-  const key = (metricId || "").trim();
-  const analysis = aiAnalysisData[key];
-
   // 确保面板展开（方案A：主内容自动适应）
   setAIPanelCollapsed(false);
 
-  titleEl.textContent = metricName || metricId || "AI 分析";
-  subtitleEl.textContent = analysis
-    ? ("已选指标：" + (metricName || metricId))
-    : ("该指标暂无 AI 分析：" + (metricName || metricId));
+  titleEl.textContent = moduleName || moduleId || "AI 分析";
+  subtitleEl.textContent = moduleId
+    ? ("已选模块：" + (moduleName || moduleId))
+    : "模块 AI 分析";
 
-  if (!analysis) {
+  if (aiModuleAnalysisError) {
     content.innerHTML = `
       <div class="ai-empty">
-        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
-        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
+        <div style="font-weight:700; margin-bottom:6px;">AI 分析加载失败</div>
+        <div>${escapeHtml(aiModuleAnalysisError)}</div>
       </div>
     `;
     return;
   }
 
-  let html = '';
-  html += `<div class="ai-block">`;
-  html += `<ul>`;
-  (analysis.points || []).forEach((pt) => {
-    const p = String(pt || '').trim();
-    if (!p) return;
-    if (p.startsWith("现状与目标") || p.startsWith("趋势分析")) return;
+  const analysis = aiModuleAnalysisData[moduleId];
+  if (!analysis) {
+    content.innerHTML = `
+      <div class="ai-empty">
+        <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
+        <div>该模块暂无对应的 AI 分析数据。</div>
+      </div>
+    `;
+    return;
+  }
 
-    // section header like "深度洞察："
-    if (/^[^:：]+[：:]$/.test(p)) {
-      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
-      return;
-    }
+  const metaHtml = renderMeta(analysis.meta || {});
+  const singlePointItems = analysis.single_point || [];
+  const goodNewsItems = analysis.good_news || [];
+  const badNewsItems = analysis.bad_news || [];
 
-    // 支持 "**标题**: 内容" 的结构
-    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
-    if (m) {
-      const t = m[1].trim();
-      const c = (m[2] || '').trim();
-      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
-    } else {
-      html += `<li>${escapeHtml(p)}</li>`;
-    }
-  });
-  html += `</ul>`;
-  html += `</div>`;
+  let html = metaHtml;
+
+  if (goodNewsItems.length) {
+    html += `
+      <div class="ai-section-block">
+        <div class="ai-section-label">
+          <span class="ai-section-icon">✅</span>
+          <span>好消息</span>
+        </div>
+        ${renderSimpleItems(goodNewsItems, 'good')}
+      </div>`;
+  }
+
+  if (badNewsItems.length) {
+    html += `
+      <div class="ai-section-block">
+        <div class="ai-section-label">
+          <span class="ai-section-icon">⚠️</span>
+          <span>待关注</span>
+        </div>
+        ${renderBadNewsItems(badNewsItems)}
+      </div>`;
+  }
+
+  if (singlePointItems.length) {
+    html += `
+      <div class="ai-section-block">
+        <div class="ai-section-label">
+          <span class="ai-section-icon">📌</span>
+          <span>单点跟踪</span>
+        </div>
+        ${renderSimpleItems(singlePointItems, 'neutral')}
+      </div>`;
+  }
+
+  if (!html.trim()) {
+    html = `<div class="ai-empty"><div>该模块暂无分析内容。</div></div>`;
+  }
 
   content.innerHTML = html;
 }
 
 // 折叠 AI 面板（不遮挡图表）
 function closeAISidebar() {
-  aiActiveMetricId = null;
+  aiActiveModuleId = null;
   setAIPanelCollapsed(true);
 }
 
@@ -13666,45 +13847,34 @@ function escapeHtml(text) {
 
 }
 
-// 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析
-function initAISidebarBadgeClick() {
-  // 点击标题右侧 AI 标识：打开/关闭右侧 AI 分析（不遮挡主内容）
+// 绑定：点击模块/指标卡片 -> 右侧弹出该模块 AI 分析
+function initAISidebarModuleClick() {
   document.addEventListener("click", (e) => {
-    const badge = e.target.closest(".ai-badge");
-    if (!badge) return;
-    e.preventDefault();
-    e.stopPropagation();
+    if (e.target.closest("a, button, input, select, textarea, .dim-dd, .dim-dd-btn, .chart-tab")) return;
 
-    const metricId = (badge.getAttribute("data-metric-id") || "").trim();
-    if (!metricId) return;
+    const chartCard = e.target.closest(".chart-card");
+    const moduleRow = chartCard ? chartCard.closest(".module-row") : e.target.closest(".module-row");
+    if (!moduleRow) return;
 
-    const sidebar = document.getElementById('aiSidebar');
-    const isOpen = sidebar.classList.contains('active');
+    const moduleId = String(moduleRow.id || "").replace(/^module-/, "");
+    if (!moduleId) return;
 
-    // 若已经打开且点击的是同一个指标 -> 收起
-    if (isOpen && aiActiveMetricId && aiActiveMetricId === metricId) {
+    const isOpen = !document.body.classList.contains('ai-collapsed');
+
+    if (isOpen && aiActiveModuleId && aiActiveModuleId === moduleId) {
       closeAISidebar();
       return;
     }
 
-    // 取卡片标题（去掉 AI badge 文案）
-    const card = badge.closest(".chart-card");
-    let metricName = metricId;
-    if (card) {
-      const titleEl = card.querySelector(".chart-title");
-      if (titleEl) {
-        const clone = titleEl.cloneNode(true);
-        clone.querySelectorAll(".ai-badge").forEach(x => x.remove());
-        metricName = (clone.textContent || "").trim() || metricId;
-      }
-    }
-
-    showAIAnalysisForMetric(metricId, metricName);
+    const titleEl = moduleRow.querySelector(".module-header h2");
+    const moduleName = titleEl ? titleEl.textContent.trim() : moduleId;
+    renderModuleAnalysis(moduleId, moduleName);
   }, true);
 }
 
 // 初始化
 initAIResize();
+loadAIAnalysisData();
 
 // =========================
 // URL路由和指标详情页功能
@@ -13918,26 +14088,7 @@ function initPage() {
   initNavigation();
   renderAllCharts();
 
-  // 点击卡片 -> 在右侧 AI 面板展示对应指标分析（面板为常驻列，不遮挡图表）
-  const modulesArea = document.getElementById("modulesArea");
-  if (modulesArea){
-    modulesArea.addEventListener("click", (ev) => {
-      const card = ev.target.closest(".chart-card");
-      if (!card) return;
-
-      // 避免干扰维度切换/按钮/下拉等交互
-      if (ev.target.closest("button, a, select, option, input, textarea, .dim-tabs, .dim-dropdown, .chart-actions")) return;
-
-      const metricId = card.dataset.metricId;
-      const metricName = card.dataset.metricName || metricId;
-
-      // 如果没有对应 AI，也展示 empty（但仍可展开面板）
-      openAISidebar();
-      showAIAnalysisForMetric(metricId, metricName);
-    });
-  }
-
-  loadAIAnalysis();
+  loadAIAnalysisData();
   // AI 面板默认展开
   setAIPanelCollapsed(false);
 
@@ -13946,8 +14097,7 @@ function initPage() {
   const expandBtn = document.getElementById("aiExpandBtn");
   if (expandBtn) expandBtn.addEventListener("click", () => setAIPanelCollapsed(false));
 
-    initAISidebarBadgeClick();
-initAISidebarBadgeClick();
+  initAISidebarModuleClick();
 
   document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
   document.getElementById("generatedAt").textContent = new Date().toLocaleString();
