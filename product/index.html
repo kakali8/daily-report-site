@@ -377,7 +377,7 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
   display:flex;
   align-items:center;
   gap:10px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text);
 }
@@ -424,7 +424,7 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 
 .ai-panel-content .ai-empty{
   border: 1px dashed var(--border-light);
-  border-radius: 13px;
+  border-radius: 14px;
   padding: 14px;
   color: var(--text-muted);
   background: rgba(0,0,0,0.02);
@@ -463,67 +463,6 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
   font-weight: 700;
   color: #0f172a;
   list-style: none;
-}
-
-.ai-panel-content .ai-meta{
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-}
-.ai-panel-content .ai-section-title{
-  margin: 14px 0 8px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #0f172a;
-  border-left: 3px solid var(--accent);
-  padding-left: 8px;
-}
-.ai-panel-content .ai-item{
-  padding: 10px 10px 8px;
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  background: #f9fafb;
-  margin-bottom: 10px;
-}
-.ai-panel-content .ai-item-title{
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 6px;
-}
-.ai-panel-content .ai-item-detail{
-  color: #374151;
-  line-height: 1.55;
-}
-.ai-panel-content .ai-subsection{
-  margin-top: 8px;
-}
-.ai-panel-content .ai-subtitle{
-  font-size: 12px;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 4px;
-}
-.ai-panel-content .ai-list{
-  margin: 4px 0 0;
-  padding-left: 18px;
-}
-.ai-panel-content .ai-strategy{
-  padding: 8px 10px;
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  background: #fff;
-  margin: 6px 0;
-}
-.ai-panel-content .ai-strategy-title{
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 4px;
-}
-.ai-panel-content .ai-strategy-ref,
-.ai-panel-content .ai-strategy-eff{
-  color: #4b5563;
-  font-size: 12px;
-  line-height: 1.5;
 }
 
 /* Sidebar header / close button */
@@ -592,182 +531,51 @@ body.ai-collapsed .ai-expand-handle{ display: inline-flex; align-items:center; j
 @media (max-width: 768px) {
   }
 
-/* AI分析内容样式 - 改版 */
-.ai-section-block {
-  margin-bottom: 16px;
-}
-
-.ai-section-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin: 0 0 10px 0;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.ai-section-label .ai-section-icon {
-  font-size: 13px;
-}
-
-.ai-card {
-  background: #fff;
-  border: 1px solid var(--border-light);
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 8px;
-  position: relative;
-}
-
-.ai-card-title {
-  font-size: 13px;
-  font-weight: 700;
+/* AI分析内容样式 - 极简版 */
+.ai-analysis-text h3 {
+  font-size: 15px;
+  font-weight: 600;
   color: #111827;
-  margin-bottom: 5px;
-  line-height: 1.4;
+  margin: 18px 0 10px 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.ai-card-detail {
-  font-size: 13px;
+.ai-analysis-text h3:first-child {
+  margin-top: 0;
+}
+
+.ai-analysis-text .tldr-section {
+  margin-bottom: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .domain-item {
+  margin: 6px 0 6px 0;
   color: #4b5563;
   line-height: 1.6;
 }
 
-/* 好消息卡片 - 绿色左边框 */
-.ai-card.good {
-  border-left: 3px solid #10b981;
-  background: #f0fdf4;
-}
-.ai-card.good .ai-card-title { color: #065f46; }
-
-/* 坏消息卡片 - 红色左边框 */
-.ai-card.bad {
-  border-left: 3px solid #ef4444;
-  background: #fff5f5;
-}
-.ai-card.bad .ai-card-title { color: #991b1b; }
-
-/* 单点跟踪卡片 - 蓝色左边框 */
-.ai-card.neutral {
-  border-left: 3px solid #3b82f6;
-  background: #f8faff;
-}
-.ai-card.neutral .ai-card-title { color: #1e40af; }
-
-.ai-card-subsection {
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(0,0,0,0.06);
-}
-
-.ai-card-subsection-title {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-}
-
-.ai-card-insights {
-  margin: 0;
-  padding-left: 16px;
-}
-
-.ai-card-insights li {
-  font-size: 12.5px;
-  color: #374151;
-  line-height: 1.55;
-  margin-bottom: 4px;
-}
-
-/* 深度洞察 - 每条用小卡片包裹 */
-.ai-insight-card {
-  background: #fff;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 9px 12px;
-  margin-bottom: 7px;
-  font-size: 14px;
-  font-weight: 400;
-  color: #374151;
-  line-height: 1.55;
-}
-
-/* 深度洞察标题旁的"核心"角标 */
-.ai-core-tag {
-  display: none;
-}
-
-/* 建议策略 - 数字序号行 */
-.ai-strategy-row {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  margin-bottom: 8px;
-}
-
-.ai-strategy-num {
-  flex-shrink: 0;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background: #ef4444;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-}
-
-.ai-strategy-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.ai-strategy-name {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 3px;
-  line-height: 1.4;
-}
-
-.ai-strategy-meta {
-  font-size: 11.5px;
-  color: #6b7280;
-  line-height: 1.5;
-}
-
-.ai-strategy-meta span {
-  display: block;
-}
-
-.ai-strategy-meta strong {
-  color: #374151;
+.ai-analysis-text .domain-name {
   font-weight: 600;
+  color: #111827;
 }
 
-.ai-meta-row {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.ai-analysis-text .domain-name::after {
+  content: ": ";
 }
 
-.ai-meta-tag {
-  background: var(--border-light);
-  border-radius: 4px;
-  padding: 2px 7px;
+.ai-analysis-text .chain-item {
+  margin: 6px 0 6px 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.ai-analysis-text .confidence-section {
+  margin-top: 12px;
+  color: #6b7280;
+  line-height: 1.6;
 }
 
 .ai-analysis-text strong {
@@ -1786,7 +1594,8 @@ body.ai-collapsed .charts{
         "new_user_intro_start_click_rate",
         "dnu_paly_rate_d0"
       ],
-      "description": "\u65b0\u7528\u6237 D1 \u7559\u5b58"
+      "description": "\u65b0\u7528\u6237 D1 \u7559\u5b58",
+      "has_ai": true
     },
     {
       "chart_id": "retention_d7___series__series_daily",
@@ -2191,7 +2000,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Platform Basics",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237 D7 \u7559\u5b58"
+      "description": "\u65b0\u7528\u6237 D7 \u7559\u5b58",
+      "has_ai": false
     },
     {
       "chart_id": "average_meaningful_battles_per_user__series__series_daily",
@@ -2217,10 +2027,10 @@ body.ai-collapsed .charts{
               "03-04"
             ],
             "values": [
-              1.9486725663716815,
+              1.88141592920354,
               1.2900188323917137,
               3.074,
-              0.54
+              0.6172248803827751
             ]
           }
         }
@@ -2234,7 +2044,8 @@ body.ai-collapsed .charts{
         "pk_ready_to_start",
         "pk_start_to_finish"
       ],
-      "description": "\u6d3b\u8dc3\u7528\u6237\u5728\u7edf\u8ba1\u5468\u671f\u5185\uff0c\u5e73\u5747\u6210\u529f\u5b8c\u6210\u7684 PK \u573a\u6b21"
+      "description": "\u6d3b\u8dc3\u7528\u6237\u5728\u7edf\u8ba1\u5468\u671f\u5185\uff0c\u5e73\u5747\u6210\u529f\u5b8c\u6210\u7684 PK \u573a\u6b21",
+      "has_ai": true
     }
   ],
   "user_growth": [
@@ -2256,7 +2067,7 @@ body.ai-collapsed .charts{
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.9591765526866712
+            "value": 0.959233449477352
           }
         },
         {
@@ -2465,7 +2276,7 @@ body.ai-collapsed .charts{
                 0.75,
                 1.0,
                 1.0,
-                0.974025974025974,
+                0.9743589743589745,
                 1.0,
                 1.0,
                 1.0,
@@ -2488,7 +2299,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.9660159074475776,
+                0.966089466089466,
                 0.4444444444444444,
                 1.0,
                 0.8333333333333334,
@@ -2552,11 +2363,11 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 0.9866760168302944,
-                0.9696132596685084,
+                0.9696969696969696,
                 1.0,
                 0.9753086419753086,
                 1.0,
-                0.913793103448276
+                0.9140546006066734
               ]
             ]
           }
@@ -2565,7 +2376,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "User Growth",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u7387"
+      "description": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "new_user_intro_start_click_rate__series__value_daily",
@@ -2585,7 +2397,7 @@ body.ai-collapsed .charts{
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.3834121498726809
+            "value": 0.3828550671994188
           }
         },
         {
@@ -2794,7 +2606,7 @@ body.ai-collapsed .charts{
                 1.0,
                 1.0,
                 1.0,
-                0.76,
+                0.75,
                 0.0,
                 0.0,
                 1.0,
@@ -2817,7 +2629,7 @@ body.ai-collapsed .charts{
                 1.0,
                 0.0,
                 1.0,
-                0.278443113772455,
+                0.2778192681105302,
                 0.75,
                 0.6666666666666666,
                 0.6,
@@ -2881,11 +2693,11 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 0.302771855010661,
-                0.4814814814814814,
+                0.4801136363636363,
                 0.0,
                 0.5949367088607594,
                 0.7777777777777778,
-                0.4495005549389567
+                0.4480088495575221
               ]
             ]
           }
@@ -2894,7 +2706,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "User Growth",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u70b9\u51fbstart\u6309\u94ae\u7387"
+      "description": "\u65b0\u7528\u6237\u70b9\u51fbstart\u6309\u94ae\u7387",
+      "has_ai": false
     }
   ],
   "revenue": [
@@ -2977,7 +2790,7 @@ body.ai-collapsed .charts{
               659.0,
               104.0,
               210.0,
-              2.0
+              4.0
             ]
           }
         },
@@ -3159,8 +2972,8 @@ body.ai-collapsed .charts{
                 132.0
               ],
               [
-                1.0,
-                1.0
+                2.0,
+                2.0
               ]
             ]
           }
@@ -3169,7 +2982,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Revenue",
       "related_metrics": [],
-      "description": "\u7528\u6237\u89c2\u770b\u5e7f\u544a\u610f\u613f"
+      "description": "\u7528\u6237\u89c2\u770b\u5e7f\u544a\u610f\u613f",
+      "has_ai": false
     },
     {
       "chart_id": "spend_energy_daily__series__series_daily",
@@ -3250,7 +3064,7 @@ body.ai-collapsed .charts{
               3372.0,
               2909.0,
               2836.0,
-              243.0
+              314.0
             ]
           }
         }
@@ -3258,7 +3072,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Revenue",
       "related_metrics": [],
-      "description": "\u6bcf\u65e5energy\u6d88\u8017\u4e2a\u6570"
+      "description": "\u6bcf\u65e5energy\u6d88\u8017\u4e2a\u6570",
+      "has_ai": false
     },
     {
       "chart_id": "average_energy_spend_per_active_user__series__series_daily",
@@ -3325,7 +3140,7 @@ body.ai-collapsed .charts{
               4.819174757281553,
               4.801333333333333,
               5.222919937205652,
-              3.2040557667934095,
+              3.204055766793409,
               3.602140077821012,
               4.58759521218716,
               5.277591973244147,
@@ -3339,7 +3154,7 @@ body.ai-collapsed .charts{
               5.187692307692307,
               5.1761565836298935,
               5.361058601134215,
-              2.146551724137931
+              2.523809523809524
             ]
           }
         }
@@ -3350,7 +3165,8 @@ body.ai-collapsed .charts{
         "kix_train_times",
         "new_user_avg_spend_energy"
       ],
-      "description": "\u5e73\u5747\u6bcf\u65e5\u4eba\u5747energy\u6d88\u8017"
+      "description": "\u5e73\u5747\u6bcf\u65e5\u4eba\u5747energy\u6d88\u8017",
+      "has_ai": true
     }
   ],
   "daily_challenge": [
@@ -3414,7 +3230,8 @@ body.ai-collapsed .charts{
         "from_waiting_to_start_match",
         "finish_kix_challenge_rate"
       ],
-      "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf"
+      "description": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
+      "has_ai": true
     },
     {
       "chart_id": "book_kix_challenge_uv__series__series_daily",
@@ -3462,7 +3279,7 @@ body.ai-collapsed .charts{
               4.045790251107829,
               0.6241935483870967,
               0.597864768683274,
-              0.8935643564356436,
+              0.882640586797066,
               0.0
             ]
           }
@@ -3471,7 +3288,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002"
+      "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002",
+      "has_ai": false
     },
     {
       "chart_id": "from_waiting_to_start_match__series__series_daily",
@@ -3560,7 +3378,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u662f\u6307\u5728\u5019\u573a\u540e\uff0c\u6210\u529f\u5f00\u59cb\u6bd4\u8d5b\u7684\u7528\u6237\u4e0e\u603b\u6b21\u6570\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u5019\u573a\u4f53\u9a8c\u7684\u6d41\u7545\u6027\u3002"
+      "description": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u662f\u6307\u5728\u5019\u573a\u540e\uff0c\u6210\u529f\u5f00\u59cb\u6bd4\u8d5b\u7684\u7528\u6237\u4e0e\u603b\u6b21\u6570\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u5019\u573a\u4f53\u9a8c\u7684\u6d41\u7545\u6027\u3002",
+      "has_ai": false
     },
     {
       "chart_id": "finish_kix_challenge_rate__series__series_daily",
@@ -3617,7 +3436,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5b8c\u6210\u7ed3\u7b97\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\uff0c\u53cd\u6620\u8d5b\u4e8b\u7684\u53c2\u4e0e\u60c5\u51b5\u3002"
+      "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5b8c\u6210\u7ed3\u7b97\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\uff0c\u53cd\u6620\u8d5b\u4e8b\u7684\u53c2\u4e0e\u60c5\u51b5\u3002",
+      "has_ai": false
     },
     {
       "chart_id": "kix_train_times__series__series_daily",
@@ -3649,10 +3469,10 @@ body.ai-collapsed .charts{
               3.729299363057325,
               3.8401585204755615,
               5.567065073041169,
-              3.7443037974683544,
+              3.7443037974683535,
               3.291208791208791,
               5.289625360230548,
-              2.938992042440318
+              3.116580310880829
             ]
           }
         },
@@ -3743,7 +3563,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.7443037974683544
+                3.7443037974683535
               ],
               [
                 0.0,
@@ -3766,7 +3586,7 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 0.0,
-                2.938992042440318,
+                3.116580310880829,
                 0.0,
                 0.0,
                 0.0,
@@ -3862,7 +3682,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.7443037974683544
+                3.7443037974683535
               ],
               [
                 0.0,
@@ -3886,7 +3706,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.938992042440318,
+                3.116580310880829,
                 0.0,
                 0.0,
                 0.0
@@ -3957,8 +3777,8 @@ body.ai-collapsed .charts{
                 5.226700251889169
               ],
               [
-                3.3072625698324023,
-                2.606060606060606
+                3.472826086956522,
+                2.792079207920792
               ]
             ]
           }
@@ -3970,7 +3790,8 @@ body.ai-collapsed .charts{
         "median_game_seconds",
         "score_zero_user"
       ],
-      "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807"
+      "description": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u7684\u6307\u6807",
+      "has_ai": true
     },
     {
       "chart_id": "median_game_seconds__series__series_daily",
@@ -4706,7 +4527,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u6bcf\u65e5KiX challeng\u6e38\u620f\u65f6\u957f"
+      "description": "\u6bcf\u65e5KiX challeng\u6e38\u620f\u65f6\u957f",
+      "has_ai": false
     },
     {
       "chart_id": "score_zero_user__series__series_daily",
@@ -4793,7 +4615,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u96f6\u5206\u5360\u6bd4"
+      "description": "\u96f6\u5206\u5360\u6bd4",
+      "has_ai": false
     },
     {
       "chart_id": "kix_challenge_retention__series__series_daily",
@@ -4872,7 +4695,7 @@ body.ai-collapsed .charts{
               0.7444444444444445,
               0.7887323943661971,
               0.7361111111111112,
-              0.3626373626373626
+              0.4065934065934066
             ]
           }
         }
@@ -4880,7 +4703,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u7559\u5b58\u7387"
+      "description": "\u7559\u5b58\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "new_user_average_train_times__series__series_daily",
@@ -4895,7 +4719,7 @@ body.ai-collapsed .charts{
           "tab_label": "Overall",
           "kind": "line",
           "meta": {
-            "metric_nature": "ratio",
+            "metric_nature": "additive",
             "value_unit": "players"
           },
           "data": {
@@ -4914,18 +4738,18 @@ body.ai-collapsed .charts{
               "03-03"
             ],
             "values": [
-              8.537084398976981,
-              5.378048780487805,
-              3.1710526315789473,
-              5.925742574257426,
-              6.59622641509434,
-              4.885714285714286,
-              3.724719101123595,
-              6.271428571428571,
-              5.032407407407407,
-              3.5754716981132075,
-              7.897297297297297,
-              3.413793103448276
+              4.346464365814211,
+              4.122635748493591,
+              2.614745502227146,
+              6.479820633848164,
+              4.794094021172026,
+              2.8637729827115885,
+              3.160726985549935,
+              5.328248720975994,
+              5.483072483072483,
+              2.741198055239801,
+              7.907543602438691,
+              6.18968023255814
             ]
           }
         },
@@ -4937,7 +4761,7 @@ body.ai-collapsed .charts{
             "dims": [
               "country"
             ],
-            "metric_nature": "ratio",
+            "metric_nature": "additive",
             "value_unit": "players"
           },
           "filterable": true,
@@ -5386,8 +5210,8 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.3333333333333335,
-                2.8333333333333335,
+                2.333333333333333,
+                2.833333333333333,
                 2.0,
                 0.0,
                 0.0,
@@ -5440,7 +5264,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                2.3333333333333335,
+                2.333333333333333,
                 2.0,
                 0.0,
                 2.6666666666666665,
@@ -5478,7 +5302,7 @@ body.ai-collapsed .charts{
                 2.0,
                 3.0,
                 6.0,
-                3.7142857142857144,
+                3.7142857142857135,
                 0.0,
                 0.0,
                 0.0,
@@ -5920,7 +5744,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.3214285714285716,
+                3.321428571428572,
                 0.0,
                 0.0,
                 0.0,
@@ -6247,7 +6071,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.761904761904762,
+                3.767441860465116,
                 0.0,
                 0.0,
                 0.0,
@@ -6280,7 +6104,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Daily Challenge",
       "related_metrics": [],
-      "description": "\u5e73\u5747\u5404\u56fd\u7528\u6237\u7ec3\u4e60\u6b21\u6570"
+      "description": "\u5e73\u5747\u5404\u56fd\u7528\u6237\u7ec3\u4e60\u6b21\u6570",
+      "has_ai": false
     }
   ],
   "pk": [
@@ -6363,7 +6188,7 @@ body.ai-collapsed .charts{
               0.9088319088319088,
               0.9335418295543392,
               0.9069767441860463,
-              0.872791519434629
+              0.8814102564102564
             ]
           }
         },
@@ -8122,11 +7947,11 @@ body.ai-collapsed .charts{
                 0.0,
                 0.8,
                 0.0,
-                0.7777777777777778,
+                0.7857142857142857,
                 0.0,
                 0.0,
                 0.0,
-                0.8995433789954338,
+                0.9068825910931174,
                 0.0,
                 0.0,
                 0.0,
@@ -8339,7 +8164,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.8718861209964412,
+                0.8806451612903226,
                 1.0
               ]
             ]
@@ -8349,7 +8174,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u6210\u529f\u8fdb\u5165\u5bf9\u6218\u7684\u5339\u914d\u6bd4\u4f8b"
+      "description": "\u6210\u529f\u8fdb\u5165\u5bf9\u6218\u7684\u5339\u914d\u6bd4\u4f8b",
+      "has_ai": false
     },
     {
       "chart_id": "pk_click_to_enter__series__value_daily",
@@ -8369,16 +8195,17 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-04",
-            "denominator": 426.0,
-            "numerator": 424.0,
-            "value": 0.9953051643192489
+            "denominator": 479.0,
+            "numerator": 477.0,
+            "value": 0.9958246346555324
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "PK \u8bf7\u6c42\u6210\u529f\u8fdb\u5165\u7684\u6bd4\u4f8b"
+      "description": "PK \u8bf7\u6c42\u6210\u529f\u8fdb\u5165\u7684\u6bd4\u4f8b",
+      "has_ai": false
     },
     {
       "chart_id": "pk_enter_to_ready__series__value_daily",
@@ -8398,8 +8225,8 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-04",
-            "denominator": 424.0,
-            "numerator": 424.0,
+            "denominator": 477.0,
+            "numerator": 477.0,
             "value": 1.0
           }
         }
@@ -8407,7 +8234,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5173\u6ce8\u91cd\u70b9: \u51c6\u5907\u7387"
+      "description": "\u5173\u6ce8\u91cd\u70b9: \u51c6\u5907\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "pk_ready_to_start__series__value_daily",
@@ -8427,16 +8255,17 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-04",
-            "denominator": 424.0,
-            "numerator": 223.0,
-            "value": 0.5259433962264151
+            "denominator": 477.0,
+            "numerator": 257.0,
+            "value": 0.5387840670859538
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5173\u6ce8\u91cd\u70b9: \u5f00\u73a9\u7387"
+      "description": "\u5173\u6ce8\u91cd\u70b9: \u5f00\u73a9\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "pk_start_to_finish__series__value_daily",
@@ -8456,16 +8285,17 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-04",
-            "denominator": 223.0,
-            "numerator": 176.0,
-            "value": 0.7892376681614349
+            "denominator": 257.0,
+            "numerator": 199.0,
+            "value": 0.77431906614786
           }
         }
       ],
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5173\u6ce8\u5b8c\u6210\u7387"
+      "description": "\u5173\u6ce8\u5b8c\u6210\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "dnu_paly_rate_d0__series__series_daily",
@@ -8546,7 +8376,7 @@ body.ai-collapsed .charts{
               0.6982543640897756,
               0.714765100671141,
               0.7620689655172413,
-              0.7111111111111111
+              0.6875
             ]
           }
         }
@@ -8554,7 +8384,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u8fdb\u6765\u7b2c\u4e00\u5929\u73a9\u6e38\u620f\u7387"
+      "description": "\u65b0\u7528\u6237\u8fdb\u6765\u7b2c\u4e00\u5929\u73a9\u6e38\u620f\u7387",
+      "has_ai": false
     },
     {
       "chart_id": "dnu_avg_play_minute_d0__series__series_daily",
@@ -8606,36 +8437,36 @@ body.ai-collapsed .charts{
               "03-04"
             ],
             "values": [
-              2.679710144927536,
-              12.288840196078432,
-              10.28427198364008,
-              7.156640764063812,
-              7.0758983870967755,
+              2.6797101449275367,
+              12.28884019607843,
+              10.284271983640084,
+              7.1566407640638126,
+              7.075898387096775,
               10.677341085271316,
-              3.912115343258891,
-              5.4224619999999994,
+              3.912115343258893,
+              5.422462,
               7.80393838878017,
-              7.075171098104793,
+              7.075171098104796,
               6.607161144179893,
-              5.1709848290598295,
+              5.170984829059829,
               5.827091057692308,
               5.943183985507246,
               5.423697583333333,
-              4.049371066152857,
-              5.872195566619251,
-              6.118281995346131,
-              5.832267652173914,
-              5.293023366834172,
-              4.9294068256194485,
-              4.772281088560884,
-              5.1195986586183775,
-              7.702503791887126,
-              5.879736949152543,
-              5.9988485156912645,
+              4.049371066152856,
+              5.87219556661925,
+              6.118281995346132,
+              5.832267652173913,
+              5.293023366834171,
+              4.929406825619449,
+              4.772281088560885,
+              5.119598658618377,
+              7.702503791887124,
+              5.879736949152544,
+              5.998848515691263,
               5.162898129675812,
-              6.3241195749440715,
+              6.324119574944072,
               8.101442528735634,
-              5.753134444444445
+              5.749299652777776
             ]
           }
         }
@@ -8643,7 +8474,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u65b0\u7528\u6237\u7b2c\u4e00\u5929\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f"
+      "description": "\u65b0\u7528\u6237\u7b2c\u4e00\u5929\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f",
+      "has_ai": false
     },
     {
       "chart_id": "dau_avg_paly_time_minute__series__series_daily",
@@ -8697,23 +8529,23 @@ body.ai-collapsed .charts{
             "values": [
               12.214944351230422,
               11.4126147311828,
-              11.68045239114918,
+              11.680452391149185,
               9.705145987654316,
               8.928552650429795,
               7.876456653225808,
               6.508162521929822,
               7.336543321651089,
               8.956991485299737,
-              8.926869061777335,
+              8.926869061777339,
               7.880271173559561,
               6.345903781379091,
               8.096976275331933,
               9.234292686120456,
               7.831021575043623,
               6.638561742424245,
-              7.971020176198723,
+              7.971020176198722,
               8.489810946462715,
-              7.418511477832515,
+              7.418511477832514,
               6.850108489681047,
               7.064217244958471,
               8.084417349999994,
@@ -8722,9 +8554,9 @@ body.ai-collapsed .charts{
               10.988307558139544,
               9.415866473864616,
               7.839926184032467,
-              10.057793219461695,
-              11.052596411092988,
-              7.902093917274945
+              10.057793219461692,
+              11.05259641109299,
+              9.049489222222224
             ]
           }
         }
@@ -8732,7 +8564,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "\u5e73\u53f0\u6240\u6709\u7528\u6237\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f"
+      "description": "\u5e73\u53f0\u6240\u6709\u7528\u6237\u5e73\u5747\u73a9\u6e38\u620f\u65f6\u957f",
+      "has_ai": false
     },
     {
       "chart_id": "dau_play_rate__series__series_daily",
@@ -8813,7 +8646,7 @@ body.ai-collapsed .charts{
               0.6549391069012178,
               0.6801242236024845,
               0.6933115823817292,
-              0.635036496350365
+              0.64
             ]
           }
         }
@@ -8821,7 +8654,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "PK",
       "related_metrics": [],
-      "description": "dau\u4e2d\u73a9\u6e38\u620f\u7684\u6bd4\u4f8b"
+      "description": "dau\u4e2d\u73a9\u6e38\u620f\u7684\u6bd4\u4f8b",
+      "has_ai": false
     }
   ],
   "viral": [
@@ -8843,9 +8677,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-03",
-            "denominator": 1583.0,
+            "denominator": 1588.0,
             "numerator": 109.0,
-            "value": 0.06885660138976626
+            "value": 0.06863979848866499
           }
         },
         {
@@ -8910,13 +8744,13 @@ body.ai-collapsed .charts{
               0.0,
               4.0,
               22.0,
-              434.0,
+              436.0,
               8.0,
               60.0,
               0.0,
-              575.0,
+              577.0,
               8.0,
-              417.0
+              418.0
             ],
             "numerator": [
               17.0,
@@ -8936,13 +8770,13 @@ body.ai-collapsed .charts{
               0.0,
               0.5,
               0.22727272727272727,
-              0.07603686635944701,
+              0.07568807339449542,
               0.375,
               0.016666666666666666,
               0.0,
-              0.07130434782608695,
+              0.07105719237435008,
               0.0,
-              0.002398081534772182
+              0.0023923444976076554
             ]
           }
         }
@@ -8950,7 +8784,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "\u7528\u6237\u662f\u5426\u613f\u610f\u5c1d\u8bd5\u5206\u4eab"
+      "description": "\u7528\u6237\u662f\u5426\u613f\u610f\u5c1d\u8bd5\u5206\u4eab",
+      "has_ai": false
     },
     {
       "chart_id": "click_to_invite_sucess__series__value_daily",
@@ -8970,9 +8805,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-03",
-            "denominator": 871.0,
+            "denominator": 873.0,
             "numerator": 54.0,
-            "value": 0.06199770378874857
+            "value": 0.061855670103092786
           }
         },
         {
@@ -9035,13 +8870,13 @@ body.ai-collapsed .charts{
             "denominator": [
               114.0,
               62.0,
-              136.0,
+              137.0,
               47.0,
               203.0,
               11.0,
               4.0,
               32.0,
-              242.0,
+              243.0,
               0.0,
               20.0
             ],
@@ -9061,13 +8896,13 @@ body.ai-collapsed .charts{
             "values": [
               0.08771929824561403,
               0.1935483870967742,
-              0.051470588235294115,
+              0.051094890510948905,
               0.10638297872340426,
               0.014778325123152709,
               0.0,
               0.25,
               0.40625,
-              0.008264462809917356,
+              0.00823045267489712,
               0.0,
               0.0
             ]
@@ -9077,7 +8912,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "\u70b9\u51fb->\u9080\u8bf7\u6210\u529f"
+      "description": "\u70b9\u51fb->\u9080\u8bf7\u6210\u529f",
+      "has_ai": false
     },
     {
       "chart_id": "minisite_click_to_invite_sucess__series__value_daily",
@@ -9106,7 +8942,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "Minisite\u70b9\u51fb->\u9080\u8bf7\u6210\u529f"
+      "description": "Minisite\u70b9\u51fb->\u9080\u8bf7\u6210\u529f",
+      "has_ai": false
     },
     {
       "chart_id": "viral_new_uv__series__series_daily",
@@ -9187,7 +9024,7 @@ body.ai-collapsed .charts{
               0.0143198090692124,
               0.0636942675159235,
               0.0629139072847682,
-              0.0204081632653061
+              0.0192307692307692
             ]
           }
         }
@@ -9198,7 +9035,8 @@ body.ai-collapsed .charts{
         "invitation_impression_to_click",
         "click_to_invite_sucess"
       ],
-      "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b"
+      "description": "Viral \u65b0\u589e\u7528\u6237\u5360\u603b\u65b0\u589e\u7528\u6237\u7684\u6bd4\u4f8b",
+      "has_ai": true
     },
     {
       "chart_id": "viral_d1_rate__series__series_daily",
@@ -9278,7 +9116,7 @@ body.ai-collapsed .charts{
               0.3296703296703296,
               0.6486486486486487,
               0.4805194805194805,
-              0.1558441558441558,
+              0.2077922077922078,
               0.0
             ]
           }
@@ -9287,7 +9125,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "viral\u6765\u6e90\u7528\u6237\u7684\u7559\u5b58"
+      "description": "viral\u6765\u6e90\u7528\u6237\u7684\u7559\u5b58",
+      "has_ai": false
     },
     {
       "chart_id": "viral_reward_uv__series__series_daily",
@@ -9376,7 +9215,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "viral\u5956\u52b1\u7528\u6237\u6570"
+      "description": "viral\u5956\u52b1\u7528\u6237\u6570",
+      "has_ai": false
     },
     {
       "chart_id": "viral_reward_energy__series__series_daily",
@@ -9465,7 +9305,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "viral\u5956\u52b1\u80fd\u91cf"
+      "description": "viral\u5956\u52b1\u80fd\u91cf",
+      "has_ai": false
     },
     {
       "chart_id": "viral__popup_show_click_rate__series__value_daily",
@@ -9485,9 +9326,9 @@ body.ai-collapsed .charts{
           },
           "data": {
             "date": "2026-03-03",
-            "denominator": 1467.0,
-            "numerator": 295.0,
-            "value": 0.2010906612133606
+            "denominator": 1470.0,
+            "numerator": 296.0,
+            "value": 0.20136054421768707
           }
         },
         {
@@ -9518,13 +9359,13 @@ body.ai-collapsed .charts{
               "__NULL__"
             ],
             "denominator": [
-              1467.0
+              1470.0
             ],
             "numerator": [
-              295.0
+              296.0
             ],
             "values": [
-              0.2010906612133606
+              0.20136054421768707
             ]
           }
         }
@@ -9532,7 +9373,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Viral",
       "related_metrics": [],
-      "description": "\u5f39\u7a97\u662f\u5426\u6709\u5438\u5f15\u529b"
+      "description": "\u5f39\u7a97\u662f\u5426\u6709\u5438\u5f15\u529b",
+      "has_ai": false
     }
   ],
   "cash_out": [
@@ -9623,7 +9465,8 @@ body.ai-collapsed .charts{
       "related_metrics": [
         "kix_challenge_redeem_uv"
       ],
-      "description": "\u73b0\u91d1\u5151\u5956\u60c5\u51b5"
+      "description": "\u73b0\u91d1\u5151\u5956\u60c5\u51b5",
+      "has_ai": false
     },
     {
       "chart_id": "prize_cash_out_to_successful__series__value_daily",
@@ -9710,7 +9553,8 @@ body.ai-collapsed .charts{
       "related_metrics": [
         "kix_challenge_redeem_uv"
       ],
-      "description": "\u63d0\u73b0\u6210\u529f\u7387\u662f\u6307\u5728\u6240\u6709\u63d0\u73b0\u8bf7\u6c42\u4e2d\u6210\u529f\u63d0\u73b0\u7684\u6bd4\u4f8b\u3002"
+      "description": "\u63d0\u73b0\u6210\u529f\u7387\u662f\u6307\u5728\u6240\u6709\u63d0\u73b0\u8bf7\u6c42\u4e2d\u6210\u529f\u63d0\u73b0\u7684\u6bd4\u4f8b\u3002",
+      "has_ai": false
     }
   ],
   "engagement": [
@@ -10249,7 +10093,8 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Engagement",
       "related_metrics": [],
-      "description": "\u6bcf\u5929\u63a8\u9001\u70b9\u51fb\u60c5\u51b5"
+      "description": "\u6bcf\u5929\u63a8\u9001\u70b9\u51fb\u60c5\u51b5",
+      "has_ai": false
     },
     {
       "chart_id": "push_notification_to_challenge__series__series_daily",
@@ -10477,11 +10322,12 @@ body.ai-collapsed .charts{
       "hide_badge": false,
       "business_domain": "Engagement",
       "related_metrics": [],
-      "description": "\u6bcf\u5929\u70b9\u51fb\u63a8\u9001\u540e\u6210\u529f\u53c2\u4e0e\u6bd4\u8d5b\u7684\u4eba\u6570\u6bd4\u4f8b"
+      "description": "\u6bcf\u5929\u70b9\u51fb\u63a8\u9001\u540e\u6210\u529f\u53c2\u4e0e\u6bd4\u8d5b\u7684\u4eba\u6570\u6bd4\u4f8b",
+      "has_ai": false
     }
   ]
 }</script>
-<script type="application/json" id="ai-module-analysis-data">{"modules": {"daily_challenge": {"meta": {"run_date": "2026-03-03", "date_range": "2026-02-26~2026-03-03", "model": "unknown"}, "single_point": [{"metric": "participate_kix_challenge_uv", "name": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf", "target": 100, "latest_date": "2026-03-03", "latest_value": 74.0, "gap": -26.0, "detail": "\u53c2\u8d5b\u89c4\u6a21\u8ddd\u79bb\u76ee\u6807\u4ecd\u5dee26\u4eba\uff0c\u867d\u8f832026-03-02\u768464.0\u56de\u5347\u523074.0\uff0c\u4f46\u8fd8\u672a\u6062\u590d\u52302026-02-26\u768481.0\u9ad8\u4f4d\u3002"}, {"metric": "finish_kix_challenge_rate", "name": "\u8d5b\u4e8b\u5b8c\u6210\u7387", "target": "100.00%", "latest_date": "2026-03-03", "latest_value": "95.95%", "gap": "-4.05%", "detail": "\u5b8c\u8d5b\u7aef\u63a5\u8fd1\u76ee\u6807\uff0c\u4e142026-03-02\u8fbe\u5230100.00%\uff0c\u8bf4\u660e\u540e\u6bb5\u201c\u5f00\u8d5b->\u5b8c\u8d5b\u201d\u603b\u4f53\u7a33\u5b9a\uff0c\u4f46\u524d\u6bb5\u8f6c\u5316\u6ce2\u52a8\u4ecd\u5728\u62d6\u7d2f\u6574\u4f53\u89c4\u6a21\u3002"}], "good_news": [{"title": "\u540e\u94fe\u8def\u97e7\u6027\u5f3a\uff1a\u5b8c\u8d5b\u4e0e\u7559\u5b58\u4fdd\u6301\u9ad8\u4f4d", "detail": "2026-03-03\u8d5b\u4e8b\u5b8c\u6210\u7387\u4e3a95.95%\uff0c\u9ad8\u4e8e\u8fd17\u65e5\u5747\u503c95.68%\uff1b\u5bf9\u5e94\u7559\u5b58\uff08\u6309T-2~T-8\uff09\u57282026-03-02\u4e3a73.61%\uff0c\u9ad8\u4e8e\u8fd17\u65e5\u5747\u503c72.69%\u3002\u8bf4\u660e\u201c\u53c2\u8d5b/\u5f00\u8d5b -> \u5b8c\u8d5b -> \u7559\u5b58\u201d\u540e\u6bb5\u627f\u63a5\u80fd\u529b\u4ecd\u8f83\u7a33\u3002"}, {"title": "2026-03-03\u51fa\u73b0\u524d\u6bb5\u4fee\u590d\u4fe1\u53f7\uff1a\u9884\u7ea6\u7387\u4e0e\u53c2\u8d5b\u4eba\u6570\u540c\u6b65\u56de\u5347", "detail": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u56de\u5347\u81f30.89%\uff082026-03-02\u4e3a0.60%\uff09\uff0c\u540c\u65e5\u53c2\u8d5b\u4eba\u6570\u4ece64.0\u56de\u5347\u523074.0\uff0c\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u4ece3.291208791208791\u63d0\u5347\u52305.289625360230548\u3002\u94fe\u8def\u4f53\u73b0\u4e3a\u201c\u9884\u7ea6\u6539\u5584+\u8d5b\u524d\u51c6\u5907\u589e\u5f3a -> \u53c2\u8d5b\u89c4\u6a21\u56de\u5347\u201d\uff0c\u5e76\u753195.95%\u7684\u5b8c\u6210\u7387\u627f\u63a5\u3002"}, {"title": "\u65b0\u7528\u6237\u540e\u6bb5\u8d28\u91cf\u660e\u663e\u6539\u5584\uff1a\u7559\u5b58\u4ece\u4f4e\u4f4d\u4fee\u590d\u5230\u9ad8\u4f4d", "detail": "\u65b0\u7528\u6237KiX challenge\u8d5b\u4e8b\u7559\u5b58\u4ece2026-02-27\u768420.00%\u30012026-02-26\u768431.25%\uff0c\u63d0\u5347\u52302026-02-28\u768478.57%\uff0c2026-03-02\u4ecd\u670972.73%\u3002\u8bf4\u660e\u65b0\u7528\u6237\u4e00\u65e6\u8fdb\u5165\u53c2\u8d5b\u5e76\u5b8c\u6210\u4f53\u9a8c\uff0c\u6b21\u65e5\u518d\u53c2\u8d5b\u610f\u613f\u663e\u8457\u589e\u5f3a\u3002"}], "bad_news": [{"title": "\u5168\u91cf\u5165\u53e3\u65ad\u5d16\u662f\u6838\u5fc3\u5f02\u5e38\uff1a\u9884\u7ea6\u7387\u57282026-02-28\u540e\u7a81\u964d\u5e76\u62d6\u7d2f\u524d\u94fe\u8def", "detail": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u4ece2026-02-26\u76844.35%\u30012026-02-27\u76844.26%\u30012026-02-28\u76844.05%\uff0c\u57282026-03-01\u9aa4\u964d\u52300.62%\uff0c2026-03-02\u4ec50.60%\uff0c2026-03-03\u4e5f\u4ec50.89%\uff1b\u540c\u671f\u53c2\u8d5b\u4eba\u6570\u4ece2026-02-26\u768481.0\u56de\u843d\u52302026-03-01\u768467.0\u548c2026-03-02\u768464.0\uff082026-03-03\u56de\u5347\u523074.0\uff09\u3002\u5c5e\u4e8e\u201c\u9884\u7ea6\u5165\u53e3\u5927\u5e45\u6536\u7f29 -> \u53c2\u8d5b\u89c4\u6a21\u53d7\u538b\u201d\u7684\u660e\u663e\u5f02\u5e38\u6bb5\u3002", "insights": [], "strategies": []}, {"title": "\u65b0\u7528\u6237\u94fe\u8def\u51fa\u73b0\u7ed3\u6784\u6027\u77db\u76fe\uff1a\u540e\u6bb5\u7559\u5b58\u9ad8\uff0c\u4f46\u524d\u6bb5\u53c2\u4e0e\u51e0\u4e4e\u5931\u901f", "detail": "\u65b0\u7528\u6237KiX Challenge\u53c2\u4e0e\u7387\u57282026-03-02\u51b2\u52306.05%\u540e\uff0c2026-03-03\u8dcc\u52300.50%\uff087\u65e5\u6700\u4f4e\uff09\uff1b\u65b0\u7528\u6237\u5e73\u5747\u7ec3\u4e60challenge\u6e38\u620f\u6b21\u6570\u4ece7.897297297297297\u964d\u52303.413793103448276\u3002\u5c3d\u7ba12026-03-02\u65b0\u7528\u6237\u7559\u5b58\u4ecd\u670972.73%\uff0c\u4f46\u201c\u53c2\u4e0e -> \u7ec3\u4e60 -> \u53c2\u8d5b\u201d\u524d\u6bb5\u7a81\u7136\u8d70\u5f31\u3002", "insights": [], "strategies": []}, {"title": "\u201c\u5019\u573a->\u5f00\u8d5b\u201d\u8fde\u7eed\u8d70\u5f31\uff0c\u5f62\u6210\u4e2d\u6bb5\u94fe\u8def\u65ad\u88c2\u98ce\u9669", "detail": "\u8d5b\u4e8b\u5f00\u73a9\u7387\u4ece2026-03-01\u768494.37%\u8fde\u7eed\u964d\u81f32026-03-02\u768488.89%\u30012026-03-03\u768481.32%\uff087\u65e5\u6700\u4f4e\uff09\uff1b\u540c\u65e5\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4ece7.14%\u5347\u523014.29%\u3002\u8fd9\u8868\u660e\u201c\u9884\u7ea6/\u5230\u8fbe\u5019\u573a -> \u6210\u529f\u5f00\u8d5b\u201d\u73af\u8282\u6469\u64e6\u4e0a\u5347\uff0c\u4f53\u9a8c\u8d28\u91cf\u4fe1\u53f7\u8f6c\u5f31\uff0c\u53ef\u80fd\u538b\u5236\u540e\u7eed\u7a33\u5b9a\u6027\u3002", "insights": ["\u5f00\u73a9\u7387\u4e09\u65e5\u8fde\u7eed\u4e0b\u6ed1\u4e14\u96f6\u5206\u7528\u6237\u540c\u6b65\u7ffb\u500d\uff0c\u4e24\u4e2a\u6307\u6807\u540c\u5411\u6076\u5316\u6307\u5411\u540c\u4e00\u6839\u56e0\uff1a\u5019\u573a\u9636\u6bb5\u5b58\u5728\u7cfb\u7edf\u6027\u5361\u70b9\uff0c\u800c\u975e\u968f\u673a\u6d41\u5931\u3002\u6700\u53ef\u80fd\u7684\u673a\u5236\u662f\uff1a\u5019\u573a\u7b49\u5f85\u671f\u5185\u751f\u547d\u503c\uff08Lives\uff09\u81ea\u7136\u6062\u590d\u901f\u5ea6\uff0830\u5206\u949f/\u70b9\uff09\u4e0e\u8d5b\u4e8b\u5f00\u8d5b\u5012\u8ba1\u65f6\u7a97\u53e3\u4e4b\u95f4\u51fa\u73b0\u4e86\u9519\u4f4d\u2014\u2014\u7528\u6237\u5230\u8fbe\u5019\u573a\u65f6\u751f\u547d\u503c\u4e0d\u8db3\u4ee5\u652f\u6491\u5f00\u8d5b\u95e8\u69db\uff0c\u53c8\u6ca1\u6709\u8db3\u591f\u7684\u5e7f\u544a\u89c2\u770b\u6fc0\u52b1\u5c06\u5176\u62c9\u56de\uff0c\u5bfc\u81f4\u5927\u91cf\u7528\u6237\u5728\u5019\u573a\u9636\u6bb5\u76f4\u63a5\u653e\u5f03\u6216\u5e26\u77400\u751f\u547d\u503c\u5f3a\u884c\u8fdb\u5165\u8d5b\u573a\u540e\u7acb\u5373\u51fa\u5c40\uff0c\u5f62\u6210\u96f6\u5206\u8bb0\u5f55\u3002", "\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4ece7.14%\u5347\u81f314.29%\uff08\u7ffb\u500d\uff09\u4e0e\u5f00\u73a9\u7387\u4e0b\u6ed1\u5e45\u5ea6\uff0894.37%\u219281.32%\uff0c\u8dcc\u5e45\u7ea613pp\uff09\u5728\u65f6\u95f4\u8282\u70b9\u4e0a\u9ad8\u5ea6\u543b\u5408\uff0c\u8bf4\u660e\u8fd9\u6279\u96f6\u5206\u7528\u6237\u5e76\u975e\u300c\u6ca1\u6709\u5f00\u73a9\u300d\uff0c\u800c\u662f\u300c\u5f00\u73a9\u5373\u51fa\u5c40\u300d\u2014\u2014\u4ed6\u4eec\u7a81\u7834\u4e86\u5019\u573a\u95e8\u69db\u4f46\u5b9e\u8d28\u4e0a\u6ca1\u6709\u5b8c\u6210\u6709\u6548\u6e38\u620f\u3002\u8fd9\u610f\u5473\u7740\u5019\u573a->\u5f00\u8d5b\u7684\u6469\u64e6\u4e0d\u53ea\u662f\u5165\u53e3\u62e6\u622a\u95ee\u9898\uff0c\u8fd8\u5305\u62ec\u300c\u5e26\u75c5\u5165\u573a\u300d\u95ee\u9898\uff1a\u7528\u6237\u5728\u751f\u547d\u503c\u6216\u51c6\u5907\u72b6\u6001\u4e0d\u8db3\u65f6\u88ab\u7cfb\u7edf\u6216\u81ea\u8eab\u4fa5\u5e78\u5fc3\u7406\u63a8\u5165\u8d5b\u573a\uff0c\u9020\u6210\u4f53\u9a8c\u8d28\u91cf\u5d29\u584c\uff0c\u5e76\u53cd\u5411\u6291\u5236\u6b21\u65e5\u53c2\u8d5b\u610f\u613f\uff0c\u5f62\u6210\u7559\u5b58\u538b\u5236\u7684\u8d1f\u5411\u98de\u8f6e\u3002"], "strategies": [{"strategy": "\u53d8\u66f4\u5bf9\u8c61\uff1a\u5019\u573a\u9636\u6bb5\u7684\u5e7f\u544a\u6362\u547d\uff08IAA\uff09\u89e6\u53d1\u89c4\u5219\u3002\u53d8\u66f4\u53c2\u6570\uff1a\u5f53\u68c0\u6d4b\u5230\u7528\u6237\u5728\u5019\u573a\u671f\u95f4\u751f\u547d\u503c\u22642\u70b9\u65f6\uff08\u5f53\u524d\u673a\u5236\u4ec5\u5728\u751f\u547d\u503c\u8017\u5c3d\u540e\u88ab\u52a8\u89e6\u53d1\u5e7f\u544a\u5165\u53e3\uff09\uff0c\u4e3b\u52a8\u63a8\u9001\u4e00\u6b21\u300c\u5f00\u8d5b\u524d\u8865\u8840\u300d\u4e13\u5c5e\u5e7f\u544a\u5f39\u7a97\uff0c\u5c06\u5e7f\u544a\u5956\u52b1\u4ece\u5f53\u524d\u6807\u51c6\u7684\u300c\u770b1\u6b21\u5e7f\u544a=\u6062\u590d2\u70b9\u751f\u547d\u300d\u4e34\u65f6\u63d0\u5347\u4e3a\u300c\u770b1\u6b21\u5e7f\u544a=\u6062\u590d3\u70b9\u751f\u547d\uff08\u9650\u5019\u573a\u9636\u6bb5\u4e13\u5c5e\uff09\u300d\uff0c\u5e76\u9644\u52a0\u5012\u8ba1\u65f6\u89c6\u89c9\u538b\u529b\uff08\u5982\u300c\u8ddd\u5f00\u8d5b\u8fd8\u6709X\u5206\u949f\uff0c\u73b0\u5728\u8865\u8840\u53ef\u6ee1\u72b6\u6001\u5165\u573a\u300d\uff09\u3002\u89e6\u53d1\u6761\u4ef6\uff1a\u4ec5\u5728\u7528\u6237\u5df2\u5b8c\u6210\u8d5b\u4e8b\u9884\u7ea6/\u8fdb\u5165\u5019\u573a\u5927\u5385\u3001\u4e14\u8ddd\u5f00\u8d5b\u65f6\u95f4\u226410\u5206\u949f\u3001\u4e14\u5f53\u524d\u751f\u547d\u503c\u22642\u70b9\u65f6\u89e6\u53d1\uff0c\u6bcf\u573a\u6b21\u6bcf\u7528\u6237\u9650\u89e6\u53d11\u6b21\u3002\u65b0\u589e\u5dee\u5f02\u70b9\uff08delta\uff09\uff1a\u5f53\u524d\u6587\u6863\u63cf\u8ff0\u7684IAA\u89e6\u53d1\u573a\u666f\u96c6\u4e2d\u5728\u300c\u751f\u547d\u8017\u5c3d\u540e\u300d\u7684\u88ab\u52a8\u8865\u6551\uff0c\u672c\u7b56\u7565\u5c06\u89e6\u53d1\u65f6\u673a\u524d\u79fb\u81f3\u5019\u573a\u9636\u6bb5\u5e76\u63d0\u9ad8\u5355\u6b21\u5e7f\u544a\u5956\u52b1\u503c\uff0c\u4e13\u95e8\u9488\u5bf9\u300c\u5e26\u75c5\u5165\u573a\u300d\u5bfc\u81f4\u7684\u96f6\u5206\u95ee\u9898\uff0c\u800c\u975e\u73b0\u6709\u673a\u5236\u8986\u76d6\u7684\u8d5b\u4e2d/\u8d5b\u540e\u8865\u8840\u573a\u666f\u3002", "reference": "[\u884c\u4e1a\u57fa\u51c6] \u7ade\u901f\u7c7b\u4f11\u95f2\u6e38\u620f\uff08\u5982Skillz\u5e73\u53f0\u65d7\u4e0b\u591a\u6b3e\u9526\u6807\u8d5b\u6e38\u620f\uff09\u666e\u904d\u91c7\u7528\u300c\u8d5b\u524d\u72b6\u6001\u68c0\u6d4b+\u5b9a\u5411\u6fc0\u52b1\u300d\u673a\u5236\uff0c\u5728\u8d5b\u524d\u51c6\u5907\u9636\u6bb5\u5bf9\u8d44\u6e90\u4e0d\u8db3\u7528\u6237\u63a8\u9001\u9ad8\u4ef7\u503c\u8865\u7ed9\u5e7f\u544a\uff0c\u76f8\u6bd4\u8d5b\u4e2d\u88ab\u52a8\u89e6\u53d1\uff0c\u8d5b\u524d\u4e3b\u52a8\u63a8\u9001\u7684\u5e7f\u544a\u5b8c\u64ad\u7387\u901a\u5e38\u66f4\u9ad8\uff08\u7528\u6237\u6709\u660e\u786e\u76ee\u7684\u6027\uff09\uff0c\u4e14\u80fd\u6709\u6548\u964d\u4f4e\u300c\u5165\u573a\u5373\u51fa\u5c40\u300d\u7684\u96f6\u5206\u7387\u3002\u5f53\u524dKiX\u57fa\u7ebf\u672a\u8986\u76d6\u5019\u573a\u9636\u6bb5\u7684\u4e3b\u52a8IAA\u89e6\u53d1\uff0c\u5b58\u5728\u660e\u663e\u7684\u53d8\u73b0\u65f6\u673a\u7a7a\u767d\u3002", "effect": "\u9884\u671f\u65b9\u5411\uff1a\u5019\u573a\u9636\u6bb5\u4e3b\u52a8IAA\u89e6\u53d1\u53ef\u540c\u65f6\u4f5c\u7528\u4e8e\u4e24\u4e2a\u6307\u6807\u2014\u2014\u63d0\u5347\u6709\u6548\u5f00\u73a9\u7387\uff08\u7528\u6237\u4ee5\u8db3\u591f\u751f\u547d\u503c\u5165\u573a\uff09\u548c\u964d\u4f4e\u96f6\u5206\u7528\u6237\u5360\u6bd4\uff08\u51cf\u5c11\u5e26\u75c5\u5165\u573a\uff09\u3002\u7531\u4e8e\u5e7f\u544a\u5956\u52b1\u63d0\u5347\uff083\u70b9vs\u6807\u51c62\u70b9\uff09\u5bf9\u7528\u6237\u7684\u8fb9\u9645\u5438\u5f15\u529b\u66f4\u5f3a\uff0c\u5019\u573a\u9636\u6bb5IAA\u5b8c\u64ad\u7387\u9884\u8ba1\u9ad8\u4e8e\u8d5b\u4e2d\u5e73\u5747\u6c34\u5e73\uff08\u63a8\u65ad\uff09\u3002\u96f6\u5206\u7528\u6237\u5360\u6bd4\u6709\u671b\u4ece\u5f53\u524d14.29%\u56de\u843d\uff0c\u5177\u4f53\u5e45\u5ea6\u53d6\u51b3\u4e8e\u5019\u573a\u9636\u6bb5\u751f\u547d\u503c\u4e0d\u8db3\u7528\u6237\u7684\u5b9e\u9645\u6bd4\u4f8b\uff08\u63a8\u65ad\uff0c\u9700A/B\u9a8c\u8bc1\uff09\u3002"}, {"strategy": "\u53d8\u66f4\u5bf9\u8c61\uff1a\u5019\u573a->\u5f00\u8d5b\u7684\u5165\u573a\u95e8\u69db\u89c4\u5219\u4e0e\u96f6\u5206\u7528\u6237\u7684\u8d5b\u540e\u5206\u6d41\u8def\u5f84\u3002\u53d8\u66f4\u53c2\u6570\uff1a\u65b0\u589e\u300c\u8f6f\u6027\u5165\u573a\u95e8\u69db\u300d\u2014\u2014\u5f53\u7528\u6237\u751f\u547d\u503c<2\u70b9\u65f6\uff0c\u5019\u573a\u5927\u5385\u5165\u53e3\u4e0d\u505a\u786c\u6027\u62e6\u622a\uff08\u4fdd\u7559\u5f53\u524d\u65e0\u95e8\u69db\u8bbe\u8ba1\uff09\uff0c\u4f46\u5728\u786e\u8ba4\u5165\u573a\u6309\u94ae\u65c1\u65b0\u589e\u5b9e\u65f6\u8b66\u793a\u6807\u7b7e\uff08\u5982\u300c\u5f53\u524d\u751f\u547d\u4e0d\u8db3\uff0c\u5efa\u8bae\u8865\u8840\u540e\u5165\u573a\uff0c\u5426\u5219\u5c06\u8fdb\u5165Redemption Rush\u300d\uff09\uff0c\u540c\u65f6\u5bf9\u6700\u7ec8\u4ee50\u5206\u5b8c\u8d5b\u7684\u7528\u6237\uff0c\u5c06\u5176Redemption Rush\u7684\u514d\u8d39\u7279\u8bad\u5238\u6570\u91cf\u4ece\u5f53\u524d\u6807\u51c6\u503c\u4e0b\u8c031\u5f20\uff08\u89e6\u53d1\u6761\u4ef6\uff1a\u8be5\u573a\u6b21\u96f6\u5206\u4e14\u5165\u573a\u65f6\u751f\u547d\u503c\u8bb0\u5f55\u22641\u70b9\uff09\uff0c\u4ee5\u6b64\u5efa\u7acb\u300c\u5e26\u75c5\u5165\u573a\u6709\u4ee3\u4ef7\u300d\u7684\u8ba4\u77e5\uff0c\u5f15\u5bfc\u7528\u6237\u5728\u5019\u573a\u9636\u6bb5\u4e3b\u52a8\u8865\u8840\u3002\u89e6\u53d1\u6761\u4ef6\uff1a\u4ec5\u5bf9\u5f53\u573a\u6b21\u5165\u573a\u65f6\u751f\u547d\u503c\u22641\u70b9\u7684\u7528\u6237\u751f\u6548\uff0c\u4e0d\u5f71\u54cd\u6b63\u5e38\u751f\u547d\u503c\u5165\u573a\u7528\u6237\u7684Redemption Rush\u6743\u76ca\u3002\u65b0\u589e\u5dee\u5f02\u70b9\uff08delta\uff09\uff1a\u5f53\u524dRedemption Rush\u5bf9\u6240\u6709\u8f93\u5bb6\uff08\u542b\u96f6\u5206\uff09\u7ed9\u4e88\u76f8\u540c\u7684\u514d\u8d39\u7279\u8bad\u5238\u6570\u91cf\uff0c\u6ca1\u6709\u533a\u5206\u300c\u6b63\u5e38\u5931\u8d25\u300d\u4e0e\u300c\u5e26\u75c5\u5165\u573a\u5bfc\u81f4\u7684\u96f6\u5206\u300d\uff0c\u672c\u7b56\u7565\u901a\u8fc7\u5dee\u5f02\u5316Redemption Rush\u6743\u76ca\uff0c\u5c06\u5019\u573a\u9636\u6bb5\u7684\u751f\u547d\u503c\u7ba1\u7406\u51b3\u7b56\u4e0e\u8d5b\u540e\u590d\u6d3b\u6210\u672c\u6302\u94a9\uff0c\u5f62\u6210\u884c\u4e3a\u5f15\u5bfc\u95ed\u73af\uff0c\u800c\u975e\u73b0\u6709\u673a\u5236\u4e2d\u5bf9\u96f6\u5206\u7528\u6237\u7684\u65e0\u5dee\u522b\u5904\u7406\u3002", "reference": "[\u5185\u90e8\u63a8\u65ad] \u57fa\u4e8eKiX\u6587\u6863\u4e2dRedemption Rush\u7684\u6838\u5fc3\u903b\u8f91\u2014\u2014\u5229\u7528\u6c89\u6ca1\u6210\u672c\u9501\u5b9a\u6b21\u65e5\u7559\u5b58\u2014\u2014\u53ef\u63a8\u65ad\uff1a\u5bf9\u96f6\u5206\u7528\u6237\u9002\u5ea6\u964d\u4f4e\u514d\u8d39\u7279\u8bad\u5238\u6570\u91cf\uff0c\u4f1a\u5f3a\u5316\u5176\u300c\u4e0b\u6b21\u5fc5\u987b\u6ee1\u72b6\u6001\u5165\u573a\u300d\u7684\u884c\u4e3a\u8bb0\u5fc6\uff0c\u540c\u65f6\u4e0d\u4f1a\u5bfc\u81f4\u7528\u6237\u6d41\u5931\uff08\u56e0\u4e3aRedemption Rush\u672c\u8eab\u4ecd\u63d0\u4f9b\u590d\u6d3b\u901a\u9053\uff0c\u53ea\u662f\u6210\u672c\u7565\u9ad8\uff09\u3002\u5f53\u524d\u57fa\u7ebf\u5bf9\u96f6\u5206\u7528\u6237\u4e0e\u666e\u901a\u8f93\u5bb6\u7ed9\u4e88\u76f8\u540c\u6743\u76ca\uff0c\u7b49\u4e8e\u53d8\u76f8\u8865\u8d34\u4e86\u300c\u5e26\u75c5\u5165\u573a\u300d\u884c\u4e3a\uff0c\u524a\u5f31\u4e86\u5019\u573a\u9636\u6bb5\u751f\u547d\u503c\u7ba1\u7406\u7684\u5fc5\u8981\u6027\u3002\u8be5\u7b56\u7565\u901a\u8fc7\u6743\u76ca\u5dee\u5f02\u5316\u800c\u975e\u786c\u6027\u62e6\u622a\u6765\u4fee\u6b63\u7528\u6237\u884c\u4e3a\uff0c\u4e0eKiX\u300c\u4e0d\u8bbe\u786c\u95e8\u69db\u3001\u7528\u6fc0\u52b1\u5f15\u5bfc\u300d\u7684\u6574\u4f53\u8bbe\u8ba1\u54f2\u5b66\u4e00\u81f4\u3002", "effect": "\u9884\u671f\u65b9\u5411\uff1a\u5019\u573a\u9636\u6bb5\u7684\u8b66\u793a\u6807\u7b7e\u53ef\u63d0\u5347\u7528\u6237\u5bf9\u751f\u547d\u503c\u72b6\u6001\u7684\u611f\u77e5\uff0c\u5f15\u5bfc\u90e8\u5206\u7528\u6237\u4e3b\u52a8\u89e6\u53d1IAA\u8865\u8840\uff0c\u4ece\u800c\u63d0\u5347\u6709\u6548\u5f00\u73a9\u7387\uff1b\u5dee\u5f02\u5316Redemption Rush\u6743\u76ca\u53ef\u5728\u4e0d\u635f\u5931\u6b21\u65e5\u7559\u5b58\u7684\u524d\u63d0\u4e0b\uff0c\u9010\u6b65\u964d\u4f4e\u96f6\u5206\u7528\u6237\u5360\u6bd4\uff08\u63a8\u65ad\uff09\u3002\u4e24\u9879\u63aa\u65bd\u8054\u52a8\u9884\u8ba1\u53ef\u57283-5\u4e2a\u8d5b\u4e8b\u5468\u671f\u5185\u4f7f\u96f6\u5206\u7528\u6237\u5360\u6bd4\u51fa\u73b0\u53ef\u89c2\u6d4b\u7684\u56de\u843d\u8d8b\u52bf\uff0c\u4f46\u5177\u4f53\u5e45\u5ea6\u9700\u7ed3\u5408\u5b9e\u9645\u751f\u547d\u503c\u5206\u5e03\u6570\u636e\u9a8c\u8bc1\uff08\u63a8\u65ad\uff09\u3002"}]}]}}, "error": ""}</script>
+<script type="application/json" id="ai-summary-data">"# KiX \u6307\u6807\u5206\u6790\u62a5\u544a\n**\u751f\u6210\u65f6\u95f4**: 2026-03-04 12:26\n\n## Platform Basics\n\n**dau**\n\n1. **DAU\u5927\u5e45\u4e0b\u964d**\uff1a2026\u5e743\u67084\u65e5\u7684DAU\u4e3a235\uff0c\u8f83\u524d\u4e00\u5929\u7684557\u4e0b\u964d\u4e8657.81%\uff0c\u663e\u793a\u51fa\u7528\u6237\u6d3b\u8dc3\u5ea6\u663e\u8457\u964d\u4f4e\u3002\n\n2. **\u65b0\u7528\u6237\u5360\u6bd4\u9ad8\u4f46\u56de\u6d41\u4f4e**\uff1a\u57282026\u5e743\u67084\u65e5\uff0cDAU\u4e2d120\u540d\u65b0\u7528\u6237\u5360\u6bd451.06%\uff0c\u800c\u56de\u6d41\u7528\u6237\uff0823\u540d\uff09\u4ec5\u53609.79%\uff0c\u8868\u660e\u65b0\u7528\u6237\u7559\u5b58\u504f\u4f4e\uff0c\u9700\u4f18\u5316\u7528\u6237\u4f53\u9a8c\u3002\n\n3. **\u4e3b\u8981\u6765\u6e90\u4e3aFB\u548c\u5176\u4ed6\u6e20\u9053**\uff1a\u57282026\u5e743\u67084\u65e5\uff0cDAU\u7684\u4e3b\u8981\u6765\u6e90\u4e3a\u201cothers\u201d\uff08102\uff09\u548c\u201cFB\u201d\uff0896\uff09\uff0c\u8fd9\u4e24\u8005\u5408\u8ba1\u5360DAU\u768484.68%\uff0c\u663e\u793a\u51fa\u5bf9\u8fd9\u4e24\u4e2a\u6e20\u9053\u7684\u4f9d\u8d56\u3002\n\n4. **\u5730\u533a\u5206\u5e03\u4e0d\u5747**\uff1a2026\u5e743\u67084\u65e5\uff0cDAU\u4e2d\u7f8e\u56fd\u7528\u6237\u4ec5\u536086\uff0c\u663e\u8457\u4f4e\u4e8e\u524d\u51e0\u5929\u7684\u6d3b\u8dc3\u4eba\u6570\uff0c\u663e\u793a\u51fa\u7f8e\u56fd\u5e02\u573a\u7684\u6d3b\u8dc3\u5ea6\u4e0b\u964d\u3002\n\n5. **\u7559\u5b58\u7387\u6301\u7eed\u4e0b\u964d**\uff1a2026\u5e743\u67083\u65e5\u7684D1\u7559\u5b58\u7387\u4e3a7.57%\uff0c\u8f83\u524d\u4e00\u5929\u76848.93%\u4e0b\u964d\uff0c\u53cd\u6620\u51fa\u65b0\u7528\u6237\u7684\u6b21\u65e5\u56de\u8bbf\u7387\u964d\u4f4e\uff0c\u5f71\u54cd\u4e86\u6574\u4f53DAU\u7684\u7a33\u5b9a\u6027\u3002\n\n**retention(d1)**\n\n1. **D1\u7559\u5b58\u7387\u4e0b\u964d\u8d8b\u52bf**\uff1a2026\u5e743\u67083\u65e5\u7684D1\u7559\u5b58\u7387\u4e3a7.57%\uff0c\u8f83\u524d\u4e00\u5929\u76848.93%\u4e0b\u964d\u4e8615.26%\uff0c\u663e\u793a\u51fa\u7528\u6237\u56de\u8bbf\u610f\u613f\u7684\u663e\u8457\u51cf\u5f31\u3002\n\n2. **\u65b0\u6fc0\u6d3b\u7528\u6237\u4e0eD1\u7559\u5b58\u76f8\u5173\u6027**\uff1a2026\u5e743\u67083\u65e5\u7684\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b\u4e3a8.88%\uff0c\u4e0eD1\u7559\u5b58\u7387\u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u7b26\uff0c\u8868\u660e\u65b0\u7528\u6237\u7684\u6709\u6548\u5bf9\u6218\u6bd4\u4f8b\u53ef\u80fd\u5f71\u54cd\u4e86\u7559\u5b58\u8868\u73b0\u3002\n\n3. **\u9996\u65e5\u8def\u5f84\u8f6c\u5316\u73af\u8282\u6d41\u5931**\uff1a2026\u5e743\u67083\u65e5\u7684\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u7387\u4e3a95.92%\uff0c\u800c\u65b0\u7528\u6237\u4ecb\u7ecd\u5f00\u59cb\u70b9\u51fb\u7387\u4e3a38.29%\uff0c\u663e\u793a\u51fa\u5728\u7528\u6237\u8f6c\u5316\u8fc7\u7a0b\u4e2d\u5b58\u5728\u660e\u663e\u7684\u6d41\u5931\u73af\u8282\uff0c\u53ef\u80fd\u9700\u8981\u4f18\u5316\u7528\u6237\u4f53\u9a8c\u3002\n\n4. **\u6311\u6218\u7559\u5b58\u4e0eD1\u7559\u5b58\u7684\u540c\u5411\u6ce2\u52a8**\uff1a2026\u5e743\u67083\u65e5\u7684\u65b0\u7528\u6237Kix\u6311\u6218\u7559\u5b58\u7387\u4e3a24%\uff0c\u8f83\u524d\u4e00\u5929\u768472.73%\u5927\u5e45\u4e0b\u964d\uff0c\u8868\u660e\u6311\u6218\u6d3b\u52a8\u7684\u5438\u5f15\u529b\u53ef\u80fd\u5f71\u54cd\u4e86D1\u7559\u5b58\u7387\u7684\u8868\u73b0\u3002\n\n5. **\u6765\u6e90\u5206\u6790\u663e\u793a\u7684\u53d8\u5316**\uff1a\u57282026\u5e743\u67083\u65e5\uff0cD1\u7559\u5b58\u7387\u7684\u4e3b\u8981\u6765\u6e90\u4e3aOrganic\uff0816.22%\uff09\uff0c\u800c\u9080\u8bf7\u6765\u6e90\u7684\u7559\u5b58\u7387\u4ec5\u4e3a14.29%\uff0c\u663e\u793a\u51faOrganic\u6765\u6e90\u7684\u7528\u6237\u66f4\u5177\u7559\u5b58\u6f5c\u529b\u3002\n\n**average_meaningful_battles_per_user**\n\n1. **\u4eba\u5747\u6210\u529f PK \u663e\u8457\u4e0b\u964d**\uff1a\u4eba\u5747\u6210\u529f PK \u4ece 3.074 \u964d\u81f3 0.617\uff0c\u73af\u6bd4\u4e0b\u964d 79.92%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u6025\u5267\u4e0b\u964d\u3002\n\n2. **\u6f0f\u6597\u73af\u8282\u540c\u6b65\u6ce2\u52a8**\uff1a\u5728\u540c\u4e00\u65f6\u95f4\u6bb5\u5185\uff0cpk_ready_to_start \u4ece 0.6529 \u964d\u81f3 0.5388\uff0c\u4e0b\u964d\u5e45\u5ea6\u4e3a 14.5%\uff0c\u4e0e\u4eba\u5747\u6210\u529f PK \u7684\u4e0b\u964d\u8d8b\u52bf\u4e00\u81f4\uff0c\u8868\u660e\u8be5\u73af\u8282\u53ef\u80fd\u662f\u5bfc\u81f4\u4eba\u5747\u6210\u529f PK \u4e0b\u964d\u7684\u5173\u952e\u74f6\u9888\u3002\n\n3. **\u5b8c\u6210\u7387\u63d0\u5347\u4f46\u53c2\u4e0e\u7387\u4e0b\u964d**\uff1a\u5c3d\u7ba1 pk_start_to_finish \u4ece 0.6899 \u4e0a\u5347\u81f3 0.7743\uff0c\u63d0\u5347\u4e86 12.23%\uff0c\u4f46\u4eba\u5747\u6210\u529f PK \u7684\u4e0b\u964d\u663e\u793a\u51fa\u201c\u8fdb\u5165\u7387\u8fd8\u5728\u4f46\u5b8c\u6210\u7387\u4e0b\u6ed1\u201d\u7684\u7ed3\u6784\u6027\u95ee\u9898\uff0c\u53ef\u80fd\u5f71\u54cd\u7528\u6237\u4f53\u9a8c\u3002\n\n4. **\u5339\u914d\u6210\u529f\u7387\u5c0f\u5e45\u4e0b\u964d**\uff1apk_successful_matching \u4ece 0.9070 \u964d\u81f3 0.8814\uff0c\u4e0b\u964d 2.82%\uff0c\u8fd9\u53ef\u80fd\u8fdb\u4e00\u6b65\u5f71\u54cd\u7528\u6237\u7684\u53c2\u4e0e\u610f\u613f\uff0c\u5bfc\u81f4\u4eba\u5747\u6210\u529f PK \u7684\u663e\u8457\u4e0b\u964d\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u4e0e\u7a33\u5b9a\u6027\u95ee\u9898**\uff1a\u4eba\u5747\u6210\u529f PK \u7684\u6025\u5267\u4e0b\u964d\u4f34\u968f pk_ready_to_start \u548c pk_successful_matching \u7684\u6ce2\u52a8\uff0c\u63d0\u793a\u94fe\u8def\u8d28\u91cf\u53ef\u80fd\u5b58\u5728\u4e0d\u7a33\u5b9a\u6027\uff0c\u9700\u8fdb\u4e00\u6b65\u5206\u6790\u7528\u6237\u4f53\u9a8c\u7684\u5f71\u54cd\u56e0\u7d20\u3002\n\n\n## User Growth\n\n**new_user**\n\n1. **\u65b0\u589e\u7528\u6237\u6574\u4f53\u8d8b\u52bf\u4e0b\u964d**\uff1a\u5728\u8fc7\u53bb7\u5929\u5185\uff0c\u65b0\u589e\u7528\u6237\u6570\u91cf\u4ece454\u4e0b\u964d\u81f3120\uff0c\u73af\u6bd4\u4e0b\u964d\u5e45\u5ea6\u8fbe\u523060.53%\uff0c\u663e\u793a\u51fa\u7528\u6237\u589e\u957f\u7684\u660e\u663e\u653e\u7f13\u3002\n\n2. **\u83f2\u5f8b\u5bbe\u4e3a\u4e3b\u8981\u7528\u6237\u6765\u6e90\u56fd**\uff1a\u57282026\u5e743\u67084\u65e5\uff0c\u83f2\u5f8b\u5bbe\u8d21\u732e\u4e8645\u540d\u65b0\u589e\u7528\u6237\uff0c\u5360\u5f53\u5929\u603b\u65b0\u589e\u7528\u6237\u768437.5%\uff0c\u663e\u793a\u51fa\u5176\u5728\u7528\u6237\u589e\u957f\u4e2d\u7684\u91cd\u8981\u5730\u4f4d\u3002\n\n3. **Facebook\u662f\u4e3b\u8981\u6d41\u91cf\u6765\u6e90**\uff1a\u57282026\u5e743\u67084\u65e5\uff0cFacebook\u8d21\u732e\u4e8669\u540d\u65b0\u589e\u7528\u6237\uff0c\u5360\u603b\u65b0\u589e\u7528\u6237\u768457.5%\uff0c\u8868\u660e\u5176\u5728\u7528\u6237\u83b7\u53d6\u4e2d\u7684\u4e3b\u5bfc\u4f5c\u7528\u3002\n\n4. **\u75c5\u6bd2\u4f20\u64ad\u7528\u6237\u5360\u6bd4\u4e0b\u964d**\uff1a\u622a\u81f32026\u5e743\u67084\u65e5\uff0c\u75c5\u6bd2\u4f20\u64ad\u65b0\u7528\u6237\u5360\u6bd4\uff08viral_new_uv\uff09\u4e3a1.92%\uff0c\u8f83\u524d\u4e00\u5929\u76846.29%\u5927\u5e45\u4e0b\u964d\uff0c\u53cd\u6620\u51fa\u75c5\u6bd2\u4f20\u64ad\u6548\u679c\u51cf\u5f31\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u663e\u8457**\uff1a\u57282026\u5e743\u67081\u65e5\uff0c\u65b0\u589e\u7528\u6237\u8fbe\u5230411\uff0c\u968f\u540e\u57283\u67082\u65e5\u548c3\u67083\u65e5\u5206\u522b\u4e0b\u964d\u81f3336\u548c304\uff0c\u663e\u793a\u51fa\u77ed\u671f\u5185\u7528\u6237\u83b7\u53d6\u7684\u6ce2\u52a8\u6027\uff0c\u53ef\u80fd\u9700\u8981\u8fdb\u4e00\u6b65\u5206\u6790\u539f\u56e0\u3002\n\n\n## Daily Challenge\n\n**participate_kix_challenge_uv**\n\n1. **\u53c2\u8d5b\u4eba\u6570\u6ce2\u52a8\u663e\u8457**\uff1a\u5728\u8fc7\u53bb\u516d\u5929\u4e2d\uff0c\u53c2\u8d5b\u4eba\u6570\u4ece79\u4e0b\u964d\u81f374\uff0c\u6ce2\u52a8\u5e45\u5ea6\u4e3a10.6%\uff0c\u663e\u793a\u51fa\u53c2\u8d5b\u4eba\u6570\u7684\u77ed\u671f\u6ce2\u52a8\u8d8b\u52bf\uff0874 vs 79\uff09\u3002\n\n2. **\u9884\u7ea6\u8f6c\u5316\u7387\u663e\u8457\u63d0\u5347**\uff1a\u9884\u7ea6\u8f6c\u5316\u7387\u5728\u6700\u8fd1\u4e00\u5929\u8fbe\u5230\u4e860.88\uff0c\u8f83\u524d\u4e00\u5929\u76840.60\u63d0\u5347\u4e8646.5%\uff0c\u8868\u660e\u9884\u7ea6\u73af\u8282\u7684\u8f6c\u5316\u6548\u7387\u6709\u4e86\u663e\u8457\u6539\u5584\uff0c\u53ef\u80fd\u5bf9\u53c2\u8d5b\u4eba\u6570\u7684\u63d0\u5347\u8d77\u5230\u4e86\u79ef\u6781\u4f5c\u7528\u3002\n\n3. **\u5b8c\u6210\u7387\u4fdd\u6301\u9ad8\u4f4d**\uff1a\u5b8c\u6210\u7387\u5728\u6700\u8fd1\u4e00\u5929\u4e3a95.9%\uff0c\u5c3d\u7ba1\u8f83\u524d\u4e00\u5929\u7565\u6709\u4e0b\u964d\uff08\u4ece100%\u964d\u81f395.9%\uff09\uff0c\u4f46\u6574\u4f53\u4fdd\u6301\u5728\u9ad8\u6c34\u5e73\uff0c\u8868\u660e\u53c2\u8d5b\u8005\u7684\u5b8c\u6210\u610f\u613f\u4f9d\u7136\u5f3a\u70c8\u3002\n\n4. **\u5019\u573a\u8f6c\u5316\u6548\u7387\u4e0b\u964d**\uff1a\u5019\u573a\u5230\u5f00\u8d5b\u7684\u6548\u7387\u5728\u6700\u8fd1\u4e00\u5929\u964d\u81f381.3%\uff0c\u8f83\u524d\u4e00\u5929\u768488.9%\u4e0b\u964d\u4e868.5%\uff0c\u53ef\u80fd\u5f71\u54cd\u4e86\u53c2\u8d5b\u4eba\u6570\u7684\u7a33\u5b9a\u6027\u3002\n\n5. **\u65b0\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u4e0b\u964d**\uff1a\u65b0\u7528\u6237\u53c2\u8d5b\u7387\u5728\u6700\u8fd1\u4e00\u5929\u4ec5\u4e3a0.49%\uff0c\u8f83\u524d\u4e00\u5929\u76846.05%\u5927\u5e45\u4e0b\u964d91.9%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u7684\u53c2\u4e0e\u5ea6\u6025\u5267\u4e0b\u964d\uff0c\u53ef\u80fd\u9700\u8981\u9488\u5bf9\u65b0\u7528\u6237\u7684\u5f15\u5bfc\u548c\u4f53\u9a8c\u8fdb\u884c\u4f18\u5316\u3002\n\n**kix_train_times**\n\n1. **\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u4e0b\u964d\u8d8b\u52bf**\uff1a\u5728\u8fc7\u53bb\u4e03\u5929\u4e2d\uff0ckix_train_times \u4ece 5.567065 \u964d\u81f3 3.116580\uff0c\u73af\u6bd4\u4e0b\u964d\u4e86 41.08%\uff0c\u663e\u793a\u51fa\u7528\u6237\u53c2\u4e0e\u5ea6\u663e\u8457\u964d\u4f4e\u3002\n\n2. **\u6e38\u620f\u540d\u79f0\u5f71\u54cd\u5206\u6790**\uff1a\u5728 2026-02-28\uff0c\u6e38\u620f \"Happy Bird\" \u7684 kix_train_times \u8fbe\u5230\u6700\u9ad8\u503c 5.567065\uff0c\u800c\u5728 2026-03-04\uff0c\"Golden Move Quest\" \u7684\u503c\u964d\u81f3\u6700\u4f4e 3.116580\uff0c\u8868\u660e\u4e0d\u540c\u6e38\u620f\u5bf9\u7528\u6237\u53c2\u4e0e\u5ea6\u7684\u5f71\u54cd\u5dee\u5f02\u660e\u663e\u3002\n\n3. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u76f8\u5173\u6027**\uff1a\u5728 2026-03-03\uff0ckix_train_times \u4e3a 5.289625\uff0c\u800c median_game_seconds \u4e3a 160.0\uff0c\u663e\u793a\u51fa\u4e24\u8005\u5728\u8be5\u65e5\u671f\u7684\u540c\u6b65\u6ce2\u52a8\uff0c\u53ef\u80fd\u6697\u793a\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u6e38\u620f\u65f6\u957f\u5b58\u5728\u4e00\u5b9a\u7684\u76f8\u5173\u6027\u3002\n\n4. **\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4e0a\u5347**\uff1a\u5728 2026-03-03\uff0cscore_zero_user \u5360\u6bd4\u4e3a 14.29%\uff0c\u8f83\u524d\u4e00\u5929\u7684 7.14% \u4e0a\u5347\u4e86 100%\uff0c\u8fd9\u53ef\u80fd\u4e0e kix_train_times \u7684\u4e0b\u964d\u8d8b\u52bf\u76f8\u5173\uff0c\u63d0\u793a\u7528\u6237\u4f53\u9a8c\u53ef\u80fd\u5b58\u5728\u95ee\u9898\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u7a33\u5b9a\u6027\u8bc4\u4f30**\uff1akix_train_times \u5728\u8fc7\u53bb\u4e03\u5929\u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u6700\u9ad8\u503c 5.567065 \u548c\u6700\u4f4e\u503c 3.116580 \u4e4b\u95f4\u7684\u5dee\u8ddd\u4e3a 2.450485\uff0c\u663e\u793a\u51fa\u8bad\u7ec3\u5f3a\u5ea6\u7684\u4e0d\u7a33\u5b9a\u6027\uff0c\u53ef\u80fd\u5f71\u54cd\u7528\u6237\u7684\u6301\u7eed\u53c2\u4e0e\u3002\n\n**new_user_challenge_rate**\n\n1. **\u53c2\u4e0e\u7387\u6025\u5267\u4e0b\u964d**\uff1a2026\u5e743\u67083\u65e5\u7684 `new_user_challenge_rate` \u964d\u81f3 0.49%\uff0c\u8f83\u524d\u4e00\u5929\u7684 6.05% \u4e0b\u964d\u4e86 91.94%\uff0c\u663e\u793a\u51fa\u65b0\u7528\u6237\u53c2\u4e0e\u6d3b\u52a8\u7684\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u9884\u7ea6\u4e0e\u53c2\u4e0e\u7387\u76f8\u5173\u6027**\uff1a\u57282026\u5e743\u67082\u65e5\uff0c`new_user_kix_challenge_book_rate` \u4e3a 44.47%\uff0c\u800c `new_user_challenge_rate` \u4e3a 6.05%\uff0c\u4e24\u8005\u5747\u8868\u73b0\u51fa\u8f83\u9ad8\u7684\u6570\u503c\uff0c\u63d0\u793a\u9884\u7ea6\u884c\u4e3a\u53ef\u80fd\u4e0e\u53c2\u4e0e\u7387\u76f8\u5173\u3002\n\n3. **\u6765\u6e90\u5206\u6790\u663e\u793a Organic \u53c2\u4e0e\u7387\u4f4e\u8ff7**\uff1a\u57282026\u5e743\u67083\u65e5\uff0c`Organic` \u6765\u6e90\u7684\u53c2\u4e0e\u7387\u4e3a 0.0%\uff0c\u800c `invite` \u6765\u6e90\u7684\u53c2\u4e0e\u7387\u4e3a 1.0%\uff0c\u663e\u793a\u51fa\u9080\u8bf7\u6765\u6e90\u7684\u6709\u6548\u6027\u8fdc\u9ad8\u4e8e\u81ea\u7136\u6d41\u91cf\u3002\n\n4. **\u56fd\u5bb6\u53c2\u4e0e\u7387\u5dee\u5f02\u663e\u8457**\uff1a2026\u5e743\u67082\u65e5\uff0c`IN` \u548c `CN` \u7684\u53c2\u4e0e\u7387\u5747\u4e3a 100%\uff0c\u800c\u57282026\u5e743\u67083\u65e5\uff0c`IN` \u7684\u53c2\u4e0e\u7387\u964d\u81f3 0%\uff0c\u663e\u793a\u51fa\u56fd\u5bb6\u95f4\u53c2\u4e0e\u7387\u7684\u6ce2\u52a8\u6027\u3002\n\n5. **\u5206\u5b50\u5206\u6bcd\u53d8\u5316\u5f71\u54cd\u53c2\u4e0e\u7387**\uff1a\u57282026\u5e743\u67083\u65e5\uff0c`new_user_challenge_rate` \u7684\u5206\u5b50\u4e3a 1\uff0c\u5206\u6bcd\u4e3a 205\uff0c\u5bfc\u81f4\u53c2\u4e0e\u7387\u663e\u8457\u4e0b\u964d\uff0c\u53cd\u6620\u51fa\u65b0\u7528\u6237\u7684\u53c2\u4e0e\u884c\u4e3a\u6025\u5267\u51cf\u5c11\u3002\n\n\n## Viral\n\n**viral_new_uv**\n\n1. **Viral \u65b0\u7528\u6237\u5360\u6bd4\u663e\u8457\u4e0b\u964d**\uff1a2026\u5e743\u67084\u65e5\u7684 viral_new_uv \u964d\u81f3 1.92%\uff0c\u8f83\u524d\u4e00\u5929\u7684 6.29% \u4e0b\u964d\u4e86 69.43%\uff0c\u663e\u793a\u51fa\u7528\u6237\u83b7\u53d6\u6e20\u9053\u7684\u6709\u6548\u6027\u53ef\u80fd\u51fa\u73b0\u95ee\u9898\u3002\n\n2. **\u65b0\u7528\u6237\u603b\u6570\u51cf\u5c11\u5f71\u54cd Viral \u5360\u6bd4**\uff1a3\u67084\u65e5\u7684\u603b\u65b0\u7528\u6237\u6570\u4e3a 52\uff0c\u800c3\u67083\u65e5\u4e3a 302\uff0c\u5bfc\u81f4 viral_new_uv \u7684\u5206\u6bcd\u5927\u5e45\u4e0b\u964d\uff0c\u76f4\u63a5\u5f71\u54cd\u4e86 viral \u65b0\u7528\u6237\u5360\u6bd4\u7684\u8ba1\u7b97\u3002\n\n3. **\u66dd\u5149\u5230\u70b9\u51fb\u8f6c\u5316\u7387\u7a33\u5b9a**\uff1a\u57283\u67083\u65e5\uff0cinvitation_impression_to_click \u7684\u503c\u4e3a 6.86%\uff0c\u4e0e viral_new_uv \u540c\u671f\u4e0b\u964d\uff0c\u8868\u660e\u66dd\u5149\u4e0e\u70b9\u51fb\u7684\u8f6c\u5316\u6548\u7387\u53ef\u80fd\u672a\u53d7\u5230 viral \u65b0\u7528\u6237\u5360\u6bd4\u4e0b\u964d\u7684\u76f4\u63a5\u5f71\u54cd\u3002\n\n4. **\u70b9\u51fb\u5230\u9080\u8bf7\u6210\u529f\u8f6c\u5316\u7387\u4fdd\u6301\u4e0d\u53d8**\uff1a3\u67083\u65e5\u7684 click_to_invite_sucess \u4e3a 1.12\uff0c\u663e\u793a\u51fa\u5c3d\u7ba1 viral_new_uv \u4e0b\u964d\uff0c\u4f46\u70b9\u51fb\u540e\u9080\u8bf7\u6210\u529f\u7684\u8f6c\u5316\u7387\u4fdd\u6301\u7a33\u5b9a\uff0c\u53ef\u80fd\u8868\u660e\u7528\u6237\u5bf9\u9080\u8bf7\u5185\u5bb9\u7684\u63a5\u53d7\u5ea6\u672a\u53d7\u5f71\u54cd\u3002\n\n5. **\u77ed\u671f\u6ce2\u52a8\u9700\u5173\u6ce8**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0cviral_new_uv \u7684\u6ce2\u52a8\u5e45\u5ea6\u8f83\u5927\uff0c\u5c24\u5176\u662f\u4ece 6.37% \u964d\u81f3 1.92%\uff0c\u9700\u8981\u8fdb\u4e00\u6b65\u5206\u6790\u7528\u6237\u83b7\u53d6\u7b56\u7565\u7684\u6709\u6548\u6027\u53ca\u5176\u5bf9\u6574\u4f53\u7528\u6237\u589e\u957f\u7684\u5f71\u54cd\u3002\n\n\n## Revenue\n\n**average_energy_spend_per_active_user**\n\n1. **\u4eba\u5747\u80fd\u8017\u6025\u5267\u4e0b\u964d**\uff1a2026\u5e743\u67084\u65e5\u7684\u4eba\u5747\u80fd\u8017\u4e3a2.52\uff0c\u8f83\u524d\u4e00\u5929\u76845.36\u4e0b\u964d\u4e8652.92%\uff0c\u663e\u793a\u51fa\u7528\u6237\u80fd\u8017\u7684\u663e\u8457\u51cf\u5c11\u3002\n\n2. **\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u80fd\u8017\u76f8\u5173\u6027**\uff1a\u57282026\u5e743\u67083\u65e5\uff0ckix_train_times\u4e3a5.29\uff0c\u80fd\u8017\u4e3a5.36\uff0c\u4e8c\u8005\u5448\u73b0\u6b63\u76f8\u5173\u8d8b\u52bf\uff0c\u4f46\u57283\u67084\u65e5\uff0ckix_train_times\u964d\u81f33.12\uff0c\u80fd\u8017\u4e5f\u968f\u4e4b\u5927\u5e45\u4e0b\u964d\uff0c\u8868\u660e\u8bad\u7ec3\u5f3a\u5ea6\u53ef\u80fd\u5f71\u54cd\u80fd\u8017\u3002\n\n3. **\u65b0\u7528\u6237\u80fd\u8017\u663e\u8457\u6ce2\u52a8**\uff1a2026\u5e743\u67083\u65e5\u7684\u65b0\u7528\u6237\u4eba\u5747\u80fd\u8017\u4e3a7.77\uff0c\u8fdc\u9ad8\u4e8e3\u67084\u65e5\u76843.71\uff0c\u663e\u793a\u65b0\u7528\u6237\u7684\u80fd\u8017\u6ce2\u52a8\u8f83\u5927\uff0c\u53ef\u80fd\u5f71\u54cd\u6574\u4f53\u4eba\u5747\u80fd\u8017\u7684\u7a33\u5b9a\u6027\u3002\n\n4. **\u77ed\u671f\u6ce2\u52a8\u4e0e\u7a33\u5b9a\u6027**\uff1a\u5728\u8fc7\u53bb\u51e0\u5929\u4e2d\uff0c\u80fd\u8017\u51fa\u73b0\u4e86\u5c16\u5cf0\u548c\u65ad\u5d16\u5f0f\u4e0b\u964d\uff0c\u5c24\u5176\u662f3\u67084\u65e5\u7684\u6025\u5267\u4e0b\u964d\uff0c\u53ef\u80fd\u4e0e\u7528\u6237\u6d3b\u8dc3\u5ea6\u6216\u8bad\u7ec3\u6d3b\u52a8\u7684\u53d8\u5316\u6709\u5173\u3002\n\n5. **\u5f02\u5e38\u65e5\u5bf9\u6bd4**\uff1a3\u67084\u65e5\u7684\u80fd\u8017\u5f02\u5e38\u4e0b\u964d\u81f32.52\uff0c\u9700\u91cd\u70b9\u5173\u6ce8\u524d\u4e00\u5929\u7684kix_train_times\uff085.29\uff09\u548c\u65b0\u7528\u6237\u80fd\u8017\uff087.77\uff09\uff0c\u4ee5\u5224\u65ad\u662f\u5426\u5b58\u5728\u884c\u4e3a\u53d8\u5316\u5bfc\u81f4\u7684\u80fd\u8017\u6ce2\u52a8\u3002"</script>
 
 
 <div class="container">
@@ -10535,7 +10381,7 @@ body.ai-collapsed .charts{
         </button>
       </div>
     </div>
-    <div class="ai-panel-subtitle" id="aiPanelSubtitle">点击任意模块或模块内指标卡片查看对应 AI 分析</div>
+    <div class="ai-panel-subtitle" id="aiPanelSubtitle">点击任意指标卡片查看对应 AI 分析</div>
     <div class="ai-panel-content" id="aiSidebarContent"></div>
   </aside>
 
@@ -11668,7 +11514,7 @@ function createChartCard(spec) {
     card.innerHTML = `
       <div class="chart-header">
         <div>
-          <div class="chart-title">${spec.title}</div>
+          <div class="chart-title">${spec.title}${spec.has_ai ? `<span class="ai-badge" data-metric-id="${spec.metric_id}" title="AI 分析">AI</span>` : ``}</div>
           ${metricInfo}
         </div>
         <div class="chart-header-right">
@@ -12559,10 +12405,9 @@ function renderAllCharts() {
 
 // AI分析展开/折叠功能
 
-// 全局变量存储 AI 模块分析数据
-let aiModuleAnalysisData = {};
-let aiModuleAnalysisError = "";
-let aiActiveModuleId = null;
+// 全局变量存储 AI 分析数据
+let aiAnalysisData = {};
+let aiActiveMetricId = null;
 
 // 方案A：打开侧边栏时不遮挡图表（主内容让出右侧空间），并触发图表 resize
 
@@ -12608,104 +12453,103 @@ function openAISidebar(){
 }
 
 
-// 加载 AI 模块分析内容
-function loadAIAnalysisData() {
-  const el = document.getElementById('ai-module-analysis-data');
+// 加载并解析 AI 分析内容
+function loadAIAnalysis() {
+  const el = document.getElementById('ai-summary-data');
   if (!el) {
-    console.warn('AI analysis element not found: #ai-module-analysis-data');
-    aiModuleAnalysisData = {};
-    aiModuleAnalysisError = "";
+    console.warn('AI summary element not found: #ai-summary-data');
+    aiAnalysisData = {};
     return;
   }
-  let payload = { modules: {}, error: "" };
+  let aiSummaryText = "";
   try {
-    payload = JSON.parse(el.textContent || '{}');
+    aiSummaryText = JSON.parse(el.textContent || '""');
   } catch (e) {
-    console.error('Failed to JSON.parse ai-module-analysis-data:', e);
+    console.error('Failed to JSON.parse ai-summary-data:', e);
+    aiSummaryText = "";
   }
-  aiModuleAnalysisData = payload.modules || {};
-  aiModuleAnalysisError = payload.error || "";
-  console.log('AI 模块分析已加载:', Object.keys(aiModuleAnalysisData).length, '个模块');
+  console.log('AI summary raw length:', (aiSummaryText || "").length, 'head:', String(aiSummaryText || "").slice(0, 80));
+  aiAnalysisData = parseAIAnalysisByMetric(aiSummaryText);
+  console.log('AI 分析数据已加载:', Object.keys(aiAnalysisData).length, '个指标');
+  console.log('已加载的指标列表:', Object.keys(aiAnalysisData).join(', '));
 }
 
-function renderMeta(meta) {
-  if (!meta) return '';
-  const parts = [];
-  if (meta.run_date) parts.push(escapeHtml(meta.run_date));
-  if (meta.date_range) parts.push(escapeHtml(meta.date_range));
-  if (meta.model) parts.push(escapeHtml(meta.model));
-  if (!parts.length) return '';
-  return `<div class="ai-meta-row">${parts.map(p => `<span class="ai-meta-tag">${p}</span>`).join('')}</div>`;
+// 按指标解析 AI 分析文本
+function parseAIAnalysisByMetric(text) {
+  // text comes from JSON.parse(script[type=application/json]). It may contain literal "\n" sequences
+  // (double-escaped) or Unicode line separators. Normalize aggressively.
+  let t = String(text || "");
+  if (!t || t === "暂无AI分析内容" || t.includes("加载AI分析内容时出错")) return {};
+
+  // normalize line breaks
+  t = t.replace(/\u2028|\u2029/g, "\n");
+  // if still looks like a single line but contains literal backslash-n, unescape once
+  if (!t.includes("\n") && /\n/.test(t)) {
+    t = t.replace(/\r\n/g, "\n").replace(/\n/g, "\n").replace(/\r/g, "\n");
+  }
+  // unify CRLF
+  t = t.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  // strip zero-width chars that break startsWith
+  const stripInvisible = (s) =>
+    s.replace(/^[\uFEFF\u200B\u200C\u200D\u2060]+/, "").replace(/[\u200B\u200C\u200D\u2060]+/g, "");
+
+  const data = {};
+  const lines = t.split("\n");
+  let currentModule = null;
+  let currentMetricId = null;
+  let bulletPoints = [];
+
+  const flush = () => {
+    if (currentMetricId && bulletPoints.length > 0) {
+      data[currentMetricId] = { module: currentModule, points: [...bulletPoints] };
+    }
+    bulletPoints = [];
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = stripInvisible(lines[i] || "").trim();
+    if (!line) continue;
+
+    // module header: ## xxx
+    const m1 = line.match(/^##\s+(.+)$/);
+    if (m1) {
+      flush();
+      currentModule = m1[1].trim();
+      currentMetricId = null;
+      continue;
+    }
+
+    // metric id: **metric_id** (must be a standalone bold line)
+    const m2 = line.match(/^\*\*([^*]+)\*\*$/);
+    if (m2 && !line.includes(":")) {
+      flush();
+      currentMetricId = m2[1].trim();
+      continue;
+    }
+
+    // bullets: • xxx  OR - xxx  OR * xxx
+    const m3 = line.match(/^(?:•|\-|\*)\s*(.+)$/);
+    if (m3) {
+      bulletPoints.push(m3[1].trim());
+      continue;
+    }
+
+    // numbered list: 1. xxx
+    const m4 = line.match(/^\d+\.\s*(.+)$/);
+    if (m4) {
+      bulletPoints.push(m4[1].trim());
+      continue;
+    }
+  }
+
+  flush();
+  return data;
 }
 
-function renderSimpleItems(items, cardClass) {
-  if (!items || !items.length) return '';
-  return items.map((it) => {
-    const title = escapeHtml(it.title || '');
-    const detail = escapeHtml(it.detail || '');
-    return `
-      <div class="ai-card ${cardClass}">
-        ${title ? `<div class="ai-card-title">${title}</div>` : ''}
-        ${detail ? `<div class="ai-card-detail">${detail}</div>` : ''}
-      </div>
-    `;
-  }).join('');
-}
-
-function renderBadNewsItems(items) {
-  if (!items || !items.length) return '';
-  return items.map((it) => {
-    const title = escapeHtml(it.title || '');
-    const detail = escapeHtml(it.detail || '');
-
-    // 深度洞察：每条用卡片包裹
-    const insightsList = (it.insights || []);
-    const insights = insightsList.map(s => `
-      <div class="ai-insight-card">${escapeHtml(String(s))}</div>
-    `).join('');
-
-    // 建议策略：数字序号列表
-    const strategiesList = (it.strategies || []);
-    const strategies = strategiesList.map((s, idx) => {
-      const st = escapeHtml(s.strategy || '');
-      const ref = escapeHtml(s.reference || '');
-      const eff = escapeHtml(s.effect || '');
-      return `
-        <div class="ai-strategy-row">
-          <div class="ai-strategy-num">${idx + 1}</div>
-          <div class="ai-strategy-body">
-            <div class="ai-strategy-name">${st}</div>
-            ${(ref || eff) ? `<div class="ai-strategy-meta">
-              ${ref ? `<span><strong>参考：</strong>${ref}</span>` : ''}
-              ${eff ? `<span><strong>效果：</strong>${eff}</span>` : ''}
-            </div>` : ''}
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    return `
-      <div class="ai-card bad">
-        ${title ? `<div class="ai-card-title">${title}</div>` : ''}
-        ${detail ? `<div class="ai-card-detail">${detail}</div>` : ''}
-        ${insights ? `
-          <div class="ai-card-subsection">
-            <div class="ai-card-subsection-title">深度洞察<span class="ai-core-tag">核心</span></div>
-            ${insights}
-          </div>` : ''}
-        ${strategies ? `
-          <div class="ai-card-subsection">
-            <div class="ai-card-subsection-title">AI建议策略（调试中，仅供参考）</div>
-            ${strategies}
-          </div>` : ''}
-      </div>
-    `;
-  }).join('');
-}
-
-// 显示模块的 AI 分析（右侧固定面板：宽度固定，不遮挡图表）
-function renderModuleAnalysis(moduleId, moduleName) {
-  aiActiveModuleId = (moduleId || "").trim();
+// 显示指标的 AI 分析（右侧固定面板：宽度固定，不遮挡图表）
+function showAIAnalysisForMetric(metricId, metricName) {
+  aiActiveMetricId = (metricId || "").trim();
 
   const content = document.getElementById('aiSidebarContent');
   const titleEl = document.getElementById('aiPanelTitle');
@@ -12713,85 +12557,60 @@ function renderModuleAnalysis(moduleId, moduleName) {
 
   if (!content || !titleEl || !subtitleEl) return;
 
+  const key = (metricId || "").trim();
+  const analysis = aiAnalysisData[key];
+
   // 确保面板展开（方案A：主内容自动适应）
   setAIPanelCollapsed(false);
 
-  titleEl.textContent = moduleName || moduleId || "AI 分析";
-  subtitleEl.textContent = moduleId
-    ? ("已选模块：" + (moduleName || moduleId))
-    : "模块 AI 分析";
+  titleEl.textContent = metricName || metricId || "AI 分析";
+  subtitleEl.textContent = analysis
+    ? ("已选指标：" + (metricName || metricId))
+    : ("该指标暂无 AI 分析：" + (metricName || metricId));
 
-  if (aiModuleAnalysisError) {
-    content.innerHTML = `
-      <div class="ai-empty">
-        <div style="font-weight:700; margin-bottom:6px;">AI 分析加载失败</div>
-        <div>${escapeHtml(aiModuleAnalysisError)}</div>
-      </div>
-    `;
-    return;
-  }
-
-  const analysis = aiModuleAnalysisData[moduleId];
   if (!analysis) {
     content.innerHTML = `
       <div class="ai-empty">
         <div style="font-weight:700; margin-bottom:6px;">暂无 AI 分析</div>
-        <div>该模块暂无对应的 AI 分析数据。</div>
+        <div>该指标在 angel_ai_summary.txt 中没有对应条目。</div>
       </div>
     `;
     return;
   }
 
-  const metaHtml = renderMeta(analysis.meta || {});
-  const singlePointItems = analysis.single_point || [];
-  const goodNewsItems = analysis.good_news || [];
-  const badNewsItems = analysis.bad_news || [];
+  let html = '';
+  html += `<div class="ai-block">`;
+  html += `<ul>`;
+  (analysis.points || []).forEach((pt) => {
+    const p = String(pt || '').trim();
+    if (!p) return;
+    if (p.startsWith("现状与目标") || p.startsWith("趋势分析")) return;
 
-  let html = metaHtml;
+    // section header like "深度洞察："
+    if (/^[^:：]+[：:]$/.test(p)) {
+      html += `<li class="ai-section">${escapeHtml(p.replace(/[：:]$/, ''))}</li>`;
+      return;
+    }
 
-  if (goodNewsItems.length) {
-    html += `
-      <div class="ai-section-block">
-        <div class="ai-section-label">
-          <span class="ai-section-icon">✅</span>
-          <span>好消息</span>
-        </div>
-        ${renderSimpleItems(goodNewsItems, 'good')}
-      </div>`;
-  }
-
-  if (badNewsItems.length) {
-    html += `
-      <div class="ai-section-block">
-        <div class="ai-section-label">
-          <span class="ai-section-icon">⚠️</span>
-          <span>待关注</span>
-        </div>
-        ${renderBadNewsItems(badNewsItems)}
-      </div>`;
-  }
-
-  if (singlePointItems.length) {
-    html += `
-      <div class="ai-section-block">
-        <div class="ai-section-label">
-          <span class="ai-section-icon">📌</span>
-          <span>单点跟踪</span>
-        </div>
-        ${renderSimpleItems(singlePointItems, 'neutral')}
-      </div>`;
-  }
-
-  if (!html.trim()) {
-    html = `<div class="ai-empty"><div>该模块暂无分析内容。</div></div>`;
-  }
+    // 支持 "**标题**: 内容" 的结构
+    const m = p.match(/^\*\*(.+?)\*\*\s*[：:]+\s*(.*)$/);
+    if (m) {
+      const t = m[1].trim();
+      const c = (m[2] || '').trim();
+      html += `<li><span class="ai-pill">${escapeHtml(t)}</span> ${escapeHtml(c)}</li>`;
+    } else {
+      html += `<li>${escapeHtml(p)}</li>`;
+    }
+  });
+  html += `</ul>`;
+  html += `</div>`;
 
   content.innerHTML = html;
 }
 
 // 折叠 AI 面板（不遮挡图表）
 function closeAISidebar() {
-  aiActiveModuleId = null;
+  aiActiveMetricId = null;
   setAIPanelCollapsed(true);
 }
 
@@ -12804,34 +12623,45 @@ function escapeHtml(text) {
 
 }
 
-// 绑定：点击模块/指标卡片 -> 右侧弹出该模块 AI 分析
-function initAISidebarModuleClick() {
+// 绑定：点击指标卡片 -> 右侧弹出该指标 AI 分析
+function initAISidebarBadgeClick() {
+  // 点击标题右侧 AI 标识：打开/关闭右侧 AI 分析（不遮挡主内容）
   document.addEventListener("click", (e) => {
-    if (e.target.closest("a, button, input, select, textarea, .dim-dd, .dim-dd-btn, .chart-tab")) return;
+    const badge = e.target.closest(".ai-badge");
+    if (!badge) return;
+    e.preventDefault();
+    e.stopPropagation();
 
-    const chartCard = e.target.closest(".chart-card");
-    const moduleRow = chartCard ? chartCard.closest(".module-row") : e.target.closest(".module-row");
-    if (!moduleRow) return;
+    const metricId = (badge.getAttribute("data-metric-id") || "").trim();
+    if (!metricId) return;
 
-    const moduleId = String(moduleRow.id || "").replace(/^module-/, "");
-    if (!moduleId) return;
+    const sidebar = document.getElementById('aiSidebar');
+    const isOpen = sidebar.classList.contains('active');
 
-    const isOpen = !document.body.classList.contains('ai-collapsed');
-
-    if (isOpen && aiActiveModuleId && aiActiveModuleId === moduleId) {
+    // 若已经打开且点击的是同一个指标 -> 收起
+    if (isOpen && aiActiveMetricId && aiActiveMetricId === metricId) {
       closeAISidebar();
       return;
     }
 
-    const titleEl = moduleRow.querySelector(".module-header h2");
-    const moduleName = titleEl ? titleEl.textContent.trim() : moduleId;
-    renderModuleAnalysis(moduleId, moduleName);
+    // 取卡片标题（去掉 AI badge 文案）
+    const card = badge.closest(".chart-card");
+    let metricName = metricId;
+    if (card) {
+      const titleEl = card.querySelector(".chart-title");
+      if (titleEl) {
+        const clone = titleEl.cloneNode(true);
+        clone.querySelectorAll(".ai-badge").forEach(x => x.remove());
+        metricName = (clone.textContent || "").trim() || metricId;
+      }
+    }
+
+    showAIAnalysisForMetric(metricId, metricName);
   }, true);
 }
 
 // 初始化
 initAIResize();
-loadAIAnalysisData();
 
 // =========================
 // URL路由和指标详情页功能
@@ -13045,7 +12875,26 @@ function initPage() {
   initNavigation();
   renderAllCharts();
 
-  loadAIAnalysisData();
+  // 点击卡片 -> 在右侧 AI 面板展示对应指标分析（面板为常驻列，不遮挡图表）
+  const modulesArea = document.getElementById("modulesArea");
+  if (modulesArea){
+    modulesArea.addEventListener("click", (ev) => {
+      const card = ev.target.closest(".chart-card");
+      if (!card) return;
+
+      // 避免干扰维度切换/按钮/下拉等交互
+      if (ev.target.closest("button, a, select, option, input, textarea, .dim-tabs, .dim-dropdown, .chart-actions")) return;
+
+      const metricId = card.dataset.metricId;
+      const metricName = card.dataset.metricName || metricId;
+
+      // 如果没有对应 AI，也展示 empty（但仍可展开面板）
+      openAISidebar();
+      showAIAnalysisForMetric(metricId, metricName);
+    });
+  }
+
+  loadAIAnalysis();
   // AI 面板默认展开
   setAIPanelCollapsed(false);
 
@@ -13054,7 +12903,8 @@ function initPage() {
   const expandBtn = document.getElementById("aiExpandBtn");
   if (expandBtn) expandBtn.addEventListener("click", () => setAIPanelCollapsed(false));
 
-  initAISidebarModuleClick();
+    initAISidebarBadgeClick();
+initAISidebarBadgeClick();
 
   document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
   document.getElementById("generatedAt").textContent = new Date().toLocaleString();
