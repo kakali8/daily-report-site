@@ -1688,15 +1688,15 @@ body.ai-collapsed .charts{
           "\u70b9\u51fbstart"
         ],
         "volumes": [
-          6741,
-          6514,
-          5554
+          6754,
+          6527,
+          5567
         ],
         "rates": [
-          0.9663,
-          0.8526
+          0.9664,
+          0.8529
         ],
-        "overall_rate": 0.8239,
+        "overall_rate": 0.8243,
         "date": "2026-03-16",
         "step_details": [
           {
@@ -1864,7 +1864,7 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 75.0,
-                223.0,
+                241.0,
                 82.0,
                 113.0,
                 72.0,
@@ -1872,10 +1872,10 @@ body.ai-collapsed .charts{
                 0.0,
                 103.0,
                 65.0,
-                123.0,
+                128.0,
                 95.0,
                 0.0,
-                69.0,
+                80.0,
                 0.0
               ],
               [
@@ -1986,7 +1986,7 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 75.0,
-                223.0,
+                241.0,
                 82.0,
                 113.0,
                 72.0,
@@ -1994,10 +1994,10 @@ body.ai-collapsed .charts{
                 0.0,
                 103.0,
                 65.0,
-                123.0,
+                128.0,
                 95.0,
                 0.0,
-                69.0,
+                80.0,
                 0.0
               ],
               [
@@ -2067,7 +2067,7 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                102.0
+                105.4
               ],
               [
                 146.0909090909091
@@ -2114,8 +2114,8 @@ body.ai-collapsed .charts{
               57726.0,
               67293.0,
               60518.0,
-              68600.0,
-              59442.0
+              68605.0,
+              59549.0
             ]
           }
         },
@@ -2173,12 +2173,12 @@ body.ai-collapsed .charts{
                 25284.0
               ],
               [
-                41123.0,
-                27477.0
+                41126.0,
+                27479.0
               ],
               [
-                37185.0,
-                22257.0
+                37250.0,
+                22299.0
               ]
             ]
           }
@@ -2230,10 +2230,10 @@ body.ai-collapsed .charts{
                 60518.0
               ],
               [
-                68600.0
+                68605.0
               ],
               [
-                59442.0
+                59549.0
               ]
             ]
           }
@@ -2275,7 +2275,7 @@ body.ai-collapsed .charts{
               0.7512953367875648,
               0.7909604519774012,
               0.7559224694903087,
-              0.7787671232876713
+              0.7796030116358659
             ]
           }
         },
@@ -2337,7 +2337,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.8548872180451128,
+                0.8557475582268971,
                 0.0
               ]
             ]
@@ -2391,10 +2391,10 @@ body.ai-collapsed .charts{
               0.8773204196933011,
               0.8683760683760684,
               0.8096,
-              0.8556034482758621,
+              0.8563218390804598,
               0.8875379939209727,
               0.9023190442726634,
-              0.8792332268370607
+              0.8786717752234994
             ]
           }
         },
@@ -2479,7 +2479,7 @@ body.ai-collapsed .charts{
                 0.3496503496503496
               ],
               [
-                0.9251028806584364,
+                0.925925925925926,
                 0.3785310734463277
               ],
               [
@@ -2491,7 +2491,7 @@ body.ai-collapsed .charts{
                 0.6274509803921569
               ],
               [
-                0.9251940719830628,
+                0.9245416078984484,
                 0.4391891891891892
               ]
             ]
@@ -2684,8 +2684,8 @@ body.ai-collapsed .charts{
     <div class="header-info">
       <span>📅 Date: <strong id="dataPeriod">-</strong></span>
     </div>
-    <div class="header-info" style="margin-top:4px;font-size:12px;color:#9ca3af;">
-      数据说明：大部分指标展示截止 T-1，留存类指标截止 T-2（d7留存截止 T-8），T = run_date
+    <div class="header-info" style="margin-top:6px;font-size:13px;color:#6b7280;">
+      数据说明：大部分指标展示截止 2026-03-16，留存类指标截止 2026-03-15（d7留存截止 2026-03-09）
     </div>
   </div>
 
@@ -2742,6 +2742,18 @@ body.ai-collapsed .charts{
 
 <script>
 Chart.register(ChartDataLabels);
+
+// Plugin: force first & last x-axis tick to always be visible after autoSkip
+Chart.register({
+  id: 'forceEdgeTicks',
+  afterBuildTicks(chart) {
+    const xScale = chart.scales && chart.scales.x;
+    if (!xScale || !Array.isArray(xScale.ticks) || xScale.ticks.length < 2) return;
+    // Mark first and last as major so autoSkip won't remove them
+    xScale.ticks[0].major = true;
+    xScale.ticks[xScale.ticks.length - 1].major = true;
+  }
+});
 
 
 // =========================
@@ -2863,6 +2875,7 @@ function applyCommonScales(scales, kind) {
     scales.x.ticks.maxRotation = 0;
     scales.x.ticks.autoSkip = true;
     scales.x.ticks.padding = 6;
+    scales.x.ticks.major = { enabled: true };
   }
   // y / y1
   ["y","y1"].forEach(k=>{
