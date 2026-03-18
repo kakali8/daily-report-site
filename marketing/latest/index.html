@@ -259,9 +259,8 @@ body {
   box-shadow: var(--shadow);
 }
 
-/* AI 分析面板 — 已禁用 */
-:root { --aiw: 0px; --ai-top: 86px; }
-.ai-panel { display: none !important; }
+/* AI 分析面板（方案A：导航下方固定占位，不遮挡图表） */
+:root { --aiw: {aiw_px}px; --ai-top: 86px; }
 
 /* 两列布局：左侧图表，右侧 AI 面板（不 overlay） */
 .content-layout{
@@ -1252,17 +1251,6 @@ body.ai-collapsed .charts{
 }
 
 .chart-card table th { padding:6px 10px; font-weight:600; color:#374151; white-space:nowrap; }
-.has-tip .col-tip {
-  display:none; position:absolute; left:50%; transform:translateX(-50%);
-  top:calc(100% + 4px); background:#1e293b; color:#fff; font-size:11px; font-weight:400;
-  padding:4px 10px; border-radius:6px; white-space:nowrap; z-index:100;
-  pointer-events:none; box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-.has-tip .col-tip::after {
-  content:""; position:absolute; bottom:100%; left:50%; transform:translateX(-50%);
-  border:5px solid transparent; border-bottom-color:#1e293b;
-}
-.has-tip:hover .col-tip { display:block; }
 .chart-card table td { padding:5px 10px; color:#4b5563; border-bottom:1px solid #f3f4f6; }
 .chart-card table tr:hover td { background:#f9fafb; }
 
@@ -1455,10 +1443,6 @@ body.ai-collapsed .charts{
       display:flex;
       align-items:center;
       justify-content:center;
-    }
-    .multi-funnel-wrap{
-      width:100%;
-      padding:8px 16px 16px;
     }
 
 /* 空状态 */
@@ -1764,7 +1748,7 @@ body.ai-collapsed .charts{
               1467.0,
               1631.0,
               1522.0,
-              673.0
+              707.0
             ]
           }
         },
@@ -6615,7 +6599,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                214.0,
+                223.0,
                 0.0,
                 0.0,
                 0.0,
@@ -6625,7 +6609,7 @@ body.ai-collapsed .charts{
                 1.0,
                 0.0,
                 0.0,
-                26.0,
+                30.0,
                 0.0,
                 0.0,
                 0.0,
@@ -6645,7 +6629,7 @@ body.ai-collapsed .charts{
                 0.0,
                 2.0,
                 0.0,
-                29.0,
+                30.0,
                 0.0,
                 0.0,
                 0.0,
@@ -6659,7 +6643,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                109.0,
+                114.0,
                 0.0,
                 0.0,
                 1.0,
@@ -6691,7 +6675,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                6.0,
+                7.0,
                 0.0,
                 0.0,
                 0.0,
@@ -6702,7 +6686,7 @@ body.ai-collapsed .charts{
                 2.0,
                 0.0,
                 0.0,
-                34.0,
+                38.0,
                 21.0,
                 0.0,
                 1.0,
@@ -6717,7 +6701,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                8.0,
+                9.0,
                 0.0,
                 0.0,
                 0.0,
@@ -6734,7 +6718,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                208.0,
+                217.0,
                 0.0,
                 0.0,
                 0.0,
@@ -7148,14 +7132,14 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                272.0,
+                287.0,
                 0.0,
                 49.0,
                 0.0,
-                112.0,
-                7.0,
-                135.0,
-                98.0,
+                117.0,
+                8.0,
+                141.0,
+                105.0,
                 0.0
               ]
             ]
@@ -7172,50 +7156,6 @@ body.ai-collapsed .charts{
     }
   ],
   "user_growth": [
-    {
-      "chart_id": "new_user_intro_funnel",
-      "title": "\u65b0\u7528\u6237\u4ecb\u7ecd\u9875\u6f0f\u6597",
-      "metric_id": "new_user_intro_funnel",
-      "module": "multi_funnel",
-      "kind": "multi_funnel",
-      "business_domain": "User Growth",
-      "data": {
-        "labels": [
-          "\u65b0\u7528\u6237",
-          "\u8fdb\u5165\u4ecb\u7ecd\u9875",
-          "\u70b9\u51fbstart"
-        ],
-        "volumes": [
-          6936,
-          6696,
-          5685
-        ],
-        "rates": [
-          0.9654,
-          0.849
-        ],
-        "overall_rate": 0.8196,
-        "date": "2026-03-17",
-        "step_details": [
-          {
-            "metric_id": "new_user_enter_intro_rate",
-            "metric_name": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u6f0f\u6597",
-            "description": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u7387"
-          },
-          {
-            "metric_id": "new_user_intro_start_click_rate",
-            "metric_name": "\u65b0\u7528\u6237\u4ece\u4ecb\u7ecd\u9875->\u70b9\u51fbstart\u6309\u94ae\u6f0f\u6597",
-            "description": "\u65b0\u7528\u6237\u70b9\u51fbstart\u6309\u94ae\u7387"
-          }
-        ]
-      },
-      "step_metric_ids": [
-        "new_user_enter_intro_rate",
-        "new_user_intro_start_click_rate"
-      ],
-      "related_metrics": [],
-      "description": ""
-    },
     {
       "chart_id": "new_user__series__series_daily",
       "title": "\u65b0\u7528\u6237\u6570",
@@ -7295,7 +7235,7 @@ body.ai-collapsed .charts{
               970.0,
               1033.0,
               936.0,
-              354.0
+              372.0
             ]
           }
         },
@@ -7467,16 +7407,16 @@ body.ai-collapsed .charts{
             "SA",
             "CN",
             "QA",
+            "MX",
             "KE",
             "CI",
             "SY",
             "SC",
-            "TZ",
             "FR",
-            "MX",
+            "TZ",
             "IN",
-            "TH",
             "NG",
+            "TH",
             "MM",
             "AE",
             "CM",
@@ -11818,7 +11758,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                159.0,
+                166.0,
                 0.0,
                 0.0,
                 0.0,
@@ -11856,7 +11796,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                89.0,
+                91.0,
                 0.0,
                 0.0,
                 0.0,
@@ -11888,7 +11828,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
+                1.0,
                 3.0,
                 0.0,
                 0.0,
@@ -11898,7 +11838,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                80.0,
+                88.0,
                 14.0,
                 0.0,
                 0.0,
@@ -12411,15 +12351,15 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                173.0,
+                181.0,
                 0.0,
                 45.0,
                 0.0,
-                40.0,
-                2.0,
-                28.0,
-                16.0,
-                50.0,
+                41.0,
+                3.0,
+                31.0,
+                19.0,
+                52.0,
                 0.0,
                 0.0
               ]
@@ -12513,7 +12453,7 @@ body.ai-collapsed .charts{
               0.2006269592476489,
               0.1681329423264907,
               0.146551724137931,
-              0.2124645892351274
+              0.2027027027027027
             ]
           }
         },
@@ -17036,7 +16976,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.2075471698113207,
+                0.2,
                 0.0,
                 0.0,
                 0.0,
@@ -17074,7 +17014,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.2613636363636363,
+                0.2555555555555555,
                 0.0,
                 0.0,
                 0.0,
@@ -17116,7 +17056,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.1375,
+                0.125,
                 0.5,
                 0.0,
                 0.0,
@@ -17178,8 +17118,8 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "FB",
             "others",
-            "minihub",
             "Organic",
+            "minihub",
             "invite",
             "TikTok"
           ],
@@ -17194,8 +17134,8 @@ body.ai-collapsed .charts{
             "others",
             "invite",
             "minihub",
-            "TikTok",
-            "Organic"
+            "Organic",
+            "TikTok"
           ],
           "data": {
             "dates": [
@@ -17473,11 +17413,11 @@ body.ai-collapsed .charts{
               ],
               [
                 0.0,
-                0.125,
-                0.5,
-                0.2857142857142857,
-                0.5625,
-                0.1947565543071161
+                0.1219512195121951,
+                0.3333333333333333,
+                0.2580645161290322,
+                0.4736842105263157,
+                0.1884057971014492
               ]
             ]
           }
@@ -17489,6 +17429,640 @@ body.ai-collapsed .charts{
         "dau"
       ],
       "description": "T+1 \u8fdb\u5165\u6709\u6548\u5bf9\u6218\u7684\u65b0\u7528\u6237\u6bd4\u4f8b"
+    },
+    {
+      "chart_id": "new_user_enter_intro_rate__series__value_daily",
+      "title": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u6f0f\u6597",
+      "metric_id": "new_user_enter_intro_rate",
+      "module": "series",
+      "item_id": "value_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "single_value",
+          "meta": {
+            "date": "2026-03-17",
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "data": {
+            "value": 0.965512286248024
+          }
+        },
+        {
+          "tab_id": "by_country",
+          "tab_label": "by country",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country"
+            ],
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "UZ",
+            "UG",
+            "PL",
+            "SG",
+            "SN",
+            "SY",
+            "MM",
+            "LV",
+            "KG",
+            "KE",
+            "TH",
+            "TR",
+            "AU",
+            "HU",
+            "HK",
+            "GH",
+            "GF",
+            "CL",
+            "CN",
+            "BD",
+            "BF",
+            "CA",
+            "CD",
+            "CH",
+            "CM",
+            "QA",
+            "CZ",
+            "DE",
+            "DK",
+            "DO",
+            "US",
+            "BR",
+            "ID",
+            "PH",
+            "PK",
+            "CI",
+            "GB",
+            "MY",
+            "TZ",
+            "SC",
+            "AE",
+            "SA",
+            "NG",
+            "IQ",
+            "FR",
+            "EG",
+            "MX",
+            "IN",
+            "MW",
+            "JP",
+            "ET"
+          ],
+          "selected_dim_values": [
+            "UZ"
+          ],
+          "ranked_dim_values": [
+            "UZ",
+            "UG",
+            "PL",
+            "SG",
+            "SN",
+            "SY",
+            "MM",
+            "LV",
+            "KG",
+            "KE",
+            "TH",
+            "TR",
+            "AU",
+            "HU",
+            "HK",
+            "GH",
+            "GF",
+            "CL",
+            "CN",
+            "BD",
+            "BF",
+            "CA",
+            "CD",
+            "CH",
+            "CM",
+            "QA",
+            "CZ",
+            "DE",
+            "DK",
+            "DO",
+            "US",
+            "BR",
+            "ID",
+            "PH",
+            "PK",
+            "CI",
+            "GB",
+            "MY",
+            "TZ",
+            "SC",
+            "AE",
+            "SA",
+            "NG",
+            "IQ",
+            "FR",
+            "EG",
+            "MX",
+            "IN",
+            "MW",
+            "JP",
+            "ET"
+          ],
+          "data": {
+            "dates": [
+              "03-17"
+            ],
+            "series": [
+              "AE",
+              "AU",
+              "BD",
+              "BF",
+              "BR",
+              "CA",
+              "CD",
+              "CH",
+              "CI",
+              "CL",
+              "CM",
+              "CN",
+              "CZ",
+              "DE",
+              "DK",
+              "DO",
+              "EG",
+              "ET",
+              "FR",
+              "GB",
+              "GF",
+              "GH",
+              "HK",
+              "HU",
+              "ID",
+              "IN",
+              "IQ",
+              "JP",
+              "KE",
+              "KG",
+              "LV",
+              "MM",
+              "MW",
+              "MX",
+              "MY",
+              "NG",
+              "PH",
+              "PK",
+              "PL",
+              "QA",
+              "SA",
+              "SC",
+              "SG",
+              "SN",
+              "SY",
+              "TH",
+              "TR",
+              "TZ",
+              "UG",
+              "US",
+              "UZ"
+            ],
+            "matrix": [
+              [
+                0.6666666666666666,
+                1.0,
+                1.0,
+                1.0,
+                0.9879746835443038,
+                1.0,
+                1.0,
+                1.0,
+                0.75,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.5,
+                0.0,
+                0.5,
+                0.75,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.985837922895358,
+                0.4,
+                0.5,
+                0.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.0,
+                0.4,
+                0.6857142857142857,
+                0.5,
+                0.9600699504517634,
+                0.9364303178484108,
+                1.0,
+                1.0,
+                0.5714285714285714,
+                0.6666666666666666,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.6666666666666666,
+                1.0,
+                0.9887640449438202,
+                1.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "source"
+            ],
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "minihub",
+            "TikTok",
+            "invite",
+            "Organic",
+            "others",
+            "FB"
+          ],
+          "selected_dim_values": [
+            "minihub"
+          ],
+          "ranked_dim_values": [
+            "minihub",
+            "TikTok",
+            "invite",
+            "Organic",
+            "others",
+            "FB"
+          ],
+          "data": {
+            "dates": [
+              "03-17"
+            ],
+            "series": [
+              "FB",
+              "Organic",
+              "TikTok",
+              "invite",
+              "minihub",
+              "others"
+            ],
+            "matrix": [
+              [
+                0.15,
+                0.9681335356600912,
+                0.9822888283378748,
+                0.977924944812362,
+                0.9957627118644068,
+                0.9598631698973774
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "User Growth",
+      "related_metrics": [],
+      "description": "\u65b0\u7528\u6237\u8fdb\u5165\u4ecb\u7ecd\u9875\u7387"
+    },
+    {
+      "chart_id": "new_user_intro_start_click_rate__series__value_daily",
+      "title": "\u65b0\u7528\u6237\u4ece\u4ecb\u7ecd\u9875->\u70b9\u51fbstart\u6309\u94ae\u6f0f\u6597",
+      "metric_id": "new_user_intro_start_click_rate",
+      "module": "series",
+      "item_id": "value_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "single_value",
+          "meta": {
+            "date": "2026-03-17",
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "data": {
+            "value": 0.849084685221015
+          }
+        },
+        {
+          "tab_id": "by_country",
+          "tab_label": "by country",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "country"
+            ],
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "AE",
+            "GB",
+            "UG",
+            "TZ",
+            "TR",
+            "TH",
+            "QA",
+            "PL",
+            "NG",
+            "MX",
+            "MM",
+            "LV",
+            "KG",
+            "IQ",
+            "AU",
+            "HK",
+            "IN",
+            "UZ",
+            "CL",
+            "BD",
+            "BF",
+            "CA",
+            "DK",
+            "DE",
+            "CH",
+            "CZ",
+            "CN",
+            "CI",
+            "PK",
+            "SG",
+            "US",
+            "PH",
+            "BR",
+            "MY",
+            "ID",
+            "SA",
+            "SC",
+            "FR",
+            "KE",
+            "CM",
+            "SY",
+            "JP",
+            "CD",
+            "MW",
+            "SN",
+            "HU",
+            "DO",
+            "GH",
+            "GF",
+            "EG",
+            "ET"
+          ],
+          "selected_dim_values": [
+            "AE"
+          ],
+          "ranked_dim_values": [
+            "AE",
+            "GB",
+            "UG",
+            "TZ",
+            "TR",
+            "TH",
+            "QA",
+            "PL",
+            "NG",
+            "MX",
+            "MM",
+            "LV",
+            "KG",
+            "IQ",
+            "AU",
+            "HK",
+            "IN",
+            "UZ",
+            "CL",
+            "BD",
+            "BF",
+            "CA",
+            "DK",
+            "DE",
+            "CH",
+            "CZ",
+            "CN",
+            "CI",
+            "PK",
+            "SG",
+            "US",
+            "PH",
+            "BR",
+            "MY",
+            "ID",
+            "SA",
+            "SC",
+            "FR",
+            "KE",
+            "CM",
+            "SY",
+            "JP",
+            "CD",
+            "MW",
+            "SN",
+            "HU",
+            "DO",
+            "GH",
+            "GF",
+            "EG",
+            "ET"
+          ],
+          "data": {
+            "dates": [
+              "03-17"
+            ],
+            "series": [
+              "AE",
+              "AU",
+              "BD",
+              "BF",
+              "BR",
+              "CA",
+              "CD",
+              "CH",
+              "CI",
+              "CL",
+              "CM",
+              "CN",
+              "CZ",
+              "DE",
+              "DK",
+              "DO",
+              "EG",
+              "ET",
+              "FR",
+              "GB",
+              "GF",
+              "GH",
+              "HK",
+              "HU",
+              "ID",
+              "IN",
+              "IQ",
+              "JP",
+              "KE",
+              "KG",
+              "LV",
+              "MM",
+              "MW",
+              "MX",
+              "MY",
+              "NG",
+              "PH",
+              "PK",
+              "PL",
+              "QA",
+              "SA",
+              "SC",
+              "SG",
+              "SN",
+              "SY",
+              "TH",
+              "TR",
+              "TZ",
+              "UG",
+              "US",
+              "UZ"
+            ],
+            "matrix": [
+              [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.8392056374119155,
+                1.0,
+                0.0,
+                1.0,
+                1.0,
+                1.0,
+                0.5,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.5,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.7797286512370312,
+                1.0,
+                1.0,
+                0.0,
+                0.5,
+                1.0,
+                1.0,
+                1.0,
+                0.0,
+                1.0,
+                0.8333333333333334,
+                1.0,
+                0.8679417122040073,
+                0.9477806788511748,
+                1.0,
+                1.0,
+                0.75,
+                0.5,
+                0.9,
+                0.0,
+                0.25,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                0.8977272727272727,
+                1.0
+              ]
+            ]
+          }
+        },
+        {
+          "tab_id": "by_source",
+          "tab_label": "by source",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "source"
+            ],
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "invite",
+            "Organic",
+            "minihub",
+            "others",
+            "TikTok",
+            "FB"
+          ],
+          "selected_dim_values": [
+            "invite"
+          ],
+          "ranked_dim_values": [
+            "invite",
+            "Organic",
+            "minihub",
+            "others",
+            "TikTok",
+            "FB"
+          ],
+          "data": {
+            "dates": [
+              "03-17"
+            ],
+            "series": [
+              "FB",
+              "Organic",
+              "TikTok",
+              "invite",
+              "minihub",
+              "others"
+            ],
+            "matrix": [
+              [
+                0.6666666666666666,
+                0.8699059561128527,
+                0.7850208044382802,
+                0.9051918735891648,
+                0.8609929078014185,
+                0.8491328106438584
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "User Growth",
+      "related_metrics": [],
+      "description": "\u65b0\u7528\u6237\u70b9\u51fbstart\u6309\u94ae\u7387"
     },
     {
       "chart_id": "new_user_consume_energy_rate__series__series_daily",
@@ -17563,13 +18137,13 @@ body.ai-collapsed .charts{
               0.7403846153846154,
               0.6828793774319066,
               0.6843971631205674,
-              0.6297619047619047,
+              0.6309523809523809,
               0.6952908587257618,
               0.4995391705069124,
               0.6102819237147595,
-              0.5713159968479118,
+              0.5721040189125296,
               0.6008771929824561,
-              0.2758620689655172
+              0.3046511627906976
             ]
           }
         },
@@ -21349,7 +21923,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.6516220028208745,
+                0.6530324400564175,
                 0.72,
                 0.0,
                 0.0,
@@ -21921,7 +22495,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.5472061657032755,
+                0.5491329479768786,
                 0.6666666666666666,
                 0.0,
                 0.0,
@@ -22126,7 +22700,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.3081395348837209,
+                0.3444444444444444,
                 0.0,
                 0.0,
                 0.0,
@@ -22164,7 +22738,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.2083333333333333,
+                0.2323232323232323,
                 0.0,
                 0.0,
                 0.0,
@@ -22207,7 +22781,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.3061224489795918,
+                0.3363636363636363,
                 0.2592592592592592,
                 0.0,
                 0.0,
@@ -22515,7 +23089,7 @@ body.ai-collapsed .charts{
                 0.875,
                 0.6808510638297872,
                 0.4654088050314465,
-                0.6470588235294118,
+                0.6666666666666666,
                 0.7017543859649122,
                 0.6602972399150743
               ],
@@ -22549,7 +23123,7 @@ body.ai-collapsed .charts{
                 0.5294117647058824,
                 0.5833333333333334,
                 0.6838709677419355,
-                0.596319018404908
+                0.5975460122699386
               ],
               [
                 1.0,
@@ -22557,15 +23131,15 @@ body.ai-collapsed .charts{
                 0.4102564102564102,
                 0.5802469135802469,
                 0.7829457364341085,
-                0.6259842519685039
+                0.6254927726675427
               ],
               [
                 0.0,
-                0.3333333333333333,
+                0.3488372093023256,
                 0.0,
-                0.3076923076923077,
-                0.15,
-                0.2753164556962025
+                0.2758620689655172,
+                0.2272727272727272,
+                0.3093093093093093
               ]
             ]
           }
@@ -22649,13 +23223,13 @@ body.ai-collapsed .charts{
               8.946608946608947,
               8.545584045584045,
               15.041450777202073,
-              14.38563327032136,
+              15.320754716981131,
               11.132802124833995,
               9.62730627306273,
               12.047554347826088,
-              7.744827586206896,
+              8.227272727272727,
               7.856934306569343,
-              5.25
+              5.312977099236641
             ]
           }
         },
@@ -23246,7 +23820,7 @@ body.ai-collapsed .charts{
                 0.0,
                 2.0,
                 0.0,
-                3.0833333333333335,
+                3.083333333333333,
                 0.0,
                 0.0,
                 2.5,
@@ -23613,7 +24187,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 42.0,
-                2.3333333333333335,
+                2.333333333333333,
                 2.0,
                 0.0,
                 6.0,
@@ -23808,7 +24382,7 @@ body.ai-collapsed .charts{
                 4.0,
                 0.0,
                 0.0,
-                3.3333333333333335,
+                3.333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -24394,7 +24968,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 1.0,
-                2.3333333333333335,
+                2.333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -26039,7 +26613,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.0714285714285716,
+                3.071428571428572,
                 0.0,
                 0.0,
                 0.0,
@@ -26435,7 +27009,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                8.517316017316018,
+                9.600431965442764,
                 93.63888888888889,
                 0.0,
                 0.0,
@@ -26824,7 +27398,7 @@ body.ai-collapsed .charts{
                 4.121428571428571,
                 0.0,
                 0.0,
-                3.3333333333333335,
+                3.333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -26855,7 +27429,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 2.0,
-                26.333333333333332,
+                26.33333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -27007,14 +27581,14 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                8.591549295774648,
+                9.817543859649122,
                 21.375,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                2.3333333333333335,
+                2.333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -27023,7 +27597,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                28.333333333333332,
+                28.33333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -27152,7 +27726,7 @@ body.ai-collapsed .charts{
                 0.0,
                 8.911111111111111,
                 14.384615384615383,
-                36.666666666666664,
+                36.66666666666666,
                 0.0,
                 0.0,
                 0.0,
@@ -27212,7 +27786,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                5.169811320754717,
+                4.951612903225806,
                 0.0,
                 0.0,
                 0.0,
@@ -27250,7 +27824,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                4.3,
+                4.434782608695652,
                 0.0,
                 0.0,
                 0.0,
@@ -27293,8 +27867,8 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                4.633333333333334,
-                8.857142857142858,
+                5.135135135135135,
+                10.0,
                 0.0,
                 0.0,
                 0.0,
@@ -27475,7 +28049,7 @@ body.ai-collapsed .charts{
                 0.0,
                 16.583333333333332,
                 0.0,
-                6.3628318584070795
+                6.36283185840708
               ],
               [
                 8.392523364485982,
@@ -27487,9 +28061,9 @@ body.ai-collapsed .charts{
               ],
               [
                 7.452830188679245,
-                5.6976744186046515,
+                5.697674418604652,
                 1.0,
-                5.0476190476190474,
+                5.047619047619048,
                 12.0,
                 5.4361702127659575
               ],
@@ -27601,7 +28175,7 @@ body.ai-collapsed .charts{
                 5.714285714285714,
                 21.15625,
                 6.202702702702703,
-                55.90909090909091,
+                69.26470588235294,
                 21.975,
                 9.7524115755627
               ],
@@ -27635,23 +28209,23 @@ body.ai-collapsed .charts{
                 5.688888888888889,
                 8.4,
                 2.509433962264151,
-                8.246913580246913
+                8.965092402464066
               ],
               [
-                14.0,
+                8.5,
                 11.046511627906977,
                 3.625,
                 7.574468085106383,
                 3.9207920792079207,
-                8.559748427672956
+                8.571428571428571
               ],
               [
                 0.0,
-                3.142857142857143,
+                3.2,
                 0.0,
-                7.875,
-                3.0,
-                5.425287356321839
+                9.5,
+                4.2,
+                5.349514563106796
               ]
             ]
           }
@@ -27663,2668 +28237,7 @@ body.ai-collapsed .charts{
       "description": "\u65b0\u7528\u6237\u4eba\u5747\u6d88\u8017energy\u91cf"
     }
   ],
-  "revenue": [
-    {
-      "chart_id": "high_balance_user__table",
-      "title": "\u9ad8\u4f59\u989d\u7528\u6237",
-      "metric_id": "high_balance_user",
-      "module": "table",
-      "kind": "data_table",
-      "columns": [
-        "energy_balance",
-        "name",
-        "uid"
-      ],
-      "column_descriptions": {
-        "uid": "\u7528\u6237uid",
-        "name": "\u7528\u6237\u540d\u79f0",
-        "energy_balance": "energy\u4f59\u989d"
-      },
-      "rows": [
-        [
-          354,
-          "monster",
-          2395314
-        ],
-        [
-          310,
-          "Their Soup",
-          2364870
-        ],
-        [
-          128,
-          "Krisha Galvez",
-          2372338
-        ],
-        [
-          125,
-          "\u54c8\u5f1f\u5f1f",
-          2368910
-        ],
-        [
-          101,
-          "King ",
-          2400369
-        ],
-        [
-          94,
-          "Panda",
-          2392786
-        ],
-        [
-          73,
-          "YorBunny",
-          2393897
-        ],
-        [
-          47,
-          "Mr Beast",
-          2396488
-        ],
-        [
-          36,
-          "User2368787",
-          2368787
-        ],
-        [
-          35,
-          "okay",
-          2391622
-        ],
-        [
-          34,
-          "don",
-          2400670
-        ],
-        [
-          28,
-          "Dylan",
-          2399331
-        ],
-        [
-          27,
-          "Guest",
-          2369987
-        ],
-        [
-          27,
-          "christian nino magabilin",
-          2398840
-        ],
-        [
-          22,
-          "ENERGY",
-          2396500
-        ],
-        [
-          21,
-          "DrDr.Nefario",
-          2392653
-        ],
-        [
-          21,
-          "tarzan",
-          2377120
-        ],
-        [
-          20,
-          "Moosa Malik",
-          2398222
-        ],
-        [
-          19,
-          "YvaineZ",
-          2404162
-        ],
-        [
-          19,
-          "eliel botelho",
-          2384525
-        ],
-        [
-          18,
-          "Dguja Gut",
-          2404512
-        ],
-        [
-          17,
-          "kimmy",
-          2402788
-        ],
-        [
-          17,
-          "Ayesha",
-          2401912
-        ],
-        [
-          17,
-          "User2401643",
-          2401643
-        ],
-        [
-          16,
-          "Chel",
-          2365832
-        ],
-        [
-          15,
-          "Art Exe",
-          2404950
-        ],
-        [
-          15,
-          "Moosa malik",
-          2398225
-        ],
-        [
-          14,
-          "Ragnar Lothbrok",
-          2397060
-        ],
-        [
-          14,
-          "Guest",
-          2404292
-        ],
-        [
-          14,
-          "kiti",
-          2401383
-        ],
-        [
-          13,
-          "Socorrinha ",
-          2403654
-        ],
-        [
-          13,
-          "JinchiR",
-          2374319
-        ],
-        [
-          13,
-          "J.",
-          2397335
-        ],
-        [
-          13,
-          "Bkase Par",
-          2404424
-        ],
-        [
-          13,
-          "User2401690",
-          2401690
-        ],
-        [
-          13,
-          "Guest",
-          2401985
-        ],
-        [
-          13,
-          "Guest",
-          2404498
-        ],
-        [
-          13,
-          "snosrap robert",
-          2404432
-        ],
-        [
-          13,
-          "Guest",
-          2379982
-        ],
-        [
-          12,
-          "cutie pie ",
-          2405095
-        ],
-        [
-          12,
-          "Rosangela santos santana Santos santana",
-          2403988
-        ],
-        [
-          12,
-          "Shehraam khan ",
-          2403409
-        ],
-        [
-          12,
-          "Ganda\ud83d\ude18\ud83d\ude18\ud83d\ude18",
-          2395305
-        ],
-        [
-          11,
-          "Guest",
-          2404195
-        ],
-        [
-          11,
-          "Satish Muth Mare",
-          2403673
-        ],
-        [
-          11,
-          "Guest",
-          2404399
-        ],
-        [
-          11,
-          "Guest",
-          2400711
-        ],
-        [
-          11,
-          "Guest",
-          2395506
-        ],
-        [
-          11,
-          "Guest",
-          2403516
-        ],
-        [
-          11,
-          "Jefferson Barros Pereira",
-          2405409
-        ],
-        [
-          11,
-          "Thalia",
-          2401413
-        ],
-        [
-          11,
-          "Danger",
-          2399276
-        ],
-        [
-          10,
-          "Allie magabilin",
-          2399636
-        ],
-        [
-          10,
-          "motchie ",
-          2396411
-        ],
-        [
-          10,
-          "jr cordova",
-          2401051
-        ],
-        [
-          10,
-          "Guest",
-          2402480
-        ],
-        [
-          10,
-          "Razel Iloro",
-          2394532
-        ],
-        [
-          10,
-          "Jessika Menezes",
-          2404205
-        ],
-        [
-          10,
-          "Noraisa Alaman",
-          2402598
-        ],
-        [
-          10,
-          "jeng lopez",
-          2397298
-        ],
-        [
-          10,
-          "Guest",
-          2400910
-        ],
-        [
-          9,
-          "Liroy",
-          2389327
-        ],
-        [
-          9,
-          "John Mark Colon",
-          2401490
-        ],
-        [
-          9,
-          "Vinz ",
-          2391609
-        ],
-        [
-          9,
-          "User2405012",
-          2405012
-        ],
-        [
-          9,
-          "Loraine Alipio",
-          2403776
-        ],
-        [
-          9,
-          "MUKESH PATEL",
-          2389353
-        ],
-        [
-          9,
-          "Hillary Cher",
-          2403329
-        ],
-        [
-          9,
-          "abdullah Javed",
-          2397680
-        ],
-        [
-          9,
-          "Ringoo",
-          2398435
-        ],
-        [
-          9,
-          "Katia Patr\u00edcia",
-          2405256
-        ],
-        [
-          9,
-          "Wsera Tuy",
-          2404462
-        ],
-        [
-          9,
-          "Guest",
-          2405052
-        ],
-        [
-          9,
-          "Fransiska Rini",
-          2404301
-        ],
-        [
-          9,
-          "Marvel Momo",
-          2402862
-        ],
-        [
-          9,
-          "manzoor khan",
-          2402218
-        ],
-        [
-          9,
-          "weewoo",
-          2402888
-        ],
-        [
-          9,
-          "User2404454",
-          2404454
-        ],
-        [
-          8,
-          "reham",
-          2366427
-        ],
-        [
-          8,
-          "Ari Wonogiri",
-          2401335
-        ],
-        [
-          8,
-          "Wali Bahi",
-          2404997
-        ],
-        [
-          8,
-          "Jelen Delena",
-          2390132
-        ],
-        [
-          8,
-          "Mila ayu",
-          2405172
-        ],
-        [
-          8,
-          "Tony junior inocente de Olivei",
-          2403574
-        ],
-        [
-          8,
-          "Perla Timbang",
-          2396333
-        ],
-        [
-          7,
-          "Jovan",
-          2389299
-        ],
-        [
-          7,
-          "Nisha Pomi",
-          2403471
-        ],
-        [
-          7,
-          "Eeego Drake",
-          2392614
-        ],
-        [
-          7,
-          "Amo",
-          2401832
-        ],
-        [
-          7,
-          "E-MAIL ",
-          2402706
-        ],
-        [
-          7,
-          "Maxmili Mendes",
-          2398757
-        ],
-        [
-          7,
-          "Drea McKay",
-          2386927
-        ],
-        [
-          7,
-          "User2373140",
-          2373140
-        ],
-        [
-          7,
-          "Bailey",
-          2392587
-        ],
-        [
-          7,
-          "Ana Sousa",
-          2399328
-        ],
-        [
-          7,
-          "Rachmat Jr",
-          2400363
-        ],
-        [
-          7,
-          "Arbaz King",
-          2398895
-        ],
-        [
-          7,
-          "Justine Nacion",
-          2402961
-        ],
-        [
-          6,
-          "joubear",
-          2395411
-        ],
-        [
-          6,
-          "Guest",
-          2405215
-        ],
-        [
-          6,
-          "mr kescai",
-          2404453
-        ],
-        [
-          6,
-          "s@i",
-          2395286
-        ],
-        [
-          6,
-          "Mar\u00eda ",
-          2401250
-        ],
-        [
-          6,
-          "Generose Geolingo",
-          2405217
-        ],
-        [
-          6,
-          "Jimboy ",
-          2404004
-        ],
-        [
-          6,
-          "Milinha Ferreira",
-          2405177
-        ],
-        [
-          6,
-          "Adeel Nawaz",
-          2400468
-        ],
-        [
-          6,
-          "Mhay",
-          2396995
-        ],
-        [
-          6,
-          "Leliosa Borruel",
-          2403917
-        ],
-        [
-          6,
-          "Tatiana ",
-          2403120
-        ],
-        [
-          6,
-          "Ben",
-          2390767
-        ],
-        [
-          6,
-          "temp",
-          2401386
-        ],
-        [
-          5,
-          "wonder",
-          2388660
-        ],
-        [
-          5,
-          "Omar Khayam",
-          2395206
-        ],
-        [
-          5,
-          "Sijjad khan",
-          2399226
-        ],
-        [
-          5,
-          "Dilip Laude",
-          2383730
-        ],
-        [
-          5,
-          "Enggar gaming",
-          2405047
-        ],
-        [
-          5,
-          "Mafia",
-          2400393
-        ],
-        [
-          5,
-          "Mahid Ali",
-          2399240
-        ],
-        [
-          5,
-          "Laila Kamin",
-          2404643
-        ],
-        [
-          5,
-          "Talenta",
-          2405026
-        ],
-        [
-          5,
-          "Godofredo Pomarca",
-          2404940
-        ],
-        [
-          5,
-          "Afnan Pathan",
-          2404930
-        ],
-        [
-          5,
-          "Anderson Ferreira",
-          2405160
-        ],
-        [
-          5,
-          "joel bulac",
-          2404298
-        ],
-        [
-          5,
-          "R L C",
-          2404103
-        ],
-        [
-          5,
-          "Joselito Naval",
-          2405149
-        ],
-        [
-          5,
-          "Luiz Cl\u00e1udio",
-          2405132
-        ],
-        [
-          5,
-          "Robson Souza",
-          2405133
-        ],
-        [
-          5,
-          "Yasmim ",
-          2403533
-        ],
-        [
-          5,
-          "jemgar",
-          2405180
-        ],
-        [
-          5,
-          "kauan proszek1",
-          2405199
-        ],
-        [
-          5,
-          "Khizar Niaz",
-          2405205
-        ],
-        [
-          5,
-          "Gelson Nascimento campos perei",
-          2403510
-        ],
-        [
-          5,
-          "hasnain mirza",
-          2404944
-        ],
-        [
-          5,
-          "Yangyy Sabdani",
-          2405027
-        ],
-        [
-          5,
-          "Blair",
-          2365689
-        ],
-        [
-          5,
-          "Janaina Silva",
-          2405191
-        ],
-        [
-          5,
-          "Guest",
-          2405295
-        ],
-        [
-          5,
-          "Akbar",
-          2402132
-        ],
-        [
-          5,
-          "Cleber Gomes Da Silva Silva",
-          2405187
-        ],
-        [
-          5,
-          "Rosemere jesus",
-          2405186
-        ],
-        [
-          5,
-          "mediocre",
-          2392390
-        ],
-        [
-          5,
-          "Guest",
-          2405167
-        ],
-        [
-          5,
-          "Alberto Llamera",
-          2392413
-        ],
-        [
-          5,
-          "Guest",
-          2404008
-        ],
-        [
-          5,
-          "Teny Arlante",
-          2403783
-        ],
-        [
-          5,
-          "Guest",
-          2405150
-        ],
-        [
-          5,
-          "Guest",
-          2405114
-        ],
-        [
-          5,
-          "Guest",
-          2405166
-        ],
-        [
-          5,
-          "Guest",
-          2405108
-        ],
-        [
-          5,
-          "Rodrigo Lopes",
-          2403992
-        ],
-        [
-          5,
-          "Guest",
-          2405048
-        ],
-        [
-          5,
-          "Guest",
-          2404951
-        ],
-        [
-          5,
-          "Thaisa Amorim",
-          2404063
-        ],
-        [
-          5,
-          "Guest",
-          2405006
-        ],
-        [
-          5,
-          "M",
-          2405159
-        ],
-        [
-          5,
-          "subhan",
-          2405000
-        ],
-        [
-          5,
-          "Guest",
-          2405212
-        ],
-        [
-          5,
-          "\u1d00\u0274\u1d00\u029f\u028f\u0274",
-          2404695
-        ],
-        [
-          5,
-          "Thay ",
-          2404931
-        ],
-        [
-          5,
-          "Nova Balinon",
-          2405214
-        ],
-        [
-          5,
-          "baixinha",
-          2405298
-        ],
-        [
-          5,
-          "jalmi awam",
-          2405013
-        ],
-        [
-          5,
-          "User2405286",
-          2405286
-        ],
-        [
-          5,
-          "Guest",
-          2404996
-        ],
-        [
-          5,
-          "Guest",
-          2405111
-        ],
-        [
-          5,
-          "RYOMON SUKUNARYOMON SUKUNA",
-          2399311
-        ],
-        [
-          5,
-          "Guest",
-          2405117
-        ],
-        [
-          5,
-          "leon aguilar",
-          2405034
-        ],
-        [
-          5,
-          "Guest",
-          2404959
-        ],
-        [
-          5,
-          "Saifo Mughal",
-          2401923
-        ],
-        [
-          5,
-          "Jessahmay ARNALDO",
-          2403856
-        ],
-        [
-          5,
-          "jos\u00e9 balbino",
-          2405061
-        ],
-        [
-          5,
-          "Angelyn Tacpan ",
-          2405231
-        ],
-        [
-          5,
-          "Bgete Ruy",
-          2404975
-        ],
-        [
-          5,
-          "Guest",
-          2405200
-        ],
-        [
-          5,
-          "Guest",
-          2405318
-        ],
-        [
-          5,
-          "Guest",
-          2404401
-        ],
-        [
-          5,
-          "Guest",
-          2405248
-        ],
-        [
-          5,
-          "Kauan Rafael",
-          2405305
-        ],
-        [
-          5,
-          "Nelma Cavalcanti",
-          2405009
-        ],
-        [
-          5,
-          "Guest",
-          2404965
-        ],
-        [
-          5,
-          "Guest",
-          2403747
-        ],
-        [
-          5,
-          "Qadim khan",
-          2405002
-        ],
-        [
-          5,
-          "Guest",
-          2405082
-        ],
-        [
-          5,
-          "Guest",
-          2405189
-        ],
-        [
-          5,
-          "Guest",
-          2404852
-        ],
-        [
-          5,
-          "Guest",
-          2405190
-        ],
-        [
-          5,
-          "Daniel Fernandes bastos",
-          2405293
-        ],
-        [
-          5,
-          "mist\u00e9rio ",
-          2404804
-        ],
-        [
-          5,
-          "Lucielle Ribeiro de sousa",
-          2405264
-        ],
-        [
-          5,
-          "Waleed Awan",
-          2401412
-        ],
-        [
-          5,
-          "Sumi Narti",
-          2405022
-        ],
-        [
-          5,
-          "Jussa Bonite",
-          2404981
-        ],
-        [
-          5,
-          "Guest",
-          2405074
-        ],
-        [
-          5,
-          "User2405153",
-          2405153
-        ],
-        [
-          5,
-          "DnBoy",
-          2405386
-        ],
-        [
-          5,
-          "Guest",
-          2404978
-        ],
-        [
-          5,
-          "American Queen",
-          2405225
-        ],
-        [
-          5,
-          "Waseem ullah",
-          2399581
-        ],
-        [
-          5,
-          "Mary Jane Pepito",
-          2394299
-        ],
-        [
-          5,
-          "Elaine Santos",
-          2405096
-        ],
-        [
-          5,
-          "User2405051",
-          2405051
-        ],
-        [
-          5,
-          "Guest",
-          2404992
-        ],
-        [
-          5,
-          "Licinia Ranis",
-          2405312
-        ],
-        [
-          5,
-          "Daisy \ud83c\udf38",
-          2402195
-        ],
-        [
-          5,
-          "Wauender Brandim",
-          2405294
-        ],
-        [
-          5,
-          "Yusuf Mansur",
-          2404947
-        ],
-        [
-          5,
-          "Lana ",
-          2405216
-        ],
-        [
-          5,
-          "Guest",
-          2405129
-        ],
-        [
-          5,
-          "chacha8",
-          2403543
-        ],
-        [
-          5,
-          "Guest",
-          2382038
-        ],
-        [
-          5,
-          "Guest",
-          2405392
-        ],
-        [
-          5,
-          "Fizo Ridz",
-          2379242
-        ],
-        [
-          5,
-          "Chrisman Bugagao",
-          2405232
-        ],
-        [
-          5,
-          "ROSA DE FATIMA DINIZ",
-          2405037
-        ],
-        [
-          5,
-          "Lais Caroline",
-          2405253
-        ],
-        [
-          5,
-          "Guest",
-          2405359
-        ],
-        [
-          5,
-          "Guest",
-          2405275
-        ],
-        [
-          5,
-          "User2402025",
-          2402025
-        ],
-        [
-          5,
-          "Guest",
-          2405201
-        ],
-        [
-          5,
-          "Guest",
-          2405334
-        ],
-        [
-          5,
-          "H\u00e9lio Rodrigues",
-          2405041
-        ],
-        [
-          5,
-          "Guest",
-          2405162
-        ],
-        [
-          5,
-          "Vernadette Nacu",
-          2404969
-        ],
-        [
-          5,
-          "Guest",
-          2405081
-        ],
-        [
-          5,
-          "Guest",
-          2403996
-        ],
-        [
-          5,
-          "Guest",
-          2405267
-        ],
-        [
-          5,
-          "Kmope Sow",
-          2404627
-        ],
-        [
-          5,
-          "Guest",
-          2404991
-        ],
-        [
-          5,
-          "Paulo Oliveira",
-          2404084
-        ],
-        [
-          5,
-          "Marcos Vila",
-          2404995
-        ],
-        [
-          5,
-          "Julia",
-          2405208
-        ],
-        [
-          5,
-          "Melisa Hamulose",
-          2383517
-        ],
-        [
-          5,
-          "Marcos Andr\u00e9",
-          2405069
-        ],
-        [
-          5,
-          "Guest",
-          2405284
-        ],
-        [
-          5,
-          "Gabriel Souza",
-          2405243
-        ],
-        [
-          5,
-          "User2400341",
-          2400341
-        ],
-        [
-          5,
-          "Alexis Augusto",
-          2405313
-        ],
-        [
-          5,
-          "Bkum Caye",
-          2404575
-        ],
-        [
-          5,
-          "Cheleya",
-          2372221
-        ],
-        [
-          5,
-          "Frederico Roberto Leite",
-          2405030
-        ],
-        [
-          5,
-          "Rio",
-          2405064
-        ],
-        [
-          5,
-          "Gnasu Rew",
-          2405122
-        ],
-        [
-          5,
-          "Guest",
-          2405266
-        ],
-        [
-          5,
-          "Aikee Zachary Rendon",
-          2394103
-        ],
-        [
-          5,
-          "Guest",
-          2405342
-        ],
-        [
-          5,
-          "Guest",
-          2404964
-        ],
-        [
-          5,
-          "Arawnds",
-          2405001
-        ],
-        [
-          5,
-          "Hyupo Toy",
-          2404598
-        ],
-        [
-          5,
-          "Guest",
-          2405163
-        ],
-        [
-          5,
-          "Guest",
-          2405271
-        ],
-        [
-          5,
-          "Guest",
-          2405126
-        ],
-        [
-          5,
-          "Guest",
-          2405316
-        ],
-        [
-          5,
-          "Reynante Ongcal",
-          2405340
-        ],
-        [
-          5,
-          "Guest",
-          2399128
-        ],
-        [
-          5,
-          "Guest",
-          2405044
-        ],
-        [
-          5,
-          "wagner fernandes",
-          2403538
-        ],
-        [
-          5,
-          "Guest",
-          2405319
-        ],
-        [
-          5,
-          "Guest",
-          2405279
-        ],
-        [
-          5,
-          "Guest",
-          2405065
-        ],
-        [
-          5,
-          "Guest",
-          2404953
-        ],
-        [
-          5,
-          "Guest",
-          2405373
-        ],
-        [
-          5,
-          "Guest",
-          2405151
-        ],
-        [
-          5,
-          "Guest",
-          2405066
-        ],
-        [
-          5,
-          "User2405058",
-          2405058
-        ],
-        [
-          5,
-          "Guest",
-          2404943
-        ],
-        [
-          5,
-          "Ridho Albukhori",
-          2405019
-        ],
-        [
-          5,
-          "Guest",
-          2405143
-        ],
-        [
-          5,
-          "Una una Asma",
-          2405123
-        ],
-        [
-          5,
-          "Ma Un",
-          2402428
-        ],
-        [
-          5,
-          "Guest",
-          2405292
-        ],
-        [
-          5,
-          "Guest",
-          2405112
-        ],
-        [
-          5,
-          "Guest",
-          2392784
-        ],
-        [
-          5,
-          "Guest",
-          2405395
-        ],
-        [
-          5,
-          "Guest",
-          2405152
-        ],
-        [
-          5,
-          "Guest",
-          2405276
-        ],
-        [
-          5,
-          "IZABEL Dasilva",
-          2405381
-        ],
-        [
-          5,
-          "Fikri Haidar",
-          2404973
-        ],
-        [
-          5,
-          "Guest",
-          2405063
-        ],
-        [
-          5,
-          "Guest",
-          2405258
-        ],
-        [
-          5,
-          "Cida Rodrigues Dos santos",
-          2405042
-        ],
-        [
-          5,
-          "Mario Souza",
-          2405023
-        ],
-        [
-          5,
-          "Christian Generosa",
-          2380854
-        ],
-        [
-          5,
-          "fengling",
-          2377094
-        ],
-        [
-          5,
-          "Guest",
-          2399878
-        ],
-        [
-          5,
-          "Guest",
-          2405244
-        ],
-        [
-          5,
-          "Guest",
-          2405137
-        ],
-        [
-          5,
-          "Guest",
-          2405054
-        ],
-        [
-          5,
-          "Guest",
-          2405221
-        ],
-        [
-          5,
-          "Rowena Meneses",
-          2402603
-        ],
-        [
-          5,
-          "Guest",
-          2405390
-        ],
-        [
-          5,
-          "Guest",
-          2405368
-        ],
-        [
-          5,
-          "Kai Smith",
-          2404608
-        ],
-        [
-          5,
-          "Guest",
-          2404979
-        ],
-        [
-          5,
-          "Innocent Khan",
-          2405230
-        ],
-        [
-          5,
-          "Guest",
-          2405176
-        ],
-        [
-          5,
-          "rei",
-          2405145
-        ],
-        [
-          5,
-          "Guest",
-          2405105
-        ],
-        [
-          5,
-          "Guest",
-          2404967
-        ],
-        [
-          5,
-          "ludo master",
-          2404984
-        ],
-        [
-          5,
-          "Guest",
-          2405154
-        ],
-        [
-          5,
-          "Rrrrr",
-          2405077
-        ],
-        [
-          5,
-          "Guest",
-          2405068
-        ],
-        [
-          5,
-          "Guest",
-          2405304
-        ],
-        [
-          5,
-          "Guest",
-          2405374
-        ],
-        [
-          5,
-          "Guest",
-          2405330
-        ],
-        [
-          5,
-          "Guest",
-          2405004
-        ],
-        [
-          5,
-          "Guest",
-          2405372
-        ],
-        [
-          5,
-          "Guest",
-          2404664
-        ],
-        [
-          5,
-          "cedric  ",
-          2404968
-        ],
-        [
-          5,
-          "Guest",
-          2405144
-        ],
-        [
-          5,
-          "Guest",
-          2405028
-        ],
-        [
-          5,
-          "Guest",
-          2404966
-        ],
-        [
-          5,
-          "Guest",
-          2404994
-        ],
-        [
-          5,
-          "Fnase Rak",
-          2405107
-        ],
-        [
-          5,
-          "Guest",
-          2405120
-        ],
-        [
-          5,
-          "Guest",
-          2405223
-        ],
-        [
-          5,
-          "Guest",
-          2405236
-        ],
-        [
-          5,
-          "Guest",
-          2405259
-        ],
-        [
-          5,
-          "User2405078",
-          2405078
-        ],
-        [
-          5,
-          "Guest",
-          2405218
-        ],
-        [
-          5,
-          "Guest",
-          2405086
-        ],
-        [
-          5,
-          "Guest",
-          2405311
-        ],
-        [
-          5,
-          "Guest",
-          2405067
-        ],
-        [
-          5,
-          "User2404919",
-          2404919
-        ],
-        [
-          5,
-          "Guest",
-          2405146
-        ],
-        [
-          5,
-          "Guest",
-          2405277
-        ],
-        [
-          5,
-          "Guest",
-          2405072
-        ],
-        [
-          5,
-          "Guest",
-          2405038
-        ],
-        [
-          5,
-          "Guest",
-          2405196
-        ],
-        [
-          5,
-          "Sivaldo",
-          2405366
-        ],
-        [
-          5,
-          "Guest",
-          2405165
-        ],
-        [
-          5,
-          "layza Silvia",
-          2405360
-        ],
-        [
-          5,
-          "kemoi",
-          2403220
-        ],
-        [
-          5,
-          "Guest",
-          2405308
-        ],
-        [
-          5,
-          "Guest",
-          2405139
-        ],
-        [
-          5,
-          "joao gabriel cincinato",
-          2403219
-        ],
-        [
-          5,
-          "Guest",
-          2405335
-        ],
-        [
-          5,
-          "Guest",
-          2405185
-        ],
-        [
-          5,
-          "Iqbal Cr",
-          2405011
-        ],
-        [
-          5,
-          "Guest",
-          2405134
-        ],
-        [
-          5,
-          "Guest",
-          2405300
-        ],
-        [
-          5,
-          "Guest",
-          2405124
-        ],
-        [
-          5,
-          "Guest",
-          2405210
-        ],
-        [
-          5,
-          "Guest",
-          2405179
-        ],
-        [
-          5,
-          "Guest",
-          2405350
-        ],
-        [
-          5,
-          "Guest",
-          2404954
-        ],
-        [
-          5,
-          "Guest",
-          2405325
-        ],
-        [
-          5,
-          "Kansas City",
-          2404987
-        ],
-        [
-          5,
-          "Guest",
-          2404890
-        ],
-        [
-          5,
-          "Guest",
-          2404945
-        ],
-        [
-          5,
-          "Guest",
-          2404985
-        ],
-        [
-          5,
-          "Guest",
-          2405015
-        ],
-        [
-          5,
-          "User2405046",
-          2405046
-        ],
-        [
-          5,
-          "Stephani Lourdes",
-          2405140
-        ],
-        [
-          5,
-          "Beauty Dacomos",
-          2405247
-        ],
-        [
-          5,
-          "Guest",
-          2405250
-        ],
-        [
-          5,
-          "Thayse Rafael",
-          2405170
-        ],
-        [
-          5,
-          "Guest",
-          2405090
-        ],
-        [
-          5,
-          "Guest",
-          2404958
-        ],
-        [
-          5,
-          "Fabiana Souza",
-          2405141
-        ],
-        [
-          5,
-          "Guest",
-          2405346
-        ],
-        [
-          5,
-          "Guest",
-          2405329
-        ],
-        [
-          5,
-          "Grasi Ribeiro",
-          2381548
-        ],
-        [
-          5,
-          "Guest",
-          2404990
-        ],
-        [
-          5,
-          "Athena Guevarra",
-          2404842
-        ],
-        [
-          5,
-          "Guest",
-          2405257
-        ],
-        [
-          5,
-          " Malik",
-          2400332
-        ],
-        [
-          5,
-          "Guest",
-          2405206
-        ],
-        [
-          5,
-          "Guest",
-          2405003
-        ],
-        [
-          5,
-          "Guest",
-          2405175
-        ],
-        [
-          5,
-          "June Moya",
-          2405155
-        ],
-        [
-          5,
-          "Guest",
-          2405220
-        ],
-        [
-          5,
-          "Guest",
-          2404983
-        ],
-        [
-          5,
-          "Guest",
-          2405161
-        ],
-        [
-          5,
-          "reh",
-          2397539
-        ],
-        [
-          5,
-          "Guest",
-          2405198
-        ],
-        [
-          5,
-          "Jorge Mauro Queiroz Marques Ma",
-          2405287
-        ],
-        [
-          5,
-          "Guest",
-          2405301
-        ],
-        [
-          5,
-          "Guest",
-          2405045
-        ],
-        [
-          5,
-          "Guest",
-          2405262
-        ],
-        [
-          5,
-          "Guest",
-          2404949
-        ],
-        [
-          5,
-          "Guest",
-          2405282
-        ],
-        [
-          5,
-          "Guest",
-          2405209
-        ],
-        [
-          5,
-          "Guest",
-          2405093
-        ],
-        [
-          5,
-          "Guest",
-          2405032
-        ],
-        [
-          5,
-          "Guest",
-          2405008
-        ],
-        [
-          5,
-          "Hotdogohun",
-          2404778
-        ],
-        [
-          5,
-          "Guest",
-          2405005
-        ],
-        [
-          5,
-          "Guest",
-          2404631
-        ],
-        [
-          5,
-          "Guest",
-          2405272
-        ],
-        [
-          5,
-          "Guest",
-          2405181
-        ],
-        [
-          5,
-          "Guest",
-          2405434
-        ],
-        [
-          5,
-          "Guest",
-          2405238
-        ],
-        [
-          5,
-          "Guest",
-          2405219
-        ],
-        [
-          5,
-          "Hamdani Medas",
-          2405118
-        ],
-        [
-          5,
-          "Punggur Gur",
-          2405398
-        ],
-        [
-          5,
-          "Guest",
-          2405055
-        ],
-        [
-          5,
-          "Mariz",
-          2392459
-        ],
-        [
-          5,
-          "Guest",
-          2405135
-        ],
-        [
-          5,
-          "Guest",
-          2405188
-        ],
-        [
-          5,
-          "Guest",
-          2404577
-        ],
-        [
-          5,
-          "Wl",
-          2396514
-        ],
-        [
-          5,
-          "Guest",
-          2405241
-        ],
-        [
-          5,
-          "Guest",
-          2405252
-        ],
-        [
-          5,
-          "Guest",
-          2405091
-        ],
-        [
-          5,
-          "Guest",
-          2405320
-        ],
-        [
-          5,
-          "Guest",
-          2405227
-        ],
-        [
-          5,
-          "Guest",
-          2405415
-        ],
-        [
-          5,
-          "User2373966",
-          2373966
-        ],
-        [
-          5,
-          "Guest",
-          2405204
-        ],
-        [
-          5,
-          "Guest",
-          2405400
-        ],
-        [
-          5,
-          "Guest",
-          2405371
-        ],
-        [
-          5,
-          "Mazoooo",
-          2396463
-        ],
-        [
-          5,
-          "Guest",
-          2404976
-        ],
-        [
-          5,
-          "Guest",
-          2405109
-        ],
-        [
-          5,
-          "kiki",
-          2405076
-        ],
-        [
-          5,
-          "Guest",
-          2405089
-        ],
-        [
-          5,
-          "Guest",
-          2404957
-        ],
-        [
-          5,
-          "Guest",
-          2405345
-        ],
-        [
-          5,
-          "Guest",
-          2405260
-        ],
-        [
-          5,
-          "Guest",
-          2405101
-        ],
-        [
-          5,
-          "MACABATA",
-          2405327
-        ],
-        [
-          5,
-          "Taynara Dos Reis Mendes",
-          2405148
-        ],
-        [
-          5,
-          "Guest",
-          2405116
-        ],
-        [
-          5,
-          "Fe",
-          2404844
-        ],
-        [
-          5,
-          "michele santos",
-          2405087
-        ],
-        [
-          5,
-          "Guest",
-          2405127
-        ],
-        [
-          5,
-          "Marcio Rodrigues",
-          2405315
-        ],
-        [
-          5,
-          "PAULO DJ",
-          2403926
-        ],
-        [
-          5,
-          "Ntedu Ret",
-          2404746
-        ],
-        [
-          5,
-          "Guest",
-          2405014
-        ],
-        [
-          5,
-          "Guest",
-          2381474
-        ],
-        [
-          5,
-          "Guest",
-          2405018
-        ],
-        [
-          4,
-          "saly",
-          2396248
-        ],
-        [
-          4,
-          "Malik",
-          2396400
-        ],
-        [
-          4,
-          "zikru kalamsyah",
-          2405104
-        ],
-        [
-          4,
-          "Elvin rey Rosales",
-          2403934
-        ],
-        [
-          4,
-          "Amhira",
-          2400874
-        ],
-        [
-          4,
-          "Rj ",
-          2403459
-        ],
-        [
-          4,
-          "719.960.105-94 ",
-          2405339
-        ],
-        [
-          4,
-          "Francis Ko",
-          2397960
-        ],
-        [
-          4,
-          "Genielsimbunotan Simbunotan",
-          2404482
-        ],
-        [
-          4,
-          "Safwan Khan",
-          2401581
-        ],
-        [
-          4,
-          "Guest",
-          2405322
-        ],
-        [
-          4,
-          "gacor",
-          2405343
-        ],
-        [
-          4,
-          "Danvill",
-          2402232
-        ],
-        [
-          4,
-          "Muhammad Nouman",
-          2404603
-        ],
-        [
-          4,
-          "Franciscu vasco",
-          2405421
-        ],
-        [
-          4,
-          "Guest",
-          2405406
-        ],
-        [
-          4,
-          "Crisnel Anne Tupas",
-          2405377
-        ],
-        [
-          4,
-          "Wesley Gomes Santos",
-          2405413
-        ],
-        [
-          4,
-          "Reny Serrano",
-          2405254
-        ],
-        [
-          4,
-          "Guest",
-          2405418
-        ],
-        [
-          4,
-          "Guest",
-          2405457
-        ],
-        [
-          4,
-          "Guest",
-          2405333
-        ],
-        [
-          4,
-          "Guest",
-          2405446
-        ],
-        [
-          4,
-          "Guest",
-          2395284
-        ],
-        [
-          4,
-          "Guest",
-          2405441
-        ],
-        [
-          3,
-          "Jessica<3",
-          2389334
-        ],
-        [
-          3,
-          "Jaysan Ni\u00f1a Sepulveda",
-          2397685
-        ],
-        [
-          3,
-          "Pamela Silva Santos",
-          2398658
-        ],
-        [
-          3,
-          "yhus",
-          2402185
-        ],
-        [
-          3,
-          "Lama Kali",
-          2402295
-        ],
-        [
-          3,
-          "Aphrodite",
-          2401045
-        ],
-        [
-          3,
-          "Leo",
-          2405136
-        ],
-        [
-          3,
-          "Wendie Sanchez",
-          2394819
-        ],
-        [
-          3,
-          "Guest",
-          2405031
-        ],
-        [
-          3,
-          "souzx",
-          2405338
-        ],
-        [
-          3,
-          "Joan Mina Rivera",
-          2405420
-        ],
-        [
-          3,
-          "Guest",
-          2405385
-        ],
-        [
-          3,
-          "Midzy__",
-          2378520
-        ],
-        [
-          3,
-          "agy",
-          2405362
-        ],
-        [
-          3,
-          "Guest",
-          2405403
-        ],
-        [
-          3,
-          "Guest",
-          2405387
-        ],
-        [
-          3,
-          "Guest",
-          2405280
-        ],
-        [
-          3,
-          "Luiz Carlos de Resende Resende",
-          2405389
-        ],
-        [
-          3,
-          "Guest",
-          2405432
-        ],
-        [
-          3,
-          "Sitti Nor",
-          2400946
-        ],
-        [
-          3,
-          "Guest",
-          2405431
-        ],
-        [
-          3,
-          "Guest",
-          2405354
-        ],
-        [
-          3,
-          "Guest",
-          2405352
-        ],
-        [
-          3,
-          "Guest",
-          2405341
-        ],
-        [
-          3,
-          "Guest",
-          2405358
-        ],
-        [
-          3,
-          "Gerald Guntang",
-          2405439
-        ],
-        [
-          3,
-          "Guest",
-          2405365
-        ],
-        [
-          2,
-          "Ems",
-          2403765
-        ],
-        [
-          2,
-          "vitor vesesalu ",
-          2405408
-        ],
-        [
-          2,
-          "Hadeed Faisal",
-          2404557
-        ],
-        [
-          2,
-          "Guest",
-          2405382
-        ],
-        [
-          2,
-          "User2405394",
-          2405394
-        ],
-        [
-          2,
-          "free ",
-          2405449
-        ],
-        [
-          2,
-          "Guest",
-          2405399
-        ],
-        [
-          2,
-          "Paloma",
-          2405443
-        ],
-        [
-          2,
-          "Guest",
-          2405383
-        ],
-        [
-          2,
-          "Guest",
-          2405379
-        ],
-        [
-          1,
-          "Aziz Khan",
-          2404993
-        ],
-        [
-          1,
-          "John Paul Villareal",
-          2404473
-        ],
-        [
-          1,
-          "Xysen",
-          2401968
-        ],
-        [
-          1,
-          "Guest",
-          2405419
-        ],
-        [
-          1,
-          "maigawa",
-          2405426
-        ],
-        [
-          1,
-          "mamun",
-          2405425
-        ],
-        [
-          1,
-          "User2405430",
-          2405430
-        ],
-        [
-          1,
-          "Guest",
-          2405445
-        ],
-        [
-          1,
-          "Guest",
-          2405429
-        ],
-        [
-          1,
-          "Guest",
-          2405428
-        ],
-        [
-          0,
-          "sue",
-          2395584
-        ],
-        [
-          0,
-          "SHAH G",
-          2400205
-        ],
-        [
-          0,
-          "matethrada ",
-          2405344
-        ],
-        [
-          0,
-          "Phoenix Rising ",
-          2373824
-        ],
-        [
-          0,
-          "Guest",
-          2405436
-        ],
-        [
-          0,
-          "Jellian",
-          2379867
-        ],
-        [
-          0,
-          "Guest",
-          2403470
-        ],
-        [
-          0,
-          "Guest",
-          2401911
-        ],
-        [
-          0,
-          "Guest",
-          2404749
-        ],
-        [
-          0,
-          "Guest",
-          2403498
-        ],
-        [
-          0,
-          "Guest",
-          2404009
-        ],
-        [
-          0,
-          "Guest",
-          2404999
-        ],
-        [
-          0,
-          "Guest",
-          2404835
-        ],
-        [
-          0,
-          "Guest",
-          2405016
-        ],
-        [
-          0,
-          "Guest",
-          2405438
-        ],
-        [
-          0,
-          "Guest",
-          2405440
-        ],
-        [
-          0,
-          "Guest",
-          2405251
-        ],
-        [
-          0,
-          "Guest",
-          2404192
-        ],
-        [
-          0,
-          "Guest",
-          2405317
-        ]
-      ],
-      "row_count": 527,
-      "data_date": "2026-03-18",
-      "business_domain": "Revenue",
-      "related_metrics": [],
-      "description": "\u9ad8\u4f59\u989d\u7528\u6237"
-    }
-  ],
-  "kix_challenge": [
+  "daily_challenge": [
     {
       "chart_id": "participate_kix_challenge_uv__series__series_daily",
       "title": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf",
@@ -30378,7 +28291,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [
         "new_user_challenge_rate",
         "book_kix_challenge_uv",
@@ -30434,13 +28347,13 @@ body.ai-collapsed .charts{
               0.2624212736179146,
               0.2354060913705583,
               0.1747311827956989,
-              0.3695324283559578
+              0.3510028653295129
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u8d5b\u4e8b\u9884\u7ea6\u7387\u662f\u6307\u5728\u65e5\u6d3b\u8dc3\u7528\u6237\u4e2d\u8fdb\u884c\u8d5b\u4e8b\u9884\u7ea6\u7684\u7528\u6237\u6bd4\u4f8b\u3002"
     },
@@ -30497,7 +28410,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u8d5b\u4e8b\u5b8c\u6210\u7387\u662f\u6307\u5b8c\u6210\u7ed3\u7b97\u4eba\u6570\u4e0e\u5f00\u8d5b\u4eba\u6570\u7684\u6bd4\u7387\uff0c\u53cd\u6620\u8d5b\u4e8b\u7684\u53c2\u4e0e\u60c5\u51b5\u3002"
     },
@@ -30530,11 +28443,11 @@ body.ai-collapsed .charts{
             "values": [
               8.588306942752741,
               7.6932551319648095,
-              7.1276127612761275,
+              7.127612761276128,
               5.709260217278842,
               4.827450980392157,
               5.130217028380635,
-              3.33716814159292
+              3.3886986301369864
             ]
           }
         },
@@ -30615,7 +28528,7 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                7.1276127612761275,
+                7.127612761276128,
                 0.0,
                 0.0,
                 0.0,
@@ -30661,7 +28574,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.33716814159292,
+                3.3886986301369864,
                 0.0
               ]
             ]
@@ -30746,7 +28659,7 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 0.0,
-                7.1276127612761275,
+                7.127612761276128,
                 0.0,
                 0.0,
                 0.0,
@@ -30789,7 +28702,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.33716814159292,
+                3.3886986301369864,
                 0.0,
                 0.0
               ]
@@ -30851,7 +28764,7 @@ body.ai-collapsed .charts{
                 5.638655462184874
               ],
               [
-                4.8448087431693985,
+                4.844808743169399,
                 4.8133333333333335
               ],
               [
@@ -30859,15 +28772,15 @@ body.ai-collapsed .charts{
                 4.988059701492538
               ],
               [
-                3.379816513761468,
-                3.2974358974358973
+                3.438721136767318,
+                3.3421487603305784
               ]
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [
         "median_game_seconds",
         "score_zero_user"
@@ -30925,7 +28838,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u6bcf\u65e5KiX challenge\u5956\u52b1\u4eba\u6570"
     },
@@ -30974,13 +28887,13 @@ body.ai-collapsed .charts{
               222.45000000000013,
               232.9700000000001,
               224.97000000000008,
-              183.02000000000012
+              183.02000000000007
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u6bcf\u65e5KiX challenge\u5956\u52b1\u91d1\u989d"
     },
@@ -31132,7 +29045,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u6bcf\u65e5KiX challenge\u5151\u5956\u4eba\u6570"
     },
@@ -31276,7 +29189,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u5151\u5956\u91d1\u989d"
     },
@@ -31351,13 +29264,13 @@ body.ai-collapsed .charts{
               0.0174291938997821,
               0.0178926441351888,
               0.0276315789473684,
-              0.0309829059829059,
+              0.032051282051282,
               0.0368932038834951,
               0.0148083623693379,
               0.0274442538593482,
-              0.0178018575851393,
+              0.0185758513931888,
               0.0173761946133796,
-              0.0105633802816901
+              0.0101867572156196
             ]
           }
         },
@@ -34918,7 +32831,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0147058823529411,
+                0.0159313725490196,
                 0.35,
                 0.0,
                 0.0,
@@ -35478,7 +33391,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0222222222222222,
+                0.024074074074074,
                 0.064516129032258,
                 0.0,
                 0.0,
@@ -35679,7 +33592,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0097560975609756,
+                0.0093896713615023,
                 0.0,
                 0.0,
                 0.0,
@@ -35716,7 +33629,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.017391304347826,
+                0.0168067226890756,
                 0.0,
                 0.0,
                 0.0,
@@ -35758,7 +33671,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0116279069767441,
+                0.011049723756906,
                 0.0,
                 0.0,
                 0.0,
@@ -36057,7 +33970,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0272727272727272,
                 0.0049751243781094,
-                0.2727272727272727,
+                0.2954545454545454,
                 0.0847457627118644,
                 0.0155642023346303
               ],
@@ -36091,7 +34004,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0547945205479452,
                 0.0066666666666666,
-                0.0156815440289505
+                0.0168878166465621
               ],
               [
                 0.0,
@@ -36099,22 +34012,22 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0285714285714285,
                 0.0078125,
-                0.0158520475561426
+                0.0158730158730158
               ],
               [
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0285714285714285,
-                0.0116009280742459
+                0.027027027027027,
+                0.0112107623318385
               ]
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [
         "new_user_kix_challenge_book_rate"
       ],
@@ -36191,13 +34104,13 @@ body.ai-collapsed .charts{
               0.2244008714596949,
               0.2524850894632207,
               0.2578947368421053,
-              0.0598290598290598,
+              0.0608974358974358,
               0.1359223300970873,
               0.0827526132404181,
               0.0831903945111492,
               0.1114551083591331,
               0.0955690703735881,
-              0.0246045694200351
+              0.0237691001697792
             ]
           }
         },
@@ -39758,7 +37671,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0367647058823529,
+                0.0379901960784313,
                 0.3,
                 0.0,
                 0.0,
@@ -40519,7 +38432,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0195121951219512,
+                0.0187793427230046,
                 0.0,
                 0.0,
                 0.0,
@@ -40556,7 +38469,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0434782608695652,
+                0.042016806722689,
                 0.0,
                 0.0,
                 0.0,
@@ -40598,7 +38511,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0057803468208092,
+                0.005524861878453,
                 0.0851063829787234,
                 0.0,
                 0.0,
@@ -40670,8 +38583,8 @@ body.ai-collapsed .charts{
           ],
           "ranked_dim_values": [
             "minihub",
-            "FB",
             "invite",
+            "FB",
             "Organic",
             "others",
             "TikTok"
@@ -40897,7 +38810,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.1,
                 0.0248756218905472,
-                0.25,
+                0.2727272727272727,
                 0.2203389830508474,
                 0.0311284046692607
               ],
@@ -40934,27 +38847,27 @@ body.ai-collapsed .charts{
                 0.0820265379975874
               ],
               [
-                1.0,
+                0.5,
                 0.0466666666666666,
                 0.0,
                 0.0571428571428571,
                 0.296875,
-                0.0792602377807133
+                0.0793650793650793
               ],
               [
                 0.0,
                 0.0,
                 0.0,
-                0.0192307692307692,
-                0.0857142857142857,
-                0.0231481481481481
+                0.0185185185185185,
+                0.081081081081081,
+                0.0224215246636771
               ]
             ]
           }
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [
         "retention(d1)"
       ],
@@ -41032,11 +38945,11 @@ body.ai-collapsed .charts{
               0.3333333333333333,
               0.44,
               0.32,
-              0.717948717948718,
+              0.725,
               0.6829268292682927,
               1.0,
               0.6428571428571429,
-              0.7272727272727273,
+              0.7391304347826086,
               0.7083333333333334
             ]
           }
@@ -44816,7 +42729,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.6111111111111112,
+                0.631578947368421,
                 1.0,
                 0.0,
                 0.0,
@@ -45388,7 +43301,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.8333333333333334,
+                0.8461538461538461,
                 1.0,
                 0.0,
                 0.0,
@@ -45838,7 +43751,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 0.0,
-                0.9285714285714286,
+                0.9333333333333332,
                 0.4,
                 0.6
               ],
@@ -45872,7 +43785,7 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 0.0,
-                0.6666666666666666
+                0.6923076923076923
               ],
               [
                 0.0,
@@ -45887,7 +43800,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u65b0\u7528\u6237\u53c2\u8d5b\u9694\u65e5\u7684\u7559\u5b58\u7387"
     },
@@ -45920,15 +43833,15 @@ body.ai-collapsed .charts{
               "03-17"
             ],
             "values": [
-              4.1263388824364435,
+              4.126338882436444,
               8.156125474932814,
-              9.866457316622302,
+              9.95146375098892,
               6.817627809323213,
               9.572608128917578,
               9.668679951132342,
-              7.614920224512329,
-              21.869168695500356,
-              5.48559697912265
+              7.707619970981001,
+              21.86916869550036,
+              5.5119761101782165
             ]
           }
         },
@@ -46082,7 +43995,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 1.6666666666666667,
-                4.0894308943089435,
+                4.089430894308944,
                 4.666666666666667,
                 0.0,
                 2.0,
@@ -46148,7 +44061,7 @@ body.ai-collapsed .charts{
                 10.0,
                 0.0,
                 2.5,
-                7.649553571428571,
+                8.839643652561247,
                 46.82608695652174,
                 0.0,
                 0.0,
@@ -46156,7 +44069,7 @@ body.ai-collapsed .charts{
                 32.0,
                 0.0,
                 1.0,
-                2.5714285714285716
+                2.571428571428572
               ],
               [
                 0.0,
@@ -46240,7 +44153,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.907692307692307,
+                3.907692307692308,
                 4.0,
                 0.0,
                 2.0,
@@ -46273,14 +44186,14 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                3.9342105263157894,
+                3.934210526315789,
                 20.0,
                 0.0,
                 0.0,
                 0.0,
                 4.0,
                 0.0,
-                7.056,
+                8.07569721115538,
                 15.09375,
                 0.0,
                 2.5,
@@ -46325,7 +44238,7 @@ body.ai-collapsed .charts{
               ],
               [
                 0.0,
-                3.6971830985915495,
+                3.657718120805369,
                 0.0,
                 0.0,
                 0.0,
@@ -46339,14 +44252,14 @@ body.ai-collapsed .charts{
                 0.0,
                 1.0,
                 0.0,
-                2.7903225806451615,
+                2.873015873015873,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 1.25,
-                4.269230769230769,
+                4.463414634146342,
                 7.363636363636363,
                 0.0,
                 1.0,
@@ -46361,7 +44274,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u5e73\u5747\u5404\u56fd\u7528\u6237\u7ec3\u4e60\u6b21\u6570"
     },
@@ -46539,7 +44452,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u5c55\u793a\u7387"
     },
@@ -46717,7 +44630,7 @@ body.ai-collapsed .charts{
         }
       ],
       "hide_badge": false,
-      "business_domain": "KiX Challenge",
+      "business_domain": "Daily Challenge",
       "related_metrics": [],
       "description": "\u70b9\u51fb\u7528\u6237\u4e0e\u5c55\u793a\u7528\u6237\u7684\u6bd4\u4f8b\uff0c\u53cd\u6620\u53c2\u8d5b\u63d0\u9192\u5361\u7247\u7684\u70b9\u51fb\u7387\u3002"
     }
@@ -46766,7 +44679,7 @@ body.ai-collapsed .charts{
               1114.0,
               1108.0,
               1015.0,
-              158.0
+              179.0
             ]
           }
         },
@@ -47585,45 +45498,45 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                48.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                2.0,
-                0.0,
-                26.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                2.0,
-                0.0,
-                0.0,
                 55.0,
-                14.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                6.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                29.0,
+                2.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                2.0,
+                0.0,
+                0.0,
+                63.0,
+                15.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                7.0,
                 0.0,
                 0.0,
                 0.0,
@@ -47683,10 +45596,10 @@ body.ai-collapsed .charts{
               10.669223167673945,
               10.846377453928907,
               6.779721537765013,
-              7.719892779038273,
-              8.500539419029819,
+              7.719892779038274,
+              8.50053941902982,
               8.552032709695721,
-              1.054229927678106,
+              1.2421137531450517,
               0.0
             ]
           }
@@ -48469,8 +46382,8 @@ body.ai-collapsed .charts{
                 0.0,
                 0.2,
                 0.0,
-                0.0588235294117647,
-                0.1666666666666666,
+                0.0641711229946524,
+                0.3333333333333333,
                 0.0,
                 0.0,
                 0.0,
@@ -48482,8 +46395,8 @@ body.ai-collapsed .charts{
                 0.0909090909090909,
                 0.0,
                 0.0,
-                0.0625,
-                0.0978260869565217,
+                0.0675,
+                0.108695652173913,
                 0.0,
                 0.0,
                 0.0,
@@ -48601,13 +46514,13 @@ body.ai-collapsed .charts{
               0.5462184873949579,
               0.4984939759036144,
               0.4903339191564148,
-              0.4315068493150685,
-              0.4030915576694411,
-              0.4304461942257218,
-              0.5198711063372717,
-              0.4919210053859964,
-              0.4449458483754512,
-              0.3793103448275862,
+              0.4328767123287671,
+              0.4042806183115339,
+              0.4313210848643919,
+              0.5209452201933404,
+              0.492818671454219,
+              0.4467509025270758,
+              0.3842364532019704,
               0.0
             ]
           }
@@ -48690,10 +46603,10 @@ body.ai-collapsed .charts{
             "IN",
             "PK",
             "DE",
-            "CN",
             "SG",
-            "EG",
+            "CN",
             "HK",
+            "EG",
             "BR",
             "US",
             "MY",
@@ -49067,7 +46980,7 @@ body.ai-collapsed .charts{
                 0.5555555555555556,
                 0.0,
                 1.0,
-                0.3562610229276896,
+                0.3580246913580246,
                 0.9090909090909092,
                 0.0,
                 0.0,
@@ -49123,7 +47036,7 @@ body.ai-collapsed .charts{
                 0.6111111111111112,
                 0.0,
                 1.0,
-                0.2949308755760368,
+                0.2964669738863287,
                 0.8367346938775511,
                 0.0,
                 0.0,
@@ -49179,7 +47092,7 @@ body.ai-collapsed .charts{
                 0.4375,
                 0.0,
                 1.0,
-                0.313953488372093,
+                0.3156146179401993,
                 0.9078947368421052,
                 0.0,
                 0.0,
@@ -49235,7 +47148,7 @@ body.ai-collapsed .charts{
                 0.55,
                 0.0,
                 1.0,
-                0.4150485436893203,
+                0.4174757281553398,
                 0.7733333333333333,
                 0.0,
                 0.0,
@@ -49291,7 +47204,7 @@ body.ai-collapsed .charts{
                 0.5833333333333334,
                 0.0,
                 1.0,
-                0.4245689655172414,
+                0.4267241379310345,
                 0.7363636363636363,
                 0.0,
                 0.0,
@@ -49347,13 +47260,13 @@ body.ai-collapsed .charts{
                 0.5,
                 0.0,
                 1.0,
-                0.3858093126385809,
+                0.3880266075388026,
                 0.775,
                 0.0,
                 0.0,
                 1.0,
                 0.0,
-                0.8214285714285714,
+                0.8571428571428571,
                 0.0,
                 1.0,
                 0.0,
@@ -49388,9 +47301,9 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.2,
+                0.4,
                 0.0,
-                0.3850267379679144,
+                0.3903743315508021,
                 0.8333333333333334,
                 0.0,
                 0.0,
@@ -49403,7 +47316,7 @@ body.ai-collapsed .charts{
                 0.4545454545454545,
                 0.0,
                 0.0,
-                0.2575,
+                0.265,
                 0.532608695652174,
                 0.0,
                 0.0,
@@ -49559,13 +47472,13 @@ body.ai-collapsed .charts{
               0.4503311258278146,
               0.3584229390681003,
               0.5409153952843273,
-              0.5799207397622193,
+              0.5812417437252312,
               0.6867881548974943,
               0.4848837209302326,
               0.5788923719958202,
               0.5610948191593352,
               0.5344827586206896,
-              0.2387640449438202
+              0.2540106951871658
             ]
           }
         },
@@ -53316,7 +51229,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.6107692307692307,
+                0.6123076923076923,
                 0.6388888888888888,
                 0.0,
                 0.0,
@@ -54088,7 +52001,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.2515723270440251,
+                0.2771084337349397,
                 0.0,
                 0.0,
                 0.0,
@@ -54126,7 +52039,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.1704545454545454,
+                0.1777777777777777,
                 0.0,
                 0.0,
                 0.0,
@@ -54168,7 +52081,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.3012048192771084,
+                0.3076923076923077,
                 0.2142857142857142,
                 0.0,
                 0.0,
@@ -54476,7 +52389,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.7282608695652174,
                 0.4936708860759494,
-                0.4444444444444444,
+                0.4629629629629629,
                 0.2439024390243902,
                 0.6310679611650486
               ],
@@ -54522,11 +52435,11 @@ body.ai-collapsed .charts{
               ],
               [
                 0.0,
-                0.275,
+                0.2682926829268293,
                 0.0,
-                0.2857142857142857,
-                0.1764705882352941,
-                0.2342007434944238
+                0.2580645161290322,
+                0.2631578947368421,
+                0.2535714285714285
               ]
             ]
           }
@@ -54610,12 +52523,12 @@ body.ai-collapsed .charts{
               0.1117647058823529,
               0.1666666666666666,
               0.1307692307692307,
-              0.1252847380410023,
+              0.1272727272727272,
               0.1028192371475953,
               0.1366906474820144,
               0.1444043321299639,
               0.0958188153310104,
-              0.032258064516129,
+              0.0362903225806451,
               0.0
             ]
           }
@@ -58367,7 +56280,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0957178841309823,
+                0.0979899497487437,
                 0.6086956521739131,
                 0.0,
                 0.0,
@@ -59035,7 +56948,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0615384615384615,
+                0.0692307692307692,
                 0.0,
                 0.0,
                 0.0,
@@ -59077,7 +56990,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0186915887850467,
+                0.0233644859813084,
                 0.0434782608695652,
                 0.0,
                 0.0,
@@ -59527,7 +57440,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.1940298507462686,
                 0.0512820512820512,
-                0.5416666666666666,
+                0.56,
                 0.3,
                 0.0846153846153846
               ],
@@ -59567,7 +57480,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0256410256410256,
                 0.0,
-                0.0652173913043478,
+                0.108695652173913,
                 0.0957446808510638,
                 0.009933774834437
               ],
@@ -59587,70 +57500,6 @@ body.ai-collapsed .charts{
       "business_domain": "Daily tournament",
       "related_metrics": [],
       "description": "\u5173\u6ce8\u65b0\u7528\u6237\u5728Daily Tournament\u4e2d\u7684\u7559\u5b58\u60c5\u51b5"
-    }
-  ],
-  "pk": [
-    {
-      "chart_id": "pk_funnel",
-      "title": "PK \u6f0f\u6597",
-      "metric_id": "pk_funnel",
-      "module": "multi_funnel",
-      "kind": "multi_funnel",
-      "business_domain": "PK",
-      "data": {
-        "labels": [
-          "click",
-          "enter",
-          "ready",
-          "start",
-          "finish"
-        ],
-        "volumes": [
-          9416,
-          9316,
-          9316,
-          5444,
-          4880
-        ],
-        "rates": [
-          0.9894,
-          1.0,
-          0.5844,
-          0.8964
-        ],
-        "overall_rate": 0.5183,
-        "date": "2026-03-17",
-        "step_details": [
-          {
-            "metric_id": "pk_click_to_enter",
-            "metric_name": "PK\u8fdb\u5165\u7387",
-            "description": "PK \u8bf7\u6c42\u6210\u529f\u8fdb\u5165\u7684\u6bd4\u4f8b"
-          },
-          {
-            "metric_id": "pk_enter_to_ready",
-            "metric_name": "PK\u51c6\u5907\u7387",
-            "description": "\u5173\u6ce8\u91cd\u70b9: \u51c6\u5907\u7387"
-          },
-          {
-            "metric_id": "pk_ready_to_start",
-            "metric_name": "PK\u6210\u529f\u5f00\u73a9\u7387",
-            "description": "\u5173\u6ce8\u91cd\u70b9: \u5f00\u73a9\u7387"
-          },
-          {
-            "metric_id": "pk_start_to_finish",
-            "metric_name": "PK\u5b8c\u6210\u7387",
-            "description": "\u5173\u6ce8\u5b8c\u6210\u7387"
-          }
-        ]
-      },
-      "step_metric_ids": [
-        "pk_click_to_enter",
-        "pk_enter_to_ready",
-        "pk_ready_to_start",
-        "pk_start_to_finish"
-      ],
-      "related_metrics": [],
-      "description": ""
     }
   ],
   "viral": [
@@ -59791,7 +57640,7 @@ body.ai-collapsed .charts{
               0.0865979381443299,
               0.0522749273959341,
               0.0865384615384615,
-              0.0788732394366197
+              0.0824468085106382
             ]
           }
         }
@@ -59972,7 +57821,7 @@ body.ai-collapsed .charts{
               157.0,
               131.0,
               263.0,
-              30.0
+              32.0
             ]
           }
         }
@@ -59984,7 +57833,7 @@ body.ai-collapsed .charts{
     }
   ]
 }</script>
-<script type="application/json" id="ai-module-analysis-data">{"modules": {}, "error": ""}</script>
+<script type="application/json" id="ai-module-analysis-data">{"modules": {"daily_challenge": {"meta": {"run_date": "2026-03-17", "date_range": "2026-03-03 to 2026-03-17", "model": "unknown"}, "single_point": [{"title": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf(participate_kix_challenge_uv)\u76ee\u6807\u63a5\u8fd1\u4f46\u4ecd\u672a\u8fbe\u6210", "detail_points": ["\u76ee\u6807\u503c\u4e3a100\uff0c\u6700\u65b0\u503c\u57282026-03-17\u4e3a99.0\uff0c\u5dee\u8ddd\u4e3a-1.0\u3002", "\u53c2\u8d5b\u4eba\u6570\u57282026-03-15\u8fbe\u5230116.0\u540e\uff0c\u56de\u843d\u81f32026-03-17\u768499.0\u3002", "\u89c4\u6a21\u4fee\u590d\u5df2\u57fa\u672c\u5b8c\u6210\uff0c\u4f46\u4e0a\u6e38\u8f6c\u5316\u7a33\u5b9a\u6027\u4ecd\u9700\u52a0\u5f3a\u3002"]}, {"title": "\u8d5b\u4e8b\u5b8c\u6210\u7387(finish_kix_challenge_rate)\u9ad8\u4f4d\u8fd0\u884c\u4f46\u4ecd\u4f4e\u4e8e\u76ee\u6807", "detail_points": ["\u76ee\u6807\u503c\u4e3a100.00%\uff0c\u6700\u65b0\u503c\u57282026-03-17\u4e3a94.95%\uff0c\u5dee\u8ddd\u4e3a-5.05%\u3002", "\u5b8c\u6210\u7387\u867d\u5904\u9ad8\u4f4d\uff0c\u4f46\u524d\u94fe\u8def\u82e5\u7ee7\u7eed\u6ce2\u52a8\uff08\u5982\u5f00\u73a9\u7387\u4e0b\u884c\uff09\u53ef\u80fd\u7ee7\u7eed\u627f\u538b\u3002", "\u9700\u540c\u6b65\u7a33\u5b9a\u524d\u7f6e\u73af\u8282\uff0c\u907f\u514d\u5b8c\u6210\u7387\u540e\u7eed\u56de\u843d\u3002"]}], "good_news": [{"title": "3\u6708\u4e2d\u65ec\u5b9e\u73b0\u201c\u53c2\u8d5b\u89c4\u6a21\u4fee\u590d+\u540e\u6bb5\u7a33\u5b9a\u201d", "detail_points": ["\u53c2\u8d5b\u4eba\u6570\u4ece2026-03-07\u768445.0\uff0830\u5929\u6700\u4f4e\uff09\u63d0\u5347\u52302026-03-15\u7684116.0\uff0830\u5929\u6700\u9ad8\uff09\uff0c2026-03-17\u4ecd\u670999.0\u3002", "\u5f00\u73a9\u7387\u4ece2026-03-07\u768456.25%\u4fee\u590d\u52302026-03-17\u768481.82%\u3002", "\u5b8c\u6210\u7387\u57282026-03-17\u4fdd\u630194.95%\uff0c\u540e\u6bb5\u627f\u63a5\u7a33\u5b9a\u3002", "\u7559\u5b58\uff08T-2~T-8\uff09\u57282026-03-16\u4e3a80.34%\uff0c\u76f8\u8f832026-03-10\u768475.00%\u6709\u6539\u5584\u3002"], "data_narrative": [{"title": "\u53c2\u8d5b\u89c4\u6a21\u6301\u7eed\u6269\u5f20\u4e14\u8d8b\u4e8e\u7a33\u5b9a\uff0cChallenge\u6f0f\u6597\u9876\u7aef\u5438\u529b\u5df2\u6062\u590d\u81f3\u53ef\u653e\u91cf\u6c34\u4f4d", "points": ["participate_kix_challenge_uv \u4ece03-07\u4f4e\u70b945\u4eba\u53cd\u5f39\uff0c03-08~03-16\u8fde\u7eed9\u65e5\u7ef4\u630185~116\u4eba\u533a\u95f4\uff0c30\u65e5\u5747\u503c77\u4eba\uff0c\u8d8b\u52bf\u503c+18", "finish_kix_challenge_rate \u572803-08~03-16\u671f\u95f4\u5747\u503c\u7ea60.944\uff0c03-09\u300103-02\u4e24\u65e5\u8fbe\u52301.0\u6ee1\u5b8c\u8d5b\u7387", "kix_reward_uv \u4ece02-15~03-05\u768423~32\u4eba\u533a\u95f4\uff0c\u572803-06\u540e\u8dc3\u5347\u81f385~116\u4eba\u533a\u95f4\uff0c30\u65e5\u5747\u503c52.3\u4eba\uff0c\u8d8b\u52bf\u503c+89"], "statistical_evidence": {"changepoint_date": null, "significant": true, "p_value": null, "effect_size": null}}, {"title": "\u8d5b\u524d\u8bad\u7ec3\u5f3a\u5ea6\u5927\u5e45\u63d0\u5347\uff0c\u6838\u5fc3\u7528\u6237\u7684\u8d5b\u4e8b\u6295\u5165\u6df1\u5ea6\u6b63\u5728\u5f62\u6210\u7559\u5b58\u62a4\u57ce\u6cb3", "points": ["kix_train_times\uff08\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\uff09\u4ece02-15~03-05\u5747\u503c\u7ea63.8\u6b21\uff0c\u572803-12~03-14\u8fde\u7eed3\u65e5\u5347\u81f38.62\u30017.68\u30017.12\u6b21\uff0c30\u65e5\u5747\u503c4.42\u6b21\uff0c\u8d8b\u52bf\u503c+0.85", "kix_challenge_retention\uff08\u8d5b\u4e8b\u6b21\u65e5\u7559\u5b58\uff09\u4ece02-16\u76840.60\u9010\u6b65\u722c\u5347\uff0c03-12~03-14\u8fde\u7eed3\u65e5\u8fbe\u52300.814\u30010.818\u30010.875\uff0c30\u65e5\u5747\u503c0.720", "median_game_seconds\uff08\u6e38\u620f\u65f6\u957f\u4e2d\u4f4d\u6570\uff09\u572803-08~03-11\u53ca03-15~03-16\u8fde\u7eed\u591a\u65e5\u7ef4\u6301180\u79d2\u6ee1\u5c40\u65f6\u957f\uff0c30\u65e5\u5747\u503c162.2\u79d2\uff0c\u8d8b\u52bf\u503c+32\u79d2"], "statistical_evidence": {"changepoint_date": null, "significant": true, "p_value": null, "effect_size": null}}], "context": {"consecutive_days": 9, "business_context": "\u53c2\u8d5b\u89c4\u6a21\u4ece\u4f4e\u8c37\u4fee\u590d\u5e76\u572885~116\u4eba\u533a\u95f4\u8fde\u7eed9\u65e5\u7a33\u5b9a\uff0c\u914d\u5408\u5b8c\u8d5b\u7387\u6301\u7eed\u7ef4\u630194%\u4ee5\u4e0a\uff0c\u610f\u5473\u7740\u8d5b\u540e\u201c\u8d62\u5bb6\u6d17\u5e93\uff08Winner Rush Hour\uff09\u201c\u4e0e\u201c\u8f93\u5bb6\u590d\u6d3b\uff08Redemption Rush\uff09\u201c\u4e24\u6761\u5e7f\u544a\u53d8\u73b0\u652f\u8def\u5747\u5177\u5907\u7a33\u5b9a\u7684\u6d41\u91cf\u4f9b\u7ed9\uff1b\u540c\u671f\u8d5b\u524d\u8bad\u7ec3\u6b21\u6570\u6fc0\u589e\u4e0e\u6b21\u65e5\u7559\u5b58\u540c\u6b65\u8d70\u9ad8\uff0c\u8868\u660e\u6838\u5fc3\u7528\u6237\u7684\u6c89\u6ca1\u6210\u672c\u6b63\u5728\u79ef\u7d2f\uff0c\u4e3a\u540e\u7eed\u8ba2\u9605\u8f6c\u5316\uff08Weekly League Offer Code\u6838\u9500\uff09\u5960\u5b9a\u7528\u6237\u8d28\u91cf\u57fa\u7840\u3002"}, "strategies": [{"strategy": "\u9488\u5bf903-12\u540e\u8d5b\u524d\u8bad\u7ec3\u6b21\u6570\u6fc0\u589e\uff08\u5cf0\u503c8.62\u6b21/\u4eba\uff09\u7684\u9ad8\u6295\u5165\u7528\u6237\u7fa4\uff0c\u5728\u8d5b\u540e\u7ed3\u7b97\u9875\u5b9a\u5411\u63a8\u9001Weekly League\u8ba2\u9605\u4f53\u9a8c\u7801\uff08Offer Code\uff09\uff0c\u5229\u7528\u5176\u5df2\u79ef\u7d2f\u7684\u9ad8\u6c89\u6ca1\u6210\u672c\u52a0\u901f$9.99\u8ba2\u9605\u8f6c\u5316", "reference": "kix_train_times 03-12~03-14\u8fde\u7eed3\u65e5\u5747\u503c7.8\u6b21\uff0c\u540c\u671fkix_challenge_retention\u8fbe0.814~0.875\uff0c\u9ad8\u8bad\u7ec3\u5f3a\u5ea6\u4e0e\u9ad8\u7559\u5b58\u7528\u6237\u91cd\u53e0\u5ea6\u9ad8", "effect": "\u9884\u671f\u63d0\u5347Weekly Offer Code\u6838\u9500\u7387\uff0c\u5c06\u9ad8\u6295\u5165\u514d\u8d39\u7528\u6237\u8f6c\u5316\u4e3a\u8ba2\u9605\u4f1a\u5458\uff0c\u62c9\u5347\u5e73\u53f0eCPM\u5747\u503c"}, {"strategy": "\u5728\u53c2\u8d5b\u89c4\u6a21\u7a33\u5b9a\u572885~116\u4eba\u7684\u5f53\u524d\u7a97\u53e3\uff0c\u9002\u5ea6\u63d0\u5347Challenge\u52a8\u6001\u540d\u4e49\u5956\u6c60\u7684\u524d\u7aef\u5c55\u793a\u91d1\u989d\u4e0a\u9650\uff0c\u5f3a\u5316\u8d5b\u524dFOMO\u88c2\u53d8\u4fe1\u53f7\uff0c\u63a8\u52a8K-Factor\u7a81\u78341.2\u8b66\u6212\u7ebf", "reference": "kix_reward_uv\u8d8b\u52bf\u503c+89\uff0c\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf\u503c+18\uff0c\u5f53\u524d\u89c4\u6a21\u5df2\u5177\u5907\u5956\u6c60\u89c6\u89c9\u81a8\u80c0\u7684\u7528\u6237\u57fa\u6570\uff1bkix_challenge_reward_usd 30\u65e5\u5747\u503c279.9\u7f8e\u5143\uff0c\u4ecd\u6709\u5c55\u793a\u7a7a\u95f4", "effect": "\u9884\u671f\u653e\u5927\u8d5b\u524d\u793e\u7fa4\u81ea\u53d1\u62c9\u65b0\u884c\u4e3a\uff0c\u964d\u4f4eeCPI\uff0c\u63d0\u5347Challenge\u53c2\u8d5b\u7387\uff08participate_kix_challenge_uv / DAU\uff09"}]}, {"title": "\u65b0\u7528\u6237\u94fe\u8def\u540e\u6bb5\u7559\u5b58\u663e\u8457\u6539\u5584", "detail_points": ["\u65b0\u7528\u6237\u7559\u5b58\uff08T-2~T-8\uff09\u4ece2026-03-11\u768432.00%\u63d0\u5347\u52302026-03-14\u7684100.00%\u3002", "\u65b0\u7528\u6237\u7559\u5b58\u57282026-03-16\u4ecd\u670973.91%\uff0c\u7ef4\u6301\u8f83\u9ad8\u6c34\u5e73\u3002", "\u65b0\u7528\u6237\u9884\u7ea6\u7387\u4ece2026-03-11\u76846.09%\u63d0\u5347\u52302026-03-12\u768413.59%\u3002", "\u65b0\u7528\u6237\u53c2\u4e0e\u7387\u4ece2026-03-11\u76843.21%\u63d0\u5347\u52302026-03-12\u76843.69%\uff0c\u524d\u7f6e\u56de\u6696\u4e0e\u7559\u5b58\u62ac\u5347\u540c\u5411\u3002"], "data_narrative": [{"title": "\u65b0\u7528\u6237\u5b8c\u6210\u9996\u6b21\u53c2\u8d5b\u540e\u6b21\u65e5\u56de\u6d41\u7387\u6301\u7eed\u8d70\u5f3a\uff0c\u8d5b\u4e8b\u5bf9\u65b0\u7528\u6237\u7684\u94a9\u5b50\u6548\u5e94\u6b63\u5728\u5151\u73b0", "points": ["new_user_kix_challenge_retention\uff08\u65b0\u7528\u6237\u53c2\u8d5b\u6b21\u65e5\u7559\u5b58\uff09\u8fd1\u671f\u591a\u65e5\u7ef4\u6301\u9ad8\u4f4d\uff1a03-07\u8fbe0.8125\u300103-12\u8fbe0.725\u300103-13\u8fbe0.683\u300103-14\u8fbe1.0\u300103-15\u8fbe0.643\uff0c30\u65e5\u5747\u503c\u4e3a0.475", "kix_challenge_retention\uff08\u5168\u4f53\u53c2\u8d5b\u7528\u6237\u6b21\u65e5\u7559\u5b58\uff09\u540c\u671f\u540c\u6b65\u8d70\u5f3a\uff1a03-12\u8fbe0.814\u300103-13\u8fbe0.818\u300103-14\u8fbe0.875\uff0c\u5747\u663e\u8457\u9ad8\u4e8e30\u65e5\u5747\u503c0.720", "participate_kix_challenge_uv\uff08\u5b9e\u9645\u53c2\u8d5b\u4eba\u6570\uff09\u4ece02-15\u768488\u4eba\u4f4e\u70b9\u7ecf\u5386\u6ce2\u52a8\u540e\uff0c03-14~03-15\u8fde\u7eed\u7a81\u7834104\u3001116\u4eba\u7684\u9636\u6bb5\u65b0\u9ad8\uff0c\u8d8b\u52bf\u503c+18"], "statistical_evidence": {"changepoint_date": null, "significant": true, "p_value": null, "effect_size": null}}, {"title": "\u65b0\u7528\u6237\u9884\u7ea6\u5230\u53c2\u8d5b\u7684\u8f6c\u5316\u94fe\u8def\u51fa\u73b0\u7ed3\u6784\u6027\u5206\u5316\uff0c\u9ad8\u8d28\u91cf\u7559\u5b58\u7528\u6237\u6b63\u5728\u6c89\u6dc0", "points": ["new_user_kix_challenge_book_rate\uff08\u65b0\u7528\u6237\u9884\u7ea6\u7387\uff09\u4ece02-27\u5cf0\u503c0.532\u6301\u7eed\u4e0b\u6ed1\u81f303-16\u76840.095\uff0c\u964d\u5e45\u7ea682%", "new_user_challenge_rate\uff08\u65b0\u7528\u6237\u5f53\u65e5\u53c2\u8d5b\u7387\uff09\u540c\u671f\u7ef4\u6301\u76f8\u5bf9\u7a33\u5b9a\uff0c30\u65e5\u5747\u503c0.025\uff0c03-16\u4e3a0.017\uff0c\u672a\u51fa\u73b0\u540c\u6bd4\u4f8b\u4e0b\u6ed1", "new_user_average_train_times\uff08\u65b0\u7528\u6237\u5e73\u5747\u7ec3\u4e60\u6b21\u6570\uff09\u81ea03-09\u9996\u6b21\u6709\u6570\u636e\uff0837\u6b21\uff09\u540e\u5feb\u901f\u6500\u5347\uff0c03-16\u8fbe307\u6b21\uff0c\u8fdc\u8d8530\u65e5\u5747\u503c124\u6b21"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}], "context": {"consecutive_days": null, "business_context": "\u65b0\u7528\u6237\u53c2\u8d5b\u540e\u6b21\u65e5\u7559\u5b58\u7387\u572803-07\u540e\u6301\u7eed\u8d70\u5f3a\uff0c\u8bf4\u660e\u5b8c\u6210\u9996\u8d5b\u7684\u65b0\u7528\u6237\u6b63\u5728\u88abRedemption Rush\u7684\u79ef\u5206\u9884\u5b58\u673a\u5236\u6709\u6548\u9501\u4f4f\u6b21\u65e5\u56de\u6d41\uff1b\u540c\u65f6\u65b0\u7528\u6237\u7ec3\u4e60\u6b21\u6570\u7684\u7206\u53d1\u5f0f\u589e\u957f\uff0803-16\u8fbe307\u6b21\uff09\u610f\u5473\u7740\u8fd9\u6279\u7528\u6237\u5df2\u6df1\u5ea6\u8fdb\u5165\u8d5b\u524d\u8bad\u7ec3\u6f0f\u6597\uff0c\u662f\u9ad8\u610f\u56fe\u5e7f\u544a\u5e93\u5b58\u7684\u4f18\u8d28\u6765\u6e90\u3002"}, "strategies": [{"strategy": "\u9488\u5bf9\u5b8c\u6210\u9996\u6b21\u53c2\u8d5b\u4e14\u6b21\u65e5\u7559\u5b58\u7684\u65b0\u7528\u6237\uff0c\u5728\u5176\u7b2c2\u65e5\u53c2\u8d5b\u540e\u5b9a\u5411\u63a8\u9001Weekly League\u7684\u8ba2\u9605\u4f53\u9a8cOffer Code\uff0c\u5229\u7528\u5176\u5df2\u5efa\u7acb\u7684\u8d5b\u4e8b\u4e60\u60ef\u52a0\u901f\u4ece\u514d\u8d39\u7528\u6237\u5411$9.99\u8ba2\u9605\u7528\u6237\u7684\u8f6c\u5316", "reference": "new_user_kix_challenge_retention\u8fd1\u671f\u591a\u65e5\u8d850.65\uff0c\u8bf4\u660e\u8be5\u6279\u7528\u6237\u5df2\u5177\u5907\u8fde\u7eed\u53c2\u8d5b\u610f\u613f\uff1bWeekly League\u7684Offer Code\u6838\u9500\u4f9d\u8d56\u9ad8\u9891\u53c2\u8d5b\u7528\u6237\u57fa\u7840", "effect": "\u9884\u671f\u53ef\u63d0\u5347Weekly League Offer Code\u6838\u9500\u7387\uff0c\u5e76\u7f29\u77ed\u65b0\u7528\u6237\u4ece\u6fc0\u6d3b\u5230\u8ba2\u9605\u8f6c\u5316\u7684\u8def\u5f84\u5468\u671f"}, {"strategy": "\u5bf9new_user_average_train_times\u5f02\u5e38\u9ad8\u503c\uff0803-16\u8fbe307\u6b21\uff09\u8fdb\u884c\u7528\u6237\u5206\u7fa4\u5206\u6790\uff0c\u8bc6\u522b\u662f\u5426\u5b58\u5728\u5237\u91cf\u6216\u5f02\u5e38\u884c\u4e3a\uff0c\u540c\u65f6\u5bf9\u6b63\u5e38\u9ad8\u7ec3\u4e60\u9891\u6b21\u7528\u6237\u8bbe\u7f6e\u7ec3\u4e60\u6b21\u6570\u91cc\u7a0b\u7891\u5956\u52b1\uff0c\u5c06\u5176\u8bad\u7ec3\u70ed\u60c5\u8f6c\u5316\u4e3a\u8d5b\u524d\u5e7f\u544a\u89c2\u770b\uff08IAA\uff09\u7684\u9ad8\u610f\u56fe\u573a\u666f", "reference": "kix_train_times\uff08\u5168\u4f53\u4eba\u5747\u7ec3\u4e60\u6b21\u6570\uff0903-12~03-13\u8fbe8.6\u30017.7\u7684\u9636\u6bb5\u5cf0\u503c\uff0c\u4e0e\u65b0\u7528\u6237\u7ec3\u4e60\u6b21\u6570\u7206\u53d1\u65f6\u95f4\u7a97\u53e3\u91cd\u53e0\uff08\u63a8\u65ad\uff09", "effect": "\u9884\u671f\u53ef\u5728\u4e0d\u589e\u52a0\u989d\u5916\u4e70\u91cf\u6210\u672c\u7684\u524d\u63d0\u4e0b\uff0c\u663e\u8457\u63d0\u5347\u8d5b\u524dIAA Impressions/DAU\uff0c\u653e\u5927\u5e7f\u544a\u5e93\u5b58\u5bc6\u5ea6"}]}, {"title": "\u8d5b\u524d\u8bad\u7ec3\u5f3a\u5ea6\u62ac\u5347\uff0c\u5bf9\u5b8c\u8d5b\u5f62\u6210\u652f\u6491", "detail_points": ["\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u57282026-03-12\u8fbe\u52308.588306942752741\uff0830\u5929\u6700\u9ad8\uff09\u3002", "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\u57282026-03-17\u4e3a5.130217028380635\uff0c\u9ad8\u4e8e30\u5929\u5747\u503c4.456402854925874\u3002", "\u5b8c\u6210\u7387\u57282026-03-15\u4e3a96.55%\uff0c2026-03-17\u4e3a94.95%\uff0c\u6301\u7eed\u9ad8\u4f4d\u3002", "\u8bad\u7ec3\u6295\u5165\u589e\u5f3a\u4e0e\u5b8c\u8d5b\u7a33\u5b9a\u5728\u540c\u4e00\u9636\u6bb5\u5171\u632f\u3002"], "data_narrative": [{"title": "\u8d5b\u524d\u8bad\u7ec3\u5f3a\u5ea6\u6301\u7eed\u8d70\u9ad8\uff0c\u6838\u5fc3\u7528\u6237\u6b63\u5728\u4ece\u201c\u53c2\u8d5b\u8005\u201c\u5411\u201c\u5907\u8d5b\u8005\u201c\u8f6c\u53d8\uff0c\u8d5b\u4e8b\u7c98\u6027\u8d28\u91cf\u5347\u7ea7", "points": ["kix_train_times\uff08\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570\uff09\u4ece2\u6708\u5747\u503c\u7ea63.8\u6b21\u62ac\u5347\u81f33\u670812\u65e5\u5cf0\u503c8.62\u6b21\uff0c3\u670813\u65e57.68\u6b21\u30013\u670814\u65e57.12\u6b21\uff0c\u8fd1\u671f\u7ef4\u6301\u9ad8\u4f4d", "new_user_average_train_times\uff08\u65b0\u7528\u6237\u5e73\u5747\u7ec3\u4e60\u6b21\u6570\uff09\u81ea3\u67089\u65e5\u8d77\u6709\u6570\u636e\uff0c\u4ece37.1\u6b21\u5feb\u901f\u6500\u5347\u81f33\u670816\u65e5307.1\u6b21\uff0c\u663e\u793a\u65b0\u8fdb\u7528\u6237\u8bad\u7ec3\u6295\u5165\u5ea6\u6781\u9ad8", "kix_train_times 30\u65e5\u5747\u503c\u4e3a4.42\u6b21\uff0c\u800c3\u670812\u65e5~3\u670814\u65e5\u8fde\u7eed3\u65e5\u5747\u8d857\u6b21\uff0c\u8f83\u5747\u503c\u9ad8\u51fa\u7ea660%~95%"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}, {"title": "\u9ad8\u8bad\u7ec3\u6295\u5165\u6b63\u5728\u8f6c\u5316\u4e3a\u66f4\u7a33\u5b9a\u7684\u5b8c\u8d5b\u8868\u73b0\uff0c\u8d5b\u4e8b\u6f0f\u6597\u5e95\u90e8\u97e7\u6027\u589e\u5f3a", "points": ["finish_kix_challenge_rate\uff08\u5b8c\u8d5b\u7387\uff09\u57283\u6708\u6574\u4f53\u7ef4\u6301\u9ad8\u4f4d\uff0c3\u67082\u65e5\u30013\u67089\u65e5\u5747\u8fbe1.0\uff0c3\u67085\u65e50.975\uff0c30\u65e5\u5747\u503c0.946", "kix_train_times\u9ad8\u5cf0\u671f\uff083\u670812\u65e5~3\u670814\u65e5\uff0c\u5747\u503c7.8\u6b21\uff09\u5bf9\u5e94\u7684\u5b8c\u8d5b\u7387\u5206\u522b\u4e3a0.921\u30010.948\u30010.875\uff0c\u6574\u4f53\u672a\u51fa\u73b0\u56e0\u53c2\u8d5b\u4eba\u6570\u6269\u5927\u800c\u4e0b\u6ed1\u7684\u8ff9\u8c61", "participate_kix_challenge_uv\uff08\u53c2\u8d5b\u4eba\u6570\uff09\u4ece3\u67087\u65e5\u4f4e\u70b945\u4eba\u53cd\u5f39\u81f33\u670815\u65e5116\u4eba\u30013\u670814\u65e5104\u4eba\uff0c\u53c2\u8d5b\u89c4\u6a21\u6269\u5927\u540c\u671f\u5b8c\u8d5b\u7387\u672a\u663e\u8457\u6076\u5316"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}], "context": {"consecutive_days": null, "business_context": "\u8d5b\u524d\u8bad\u7ec3\u6b21\u6570\u6301\u7eed\u62ac\u5347\u610f\u5473\u7740\u7528\u6237\u5728\u6b63\u5f0f\u53c2\u8d5b\u524d\u5df2\u6df1\u5ea6\u6d88\u8017\u751f\u547d\u503c\u4e0e\u65f6\u95f4\u6210\u672c\uff0c\u6c89\u6ca1\u6210\u672c\u79ef\u7d2f\u5c06\u663e\u8457\u63d0\u5347\u5b8c\u8d5b\u610f\u613f\u4e0e\u8d5b\u540e\u7559\u5b58\u6982\u7387\uff1b\u540c\u65f6\u9ad8\u8bad\u7ec3\u5f3a\u5ea6\u7528\u6237\u5728\u8d5b\u540eRedemption Rush\u9636\u6bb5\u7684\u5e7f\u544a\u6d88\u8017\u610f\u613f\u66f4\u5f3a\uff0c\u6709\u52a9\u4e8e\u63d0\u5347IAA\u5e93\u5b58\u6df1\u5ea6\u4e0e\u4eba\u5747\u5e7f\u544a\u89c2\u770b\u6b21\u6570\u3002"}, "strategies": [{"strategy": "\u9488\u5bf9\u8d5b\u524d\u8bad\u7ec3\u6b21\u6570\u8d85\u8fc75\u6b21\u7684\u9ad8\u5f3a\u5ea6\u5907\u8d5b\u7528\u6237\uff0c\u5728\u8d5b\u4e8b\u7ed3\u675f\u540e\u4f18\u5148\u63a8\u9001Redemption Rush\u5165\u53e3\u4e0e\u6b21\u65e5\u8d5b\u9898\u9884\u4e60\u7279\u6743\uff0c\u5f3a\u5316\u5176\u201c\u660e\u5929\u7ffb\u76d8\u201c\u7684\u6c89\u6ca1\u6210\u672c\u951a\u5b9a", "reference": "kix_train_times\u8fd1\u671f\u5747\u503c\u8d857\u6b21\uff0cnew_user_average_train_times 3\u670816\u65e5\u8fbe307\u6b21\uff0c\u9ad8\u8bad\u7ec3\u7528\u6237\u5df2\u5f62\u6210\u5f3a\u5907\u8d5b\u4e60\u60ef", "effect": "\u9884\u671f\u53ef\u63d0\u5347\u8d5b\u540eRedemption Rush\u8fdb\u5165\u7387\uff0c\u589e\u52a0IAA Impressions/DAU\uff0c\u5e76\u5f3a\u5316\u6b21\u65e5\u53c2\u8d5b\u7559\u5b58\uff08\u5f53\u524dkix_challenge_retention\u5df2\u8fbe0.875\uff09"}, {"strategy": "\u5728\u8d5b\u524d\u8bad\u7ec3\u754c\u9762\u8bbe\u7f6e\u52a8\u6001\u8fdb\u5ea6\u6761\uff0c\u5c55\u793a\u201c\u5f53\u524d\u8bad\u7ec3\u6b21\u6570 vs \u5386\u53f2Top\u9009\u624b\u8d5b\u524d\u5747\u503c\u201c\uff0c\u5229\u7528\u793e\u4f1a\u6bd4\u8f83\u6548\u5e94\u8fdb\u4e00\u6b65\u62c9\u5347\u8bad\u7ec3\u5f3a\u5ea6\uff0c\u540c\u65f6\u6bcf\u6b21\u8bad\u7ec3\u6d88\u8017\u751f\u547d\u503c\u4ee5\u52a0\u901fIAA\u89e6\u53d1", "reference": "kix_train_times\u4ece2\u6708\u5747\u503c3.8\u6b21\u62ac\u5347\u81f33\u6708\u5cf0\u503c8.6\u6b21\uff0c\u8bf4\u660e\u7528\u6237\u5bf9\u8bad\u7ec3\u5f3a\u5ea6\u63d0\u793a\u5b58\u5728\u54cd\u5e94\u7a7a\u95f4", "effect": "\u9884\u671f\u53ef\u8fdb\u4e00\u6b65\u63d0\u5347\u4eba\u5747\u8bad\u7ec3\u6b21\u6570\uff0c\u52a0\u901f\u751f\u547d\u503c\u6d88\u8017\u5468\u671f\uff0c\u63d0\u9ad8\u8d5b\u524dIAA Impressions\u5bc6\u5ea6"}]}], "bad_news": [{"title": "\u9884\u7ea6\u7aef\u6301\u7eed\u4e0b\u6ed1\u5e76\u4f20\u5bfc\u81f3\u65b0\u7528\u6237\u53c2\u8d5b\u5165\u53e3", "detail_points": ["\u5168\u91cf\u9884\u7ea6\u7387\u4ece2026-03-03\u768466.06%\u4e0b\u964d\u52302026-03-17\u768417.47%\u3002", "\u65b0\u7528\u6237\u9884\u7ea6\u7387\u4ece2026-03-05\u768449.57%\u4e0b\u964d\u52302026-03-17\u76842.38%\uff0830\u5929\u6700\u4f4e\uff09\u3002", "\u65b0\u7528\u6237\u53c2\u4e0e\u7387\u4ece2026-03-12\u76843.69%\u4e0b\u964d\u52302026-03-17\u76841.02%\uff0830\u5929\u6700\u4f4e\uff09\u3002", "\u94fe\u8def\u5448\u73b0\u201c\u9884\u7ea6\u4e0b\u6ed1 -> \u53c2\u8d5b\u5165\u53e3\u6536\u7f29\u201d\u7684\u65ad\u88c2\u7279\u5f81\u3002"], "data_narrative": [{"title": "\u65b0\u7528\u6237\u5bf9\u8d5b\u4e8b\u7684\u4e3b\u52a8\u610f\u613f\u6b63\u5728\u7cfb\u7edf\u6027\u840e\u7f29\uff0c\u524d\u7aef\u62c9\u65b0\u6f0f\u6597\u7684\u8f6c\u5316\u6548\u7387\u5df2\u8dcc\u81f3\u89c2\u6d4b\u671f\u4f4e\u70b9", "points": ["new_user_kix_challenge_book_rate\uff08\u65b0\u7528\u6237\u9884\u7ea6\u7387\uff09\u4ece2\u670827\u65e5\u5cf0\u503c0.532\u4e0b\u6ed1\u81f33\u670816\u65e50.095\uff0c\u964d\u5e45\u7ea682%", "book_kix_challenge_uv\uff08\u5168\u91cf\u9884\u7ea6\u7387/DAU\uff09\u4ece2\u670827\u65e5\u5cf0\u503c4.558\u8dcc\u81f33\u670816\u65e50.236\uff0c\u540c\u671f\u964d\u5e45\u7ea695%", "new_user_challenge_rate\uff08\u65b0\u7528\u6237\u5f53\u65e5\u53c2\u8d5b\u7387\uff0930\u65e5\u5747\u503c\u4ec50.025\uff0c3\u670816\u65e5\u4e3a0.017\uff0c\u5904\u4e8e\u89c2\u6d4b\u671f\u4f4e\u4f4d", "new_user_kix_challenge_book_rate\u57283\u670811\u65e5\u51fa\u73b0\u52a0\u901f\u4e0b\u8dcc\uff0c\u5355\u65e5\u4ece0.260\u8dcc\u81f30.060\uff0c\u6b64\u540e\u7ef4\u6301\u57280.08-0.11\u533a\u95f4"], "statistical_evidence": {"changepoint_date": "2026-02-27", "significant": true, "p_value": 0.03, "effect_size": 0.8}}, {"title": "\u9884\u7ea6\u91cf\u5d29\u584c\u672a\u88ab\u53c2\u8d5b\u4eba\u6570\u540c\u6b65\u53cd\u6620\uff0c\u8bf4\u660e\u5b58\u91cf\u8001\u7528\u6237\u5728\u652f\u6491\u53c2\u8d5b\u89c4\u6a21\uff0c\u65b0\u8840\u6db2\u8865\u5145\u80fd\u529b\u5df2\u544a\u8b66", "points": ["participate_kix_challenge_uv\uff08\u5b9e\u9645\u53c2\u8d5b\u4eba\u6570\uff09\u4ece2\u670815\u65e588\u4eba\u7ecf\u4f4e\u8c37\u540e\u56de\u5347\u81f33\u670815\u65e5116\u4eba\uff0c30\u65e5\u8d8b\u52bf+18\uff0c\u6574\u4f53\u5411\u4e0a", "kix_reward_uv\uff08\u5956\u52b1\u4eba\u6570\uff09\u4ece3\u67086\u65e5\u8d77\u5927\u5e45\u8dc3\u5347\uff0c3\u670815\u65e5\u8fbe116\u4eba\uff0c\u4e0e\u53c2\u8d5b\u4eba\u6570\u51e0\u4e4e\u6301\u5e73\uff0c\u5956\u52b1\u8986\u76d6\u7387\u63a5\u8fd1100%", "new_user_challenge_rate\uff08\u65b0\u7528\u6237\u53c2\u8d5b\u7387\uff09\u540c\u671f\u7ef4\u6301\u57280.015-0.031\u4f4e\u4f4d\uff0c\u4e0e\u53c2\u8d5b\u603b\u91cf\u589e\u957f\u65b9\u5411\u76f8\u53cd", "new_user_kix_challenge_book_rate\u4ece2\u670827\u65e50.532\u8dcc\u81f33\u670816\u65e50.095\uff0c\u800cparticipate_kix_challenge_uv\u540c\u671f\u4ece72\u5347\u81f3106\uff0c\u4e24\u8005\u8d70\u52bf\u660e\u663e\u80cc\u79bb"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}], "context": {"consecutive_days": 18, "business_context": "\u9884\u7ea6\u662fChallenge\u6f0f\u6597\u7684\u6700\u524d\u7aef\u5165\u53e3\uff0c\u65b0\u7528\u6237\u9884\u7ea6\u7387\u4ece\u5cf0\u503c82%\u7684\u8dcc\u5e45\u610f\u5473\u7740\u65b0\u7528\u6237\u88ab\u8d5b\u4e8b\u5438\u5f15\u5e76\u5b8c\u6210\u610f\u5411\u7ed1\u5b9a\u7684\u80fd\u529b\u5927\u5e45\u524a\u5f31\uff1b\u5f53\u524d\u53c2\u8d5b\u89c4\u6a21\u7531\u5b58\u91cf\u7528\u6237\u652f\u6491\uff0c\u4e00\u65e6\u5b58\u91cf\u7528\u6237\u81ea\u7136\u6d41\u5931\uff0c\u7f3a\u4e4f\u65b0\u7528\u6237\u8865\u5145\u7684\u53c2\u8d5b\u6c60\u5c06\u9762\u4e34\u5feb\u901f\u840e\u7f29\uff0c\u8fdb\u800c\u538b\u7f29\u5956\u6c60FOMO\u6548\u5e94\u4e0eIAA\u5e7f\u544a\u5e93\u5b58\u89c4\u6a21\u3002"}, "strategies": [{"strategy": "\u9488\u5bf9\u65b0\u7528\u6237\u9996\u65e5\u4f53\u9a8c\uff0c\u5728\u9884\u7ea6\u73af\u8282\u589e\u52a0\u52a8\u6001\u5956\u6c60\u53ef\u89c6\u5316\u7ec4\u4ef6\uff08\u5b9e\u65f6\u663e\u793a\u5f53\u524d\u5956\u6c60\u91d1\u989d\u4e0e\u53c2\u8d5b\u4eba\u6570\uff09\uff0c\u5f3a\u5316FOMO\u611f\u77e5\uff0c\u964d\u4f4e\u65b0\u7528\u6237\u4ece\u9884\u7ea6\u5230\u5b9e\u9645\u53c2\u8d5b\u7684\u51b3\u7b56\u6469\u64e6", "reference": "new_user_kix_challenge_book_rate\u4e0enew_user_challenge_rate\u540c\u6b65\u4f4e\u8ff7\uff0c\u8bf4\u660e\u9884\u7ea6\u610f\u613f\u4e0e\u53c2\u8d5b\u8f6c\u5316\u53cc\u53cc\u5931\u6548\uff1bbook_kix_challenge_uv\u5cf0\u503c\u671f\uff082\u670825-28\u65e5\uff09\u5bf9\u5e94\u53c2\u8d5b\u4eba\u6570\u76f8\u5bf9\u9ad8\u4f4d\uff0c\u4e24\u8005\u5b58\u5728\u65f6\u5e8f\u5173\u8054\uff08\u4ec5\u4f9b\u53c2\u8003\uff09", "effect": "\u9884\u671f\u63d0\u5347\u65b0\u7528\u6237\u9884\u7ea6\u7387\u53ca\u9884\u7ea6\u2192\u53c2\u8d5b\u8f6c\u5316\u7387\uff0c\u6269\u5927\u6bcf\u65e5\u53c2\u8d5b\u6c60\u57fa\u6570\uff0c\u589e\u5f3a\u5956\u6c60\u81a8\u80c0\u7684FOMO\u88c2\u53d8\u6548\u5e94"}, {"strategy": "\u5bf9\u5b8c\u6210\u9884\u7ea6\u4f46\u672a\u53c2\u8d5b\u7684\u65b0\u7528\u6237\uff0c\u5728\u8d5b\u524d1\u5c0f\u65f6\u901a\u8fc7auto_reminder\u5361\u7247\u63a8\u9001\u4e2a\u6027\u5316\u63d0\u9192\uff08\u5f53\u524d\u5c55\u793a\u7387\u4ec53.5%\uff0c\u70b9\u51fb\u7387\u7ea618%\uff09\uff0c\u91cd\u70b9\u63d0\u5347\u63d0\u9192\u5361\u7247\u7684\u89e6\u8fbe\u8986\u76d6\u7387", "reference": "auto_reminder_show\uff08\u63d0\u9192\u5c55\u793a\u7387\uff09\u5f53\u524d\u4ec50.035\uff0c\u8fdc\u4f4e\u4e8ebook\u7528\u6237\u603b\u91cf\uff1bauto_reminder_click\u70b9\u51fb\u7387\u5747\u503c0.182\uff0c\u8bf4\u660e\u89e6\u8fbe\u540e\u8f6c\u5316\u610f\u613f\u5c1a\u53ef\uff0c\u6838\u5fc3\u74f6\u9888\u5728\u4e8e\u5c55\u793a\u8986\u76d6\u4e0d\u8db3\uff08\u4ec5\u4f9b\u53c2\u8003\uff09", "effect": "\u9884\u671f\u6536\u7a84\u9884\u7ea6\u7528\u6237\u4e0e\u5b9e\u9645\u53c2\u8d5b\u7528\u6237\u4e4b\u95f4\u7684\u6f0f\u6597\u635f\u8017\uff0c\u63d0\u5347\u65b0\u7528\u6237\u9996\u65e5\u53c2\u8d5b\u7387"}]}, {"title": "\u53c2\u8d5b\u63d0\u9192\u94fe\u8def\u7ed3\u6784\u6027\u77db\u76fe\uff1a\u5c55\u793a\u5347\u9ad8\u4f46\u70b9\u51fb\u4e0e\u9884\u7ea6\u672a\u8ddf\u4e0a", "detail_points": ["\u53c2\u8d5b\u63d0\u9192\u5361\u7247\u5c55\u793a\u7387\u57282026-03-17\u5347\u81f36.85%\uff08\u9636\u6bb5\u6700\u9ad8\uff09\u3002", "\u70b9\u51fb\u7387\u57282026-03-17\u4ec55.00%\uff0c\u4f4e\u4e8e2026-03-13\u768425.00%\u548c2026-03-09\u768441.18%\u3002", "\u9884\u7ea6\u7387\u4ece2026-03-13\u768425.09%\u4e0b\u964d\u52302026-03-17\u768417.47%\u3002", "\u8868\u73b0\u4e3a\u201c\u89e6\u8fbe\u589e\u5f3a -> \u5174\u8da3\u8f6c\u5316\u4e0d\u8db3 -> \u9884\u7ea6\u56de\u843d\u201d\u3002"], "data_narrative": [{"title": "\u63d0\u9192\u5361\u7247\u89e6\u8fbe\u6548\u7387\u6301\u7eed\u8d70\u4f4e\uff0c\u9884\u7ea6\u8f6c\u5316\u6f0f\u6597\u524d\u7aef\u6b63\u5728\u7a7a\u8f6c\uff0c\u65e0\u6cd5\u6709\u6548\u9a71\u52a8\u53c2\u8d5b\u884c\u4e3a", "points": ["auto_reminder_show\uff08\u5c55\u793a\u7387\uff09\u4ece3\u67085\u65e50.010\u6301\u7eed\u722c\u5347\u81f33\u670814\u65e5\u5cf0\u503c0.057\uff0c\u6574\u4f53\u5448\u4e0a\u5347\u8d8b\u52bf", "auto_reminder_click\uff08\u70b9\u51fb\u7387\uff09\u540c\u671f\u6ce2\u52a8\u5267\u70c8\u4e14\u65e0\u4e0a\u5347\u8d8b\u52bf\uff1a3\u67087\u65e5\u8dcc\u81f30.0\uff0c3\u670810\u65e5\u4ec50.059\uff0c30\u65e5\u5747\u503c\u4ec50.182", "new_user_kix_challenge_book_rate\uff08\u65b0\u7528\u6237\u9884\u7ea6\u7387\uff09\u4ece2\u670827\u65e5\u5cf0\u503c0.532\u6301\u7eed\u4e0b\u6ed1\uff0c3\u670814\u65e5\u5df2\u8dcc\u81f30.081\uff0c\u8f83\u5cf0\u503c\u4e0b\u964d\u7ea685%", "book_kix_challenge_uv\uff08\u5168\u91cf\u9884\u7ea6\u7387\uff09\u4ece2\u670827\u65e5\u5cf0\u503c4.558\u8dcc\u81f33\u670816\u65e50.236\uff0c\u540c\u671f\u5c55\u793a\u7387\u4ecd\u5728\u4e0a\u5347"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}, {"title": "\u9884\u7ea6\u7528\u6237\u57fa\u6570\u5927\u5e45\u840e\u7f29\u5bfc\u81f4\u63d0\u9192\u5361\u7247\u8986\u76d6\u6bcd\u4f53\u67af\u7aed\uff0c\u5c55\u793a\u7387\u63d0\u5347\u662f\u5206\u6bcd\u574d\u584c\u7684\u7edf\u8ba1\u5047\u8c61", "points": ["book_kix_challenge_uv\uff08\u5168\u91cf\u9884\u7ea6\u7387\uff09\u4ece2\u670827\u65e54.558\u8dcc\u81f33\u670816\u65e50.236\uff0c\u964d\u5e45\u7ea695%", "auto_reminder_show\u8ba1\u7b97\u53e3\u5f84\u4e3a\u5c55\u793a\u7528\u6237/book\u7528\u6237\uff0c\u5206\u6bcd\uff08book\u7528\u6237\uff09\u5927\u5e45\u6536\u7f29\u53ef\u5bfc\u81f4\u5c55\u793a\u7387\u88ab\u52a8\u62ac\u5347", "participate_kix_challenge_uv\uff08\u5b9e\u9645\u53c2\u8d5b\u4eba\u6570\uff09\u540c\u671f\u4ece72\u4eba\u589e\u957f\u81f3106\u4eba\uff0c\u4e0e\u9884\u7ea6\u7387\u8d70\u52bf\u5b8c\u5168\u80cc\u79bb", "new_user_kix_challenge_book_rate\uff08\u65b0\u7528\u6237\u9884\u7ea6\u7387\uff093\u670811\u65e5\u540e\u8fde\u7eed\u4f4e\u4e8e0.14\uff0c\u800c3\u67085\u65e5\u524d\u5747\u9ad8\u4e8e0.28"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}], "context": {"consecutive_days": null, "business_context": "\u9884\u7ea6\u662fChallenge\u53c2\u8d5b\u6f0f\u6597\u7684\u7b2c\u4e00\u4e2a\u6fc0\u6d3b\u8282\u70b9\uff0c\u9884\u7ea6\u7387\u65ad\u5d16\u5f0f\u4e0b\u6ed1\u610f\u5473\u7740\u63d0\u9192\u5361\u7247\u6240\u80fd\u89e6\u8fbe\u7684\u6f5c\u5728\u53c2\u8d5b\u7528\u6237\u6c60\u6b63\u5728\u5feb\u901f\u840e\u7f29\uff1b\u82e5\u8be5\u8d8b\u52bf\u6301\u7eed\uff0c\u5f53\u524d\u4f9d\u8d56\u5b58\u91cf\u8001\u7528\u6237\u652f\u6491\u7684\u53c2\u8d5b\u4eba\u6570\u589e\u957f\u5c06\u9762\u4e34\u5929\u82b1\u677f\uff0cFOMO\u88c2\u53d8\u7684\u524d\u7aef\u5f15\u6d41\u6548\u7387\u5c06\u8fdb\u4e00\u6b65\u5f31\u5316\u3002"}, "strategies": [{"strategy": "\uff08\u4ec5\u4f9b\u53c2\u8003\uff09\u6392\u67e53\u6708\u521d\u524d\u540e\u9884\u7ea6\u5165\u53e3\u7684\u66dd\u5149\u8def\u5f84\u662f\u5426\u53d1\u751f\u53d8\u66f4\uff0c\u91cd\u70b9\u6838\u67e5\u65b0\u7528\u6237\u9996\u65e5\u9884\u7ea6\u5f15\u5bfc\u6d41\u7a0b\u662f\u5426\u5b58\u5728\u65ad\u70b9\uff0c\u9488\u5bf9\u6027\u4fee\u590dnew_user_kix_challenge_book_rate\u7684\u4e0b\u6ed1\u8282\u70b9", "reference": "new_user_kix_challenge_book_rate\u4ece3\u670810\u65e50.258\u8dcc\u81f33\u670811\u65e50.060\uff0c\u5355\u65e5\u8dcc\u5e45\u5f02\u5e38\uff0c\u7591\u4f3c\u4ea7\u54c1\u4fa7\u89e6\u53d1\u70b9\u53d8\u66f4", "effect": "\u82e5\u80fd\u5c06\u65b0\u7528\u6237\u9884\u7ea6\u7387\u6062\u590d\u81f30.35\u4ee5\u4e0a\uff0c\u53ef\u6269\u5927\u63d0\u9192\u5361\u7247\u7684\u6709\u6548\u8986\u76d6\u6bcd\u4f53\uff0c\u4ece\u800c\u63d0\u5347\u63d0\u9192\u94fe\u8def\u7684\u7edd\u5bf9\u8f6c\u5316\u91cf"}, {"strategy": "\uff08\u4ec5\u4f9b\u53c2\u8003\uff09\u5bf9auto_reminder_click\u70b9\u51fb\u7387\u8fdb\u884cA/B\u6d4b\u8bd5\uff0c\u6d4b\u8bd5\u4e0d\u540c\u5361\u7247\u6587\u6848\uff08\u5f3a\u8c03\u5956\u6c60\u91d1\u989d vs \u5f3a\u8c03\u540d\u6b21\u7ade\u4e89\uff09\u5bf9\u70b9\u51fb\u7387\u7684\u5f71\u54cd\uff0c\u76ee\u6807\u5c06\u70b9\u51fb\u7387\u4ece\u5f53\u524d\u5747\u503c0.18\u63d0\u5347\u81f30.30\u4ee5\u4e0a", "reference": "auto_reminder_click\u57280.0\u81f30.41\u4e4b\u95f4\u5927\u5e45\u6ce2\u52a8\uff0c\u8bf4\u660e\u5361\u7247\u5185\u5bb9\u5bf9\u70b9\u51fb\u884c\u4e3a\u5f71\u54cd\u663e\u8457\uff0c\u5b58\u5728\u4f18\u5316\u7a7a\u95f4\uff1bKiX\u6838\u5fc3\u9a71\u52a8\u529b\u4e3a\u5bf9\u7f8e\u91d1\u7684\u8d2a\u5a6a\u4e0eFOMO\uff0c\u5361\u7247\u5185\u5bb9\u5e94\u5f3a\u5316\u5956\u6c60\u52a8\u6001\u81a8\u80c0\u7684\u7d27\u8feb\u611f", "effect": "\u63d0\u5347\u70b9\u51fb\u7387\u53ef\u5728\u9884\u7ea6\u6bcd\u4f53\u4e0d\u53d8\u7684\u524d\u63d0\u4e0b\u589e\u52a0\u8fdb\u5165\u53c2\u8d5b\u6f0f\u6597\u7684\u7528\u6237\u6570\uff0c\u7f13\u89e3\u9884\u7ea6\u840e\u7f29\u5bf9\u53c2\u8d5b\u4eba\u6570\u7684\u538b\u529b"}]}, {"title": "\u4e2d\u540e\u6bb5\u4f53\u9a8c\u4e0e\u6fc0\u52b1\u6548\u7387\u540c\u6b65\u8d70\u5f31\uff0c\u7559\u5b58\u7a33\u5b9a\u6027\u53d7\u5f71\u54cd", "detail_points": ["\u5f00\u73a9\u7387\u4ece2026-03-12\u768491.75%\u4e0b\u964d\u52302026-03-17\u768481.82%\u3002", "\u96f6\u5206\u7528\u6237\u5360\u6bd4\u4ece2026-03-12\u76848.74%\u4e0a\u5347\u52302026-03-17\u768417.74%\u3002", "\u7559\u5b58\uff08T-2~T-8\uff09\u4ece2026-03-14\u768487.50%\u56de\u843d\u52302026-03-16\u768480.34%\u3002", "\u5956\u52b1\u4eba\u6570\u57282026-03-17\u4e3a102.0\uff0c\u4f46\u5956\u52b1\u91d1\u989d\u4ec5183.02000000000012\uff0830\u5929\u6700\u4f4e\uff09\uff0c\u6fc0\u52b1\u6548\u7387\u504f\u5f31\u3002"], "data_narrative": [{"title": "\u5956\u52b1\u8986\u76d6\u7387\u63a5\u8fd1\u5168\u91cf\u53c2\u8d5b\u4f46\u4eba\u5747\u5956\u91d1\u6301\u7eed\u7f29\u6c34\uff0c\u6fc0\u52b1\u7a00\u91ca\u6b63\u5728\u524a\u5f31\u8d5b\u4e8b\u7684\u771f\u91d1\u5438\u5f15\u529b", "points": ["kix_reward_uv\uff08\u5956\u52b1\u4eba\u6570\uff09\u4ece2\u670815\u65e5\u768423\u4eba\u6500\u5347\u81f33\u670815\u65e5\u7684116\u4eba\uff0c\u4e0eparticipate_kix_challenge_uv\uff08\u53c2\u8d5b\u4eba\u6570\uff09\u540c\u671f\u4ece88\u4eba\u5347\u81f3116\u4eba\uff0c\u5956\u52b1\u4eba\u6570/\u53c2\u8d5b\u4eba\u6570\u6bd4\u503c\u5df2\u63a5\u8fd11.0", "kix_challenge_reward_usd\uff08\u6bcf\u65e5\u5956\u52b1\u91d1\u989d\uff09\u4ece3\u67085\u65e5\u7684301\u7f8e\u5143\u4e0b\u6ed1\u81f33\u670816\u65e5\u7684224.97\u7f8e\u5143\uff0c\u8fd112\u65e5\u7d2f\u8ba1\u4e0b\u964d\u7ea625%", "\u4eba\u5747\u5956\u52b1\u91d1\u989d\uff08reward_usd / reward_uv\uff09\u4ece2\u670815\u65e5\u7ea611.3\u7f8e\u5143/\u4eba\u964d\u81f33\u670816\u65e5\u7ea62.0\u7f8e\u5143/\u4eba\uff0c\u964d\u5e45\u8d8580%", "kix_challenge_redeem_uv\uff08\u5151\u5956\u4eba\u6570\uff09\u6570\u636e\u81ea3\u67086\u65e5\u8d77\u5168\u90e8\u4e3aNone\uff0c\u5151\u5956\u884c\u4e3a\u53ef\u89c2\u6d4b\u6027\u4e2d\u65ad\uff0c\u65e0\u6cd5\u8bc4\u4f30\u5b9e\u9645\u63d0\u73b0\u8f6c\u5316"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}, {"title": "\u65b0\u7528\u6237\u5bf9\u8d5b\u4e8b\u7684\u9884\u7ea6\u610f\u613f\u5927\u5e45\u8870\u9000\uff0c\u524d\u7aef\u6f0f\u6597\u5438\u5f15\u529b\u6b63\u5728\u7cfb\u7edf\u6027\u5931\u6548", "points": ["new_user_kix_challenge_book_rate\uff08\u65b0\u7528\u6237\u9884\u7ea6\u7387\uff09\u4ece2\u670827\u65e5\u5cf0\u503c0.532\u9aa4\u964d\u81f33\u670816\u65e5\u76840.095\uff0c\u964d\u5e45\u8fbe82%", "book_kix_challenge_uv\uff08\u5168\u91cf\u9884\u7ea6\u7387/DAU\uff09\u4ece2\u670827\u65e5\u5cf0\u503c4.56%\u8dcc\u81f33\u670816\u65e5\u76840.24%\uff0c\u56de\u843d\u81f3\u89c2\u6d4b\u671f\u6700\u4f4e\u6c34\u5e73", "new_user_challenge_rate\uff08\u65b0\u7528\u6237\u5f53\u65e5\u53c2\u8d5b\u7387\uff0930\u65e5\u5747\u503c\u4ec50.025\uff0c3\u670816\u65e5\u4e3a0.017\uff0c\u4e0e\u9884\u7ea6\u7387\u4e0b\u6ed1\u540c\u671f\u51fa\u73b0\uff0c\u9884\u7ea6\u5230\u53c2\u8d5b\u7684\u6f0f\u6597\u524d\u7aef\u6301\u7eed\u6536\u7a84", "participate_kix_challenge_uv\uff08\u53c2\u8d5b\u603b\u4eba\u6570\uff09\u540c\u671f\u4ece2\u670815\u65e588\u4eba\u5347\u81f33\u670816\u65e5106\u4eba\uff0c\u8bf4\u660e\u53c2\u8d5b\u91cf\u589e\u957f\u4e3b\u8981\u4f9d\u8d56\u8001\u7528\u6237\u590d\u8bbf\u800c\u975e\u65b0\u7528\u6237\u6fc0\u6d3b"], "statistical_evidence": {"changepoint_date": null, "significant": false, "p_value": null, "effect_size": null}}], "context": {"consecutive_days": null, "business_context": "\u65b0\u7528\u6237\u9884\u7ea6\u7387\u7684\u5927\u5e45\u4e0b\u6ed1\u610f\u5473\u7740Challenge\u4f5c\u4e3aUA\u6fc0\u6d3b\u4e3b\u5f15\u64ce\u7684\u524d\u7aef\u6f0f\u6597\u6b63\u5728\u6536\u7a84\uff0c\u82e5\u65b0\u7528\u6237\u65e0\u6cd5\u88ab\u8d5b\u4e8b\u6709\u6548\u6fc0\u6d3b\uff0c\u5e73\u53f0K-Factor\u88c2\u53d8\u6240\u4f9d\u8d56\u7684\u65b0\u589e\u53c2\u8d5b\u4eba\u53e3\u5c06\u6301\u7eed\u840e\u7f29\uff1b\u4e0e\u6b64\u540c\u65f6\uff0c\u4eba\u5747\u5956\u52b1\u91d1\u989d\u7684\u5feb\u901f\u7a00\u91ca\u524a\u5f31\u4e86'\u5bf9\u7f8e\u91d1\u7684\u8d2a\u5a6a'\u8fd9\u4e00\u6838\u5fc3FOMO\u9a71\u52a8\u529b\uff0c\u53ef\u80fd\u8fdb\u4e00\u6b65\u538b\u5236\u8d5b\u524d\u793e\u7fa4\u81ea\u53d1\u62c9\u65b0\u7684\u52a8\u673a\uff0c\u5f62\u6210\u53c2\u8d5b\u89c4\u6a21\u4e0e\u6fc0\u52b1\u5438\u5f15\u529b\u7684\u53cc\u5411\u5f31\u5316\u3002"}, "strategies": [{"strategy": "\uff08\u4ec5\u4f9b\u53c2\u8003\uff09\u5bf9\u65b0\u7528\u6237\u8bbe\u7f6e\u5dee\u5f02\u5316\u7684\u9996\u6b21\u53c2\u8d5b\u5956\u52b1\u4fdd\u5e95\u673a\u5236\uff0c\u786e\u4fdd\u65b0\u7528\u6237\u9996\u573a\u6bd4\u8d5b\u7684\u4eba\u5747\u8d26\u9762\u5956\u52b1\u4e0d\u4f4e\u4e8e\u67d0\u4e00\u9608\u503c\uff08\u59825\u7f8e\u5143\uff09\uff0c\u4ee5\u7ef4\u6301\u524d\u7aef\u6f0f\u6597\u7684FOMO\u5438\u5f15\u529b\uff0c\u540c\u65f6\u76d1\u63a7new_user_challenge_rate\u4e0enew_user_kix_challenge_book_rate\u7684\u8054\u52a8\u6062\u590d\u60c5\u51b5", "reference": "new_user_kix_challenge_book_rate\u4ece0.532\u8dcc\u81f30.095\uff0c\u540c\u671f\u4eba\u5747\u5956\u52b1\u4ece\u7ea611\u7f8e\u5143\u964d\u81f3\u7ea62\u7f8e\u5143\uff0c\u4e24\u8005\u65f6\u95f4\u4e0a\u9ad8\u5ea6\u91cd\u5408", "effect": "\u9884\u671f\u63d0\u5347\u65b0\u7528\u6237\u9996\u65e5\u9884\u7ea6\u7387\u4e0e\u53c2\u8d5b\u8f6c\u5316\u7387\uff0c\u4fee\u590d\u524d\u7aef\u6fc0\u6d3b\u6f0f\u6597\uff0c\u4e3aK-Factor\u88c2\u53d8\u8865\u5145\u65b0\u589e\u4eba\u53e3\u71c3\u6599"}, {"strategy": "\uff08\u4ec5\u4f9b\u53c2\u8003\uff09\u9488\u5bf9kix_challenge_redeem_uv\u4e0ekix_challenge_reward_value\u81ea3\u67086\u65e5\u8d77\u6570\u636e\u4e2d\u65ad\u7684\u95ee\u9898\uff0c\u4f18\u5148\u6392\u67e5\u5151\u5956\u94fe\u8def\u7684\u57cb\u70b9\u6216\u4e1a\u52a1\u903b\u8f91\u662f\u5426\u53d1\u751f\u53d8\u66f4\uff0c\u786e\u8ba4\u5b9e\u9645\u63d0\u73b0\u884c\u4e3a\u662f\u5426\u4ecd\u5728\u53d1\u751f\uff1b\u82e5\u5151\u5956\u529f\u80fd\u5b58\u5728\u5f02\u5e38\uff0c\u5e94\u8bc4\u4f30\u5176\u5bf9'\u8d5b\u540e\u63d0\u73b0\u5347\u8231\u88c2\u53d8'\u673a\u5236\u7684\u5f71\u54cd\u5e76\u53ca\u65f6\u4fee\u590d", "reference": "kix_challenge_redeem_uv\u8fde\u7eed11\u5929\uff083\u67086\u65e5\u81f33\u670816\u65e5\uff09\u6570\u636e\u4e3aNone\uff0c\u4e0eS-004\u5956\u52b1\u8c03\u6574\u65f6\u95f4\u8282\u70b9\u4e34\u8fd1", "effect": "\u6062\u590d\u5151\u5956\u6570\u636e\u53ef\u89c2\u6d4b\u6027\uff0c\u786e\u4fdd\u63d0\u73b0\u6f0f\u6597\u7684\u88c2\u53d8\u6548\u80fd\u53ef\u88ab\u76d1\u63a7\u548c\u4f18\u5316\uff0c\u907f\u514d\u56e0\u6570\u636e\u76f2\u533a\u5bfc\u81f4\u5173\u952e\u53d8\u73b0\u8282\u70b9\u5931\u63a7"}]}], "statistical_insights": {"run_date": "2026-03-18", "metrics": [{"metric_id": "participate_kix_challenge_uv", "metric_name": "\u8d5b\u4e8b\u53c2\u8d5b\u4eba\u6570\u8d8b\u52bf", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 99.0, "period_mean": 77.3333, "period_std": 16.9631, "changepoints": []}, {"metric_id": "book_kix_challenge_uv", "metric_name": "\u8d5b\u4e8b\u9884\u7ea6\u7387", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 0.17473118279569894, "period_mean": 1.1333, "period_std": 1.2134, "changepoints": []}, {"metric_id": "from_waiting_to_start_match", "metric_name": "\u8d5b\u4e8b\u5f00\u73a9\u7387", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 0.8181818181818182, "period_mean": 0.8596, "period_std": 0.0777, "changepoints": []}, {"metric_id": "finish_kix_challenge_rate", "metric_name": "\u8d5b\u4e8b\u5b8c\u6210\u7387", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 0.9494949494949495, "period_mean": 0.9489, "period_std": 0.0378, "changepoints": []}, {"metric_id": "kix_train_times", "metric_name": "\u8d5b\u524d\u4eba\u5747\u6e38\u73a9\u6b21\u6570", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 5.130217028380635, "period_mean": 4.4564, "period_std": 1.4707, "changepoints": []}, {"metric_id": "kix_reward_uv", "metric_name": "KiX challenge\u5956\u52b1\u4eba\u6570", "evaluation_method": "display_only", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 102.0, "period_mean": 54.9333, "period_std": 36.3602, "changepoints": []}, {"metric_id": "kix_challenge_reward_usd", "metric_name": "KiX challenge\u5956\u52b1\u91d1\u989d", "evaluation_method": "display_only", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 183.02000000000012, "period_mean": 277.3757, "period_std": 30.7033, "changepoints": []}, {"metric_id": "kix_challenge_redeem_uv", "metric_name": "KiX challenge redeem\u4eba\u6570", "evaluation_method": "display_only", "data_points": 18, "latest_date": "2026-03-17", "latest_value": null, "period_mean": 21.6111, "period_std": 3.5997, "changepoints": []}, {"metric_id": "kix_challenge_reward_value", "metric_name": "KiX challleng\u5151\u6362\u91d1\u989d", "evaluation_method": "display_only", "data_points": 18, "latest_date": "2026-03-17", "latest_value": null, "period_mean": 219.6667, "period_std": 102.3081, "changepoints": []}, {"metric_id": "median_game_seconds", "metric_name": "Challenge\u6e38\u620f\u65f6\u957f\u4e2d\u4f4d\u6570", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 175.0, "period_mean": 163.1, "period_std": 23.1313, "changepoints": []}, {"metric_id": "score_zero_user", "metric_name": "\u96f6\u5206\u7528\u6237\u5360\u6bd4", "evaluation_method": "lower_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 0.1774193548387097, "period_mean": 0.1261, "period_std": 0.0702, "changepoints": []}, {"metric_id": "kix_challenge_retention", "metric_name": "KiX challenge\u8d5b\u4e8b\u7559\u5b58", "evaluation_method": "higher_is_better", "data_points": 28, "latest_date": "2026-03-16", "latest_value": 0.8034188034188035, "period_mean": 0.7268, "period_std": 0.0687, "changepoints": []}, {"metric_id": "new_user_challenge_rate", "metric_name": "\u65b0\u7528\u6237KiX Challenge\u53c2\u4e0e\u7387", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 0.010186757215619695, "period_mean": 0.0252, "period_std": 0.01, "changepoints": []}, {"metric_id": "new_user_kix_challenge_book_rate", "metric_name": "\u65b0\u7528\u6237KiX Challenge\u9884\u7ea6\u7387", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-17", "latest_value": 0.023769100169779286, "period_mean": 0.3098, "period_std": 0.147, "changepoints": []}, {"metric_id": "new_user_kix_challenge_retention", "metric_name": "\u65b0\u7528\u6237KiX challenge\u8d5b\u4e8b\u7559\u5b58", "evaluation_method": "higher_is_better", "data_points": 30, "latest_date": "2026-03-16", "latest_value": 0.7391304347826086, "period_mean": 0.4944, "period_std": 0.2386, "changepoints": []}, {"metric_id": "new_user_average_train_times", "metric_name": "\u65b0\u7528\u6237\u5e73\u5747\u7ec3\u4e60challenge\u6e38\u620f\u6b21\u6570", "evaluation_method": "higher_is_better", "data_points": 9, "latest_date": "2026-03-17", "latest_value": 49.60778499160394, "period_mean": 117.3578, "period_std": 80.0503, "changepoints": []}, {"metric_id": "auto_reminder_show", "metric_name": "\u53c2\u8d5b\u63d0\u9192\u5361\u7247\u5c55\u793a\u7387", "evaluation_method": "higher_is_better", "data_points": 13, "latest_date": "2026-03-17", "latest_value": 0.0684931506849315, "period_mean": 0.0374, "period_std": 0.0194, "changepoints": []}, {"metric_id": "auto_reminder_click", "metric_name": "\u53c2\u8d5b\u63d0\u9192\u5361\u7247\u70b9\u51fb\u7387", "evaluation_method": "higher_is_better", "data_points": 13, "latest_date": "2026-03-17", "latest_value": 0.05, "period_mean": 0.1722, "period_std": 0.116, "changepoints": []}], "active_anomalies": []}}}, "error": ""}</script>
 
 
 <div class="container">
@@ -59992,8 +57841,9 @@ body.ai-collapsed .charts{
     <h1>📊 KiX marketing Dashboard</h1>
     <div class="header-info">
       <span>📅 Date: <strong id="dataPeriod">-</strong></span>
+      <span style="margin-left:20px">🕒 Generated: <strong id="generatedAt">-</strong></span>
+      <span> 拖拽AI分析卡片边缘可调整宽度，也可点击AI分析右上角<隐藏 </span>
     </div>
-    
   </div>
 
 <nav class="nav-tabs" id="navTabs">
@@ -60049,18 +57899,6 @@ body.ai-collapsed .charts{
 
 <script>
 Chart.register(ChartDataLabels);
-
-// Plugin: force first & last x-axis tick to always be visible after autoSkip
-Chart.register({
-  id: 'forceEdgeTicks',
-  afterBuildTicks(chart) {
-    const xScale = chart.scales && chart.scales.x;
-    if (!xScale || !Array.isArray(xScale.ticks) || xScale.ticks.length < 2) return;
-    // Mark first and last as major so autoSkip won't remove them
-    xScale.ticks[0].major = true;
-    xScale.ticks[xScale.ticks.length - 1].major = true;
-  }
-});
 
 
 // =========================
@@ -60182,7 +58020,6 @@ function applyCommonScales(scales, kind) {
     scales.x.ticks.maxRotation = 0;
     scales.x.ticks.autoSkip = true;
     scales.x.ticks.padding = 6;
-    scales.x.ticks.major = { enabled: true };
   }
   // y / y1
   ["y","y1"].forEach(k=>{
@@ -60280,7 +58117,7 @@ const DOMAIN_TITLES = {
   "platform_basics": { name: "🏗️ Platform Basics", desc: "平台基础指标" },
   "user_growth": { name: "📈 User Growth", desc: "用户增长指标" },
   "revenue": { name: "💰 Revenue", desc: "收入相关指标" },
-  "kix_challenge": { name: "🎯 KiX Challenge", desc: "KiX挑战" },
+  "daily_challenge": { name: "🎯 Daily Challenge", desc: "每日挑战" },
   "daily_tournament": { name: "🏆 Daily Tournament", desc: "每日锦标赛" },
   "pk": { name: "⚔️ PK", desc: "PK对战" },
   "viral": { name: "🚀 Viral", desc: "病毒传播" },
@@ -60568,101 +58405,6 @@ function renderSingleFunnel(container, title, layer1, layer2, layer1Name, layer2
     .attr("font-size", 13)
     .attr("font-weight", 800)
     .text(rateText);
-}
-
-function renderMultiFunnel(containerId, labels, volumes, rates) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-
-  const N = labels.length;       // number of stages (5)
-  const W = Math.max(400, el.clientWidth || 600);
-  const barH = 36;
-  const gap = 28;                // vertical gap between bars (holds arrow + rate badge)
-  const padTop = 10;
-  const padSide = 14;
-  const H = padTop + N * barH + (N - 1) * gap + 10;
-
-  const maxV = Math.max(...volumes, 1);
-
-  // Color palette: gradient from blue-purple to teal across stages
-  const colors = [
-    ['#6366f1', '#818cf8'],  // indigo
-    ['#6c5ce7', '#a29bfe'],  // purple
-    ['#0891b2', '#22d3ee'],  // cyan
-    ['#059669', '#34d399'],  // emerald
-    ['#10b981', '#6ee7b7'],  // green
-  ];
-
-  d3.select(el).html("");
-  const svg = d3.select(el).append("svg")
-    .attr("width", W).attr("height", H)
-    .attr("viewBox", "0 0 " + W + " " + H)
-    .style("display", "block");
-
-  const fmtInt = (v) => Number(v||0).toLocaleString(undefined, {maximumFractionDigits:0});
-  const barW = W - padSide * 2;
-
-  for (let i = 0; i < N; i++) {
-    const y = padTop + i * (barH + gap);
-    const w = barW * (volumes[i] / maxV);
-    const x = (W - w) / 2;
-    const c = colors[i % colors.length];
-
-    // Gradient
-    const gid = 'mfg-' + containerId + '-' + i;
-    const grad = svg.append("defs").append("linearGradient")
-      .attr("id", gid).attr("x1","0%").attr("y1","0%").attr("x2","100%").attr("y2","0%");
-    grad.append("stop").attr("offset","0%").attr("style","stop-color:" + c[0]);
-    grad.append("stop").attr("offset","100%").attr("style","stop-color:" + c[1]);
-
-    // Background rail
-    svg.append("rect")
-      .attr("x", padSide).attr("y", y)
-      .attr("width", barW).attr("height", barH)
-      .attr("rx", 8).attr("fill", "#f1f5f9");
-
-    // Filled bar
-    svg.append("rect")
-      .attr("x", x).attr("y", y)
-      .attr("width", Math.max(w, 2)).attr("height", barH)
-      .attr("rx", 8).attr("fill", "url(#" + gid + ")");
-
-    // Label left
-    svg.append("text")
-      .attr("x", x + 10).attr("y", y + barH/2 + 5)
-      .attr("fill", "#fff").attr("font-size", 12).attr("font-weight", 700)
-      .text(labels[i]);
-
-    // Volume right
-    svg.append("text")
-      .attr("x", x + w - 10).attr("y", y + barH/2 + 5)
-      .attr("text-anchor", "end")
-      .attr("fill", "#fff").attr("font-size", 13).attr("font-weight", 700)
-      .text(fmtInt(volumes[i]));
-
-    // Arrow + rate badge between bars
-    if (i < N - 1) {
-      const midY = y + barH + gap / 2;
-      const ratePct = ((rates[i] || 0) * 100).toFixed(2) + '%';
-
-      // Arrow line
-      svg.append("line")
-        .attr("x1", W/2).attr("y1", y + barH + 3)
-        .attr("x2", W/2).attr("y2", y + barH + gap - 3)
-        .attr("stroke", "#cbd5e1").attr("stroke-width", 2);
-
-      // Rate badge
-      svg.append("circle")
-        .attr("cx", W/2).attr("cy", midY).attr("r", 16)
-        .attr("fill", "#fff").attr("stroke", "#e2e8f0").attr("stroke-width", 1.5);
-
-      svg.append("text")
-        .attr("x", W/2).attr("y", midY + 4)
-        .attr("text-anchor", "middle")
-        .attr("fill", "#3b82f6").attr("font-size", 10).attr("font-weight", 700)
-        .text(ratePct);
-    }
-  }
 }
 
 function isPercentKind(kind) {
@@ -61258,46 +59000,6 @@ function createChartCard(spec) {
   card.dataset.chartId = spec.chart_id; // 添加chart-id属性用于搜索定位
   card.dataset.metricId = spec.metric_id || ''; // 添加metric-id属性
 
-  // 处理 multi_funnel 类型（合并漏斗）
-  if (spec.kind === "multi_funnel") {
-    const d = spec.data || {};
-    const labels = d.labels || [];
-    const volumes = d.volumes || [];
-    const rates = d.rates || [];
-    const overallPct = ((d.overall_rate || 0) * 100).toFixed(2);
-    const dataDate = d.date || '';
-
-    var details = (d.step_details || []);
-    var detailsHtml = '';
-    if (details.length) {
-      detailsHtml = '<div style="padding:4px 20px 14px;border-top:1px solid #f1f5f9;">';
-      details.forEach(function(s) {
-        detailsHtml += '<div style="font-size:11px;color:#6b7280;line-height:1.8;">' +
-          '<span style="color:#374151;font-weight:600;">' + (s.metric_id || '') + '</span>: ' +
-          (s.description || '') + '</div>';
-      });
-      detailsHtml += '</div>';
-    }
-
-    var overallBanner = '<div style="text-align:center;padding:12px 20px 14px;border-top:1px solid #f1f5f9;">' +
-      '<span style="font-size:13px;color:#6b7280;">整体转化率</span> ' +
-      '<span style="font-size:28px;font-weight:800;color:#3b82f6;margin-left:6px;">' + overallPct + '%</span>' +
-      '<span style="font-size:12px;color:#9ca3af;margin-left:8px;">' + labels[0] + ' → ' + labels[labels.length-1] + '</span>' +
-      '</div>';
-
-    card.innerHTML = '<div class="chart-header"><div>' +
-      '<div class="chart-title">' + spec.title + '</div>' +
-      '<div style="font-size:11px;color:#9ca3af;margin-top:4px;">' +
-        (dataDate || '') +
-      '</div></div></div>' +
-      '<div class="multi-funnel-wrap" id="mf-' + spec.chart_id + '"></div>' +
-      overallBanner +
-      detailsHtml;
-
-    setTimeout(function() { renderMultiFunnel('mf-' + spec.chart_id, labels, volumes, rates); }, 0);
-    return card;
-  }
-
   // 处理data_table类型
   if (spec.kind === "data_table") {
     const cols = spec.columns || [];
@@ -61307,26 +59009,17 @@ function createChartCard(spec) {
     const tableId = 'tbl-' + spec.chart_id;
 
     function esc(v) { var d = document.createElement('div'); d.textContent = String(v); return d.innerHTML; }
-    var colDescs = spec.column_descriptions || {};
-    let thHtml = cols.map(c => {
-      var desc = colDescs[c];
-      if (desc) {
-        return '<th class="has-tip" style="cursor:help;text-decoration:underline dotted #9ca3af;position:relative;">' +
-          esc(c) + '<span class="col-tip">' + esc(desc) + '</span></th>';
-      }
-      return '<th>' + esc(c) + '</th>';
-    }).join('');
+    let thHtml = cols.map(c => '<th>' + esc(c) + '</th>').join('');
     let tbodyHtml = '';
     rows.forEach((r, i) => {
       const display = i < PAGE_SIZE ? '' : ' style="display:none"';
       tbodyHtml += '<tr class="' + tableId + '-row"' + display + '>' + r.map(v => '<td>' + esc(v) + '</td>').join('') + '</tr>';
     });
 
-    var dateBadge = spec.data_date ? ' &middot; ' + spec.data_date : '';
     card.innerHTML = '<div class="chart-header"><div><div class="chart-title">' + spec.title + '</div>' +
-      '<div style="font-size:11px;color:#9ca3af;margin-top:4px;">' + spec.metric_id + ' &middot; ' + totalRows + ' rows' + dateBadge + '</div>' +
+      '<div style="font-size:11px;color:#9ca3af;margin-top:4px;">' + spec.metric_id + ' &middot; ' + totalRows + ' rows</div>' +
       '</div></div>' +
-      '<div style="max-height:500px;overflow-x:auto;overflow-y:auto;padding:0 16px 12px;position:relative;">' +
+      '<div style="max-height:500px;overflow:auto;padding:0 16px 12px;">' +
       '<table style="width:100%;border-collapse:collapse;font-size:12px;">' +
       '<thead><tr style="border-bottom:2px solid #e5e7eb;text-align:left;">' + thHtml + '</tr></thead>' +
       '<tbody>' + tbodyHtml + '</tbody></table></div>' +
@@ -61445,7 +59138,13 @@ function createChartCard(spec) {
     ${viewDetailsLink}
   `;
 
-  // AI 分析已禁用 — 不绑定点击事件
+  // 添加点击显示 AI 分析的功能
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', function(e) {
+    if (!e.target.closest('a') && !e.target.closest('button') && !e.target.closest('.tab-button')) {
+      showAIAnalysisForMetric(spec.metric_id, spec.title);
+    }
+  });
 
   return card;
 }
@@ -62864,12 +60563,19 @@ function initPage() {
   initNavigation();
   renderAllCharts();
 
-  // AI 分析已禁用
-  setAIPanelCollapsed(true);
+  loadAIAnalysisData();
+  // AI 面板默认展开
+  setAIPanelCollapsed(false);
+
+  const collapseBtn = document.getElementById("aiCollapseBtn");
+  if (collapseBtn) collapseBtn.addEventListener("click", () => setAIPanelCollapsed(true));
+  const expandBtn = document.getElementById("aiExpandBtn");
+  if (expandBtn) expandBtn.addEventListener("click", () => setAIPanelCollapsed(false));
 
   initAISidebarModuleClick();
 
   document.getElementById("dataPeriod").textContent = new Date().toISOString().split('T')[0];
+  document.getElementById("generatedAt").textContent = new Date().toLocaleString();
 
   // 监听URL hash变化
   window.addEventListener('hashchange', handleHashChange);
