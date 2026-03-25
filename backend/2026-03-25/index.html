@@ -1680,6 +1680,97 @@ body.ai-collapsed .charts{
   padding: 12px 10px 26px 10px;
 }
 
+/* Product Changes Panel */
+.product-changes-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin: 0 0 24px 0;
+  box-shadow: var(--shadow-sm);
+}
+.product-changes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  user-select: none;
+}
+.product-changes-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.product-changes-header .toggle-icon {
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.product-changes-header.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+.product-changes-body {
+  padding: 16px 20px;
+}
+.product-changes-body.hidden {
+  display: none;
+}
+.pc-date-group {
+  margin-bottom: 16px;
+}
+.pc-date-group:last-child {
+  margin-bottom: 0;
+}
+.pc-date-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.pc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pc-item:last-child {
+  border-bottom: none;
+}
+.pc-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.pc-tag-biz {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.pc-tag-type {
+  background: #fef3c7;
+  color: #92400e;
+}
+.pc-desc {
+  flex: 1;
+  color: var(--text);
+}
+.pc-tag-owner {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+.pc-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 12px 0;
+}
+
 </style>
 </head>
 <body>
@@ -1699,15 +1790,15 @@ body.ai-collapsed .charts{
           "\u70b9\u51fbstart"
         ],
         "volumes": [
-          9489,
-          9083,
-          7539
+          9458,
+          9054,
+          7521
         ],
         "rates": [
-          0.9572,
-          0.8299
+          0.9573,
+          0.8307
         ],
-        "overall_rate": 0.7945,
+        "overall_rate": 0.7952,
         "date": "2026-03-24",
         "step_details": [
           {
@@ -1820,25 +1911,22 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "CN",
             "ID",
-            "PK",
             "PR",
-            "SG",
+            "PK",
             "MY",
+            "SG",
             "SA",
             "PH",
             "US",
             "BR",
-            "ZM",
             "AE",
             "GB",
+            "ZM",
             "IN",
-            "JO",
             "EG",
             "JP",
             "TH",
             "VN",
-            "FI",
-            "TN",
             "FR"
           ],
           "selected_dim_values": [
@@ -1847,45 +1935,39 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "CN",
             "ID",
-            "PK",
             "PR",
-            "SG",
+            "PK",
             "MY",
+            "SG",
             "SA",
             "PH",
             "US",
             "BR",
-            "ZM",
             "AE",
             "GB",
+            "ZM",
             "IN",
-            "JO",
             "EG",
             "JP",
             "TH",
             "VN",
-            "FI",
-            "TN",
             "FR"
           ],
           "data": {
             "dates": [
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "series": [
               "AE",
               "BR",
               "CN",
               "EG",
-              "FI",
               "FR",
               "GB",
               "ID",
               "IN",
-              "JO",
               "JP",
               "MY",
               "PH",
@@ -1894,7 +1976,6 @@ body.ai-collapsed .charts{
               "SA",
               "SG",
               "TH",
-              "TN",
               "US",
               "VN",
               "ZM"
@@ -1903,23 +1984,20 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 207.0,
-                547.0,
-                0.0,
+                483.0,
                 0.0,
                 0.0,
                 0.0,
                 1055.0,
+                47.0,
                 0.0,
-                0.0,
-                0.0,
-                49.0,
+                72.0,
                 141.0,
                 223.0,
                 0.0,
                 77.0,
                 85.0,
                 75.0,
-                0.0,
                 42.0,
                 0.0,
                 0.0
@@ -1929,12 +2007,10 @@ body.ai-collapsed .charts{
                 93.0,
                 677.0,
                 179.0,
-                0.0,
                 34.0,
                 0.0,
                 225.0,
                 67.0,
-                0.0,
                 80.0,
                 166.0,
                 192.0,
@@ -1942,7 +2018,6 @@ body.ai-collapsed .charts{
                 661.0,
                 250.0,
                 281.0,
-                0.0,
                 0.0,
                 131.0,
                 0.0,
@@ -1954,11 +2029,9 @@ body.ai-collapsed .charts{
                 363.0,
                 0.0,
                 0.0,
-                0.0,
                 199.0,
                 70.0,
                 70.0,
-                0.0,
                 0.0,
                 430.0,
                 113.0,
@@ -1967,34 +2040,9 @@ body.ai-collapsed .charts{
                 129.0,
                 159.0,
                 0.0,
-                0.0,
                 230.0,
                 72.0,
                 100.0
-              ],
-              [
-                0.0,
-                116.0,
-                210.0,
-                0.0,
-                70.0,
-                0.0,
-                0.0,
-                62.0,
-                60.0,
-                179.0,
-                0.0,
-                0.0,
-                77.0,
-                340.0,
-                0.0,
-                95.0,
-                187.0,
-                0.0,
-                37.0,
-                108.0,
-                0.0,
-                87.0
               ]
             ]
           }
@@ -2015,25 +2063,22 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "ios \u00d7 CN",
             "ios \u00d7 ID",
-            "ios \u00d7 PK",
             "ios \u00d7 PR",
-            "ios \u00d7 SG",
+            "ios \u00d7 PK",
             "ios \u00d7 MY",
+            "ios \u00d7 SG",
             "ios \u00d7 SA",
             "ios \u00d7 PH",
             "ios \u00d7 US",
             "ios \u00d7 BR",
-            "ios \u00d7 ZM",
             "ios \u00d7 AE",
             "ios \u00d7 GB",
+            "ios \u00d7 ZM",
             "ios \u00d7 IN",
-            "ios \u00d7 JO",
             "ios \u00d7 EG",
             "ios \u00d7 JP",
             "ios \u00d7 TH",
             "ios \u00d7 VN",
-            "ios \u00d7 FI",
-            "ios \u00d7 TN",
             "ios \u00d7 FR"
           ],
           "selected_dim_values": [
@@ -2042,45 +2087,39 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "ios \u00d7 CN",
             "ios \u00d7 ID",
-            "ios \u00d7 PK",
             "ios \u00d7 PR",
-            "ios \u00d7 SG",
+            "ios \u00d7 PK",
             "ios \u00d7 MY",
+            "ios \u00d7 SG",
             "ios \u00d7 SA",
             "ios \u00d7 PH",
             "ios \u00d7 US",
             "ios \u00d7 BR",
-            "ios \u00d7 ZM",
             "ios \u00d7 AE",
             "ios \u00d7 GB",
+            "ios \u00d7 ZM",
             "ios \u00d7 IN",
-            "ios \u00d7 JO",
             "ios \u00d7 EG",
             "ios \u00d7 JP",
             "ios \u00d7 TH",
             "ios \u00d7 VN",
-            "ios \u00d7 FI",
-            "ios \u00d7 TN",
             "ios \u00d7 FR"
           ],
           "data": {
             "dates": [
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "series": [
               "ios \u00d7 AE",
               "ios \u00d7 BR",
               "ios \u00d7 CN",
               "ios \u00d7 EG",
-              "ios \u00d7 FI",
               "ios \u00d7 FR",
               "ios \u00d7 GB",
               "ios \u00d7 ID",
               "ios \u00d7 IN",
-              "ios \u00d7 JO",
               "ios \u00d7 JP",
               "ios \u00d7 MY",
               "ios \u00d7 PH",
@@ -2089,7 +2128,6 @@ body.ai-collapsed .charts{
               "ios \u00d7 SA",
               "ios \u00d7 SG",
               "ios \u00d7 TH",
-              "ios \u00d7 TN",
               "ios \u00d7 US",
               "ios \u00d7 VN",
               "ios \u00d7 ZM"
@@ -2098,23 +2136,20 @@ body.ai-collapsed .charts{
               [
                 0.0,
                 207.0,
-                547.0,
-                0.0,
+                483.0,
                 0.0,
                 0.0,
                 0.0,
                 1055.0,
+                47.0,
                 0.0,
-                0.0,
-                0.0,
-                49.0,
+                72.0,
                 141.0,
                 223.0,
                 0.0,
                 77.0,
                 85.0,
                 75.0,
-                0.0,
                 42.0,
                 0.0,
                 0.0
@@ -2124,12 +2159,10 @@ body.ai-collapsed .charts{
                 93.0,
                 677.0,
                 179.0,
-                0.0,
                 34.0,
                 0.0,
                 225.0,
                 67.0,
-                0.0,
                 80.0,
                 166.0,
                 192.0,
@@ -2137,7 +2170,6 @@ body.ai-collapsed .charts{
                 661.0,
                 250.0,
                 281.0,
-                0.0,
                 0.0,
                 131.0,
                 0.0,
@@ -2149,11 +2181,9 @@ body.ai-collapsed .charts{
                 363.0,
                 0.0,
                 0.0,
-                0.0,
                 199.0,
                 70.0,
                 70.0,
-                0.0,
                 0.0,
                 430.0,
                 113.0,
@@ -2162,34 +2192,9 @@ body.ai-collapsed .charts{
                 129.0,
                 159.0,
                 0.0,
-                0.0,
                 230.0,
                 72.0,
                 100.0
-              ],
-              [
-                0.0,
-                116.0,
-                210.0,
-                0.0,
-                70.0,
-                0.0,
-                0.0,
-                62.0,
-                60.0,
-                179.0,
-                0.0,
-                0.0,
-                77.0,
-                340.0,
-                0.0,
-                95.0,
-                187.0,
-                0.0,
-                37.0,
-                108.0,
-                0.0,
-                87.0
               ]
             ]
           }
@@ -2219,24 +2224,20 @@ body.ai-collapsed .charts{
             "dates": [
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "series": [
               "ios"
             ],
             "matrix": [
               [
-                227.3636363636364
+                208.91666666666663
               ],
               [
                 224.5
               ],
               [
                 156.73333333333332
-              ],
-              [
-                125.23076923076924
               ]
             ]
           }
@@ -2411,7 +2412,7 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "line",
+          "kind": "bar_line",
           "meta": {
             "metric_nature": "ratio",
             "value_unit": "percent"
@@ -2423,8 +2424,7 @@ body.ai-collapsed .charts{
               "03-21",
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "values": [
               0.5312,
@@ -2432,8 +2432,7 @@ body.ai-collapsed .charts{
               0.3951048951048951,
               0.351185921958684,
               0.3523131672597864,
-              0.3523107836570663,
-              0.3071000855431993
+              0.3523107836570663
             ]
           }
         },
@@ -2465,8 +2464,7 @@ body.ai-collapsed .charts{
               "03-21",
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "series": [
               "Android"
@@ -2489,9 +2487,6 @@ body.ai-collapsed .charts{
               ],
               [
                 0.3523107836570663
-              ],
-              [
-                0.3071000855431993
               ]
             ]
           }
@@ -2533,8 +2528,7 @@ body.ai-collapsed .charts{
               "03-21",
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "values": [
               0.8070175438596491,
@@ -2549,8 +2543,7 @@ body.ai-collapsed .charts{
               0.8924471299093656,
               0.8810779144698301,
               0.6126074498567335,
-              0.2836842105263158,
-              0.1341671404206935
+              0.2836842105263158
             ]
           }
         },
@@ -2591,8 +2584,7 @@ body.ai-collapsed .charts{
               "03-21",
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "series": [
               "Android",
@@ -2650,10 +2642,6 @@ body.ai-collapsed .charts{
               [
                 0.2735141373341027,
                 0.3892215568862275
-              ],
-              [
-                0.1192771084337349,
-                0.3838383838383838
               ]
             ]
           }
@@ -2695,13 +2683,12 @@ body.ai-collapsed .charts{
               "03-21",
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "values": [
               2.0,
-              2.333333333333333,
-              2.333333333333333,
+              2.3333333333333335,
+              2.3333333333333335,
               14.0,
               3.6666666666666665,
               2.0,
@@ -2711,8 +2698,7 @@ body.ai-collapsed .charts{
               10.666666666666666,
               1.4710884333333334,
               1.975,
-              14.666666666666666,
-              2.0
+              14.666666666666666
             ]
           }
         },
@@ -2755,8 +2741,7 @@ body.ai-collapsed .charts{
               "03-21",
               "03-22",
               "03-23",
-              "03-24",
-              "03-25"
+              "03-24"
             ],
             "series": [
               "Android",
@@ -2828,11 +2813,6 @@ body.ai-collapsed .charts{
                 1.0,
                 41.0,
                 2.0
-              ],
-              [
-                1.0,
-                0.0,
-                3.0
               ]
             ]
           }
@@ -2847,6 +2827,7 @@ body.ai-collapsed .charts{
   ]
 }</script>
 <script type="application/json" id="ai-module-analysis-data">{"modules": {}, "error": ""}</script>
+<script type="application/json" id="product-changes-data">[]</script>
 
 
 <div class="container">
@@ -2861,6 +2842,16 @@ body.ai-collapsed .charts{
 <nav class="nav-tabs" id="navTabs">
     <!-- 导航按钮会通过JS插入到这里 -->
 </nav>
+
+<!-- Product Changes Panel -->
+<div class="product-changes-panel" id="productChangesPanel">
+  <div class="product-changes-header" id="productChangesToggle">
+    <h2>📋 产品调整记录（近7天）</h2>
+    <span class="toggle-icon">▼</span>
+  </div>
+  <div class="product-changes-body" id="productChangesBody">
+  </div>
+</div>
 
   <!-- 指标详情页面包屑 -->
   <div class="metric-detail-breadcrumb" id="metricBreadcrumb" style="display: none;">
@@ -5724,10 +5715,52 @@ function onViewDetailsClick(metricId, event) {
   showMetricDetail(metricId);
 }
 
+// Product changes panel
+function renderProductChanges() {
+  const el = document.getElementById('product-changes-data');
+  if (!el) return;
+  let data;
+  try { data = JSON.parse(el.textContent); } catch(e) { return; }
+  if (!data || !data.length) {
+    document.getElementById('productChangesBody').innerHTML =
+      '<div class="pc-empty">暂无记录</div>';
+    return;
+  }
+  const groups = {};
+  data.forEach(r => {
+    if (!groups[r.date]) groups[r.date] = [];
+    groups[r.date].push(r);
+  });
+  const dates = Object.keys(groups).sort().reverse();
+  let html = '';
+  dates.forEach(date => {
+    const d = new Date(date + 'T00:00:00');
+    const label = `${d.getMonth()+1}月${d.getDate()}日`;
+    html += `<div class="pc-date-group"><div class="pc-date-label">${label}</div>`;
+    groups[date].forEach(r => {
+      html += `<div class="pc-item">
+        <span class="pc-tag pc-tag-biz">${r.biz_line || '-'}</span>
+        <span class="pc-tag pc-tag-type">${r.change_type || '-'}</span>
+        <span class="pc-tag pc-tag-owner">${r.owner || '-'}</span>
+        <span class="pc-desc">${r.description || ''}</span>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  document.getElementById('productChangesBody').innerHTML = html;
+}
+
 // 初始化
 function initPage() {
   initNavigation();
   renderAllCharts();
+
+  // Product changes panel
+  renderProductChanges();
+  document.getElementById('productChangesToggle')?.addEventListener('click', function() {
+    this.classList.toggle('collapsed');
+    document.getElementById('productChangesBody').classList.toggle('hidden');
+  });
 
   // AI 分析已禁用
   setAIPanelCollapsed(true);
