@@ -2206,12 +2206,12 @@ body.ai-collapsed .charts{
               "04-23"
             ],
             "values": [
-              1.39,
-              1.4,
+              1.37,
+              1.36,
               1.44,
-              1.3,
               1.32,
-              1.52
+              1.34,
+              1.49
             ]
           }
         },
@@ -2256,12 +2256,12 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                1.39,
+                1.37,
                 0.0,
                 0.0
               ],
               [
-                1.4,
+                1.36,
                 0.0,
                 0.0
               ],
@@ -2271,17 +2271,17 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                1.3,
-                0.0,
-                0.0
-              ],
-              [
                 1.32,
                 0.0,
                 0.0
               ],
               [
-                1.52,
+                1.34,
+                0.0,
+                0.0
+              ],
+              [
+                1.49,
                 0.0,
                 0.0
               ]
@@ -2323,7 +2323,7 @@ body.ai-collapsed .charts{
               232.75,
               116.51,
               173.19,
-              203.59,
+              203.59000000000003,
               173.13,
               84.37
             ]
@@ -3039,12 +3039,12 @@ body.ai-collapsed .charts{
               "04-23"
             ],
             "values": [
-              14453.0,
+              14457.0,
               14354.0,
-              14191.0,
+              14195.0,
               13589.0,
               16198.0,
-              22177.0
+              22180.0
             ]
           }
         },
@@ -3083,13 +3083,13 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                14453.0
+                14457.0
               ],
               [
                 14354.0
               ],
               [
-                14191.0
+                14195.0
               ],
               [
                 13589.0
@@ -3098,7 +3098,7 @@ body.ai-collapsed .charts{
                 16198.0
               ],
               [
-                22177.0
+                22180.0
               ]
             ]
           }
@@ -3138,13 +3138,13 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                14453.0
+                14457.0
               ],
               [
                 14354.0
               ],
               [
-                14191.0
+                14195.0
               ],
               [
                 13589.0
@@ -3153,7 +3153,7 @@ body.ai-collapsed .charts{
                 16198.0
               ],
               [
-                22177.0
+                22180.0
               ]
             ]
           }
@@ -3163,6 +3163,256 @@ body.ai-collapsed .charts{
       "business_domain": "pe_b",
       "related_metrics": [],
       "description": "\u7f51\u7edc\u62a5\u9519\u6b21\u6570"
+    },
+    {
+      "chart_id": "Network_Error_UV_rate__series__series_daily",
+      "title": "\u7f51\u7edc\u62a5\u9519\u7528\u6237\u6bd4\u4f8b",
+      "metric_id": "Network Error UV rate",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "bar_line",
+          "meta": {
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "data": {
+            "dates": [
+              "04-18",
+              "04-19",
+              "04-20",
+              "04-21",
+              "04-22",
+              "04-23"
+            ],
+            "values": [
+              0.0294014700735036,
+              0.0303972366148531,
+              0.0316691505216095,
+              0.0302921024161557,
+              0.0241036456764085,
+              0.0154173312068048
+            ]
+          }
+        },
+        {
+          "tab_id": "by_platform",
+          "tab_label": "by platform",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "platform"
+            ],
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "filterable": false,
+          "all_dim_values": [
+            "Android"
+          ],
+          "selected_dim_values": [
+            "Android"
+          ],
+          "ranked_dim_values": [
+            "Android"
+          ],
+          "data": {
+            "dates": [
+              "04-18",
+              "04-19",
+              "04-20",
+              "04-21",
+              "04-22",
+              "04-23"
+            ],
+            "series": [
+              "Android"
+            ],
+            "matrix": [
+              [
+                0.0294014700735036
+              ],
+              [
+                0.0303972366148531
+              ],
+              [
+                0.0316691505216095
+              ],
+              [
+                0.0302921024161557
+              ],
+              [
+                0.0241036456764085
+              ],
+              [
+                0.0154173312068048
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "pe_b",
+      "related_metrics": [],
+      "description": "\u9047\u5230\u9519\u8bef\u7684\u6d3b\u8dc3\u7528\u6237\u6bd4\u4f8b"
+    },
+    {
+      "chart_id": "Swipe_Failed_User__series__series_daily",
+      "title": "\u7528\u6237swipe\u5931\u8d25\u7387",
+      "metric_id": "Swipe Failed User",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "line",
+          "meta": {
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "data": {
+            "dates": [
+              "04-11",
+              "04-12",
+              "04-13",
+              "04-14",
+              "04-15",
+              "04-16",
+              "04-17",
+              "04-18",
+              "04-19",
+              "04-20",
+              "04-21",
+              "04-22",
+              "04-23"
+            ],
+            "values": [
+              0.0904584882280049,
+              0.0880052151238592,
+              0.0867879510885774,
+              0.0801475519785379,
+              0.1196554906182713,
+              0.1373379860418744,
+              0.1854545454545454,
+              0.1974018638802598,
+              0.1869262865090403,
+              0.1584097859327217,
+              0.0797601199400299,
+              0.0923328658251519,
+              0.1272549019607843
+            ]
+          }
+        },
+        {
+          "tab_id": "by_platform",
+          "tab_label": "by platform",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "platform"
+            ],
+            "metric_nature": "ratio",
+            "value_unit": "percent"
+          },
+          "filterable": true,
+          "all_dim_values": [
+            "iPhone",
+            "Android"
+          ],
+          "selected_dim_values": [
+            "Android"
+          ],
+          "ranked_dim_values": [
+            "Android",
+            "iPhone"
+          ],
+          "data": {
+            "dates": [
+              "04-11",
+              "04-12",
+              "04-13",
+              "04-14",
+              "04-15",
+              "04-16",
+              "04-17",
+              "04-18",
+              "04-19",
+              "04-20",
+              "04-21",
+              "04-22",
+              "04-23"
+            ],
+            "series": [
+              "Android",
+              "iPhone"
+            ],
+            "matrix": [
+              [
+                0.0898587933247753,
+                0.1071428571428571
+              ],
+              [
+                0.0859244399866265,
+                0.1688311688311688
+              ],
+              [
+                0.0849230769230769,
+                0.145631067961165
+              ],
+              [
+                0.0783362218370883,
+                0.134020618556701
+              ],
+              [
+                0.1207115628970775,
+                0.087378640776699
+              ],
+              [
+                0.1369230769230769,
+                0.1517857142857142
+              ],
+              [
+                0.185978057265186,
+                0.168141592920354
+              ],
+              [
+                0.1997687192830297,
+                0.0975609756097561
+              ],
+              [
+                0.1893960873263396,
+                0.0588235294117647
+              ],
+              [
+                0.1571338780641106,
+                0.2045454545454545
+              ],
+              [
+                0.078996282527881,
+                0.102803738317757
+              ],
+              [
+                0.0909527237820974,
+                0.1441441441441441
+              ],
+              [
+                0.1252778339058395,
+                0.1920529801324503
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "pe_b",
+      "related_metrics": [],
+      "description": "\u6bcf\u5929\u6d3b\u8dc3\u7528\u6237\u4e2d\u6ed1\u52a8\u5931\u8d25\u7684\u6bd4\u4f8b"
     },
     {
       "chart_id": "Swipe_Failed_Times__P50___series__series_daily",
@@ -3410,23 +3660,23 @@ body.ai-collapsed .charts{
         [
           531.0,
           "Punch Box",
-          13372,
-          8932,
-          0.668
+          13316,
+          8888,
+          0.6675
         ],
         [
           1278.0,
           "Happy Bird",
-          9440,
-          6371,
+          9437,
+          6369,
           0.6749
         ],
         [
           1379.0,
           "Squid Head Kick",
-          2464,
-          1727,
-          0.7009
+          2450,
+          1722,
+          0.7029
         ],
         [
           866.0,
@@ -3445,9 +3695,9 @@ body.ai-collapsed .charts{
         [
           1219.0,
           "King Of Drift",
-          122,
-          87,
-          0.7131
+          119,
+          85,
+          0.7143
         ],
         [
           1003.0,
@@ -3466,16 +3716,16 @@ body.ai-collapsed .charts{
         [
           1038.0,
           "JAGO",
-          364,
-          265,
-          0.728
+          365,
+          266,
+          0.7288
         ],
         [
           1403.0,
           "Drift Bus",
-          3262,
-          2460,
-          0.7541
+          3263,
+          2461,
+          0.7542
         ],
         [
           1110.0,
@@ -3508,15 +3758,15 @@ body.ai-collapsed .charts{
         [
           1302.0,
           "Endless Shoot",
-          937,
-          734,
-          0.7834
+          933,
+          730,
+          0.7824
         ],
         [
           1411.0,
           "Sky Speedster",
-          7991,
-          6365,
+          7986,
+          6361,
           0.7965
         ],
         [
@@ -3571,16 +3821,16 @@ body.ai-collapsed .charts{
         [
           1725.0,
           "Bubble Pet Saga",
-          1802,
-          1530,
-          0.8491
+          1804,
+          1532,
+          0.8492
         ],
         [
           778.0,
           "Animals Crush",
-          6899,
-          5907,
-          0.8562
+          6902,
+          5910,
+          0.8563
         ],
         [
           1055.0,
@@ -3592,23 +3842,23 @@ body.ai-collapsed .charts{
         [
           832.0,
           "Stack Fall Hit 2",
-          72,
-          62,
-          0.8611
+          73,
+          63,
+          0.863
         ],
         [
           636.0,
           "Crazy Fishing",
-          283,
-          244,
-          0.8622
+          286,
+          247,
+          0.8636
         ],
         [
           449.0,
           "Jelly Blast",
-          537,
-          464,
-          0.8641
+          545,
+          471,
+          0.8642
         ],
         [
           432.0,
@@ -3620,22 +3870,22 @@ body.ai-collapsed .charts{
         [
           667.0,
           "Block Breaker",
-          31088,
-          26982,
-          0.8679
+          31136,
+          27027,
+          0.868
         ],
         [
           1245.0,
           "Sling Tomb",
-          3980,
-          3456,
-          0.8683
+          3996,
+          3470,
+          0.8684
         ],
         [
           844.0,
           "Dragon Snap Rescue",
-          6209,
-          5416,
+          6210,
+          5417,
           0.8723
         ],
         [
@@ -3648,16 +3898,9 @@ body.ai-collapsed .charts{
         [
           1822.0,
           "Dunk Master",
-          1400,
-          1231,
-          0.8793
-        ],
-        [
-          1402.0,
-          "HangGlider",
-          1268,
-          1116,
-          0.8801
+          1402,
+          1233,
+          0.8795
         ],
         [
           691.0,
@@ -3665,6 +3908,13 @@ body.ai-collapsed .charts{
           334,
           294,
           0.8802
+        ],
+        [
+          1402.0,
+          "HangGlider",
+          1271,
+          1119,
+          0.8804
         ],
         [
           857.0,
@@ -3676,30 +3926,30 @@ body.ai-collapsed .charts{
         [
           480.0,
           "Candy Jumping",
-          164,
-          147,
-          0.8963
+          166,
+          149,
+          0.8976
         ],
         [
           642.0,
           "Deep Sea 2048",
-          788,
-          719,
-          0.9124
+          793,
+          724,
+          0.913
         ],
         [
           441.0,
           "Nutmeg Football",
-          555,
-          507,
-          0.9135
+          556,
+          508,
+          0.9137
         ],
         [
           805.0,
           "Mini Golf",
-          640,
-          585,
-          0.9141
+          641,
+          586,
+          0.9142
         ],
         [
           710.0,
@@ -3707,6 +3957,13 @@ body.ai-collapsed .charts{
           103,
           96,
           0.932
+        ],
+        [
+          1890.0,
+          "test_\u6d883.MOCOK3CA",
+          11,
+          11,
+          1.0
         ],
         [
           1797.0,
@@ -3744,15 +4001,15 @@ body.ai-collapsed .charts{
           1.0
         ],
         [
-          208.0,
-          "Kel w Kal",
+          851.0,
+          "Circle Burst",
           2,
           2,
           1.0
         ],
         [
-          851.0,
-          "Circle Burst",
+          208.0,
+          "Kel w Kal",
           2,
           2,
           1.0
@@ -3772,15 +4029,15 @@ body.ai-collapsed .charts{
           1.0
         ],
         [
-          858.0,
-          "Rungo",
+          768.0,
+          "Candy Super Match",
           1,
           1,
           1.0
         ],
         [
-          768.0,
-          "Candy Super Match",
+          858.0,
+          "Rungo",
           1,
           1,
           1.0
@@ -3800,7 +4057,7 @@ body.ai-collapsed .charts{
           1.0
         ]
       ],
-      "row_count": 64,
+      "row_count": 65,
       "data_date": "2026-04-24",
       "business_domain": "pe_c",
       "related_metrics": [],
@@ -3823,10 +4080,10 @@ body.ai-collapsed .charts{
       "column_descriptions": {},
       "rows": [
         [
-          10.028985507246375,
+          10.033898305084746,
           667.0,
           "Block Breaker",
-          414,
+          413,
           4.0,
           28.0
         ],
@@ -3847,12 +4104,12 @@ body.ai-collapsed .charts{
           27.0
         ],
         [
-          16.970588235294116,
+          16.72463768115942,
           1245.0,
           "Sling Tomb",
-          68,
+          69,
           5.0,
-          23.900000000000013
+          23.60000000000001
         ],
         [
           6.301587301587301,
@@ -3967,20 +4224,20 @@ body.ai-collapsed .charts{
           7.7
         ],
         [
-          3.5,
-          1725.0,
-          "Bubble Pet Saga",
-          4,
-          3.0,
-          4.4
-        ],
-        [
           9.5,
           449.0,
           "Jelly Blast",
           4,
           6.0,
           16.5
+        ],
+        [
+          3.5,
+          1725.0,
+          "Bubble Pet Saga",
+          4,
+          3.0,
+          4.4
         ],
         [
           6.5,
@@ -4048,8 +4305,8 @@ body.ai-collapsed .charts{
           667.0,
           "Block Breaker",
           1,
-          2.525,
-          29998
+          2.527,
+          30064
         ],
         [
           989.0,
@@ -4062,50 +4319,50 @@ body.ai-collapsed .charts{
           531.0,
           "Punch Box",
           1,
-          9.1935,
-          12748
+          9.163,
+          12709
         ],
         [
           1278.0,
           "Happy Bird",
           1,
-          7.814500000000001,
-          8947
+          7.827500000000001,
+          8932
         ],
         [
           1411.0,
           "Sky Speedster",
           1,
-          5.315,
-          7626
+          5.298500000000001,
+          7610
         ],
         [
           778.0,
           "Animals Crush",
           1,
           2.609,
-          6484
+          6485
         ],
         [
           844.0,
           "Dragon Snap Rescue",
           1,
-          2.7105,
-          5904
+          2.71,
+          5912
         ],
         [
           1245.0,
           "Sling Tomb",
           1,
-          2.51,
-          3781
+          2.511,
+          3801
         ],
         [
           1403.0,
           "Drift Bus",
           1,
-          3.53,
-          3053
+          3.534,
+          3055
         ],
         [
           1401.0,
@@ -4118,50 +4375,50 @@ body.ai-collapsed .charts{
           1379.0,
           "Squid Head Kick",
           1,
-          7.9895,
-          2338
+          7.993,
+          2328
         ],
         [
           1725.0,
           "Bubble Pet Saga",
           1,
-          11.805,
-          1697
+          11.785,
+          1699
         ],
         [
           667.0,
           "Block Breaker",
           0,
-          2.5835,
-          1676
+          2.5825,
+          1678
         ],
         [
           1822.0,
           "Dunk Master",
           1,
-          7.579,
-          1334
+          7.55,
+          1335
         ],
         [
           1402.0,
           "HangGlider",
           1,
-          2.4655,
-          1198
+          2.468,
+          1203
         ],
         [
           432.0,
           "Gold Miner",
           1,
-          2.5035,
-          1084
+          2.505,
+          1085
         ],
         [
           1302.0,
           "Endless Shoot",
           1,
           12.474,
-          899
+          897
         ],
         [
           1055.0,
@@ -4181,8 +4438,8 @@ body.ai-collapsed .charts{
           642.0,
           "Deep Sea 2048",
           1,
-          2.521,
-          758
+          2.5235000000000003,
+          764
         ],
         [
           635.0,
@@ -4206,18 +4463,18 @@ body.ai-collapsed .charts{
           546
         ],
         [
+          449.0,
+          "Jelly Blast",
+          1,
+          2.591,
+          519
+        ],
+        [
           441.0,
           "Nutmeg Football",
           1,
           2.692,
           518
-        ],
-        [
-          449.0,
-          "Jelly Blast",
-          1,
-          2.599,
-          513
         ],
         [
           1104.0,
@@ -4244,8 +4501,8 @@ body.ai-collapsed .charts{
           1278.0,
           "Happy Bird",
           0,
-          4.558,
-          343
+          4.535,
+          341
         ],
         [
           1038.0,
@@ -4265,8 +4522,8 @@ body.ai-collapsed .charts{
           1245.0,
           "Sling Tomb",
           0,
-          2.352,
-          299
+          2.3535,
+          300
         ],
         [
           691.0,
@@ -4279,8 +4536,8 @@ body.ai-collapsed .charts{
           1411.0,
           "Sky Speedster",
           0,
-          4.682,
-          288
+          4.667,
+          287
         ],
         [
           636.0,
@@ -4322,7 +4579,7 @@ body.ai-collapsed .charts{
           "King Of Drift",
           1,
           11.621,
-          109
+          107
         ],
         [
           710.0,
@@ -4391,8 +4648,8 @@ body.ai-collapsed .charts{
           1402.0,
           "HangGlider",
           0,
-          2.2405,
-          68
+          2.242,
+          69
         ],
         [
           1403.0,
@@ -4486,18 +4743,18 @@ body.ai-collapsed .charts{
           11
         ],
         [
+          1890.0,
+          "",
+          1,
+          3.407,
+          11
+        ],
+        [
           1797.0,
           "Jump! SEA",
           1,
           3.517,
           9
-        ],
-        [
-          691.0,
-          "Fast Driver",
-          0,
-          3.7835,
-          8
         ],
         [
           1797.0,
@@ -4507,10 +4764,10 @@ body.ai-collapsed .charts{
           8
         ],
         [
-          1890.0,
-          "",
-          1,
-          2.319,
+          691.0,
+          "Fast Driver",
+          0,
+          3.7835,
           8
         ],
         [
@@ -4549,13 +4806,6 @@ body.ai-collapsed .charts{
           6
         ],
         [
-          1275.0,
-          "Brainrot Merge Fellas",
-          1,
-          7.721,
-          6
-        ],
-        [
           1338.0,
           "Tofu Cat",
           0,
@@ -4570,17 +4820,17 @@ body.ai-collapsed .charts{
           5
         ],
         [
-          573.0,
-          "Pixel Journey",
-          1,
-          11.551,
-          5
-        ],
-        [
           578.0,
           "Super Tetris",
           1,
           9.643,
+          5
+        ],
+        [
+          1275.0,
+          "Brainrot Merge Fellas",
+          1,
+          8.403,
           5
         ],
         [
@@ -4591,6 +4841,13 @@ body.ai-collapsed .charts{
           5
         ],
         [
+          573.0,
+          "Pixel Journey",
+          1,
+          11.551,
+          5
+        ],
+        [
           1219.0,
           "King Of Drift",
           0,
@@ -4598,17 +4855,17 @@ body.ai-collapsed .charts{
           4
         ],
         [
-          636.0,
-          "Crazy Fishing",
-          0,
-          11.146,
-          4
-        ],
-        [
           480.0,
           "Candy Jumping",
           0,
           6.447,
+          4
+        ],
+        [
+          636.0,
+          "Crazy Fishing",
+          0,
+          11.146,
           4
         ],
         [
@@ -4640,38 +4897,10 @@ body.ai-collapsed .charts{
           2
         ],
         [
-          1234.0,
-          "Mini PUBG",
-          1,
-          2.543,
-          2
-        ],
-        [
-          753.0,
-          "Invace Spaders",
-          1,
-          14.432,
-          2
-        ],
-        [
           851.0,
           "Circle Burst",
           1,
           1.821,
-          2
-        ],
-        [
-          1863.0,
-          "",
-          1,
-          9.739999999999998,
-          2
-        ],
-        [
-          1212.0,
-          "Color Block Away",
-          1,
-          19.4685,
           2
         ],
         [
@@ -4682,6 +4911,34 @@ body.ai-collapsed .charts{
           2
         ],
         [
+          1863.0,
+          "",
+          1,
+          9.739999999999998,
+          2
+        ],
+        [
+          753.0,
+          "Invace Spaders",
+          1,
+          14.432,
+          2
+        ],
+        [
+          1212.0,
+          "Color Block Away",
+          1,
+          19.4685,
+          2
+        ],
+        [
+          1234.0,
+          "Mini PUBG",
+          1,
+          2.543,
+          2
+        ],
+        [
           791.0,
           "Monkey Mart",
           0,
@@ -4689,17 +4946,17 @@ body.ai-collapsed .charts{
           1
         ],
         [
+          858.0,
+          "Rungo",
+          1,
+          13.825,
+          1
+        ],
+        [
           1252.0,
           "Spin Maze Save Xmas",
           1,
           6.234,
-          1
-        ],
-        [
-          568.0,
-          "Matching Shapes",
-          1,
-          2.817,
           1
         ],
         [
@@ -4717,13 +4974,6 @@ body.ai-collapsed .charts{
           1
         ],
         [
-          914.0,
-          "Battlefront Escape",
-          1,
-          2.155,
-          1
-        ],
-        [
           768.0,
           "Candy Super Match",
           1,
@@ -4731,10 +4981,17 @@ body.ai-collapsed .charts{
           1
         ],
         [
-          858.0,
-          "Rungo",
+          568.0,
+          "Matching Shapes",
           1,
-          13.825,
+          2.817,
+          1
+        ],
+        [
+          914.0,
+          "Battlefront Escape",
+          1,
+          2.155,
           1
         ]
       ],
@@ -4760,18 +5017,18 @@ body.ai-collapsed .charts{
       "column_descriptions": {},
       "rows": [
         [
-          9.82,
-          28.0,
-          1038.0,
-          9.0,
-          8.0
-        ],
-        [
           9.75,
           4.0,
           259.0,
           11.0,
           7.0
+        ],
+        [
+          9.72,
+          29.0,
+          1038.0,
+          9.0,
+          8.0
         ],
         [
           9.5,
@@ -4802,57 +5059,57 @@ body.ai-collapsed .charts{
           8.0
         ],
         [
-          8.92,
+          8.9,
           110.0,
           480.0,
           8.0,
           8.0
         ],
         [
-          8.88,
-          494.0,
+          8.89,
+          503.0,
           449.0,
           8.0,
           8.0
         ],
         [
           8.82,
-          987.0,
-          1402.0,
-          8.0,
-          8.0
-        ],
-        [
-          8.82,
-          265.0,
+          261.0,
           805.0,
           8.0,
           7.0
         ],
         [
+          8.82,
+          992.0,
+          1402.0,
+          8.0,
+          8.0
+        ],
+        [
           8.81,
-          728.0,
+          739.0,
           642.0,
           8.0,
           8.0
         ],
         [
           8.81,
-          4055.0,
-          844.0,
-          8.0,
-          8.0
-        ],
-        [
-          8.81,
-          884.0,
+          887.0,
           432.0,
           8.0,
           7.0
         ],
         [
+          8.81,
+          4044.0,
+          844.0,
+          8.0,
+          8.0
+        ],
+        [
           8.74,
-          2956.0,
+          2978.0,
           1245.0,
           8.0,
           8.0
@@ -4865,8 +5122,8 @@ body.ai-collapsed .charts{
           8.0
         ],
         [
-          8.63,
-          2169.0,
+          8.64,
+          2183.0,
           531.0,
           8.0,
           8.0
@@ -4880,17 +5137,17 @@ body.ai-collapsed .charts{
         ],
         [
           8.6,
+          382.0,
+          441.0,
+          8.0,
+          7.0
+        ],
+        [
+          8.6,
           5.0,
           578.0,
           8.0,
           8.0
-        ],
-        [
-          8.6,
-          381.0,
-          441.0,
-          8.0,
-          7.0
         ],
         [
           8.45,
@@ -4901,14 +5158,14 @@ body.ai-collapsed .charts{
         ],
         [
           8.31,
-          1177.0,
+          1169.0,
           1401.0,
           8.0,
           7.0
         ],
         [
           8.3,
-          4712.0,
+          4694.0,
           778.0,
           8.0,
           7.0
@@ -4922,35 +5179,35 @@ body.ai-collapsed .charts{
         ],
         [
           8.28,
-          20653.0,
+          20705.0,
           667.0,
           8.0,
           7.0
         ],
         [
           8.28,
-          495.0,
-          1055.0,
-          8.0,
-          7.0
-        ],
-        [
-          8.28,
-          507.0,
+          502.0,
           1379.0,
           8.0,
           7.0
         ],
         [
-          8.24,
-          1541.0,
+          8.27,
+          491.0,
+          1055.0,
+          8.0,
+          7.0
+        ],
+        [
+          8.25,
+          1543.0,
           1403.0,
           8.0,
           7.0
         ],
         [
-          8.2,
-          3042.0,
+          8.19,
+          3010.0,
           1411.0,
           8.0,
           7.0
@@ -4958,7 +5215,7 @@ body.ai-collapsed .charts{
         [
           8.0,
           1.0,
-          7.0,
+          914.0,
           8.0,
           8.0
         ],
@@ -4978,13 +5235,6 @@ body.ai-collapsed .charts{
         ],
         [
           8.0,
-          1.0,
-          768.0,
-          8.0,
-          8.0
-        ],
-        [
-          8.0,
           2.0,
           851.0,
           8.0,
@@ -4993,16 +5243,16 @@ body.ai-collapsed .charts{
         [
           8.0,
           1.0,
-          914.0,
+          768.0,
           8.0,
           8.0
         ],
         [
-          7.92,
-          2061.0,
-          1278.0,
           8.0,
-          7.0
+          1.0,
+          7.0,
+          8.0,
+          8.0
         ],
         [
           7.91,
@@ -5010,6 +5260,13 @@ body.ai-collapsed .charts{
           857.0,
           8.0,
           8.0
+        ],
+        [
+          7.91,
+          2058.0,
+          1278.0,
+          8.0,
+          7.0
         ],
         [
           7.82,
@@ -5040,22 +5297,22 @@ body.ai-collapsed .charts{
           6.0
         ],
         [
-          2.86,
-          200.0,
+          2.89,
+          201.0,
           636.0,
           1.0,
           1.0
         ],
         [
-          2.65,
-          658.0,
+          2.64,
+          662.0,
           1725.0,
           2.0,
           1.0
         ],
         [
           2.4,
-          587.0,
+          592.0,
           1822.0,
           2.0,
           1.0
@@ -5158,7 +5415,7 @@ body.ai-collapsed .charts{
   color:#9ca3af;font-size:12px;border:1px dashed #e5e7eb;border-radius:6px}
 .pe-news-meta{font-size:11px;color:#9ca3af;margin-top:10px;text-align:right}
 </style>
-<div class="pe-news-banner"><div class="pe-news-col good"><h3>🟢 Good News</h3><div class="pe-placeholder">（本次未产出）</div></div><div class="pe-news-col bad"><h3>🔴 Bad News</h3><div class="pe-placeholder">（本次未产出）</div></div></div><div class="pe-news-meta">2026-04-24 17:42:29 · anthropic/claude-sonnet-4.6 · ⚠ &#x27;latin-1&#x27; codec can&#x27;t encode characters in position 4-11: ordinal not in range(256)</div>
+<div class="pe-news-banner"><div class="pe-news-col good"><h3>🟢 Good News</h3><div class="pe-placeholder">（本次未产出）</div></div><div class="pe-news-col bad"><h3>🔴 Bad News</h3><div class="pe-placeholder">（本次未产出）</div></div></div><div class="pe-news-meta">2026-04-24 17:58:48 · anthropic/claude-sonnet-4.6 · ⚠ &#x27;latin-1&#x27; codec can&#x27;t encode characters in position 4-11: ordinal not in range(256)</div>
 <script>
 window.peScrollTo = function(chartId) {
   var el = document.querySelector('.chart-card[data-chart-id="' + chartId + '"]');
