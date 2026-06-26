@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang='zh'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>V7 Dashboard — 3秒诊断 2026-06-26</title><style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; padding: 24px; }
+h1 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.subtitle { font-size: 12px; color: #666; margin-bottom: 24px; }
+.section { margin-bottom: 20px; }
+.section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #888; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.section-title::after { content: ''; flex: 1; height: 1px; background: #222; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.r0-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.r0-card { background: #1e1515; border: 1px solid #3d2020; border-radius: 10px; padding: 16px; }
+.r0-card.ok-card { background: #151e18; border-color: #1e3d2a; }
+.r0-label { font-size: 11px; color: #888; margin-bottom: 8px; font-weight: 600; letter-spacing: 0.05em; }
+.r0-value { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+.r0-target { font-size: 11px; color: #555; }
+.r0-action { font-size: 11px; color: #e07070; margin-top: 8px; border-top: 1px solid #2a1818; padding-top: 8px; }
+.bot-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 4px; }
+.bot-table th { color: #555; font-weight: 500; text-align: left; padding: 4px 8px; border-bottom: 1px solid #222; }
+.bot-table td { padding: 5px 8px; border-bottom: 1px solid #1a1d27; }
+.bot-table tr:last-child td { border-bottom: none; }
+.ok    { color: #4caf82; }
+.fail  { color: #e05555; }
+.warn  { color: #e0a030; }
+.neutral { color: #aaa; }
+.d1-card { background: #1a1d27; border: 1px solid #222; border-radius: 10px; padding: 20px; text-align: center; }
+.d1-card.ok { border-color: #1e3d2a; background: #141d17; }
+.d1-card.fail { border-color: #3d1f1f; background: #1a1212; }
+.d1-card.neutral { border-color: #222; }
+.d1-track { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: #777; margin-bottom: 8px; }
+.d1-value { font-size: 36px; font-weight: 800; margin-bottom: 4px; }
+.d1-target { font-size: 11px; color: #555; }
+.d1-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; margin-top: 8px; }
+.badge-ok { background: #1e3d2a; color: #4caf82; }
+.badge-fail { background: #3d1f1f; color: #e05555; }
+.badge-neutral { background: #2a2d35; color: #aaa; }
+.metric-table { background: #1a1d27; border-radius: 10px; overflow: hidden; border: 1px solid #222; }
+.metric-table-header { display: grid; grid-template-columns: 140px repeat(3, 1fr); background: #141620; padding: 0; }
+.col-header { font-size: 11px; font-weight: 700; color: #666; padding: 8px 10px; text-align: center; letter-spacing: 0.06em; }
+.col-header:first-child { text-align: left; }
+.metric-table-row { display: grid; grid-template-columns: 140px repeat(3, 1fr); border-top: 1px solid #1e2030; }
+.metric-table-row:hover { background: #1e2135; }
+.row-label { font-size: 12px; color: #777; padding: 10px; display: flex; align-items: center; }
+.row-num { font-size: 10px; color: #444; margin-right: 4px; font-weight: 700; }
+.metric-val { padding: 10px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.val-num { font-size: 18px; font-weight: 700; }
+.val-target { font-size: 10px; color: #444; margin-top: 2px; }
+.diagnosis { background: #141620; border: 1px solid #252840; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+.diag-title { font-size: 12px; font-weight: 700; color: #7090e0; margin-bottom: 10px; }
+.diag-item { font-size: 12px; color: #aaa; margin-bottom: 6px; padding-left: 12px; position: relative; line-height: 1.5; }
+.diag-item::before { content: '→'; position: absolute; left: 0; color: #555; }
+.diag-item .action { color: #7090e0; }
+.diag-item b { color: #e05555; font-weight: 600; }
+.footer { font-size: 11px; color: #444; margin-top: 24px; text-align: center; }
+</style></head><body>
+<h1>V7 Dashboard — 3秒诊断</h1>
+<div class='subtitle'>数据日期：D1=2026-06-24 / 其他指标=2026-06-25 &nbsp;|&nbsp; 生成：2026-06-26</div>
+
+<div class="section">
+  <div class="section-title">🚨 R0 急救（DT专属，每天第一个看）</div>
+  <div class="r0-grid">
+    <div class="r0-card ok-card">
+      <div class="r0-label">BOT 响应时间</div>
+      <div class="r0-value ok">avg ✅ &nbsp; p90 ✅</div>
+      <div class="r0-target">目标 avg / p90 ≤ 10秒</div>
+      <table class="bot-table" style="margin-top:10px">
+        <tr><th>游戏</th><th>avg</th><th>p90</th></tr>
+        <tr><td>CONNECT4</td><td class='ok'>1.4s</td><td class='ok'>1.9s</td></tr><tr><td>Uno King</td><td class='ok'>1.9s</td><td class='ok'>3.3s</td></tr><tr><td>Stack Fall Hit 2</td><td class='ok'>1.9s</td><td class='ok'>2.5s</td></tr><tr><td>Chess</td><td class='ok'>1.4s</td><td class='ok'>1.9s</td></tr><tr><td>Xiangqi</td><td class='ok'>3.9s</td><td class='ok'>8.1s</td></tr>
+      </table>
+      <div class="r0-action">全部达标</div>
+    </div>
+
+    <div class="r0-card ">
+      <div class="r0-label">新玩家胜率（前15局）</div>
+      <div class="r0-value neutral">–</div>
+      <div class="r0-target">目标 55 – 60%</div>
+      <div class="r0-action">在目标区间内</div>
+    </div>
+
+    <div class="r0-card ">
+      <div class="r0-label">连败 ≥ 3 局（DT线）</div>
+      <div class="r0-value fail">1 次</div>
+      <div class="r0-target">目标 = 0</div>
+      <div class="r0-action">Uno King: 1次<br>→ 黄晓龙紧急修连败保护</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-title">★ D1 Retention — North Star &nbsp;(2026-06-24)</div>
+  <div class="grid-3">
+        <div class="d1-card ok">
+          <div class="d1-track">CT</div>
+          <div class="d1-value ok">31.2%</div>
+          <div class="d1-target">目标 ≥ 15%</div>
+          <div><span class="d1-badge badge-ok">✅ 达标</span></div>
+        </div>
+        <div class="d1-card fail">
+          <div class="d1-track">DT</div>
+          <div class="d1-value fail">6.2%</div>
+          <div class="d1-target">目标 ≥ 20%</div>
+          <div><span class="d1-badge badge-fail">❌ 未达标 → 向下诊断</span></div>
+        </div>
+        <div class="d1-card neutral">
+          <div class="d1-track">KC</div>
+          <div class="d1-value neutral">–</div>
+          <div class="d1-target">目标 ≥ 12%</div>
+          <div><span class="d1-badge badge-neutral">– 无数据</span></div>
+        </div></div>
+</div>
+
+
+<div class="section">
+  <div class="section-title">Layer 1 — D1 低时按顺序排查 &nbsp;(2026-06-25)</div>
+  <div class="metric-table">
+    <div class="metric-table-header">
+      <div class="col-header">指标</div>
+      <div class="col-header">CT</div>
+      <div class="col-header">DT</div>
+      <div class="col-header">KC</div>
+    </div>
+    <div class="metric-table-row"><div class="row-label"><span class="row-num">②</span>激活率</div><div class="metric-val"><span class="val-num fail">6.5%</span><span class="val-target">目标≥50%</span></div><div class="metric-val"><span class="val-num fail">16.7%</span><span class="val-target">目标≥65%</span></div><div class="metric-val"><span class="val-num neutral">–</span><span class="val-target">目标≥75%</span></div></div><div class="metric-table-row"><div class="row-label"><span class="row-num">③</span>复玩率</div><div class="metric-val"><span class="val-num ok">57.0%</span><span class="val-target">目标≥30%</span></div><div class="metric-val"><span class="val-num fail">0.0%</span><span class="val-target">目标≥45%</span></div><div class="metric-val"><span class="val-num neutral">–</span><span class="val-target">目标≥35%</span></div></div><div class="metric-table-row"><div class="row-label"><span class="row-num">④</span>Push开启率</div><div class="metric-val"><span class="val-num fail">25.7%</span><span class="val-target">目标≥55%</span></div><div class="metric-val"><span class="val-num fail">50.0%</span><span class="val-target">目标≥55%</span></div><div class="metric-val"><span class="val-num neutral">–</span><span class="val-target">目标≥40%</span></div></div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-title">Layer 2 — Layer 1 全绿才看 &nbsp;(2026-06-25)</div>
+  <div class="metric-table">
+    <div class="metric-table-header">
+      <div class="col-header">指标</div>
+      <div class="col-header">CT</div>
+      <div class="col-header">DT</div>
+      <div class="col-header">KC</div>
+    </div>
+    <div class="metric-table-row"><div class="row-label"><span class="row-num">⑤</span>Club加入率</div><div class="metric-val"><span class="val-num ok">93.3%</span><span class="val-target">目标≥8%</span></div><div class="metric-val"><span class="val-num ok">83.3%</span><span class="val-target">目标≥15%</span></div><div class="metric-val"><span class="val-num neutral">–</span><span class="val-target">目标≥20%</span></div></div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-title">📋 诊断结论</div>
+  <div class="diagnosis">
+    <div class="diag-title">按 SOP 因果链排查结果</div>
+    <div class="diag-item">🚨 R0 最紧急：DT 新玩家胜率 <b>–</b>（目标 55-60%），连败 <b>1 次</b>（目标 0）。Bot 难度保护机制基本未生效，直接导致 DT D1 仅 <b>6.2%</b>。 → <span class='action'>黄晓龙今日修复</span></div>
+  </div>
+</div>
+
+<div class='footer'>⚠️ 激活率使用 pk_rate (entered_first_pk / total_new_users) 作为代理指标，V7 单机模式上线后需替换为「Session1 完成首局（含单机）」新口径</div>
+</body></html>
