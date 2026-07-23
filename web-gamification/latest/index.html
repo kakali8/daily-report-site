@@ -2056,7 +2056,7 @@ body.ai-collapsed .charts{
               764.0,
               836.0,
               858.0,
-              880.0
+              881.0
             ]
           }
         }
@@ -2568,23 +2568,23 @@ body.ai-collapsed .charts{
           "filterable": false,
           "data": {
             "volumes": [
-              670,
-              515,
-              284,
-              260
+              667,
+              514,
+              282,
+              258
             ],
             "rates": [
-              0.7687,
-              0.5515,
-              0.9155
+              0.7706,
+              0.5486,
+              0.9149
             ],
             "cumulative_rates": [
               1.0,
-              0.7687,
-              0.4239,
-              0.3881
+              0.7706,
+              0.4228,
+              0.3868
             ],
-            "overall_rate": 0.3881,
+            "overall_rate": 0.3868,
             "labels": [
               "\u626b\u7801\u8fdb\u5165",
               "\u5f00\u59cb\u73a9",
@@ -2779,6 +2779,198 @@ body.ai-collapsed .charts{
       "business_domain": "pe_c",
       "related_metrics": [],
       "description": "\u5238\u6210\u672c\u4e0e\u8d1f\u503a"
+    }
+  ],
+  "pe_d": [
+    {
+      "chart_id": "app\u5185O2O\u6f0f\u6597",
+      "title": "app\u5185O2O\u6f0f\u6597",
+      "metric_id": "app\u5185O2O\u6f0f\u6597",
+      "module": "multi_funnel",
+      "kind": "tabbed",
+      "business_domain": "pe_d",
+      "default_tab": "overall",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "multi_funnel",
+          "filterable": false,
+          "data": {
+            "volumes": [
+              725,
+              186,
+              175,
+              94
+            ],
+            "rates": [
+              0.2566,
+              0.9409,
+              0.5371
+            ],
+            "cumulative_rates": [
+              1.0,
+              0.2566,
+              0.2414,
+              0.1297
+            ],
+            "overall_rate": 0.1297,
+            "labels": [
+              "\u8fdb\u5165\u6e38\u620f",
+              "\u8d62\u5238",
+              "\u9886\u5238",
+              "\u5230\u5e97\u6838\u9500"
+            ],
+            "step_keys": [
+              "\u8fdb\u5165\u6e38\u620f",
+              "\u8d62\u5238",
+              "\u9886\u5238",
+              "\u5230\u5e97\u6838\u9500"
+            ],
+            "date": "2026-07-23",
+            "step_details": [
+              {
+                "metric_id": "\u8fdb\u5165\u6e38\u620f",
+                "metric_name": "\u8fdb\u5165\u6e38\u620f",
+                "description": "\u8fdb\u5165\u6e38\u620f"
+              },
+              {
+                "metric_id": "\u8d62\u5238",
+                "metric_name": "\u8d62\u5238",
+                "description": "\u8d62\u5238"
+              },
+              {
+                "metric_id": "\u9886\u5238",
+                "metric_name": "\u9886\u5238",
+                "description": "\u9886\u5238"
+              },
+              {
+                "metric_id": "\u5230\u5e97\u6838\u9500",
+                "metric_name": "\u5230\u5e97\u6838\u9500",
+                "description": "\u5230\u5e97\u6838\u9500"
+              }
+            ]
+          }
+        }
+      ],
+      "related_metrics": [],
+      "description": "app\u5185O2O\u6f0f\u6597"
+    },
+    {
+      "chart_id": "app\u5185\u8f6c\u5316\u660e\u7ec6__table",
+      "title": "app\u5185\u8f6c\u5316\u660e\u7ec6",
+      "metric_id": "app\u5185\u8f6c\u5316\u660e\u7ec6",
+      "module": "table",
+      "kind": "data_table",
+      "columns": [
+        "brand_name",
+        "claimed",
+        "played",
+        "redeemed",
+        "source_type",
+        "won"
+      ],
+      "column_descriptions": {},
+      "rows": [
+        [
+          "Yi Fang",
+          45,
+          459,
+          25,
+          "non_ad",
+          52
+        ],
+        [
+          "Yi Fang",
+          59,
+          164,
+          16,
+          "ad",
+          64
+        ],
+        [
+          "Gelare",
+          65,
+          111,
+          38,
+          "non_ad",
+          65
+        ],
+        [
+          "Gelare",
+          16,
+          55,
+          14,
+          "ad",
+          17
+        ],
+        [
+          "Cheerful Goat",
+          10,
+          28,
+          5,
+          "non_ad",
+          10
+        ],
+        [
+          "Cheerful Goat",
+          1,
+          23,
+          1,
+          "ad",
+          1
+        ]
+      ],
+      "row_count": 6,
+      "data_date": "2026-07-23",
+      "business_domain": "pe_d",
+      "related_metrics": [],
+      "description": "app\u5185\u8f6c\u5316\u660e\u7ec6"
+    },
+    {
+      "chart_id": "app\u5185\u5e7f\u544aROI__table",
+      "title": "app\u5185\u5e7f\u544aROI",
+      "metric_id": "app\u5185\u5e7f\u544aROI",
+      "module": "table",
+      "kind": "data_table",
+      "columns": [
+        "brand_name",
+        "cpa_redeemed",
+        "cpa_won",
+        "cpi",
+        "installs",
+        "redeemed",
+        "spend_usd",
+        "won"
+      ],
+      "column_descriptions": {},
+      "rows": [
+        [
+          "Yi Fang",
+          72.71,
+          16.59,
+          5.82,
+          587,
+          47,
+          3417.6,
+          206
+        ],
+        [
+          "Gelare",
+          175.86,
+          32.97,
+          9.77,
+          54,
+          3,
+          527.58,
+          16
+        ]
+      ],
+      "row_count": 2,
+      "data_date": "2026-07-23",
+      "business_domain": "pe_d",
+      "related_metrics": [],
+      "description": "app\u5185\u5e7f\u544aROI"
     }
   ]
 }</script>
