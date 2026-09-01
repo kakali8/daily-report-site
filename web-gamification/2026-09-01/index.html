@@ -1892,14 +1892,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-08-03",
             "metric_nature": "additive",
             "value_unit": "number"
           },
           "data": {
-            "value": 16.0
+            "dates": [
+              "08-03",
+              "09-01"
+            ],
+            "values": [
+              16.0,
+              17.0
+            ]
           }
         }
       ],
@@ -1907,6 +1913,33 @@ body.ai-collapsed .charts{
       "business_domain": "pe_a",
       "related_metrics": [],
       "description": "\u7d2f\u8ba1\u6fc0\u6d3b\u5546\u5bb6\u6570\uff08\u914d\u5956\uff09"
+    },
+    {
+      "chart_id": "\u7d2f\u8ba1\u5230\u5e97\u5151\u6362\u7684\u5546\u5bb6\u6570__series__series_daily",
+      "title": "\u7d2f\u8ba1\u5230\u5e97\u5151\u6362\u7684\u5546\u5bb6\u6570",
+      "metric_id": "\u7d2f\u8ba1\u5230\u5e97\u5151\u6362\u7684\u5546\u5bb6\u6570",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "single_value",
+          "meta": {
+            "date": "2026-09-01",
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "data": {
+            "value": 12.0
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "pe_a",
+      "related_metrics": [],
+      "description": "\u7d2f\u8ba1\u5230\u5e97\u5151\u6362\u7684\u5546\u5bb6\u6570"
     },
     {
       "chart_id": "\u7d2f\u8ba1\u9886\u5238\u73a9\u5bb6\u6570__series__series_daily",
@@ -1981,7 +2014,7 @@ body.ai-collapsed .charts{
               1471.0,
               1478.0,
               1481.0,
-              1482.0
+              1483.0
             ]
           }
         }
@@ -2109,7 +2142,8 @@ body.ai-collapsed .charts{
               "08-26",
               "08-27",
               "08-28",
-              "08-29"
+              "08-29",
+              "09-01"
             ],
             "values": [
               783.0,
@@ -2135,7 +2169,8 @@ body.ai-collapsed .charts{
               901.0,
               902.0,
               906.0,
-              907.0
+              907.0,
+              908.0
             ]
           }
         }
@@ -2219,23 +2254,23 @@ body.ai-collapsed .charts{
           "filterable": false,
           "data": {
             "volumes": [
-              71,
-              46,
+              72,
+              47,
               36,
               31
             ],
             "rates": [
-              0.6479,
-              0.7826,
+              0.6528,
+              0.766,
               0.8611
             ],
             "cumulative_rates": [
               1.0,
-              0.6479,
-              0.507,
-              0.4366
+              0.6528,
+              0.5,
+              0.4306
             ],
-            "overall_rate": 0.4366,
+            "overall_rate": 0.4306,
             "labels": [
               "\u626b\u7801\u8fdb\u5165",
               "\u5f00\u59cb\u73a9",
@@ -2293,20 +2328,20 @@ body.ai-collapsed .charts{
           "filterable": false,
           "data": {
             "volumes": [
-              17,
-              9,
+              16,
+              8,
               3
             ],
             "rates": [
-              0.5294,
-              0.3333
+              0.5,
+              0.375
             ],
             "cumulative_rates": [
               1.0,
-              0.5294,
-              0.1765
+              0.5,
+              0.1875
             ],
-            "overall_rate": 0.1765,
+            "overall_rate": 0.1875,
             "labels": [
               "\u4e0b\u8f7d",
               "\u9886\u5238",
@@ -2452,20 +2487,20 @@ body.ai-collapsed .charts{
               136,
               27,
               24,
-              16
+              17
             ],
             "rates": [
               0.1985,
               0.8889,
-              0.6667
+              0.7083
             ],
             "cumulative_rates": [
               1.0,
               0.1985,
               0.1765,
-              0.1176
+              0.125
             ],
-            "overall_rate": 0.1176,
+            "overall_rate": 0.125,
             "labels": [
               "\u8fdb\u5165\u6e38\u620f",
               "\u8d62\u5238",
@@ -2535,7 +2570,7 @@ body.ai-collapsed .charts{
           "Yi Fang",
           6,
           26,
-          3,
+          4,
           "ad",
           6
         ],
@@ -2598,11 +2633,11 @@ body.ai-collapsed .charts{
       "rows": [
         [
           "Yi Fang",
-          79.25,
+          77.97,
           17.02,
           6.69,
           723,
-          61,
+          62,
           4834.02,
           284
         ],
@@ -2619,11 +2654,11 @@ body.ai-collapsed .charts{
         [
           "Cheerful Goat",
           "",
-          112.93,
-          14.31,
+          113.23,
+          14.35,
           71,
           0,
-          1016.35,
+          1019.05,
           9
         ]
       ],
