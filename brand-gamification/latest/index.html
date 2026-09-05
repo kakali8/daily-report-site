@@ -1843,14 +1843,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "additive",
             "value_unit": "number"
           },
           "data": {
-            "value": 10.0
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              10.0,
+              1.0
+            ]
           }
         },
         {
@@ -1876,7 +1882,8 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
@@ -1884,6 +1891,9 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 10.0
+              ],
+              [
+                1.0
               ]
             ]
           }
@@ -1905,130 +1915,6 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
-          "meta": {
-            "date": "2026-09-04",
-            "metric_nature": "additive",
-            "value_unit": "number"
-          },
-          "data": {
-            "value": 1.0
-          }
-        },
-        {
-          "tab_id": "by_brand",
-          "tab_label": "by brand",
-          "kind": "grouped_bar",
-          "meta": {
-            "dims": [
-              "brand"
-            ],
-            "metric_nature": "additive",
-            "value_unit": "number"
-          },
-          "filterable": false,
-          "all_dim_values": [
-            "Yum Yum Cafe"
-          ],
-          "selected_dim_values": [
-            "Yum Yum Cafe"
-          ],
-          "ranked_dim_values": [
-            "Yum Yum Cafe"
-          ],
-          "data": {
-            "dates": [
-              "09-04"
-            ],
-            "series": [
-              "Yum Yum Cafe"
-            ],
-            "matrix": [
-              [
-                1.0
-              ]
-            ]
-          }
-        }
-      ],
-      "hide_badge": false,
-      "business_domain": "pe_a",
-      "related_metrics": [],
-      "description": "\u5f53\u5929\u73a9\u6e38\u620f\u7684\u53bb\u91cd\u7528\u6237(tour_round\u6309game_day)"
-    },
-    {
-      "chart_id": "\u73a9\u6e38\u620f\u5c40\u6570__series__series_daily",
-      "title": "\u73a9\u6e38\u620f\u5c40\u6570",
-      "metric_id": "\u73a9\u6e38\u620f\u5c40\u6570",
-      "module": "series",
-      "item_id": "series_daily",
-      "kind": "tabbed",
-      "tabs": [
-        {
-          "tab_id": "overall",
-          "tab_label": "Overall",
-          "kind": "single_value",
-          "meta": {
-            "date": "2026-09-04",
-            "metric_nature": "additive",
-            "value_unit": "number"
-          },
-          "data": {
-            "value": 1.0
-          }
-        },
-        {
-          "tab_id": "by_brand",
-          "tab_label": "by brand",
-          "kind": "grouped_bar",
-          "meta": {
-            "dims": [
-              "brand"
-            ],
-            "metric_nature": "additive",
-            "value_unit": "number"
-          },
-          "filterable": false,
-          "all_dim_values": [
-            "Yum Yum Cafe"
-          ],
-          "selected_dim_values": [
-            "Yum Yum Cafe"
-          ],
-          "ranked_dim_values": [
-            "Yum Yum Cafe"
-          ],
-          "data": {
-            "dates": [
-              "09-04"
-            ],
-            "series": [
-              "Yum Yum Cafe"
-            ],
-            "matrix": [
-              [
-                1.0
-              ]
-            ]
-          }
-        }
-      ],
-      "hide_badge": false,
-      "business_domain": "pe_a",
-      "related_metrics": [],
-      "description": "\u5f53\u5929\u6e38\u620f\u5c40\u6570(tour_round\u53bb\u91cdround_key)"
-    },
-    {
-      "chart_id": "\u62bd\u5956\u4eba\u6570__series__series_daily",
-      "title": "\u62bd\u5956\u4eba\u6570",
-      "metric_id": "\u62bd\u5956\u4eba\u6570",
-      "module": "series",
-      "item_id": "series_daily",
-      "kind": "tabbed",
-      "tabs": [
-        {
-          "tab_id": "overall",
-          "tab_label": "Overall",
           "kind": "bar_line",
           "meta": {
             "metric_nature": "additive",
@@ -2041,7 +1927,7 @@ body.ai-collapsed .charts{
             ],
             "values": [
               1.0,
-              2.0
+              1.0
             ]
           }
         },
@@ -2079,7 +1965,151 @@ body.ai-collapsed .charts{
                 1.0
               ],
               [
-                2.0
+                1.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "pe_a",
+      "related_metrics": [],
+      "description": "\u5f53\u5929\u73a9\u6e38\u620f\u7684\u53bb\u91cd\u7528\u6237(tour_round\u6309game_day)"
+    },
+    {
+      "chart_id": "\u73a9\u6e38\u620f\u5c40\u6570__series__series_daily",
+      "title": "\u73a9\u6e38\u620f\u5c40\u6570",
+      "metric_id": "\u73a9\u6e38\u620f\u5c40\u6570",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "bar_line",
+          "meta": {
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "data": {
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_brand",
+          "tab_label": "by brand",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "brand"
+            ],
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "filterable": false,
+          "all_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "selected_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "ranked_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "data": {
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "series": [
+              "Yum Yum Cafe"
+            ],
+            "matrix": [
+              [
+                1.0
+              ],
+              [
+                1.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "pe_a",
+      "related_metrics": [],
+      "description": "\u5f53\u5929\u6e38\u620f\u5c40\u6570(tour_round\u53bb\u91cdround_key)"
+    },
+    {
+      "chart_id": "\u62bd\u5956\u4eba\u6570__series__series_daily",
+      "title": "\u62bd\u5956\u4eba\u6570",
+      "metric_id": "\u62bd\u5956\u4eba\u6570",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "bar_line",
+          "meta": {
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "data": {
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              1.0,
+              3.0
+            ]
+          }
+        },
+        {
+          "tab_id": "by_brand",
+          "tab_label": "by brand",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "brand"
+            ],
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "filterable": false,
+          "all_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "selected_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "ranked_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "data": {
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "series": [
+              "Yum Yum Cafe"
+            ],
+            "matrix": [
+              [
+                1.0
+              ],
+              [
+                3.0
               ]
             ]
           }
@@ -2113,7 +2143,7 @@ body.ai-collapsed .charts{
             ],
             "values": [
               3.0,
-              2.0
+              5.0
             ]
           }
         },
@@ -2151,7 +2181,7 @@ body.ai-collapsed .charts{
                 3.0
               ],
               [
-                2.0
+                5.0
               ]
             ]
           }
@@ -2173,14 +2203,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "additive",
             "value_unit": "number"
           },
           "data": {
-            "value": 1.0
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              1.0,
+              1.0
+            ]
           }
         },
         {
@@ -2206,12 +2242,16 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
             ],
             "matrix": [
+              [
+                1.0
+              ],
               [
                 1.0
               ]
@@ -2242,26 +2282,26 @@ body.ai-collapsed .charts{
           "filterable": false,
           "data": {
             "volumes": [
-              9,
-              3,
-              3,
-              2,
+              1,
+              1,
+              1,
+              1,
               1,
               0
             ],
             "rates": [
-              0.3333,
               1.0,
-              0.6667,
-              0.5,
+              1.0,
+              1.0,
+              1.0,
               0.0
             ],
             "cumulative_rates": [
               1.0,
-              0.3333,
-              0.3333,
-              0.2222,
-              0.1111,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
               0.0
             ],
             "overall_rate": 0.0,
@@ -2281,7 +2321,7 @@ body.ai-collapsed .charts{
               "claim_click",
               "claim_success"
             ],
-            "date": "2026-09-04",
+            "date": "2026-09-05",
             "step_details": [
               {
                 "metric_id": "\u9996\u9875\u66dd\u5149",
@@ -2344,7 +2384,7 @@ body.ai-collapsed .charts{
               "claim_click",
               "claim_success"
             ],
-            "date": "2026-09-04",
+            "date": "2026-09-05",
             "step_details": [
               {
                 "metric_id": "\u9996\u9875\u66dd\u5149",
@@ -2379,26 +2419,26 @@ body.ai-collapsed .charts{
             ],
             "overall": {
               "volumes": [
-                9,
-                3,
-                3,
-                2,
+                1,
+                1,
+                1,
+                1,
                 1,
                 0
               ],
               "rates": [
-                0.3333,
                 1.0,
-                0.6667,
-                0.5,
+                1.0,
+                1.0,
+                1.0,
                 0.0
               ],
               "cumulative_rates": [
                 1.0,
-                0.3333,
-                0.3333,
-                0.2222,
-                0.1111,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
                 0.0
               ],
               "overall_rate": 0.0
@@ -2406,26 +2446,26 @@ body.ai-collapsed .charts{
             "by_dim": {
               "Yum Yum Cafe": {
                 "volumes": [
-                  9,
-                  3,
-                  3,
-                  2,
+                  1,
+                  1,
+                  1,
+                  1,
                   1,
                   0
                 ],
                 "rates": [
-                  0.3333,
                   1.0,
-                  0.6667,
-                  0.5,
+                  1.0,
+                  1.0,
+                  1.0,
                   0.0
                 ],
                 "cumulative_rates": [
                   1.0,
-                  0.3333,
-                  0.3333,
-                  0.2222,
-                  0.1111,
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0,
                   0.0
                 ],
                 "overall_rate": 0.0
@@ -2462,7 +2502,7 @@ body.ai-collapsed .charts{
             ],
             "values": [
               1.0,
-              1.0
+              0.6
             ]
           }
         },
@@ -2500,7 +2540,7 @@ body.ai-collapsed .charts{
                 1.0
               ],
               [
-                1.0
+                0.6
               ]
             ]
           }
@@ -2533,16 +2573,27 @@ body.ai-collapsed .charts{
         [
           "Yum Yum Cafe \u00b7 Cash Voucher",
           "Yum Yum Cafe",
+          0.2,
+          0.25,
+          "No Prize",
+          0,
+          2,
+          "DEFAULT",
+          8
+        ],
+        [
+          "Yum Yum Cafe \u00b7 Cash Voucher",
+          "Yum Yum Cafe",
           0.6686,
-          1.0,
+          0.75,
           "SGD 1 Voucher",
           1,
-          5,
+          6,
           "DEFAULT",
-          5
+          8
         ]
       ],
-      "row_count": 1,
+      "row_count": 2,
       "data_date": "2026-09-05",
       "business_domain": "pe_c",
       "related_metrics": [],
@@ -2568,10 +2619,10 @@ body.ai-collapsed .charts{
       "rows": [
         [
           "Yum Yum Cafe",
-          2.0,
-          1038.0,
+          3.0,
+          1037.0,
           1040.0,
-          0.0019,
+          0.0029,
           91.0,
           8.0,
           "Yum Yum Cafe \u00b7 Cash Voucher"
@@ -2596,14 +2647,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "additive",
             "value_unit": "number"
           },
           "data": {
-            "value": 24.0
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              24.0,
+              3.0
+            ]
           }
         },
         {
@@ -2629,7 +2686,8 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
@@ -2637,6 +2695,9 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 24.0
+              ],
+              [
+                3.0
               ]
             ]
           }
@@ -2646,6 +2707,68 @@ body.ai-collapsed .charts{
       "business_domain": "pe_d",
       "related_metrics": [],
       "description": "\u6bcf\u65e5Credits\u53d1\u653e\u603b\u91cf(ledger direction=1)"
+    },
+    {
+      "chart_id": "credits\u6d88\u8017__series__series_daily",
+      "title": "credits\u6d88\u8017",
+      "metric_id": "credits\u6d88\u8017",
+      "module": "series",
+      "item_id": "series_daily",
+      "kind": "tabbed",
+      "tabs": [
+        {
+          "tab_id": "overall",
+          "tab_label": "Overall",
+          "kind": "single_value",
+          "meta": {
+            "date": "2026-09-05",
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "data": {
+            "value": 2.0
+          }
+        },
+        {
+          "tab_id": "by_brand",
+          "tab_label": "by brand",
+          "kind": "grouped_bar",
+          "meta": {
+            "dims": [
+              "brand"
+            ],
+            "metric_nature": "additive",
+            "value_unit": "number"
+          },
+          "filterable": false,
+          "all_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "selected_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "ranked_dim_values": [
+            "Yum Yum Cafe"
+          ],
+          "data": {
+            "dates": [
+              "09-05"
+            ],
+            "series": [
+              "Yum Yum Cafe"
+            ],
+            "matrix": [
+              [
+                2.0
+              ]
+            ]
+          }
+        }
+      ],
+      "hide_badge": false,
+      "business_domain": "pe_d",
+      "related_metrics": [],
+      "description": "\u6bcf\u65e5Credits\u6d88\u8017\u603b\u91cf(ledger direction=-1)"
     },
     {
       "chart_id": "credits\u8d5a\u53d6\u6765\u6e90__series__series_daily",
@@ -2658,14 +2781,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "additive",
             "value_unit": "number"
           },
           "data": {
-            "value": 24.0
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              24.0,
+              3.0
+            ]
           }
         },
         {
@@ -2693,7 +2822,8 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "FIRST_LOGIN",
@@ -2703,6 +2833,10 @@ body.ai-collapsed .charts{
               [
                 15.0,
                 9.0
+              ],
+              [
+                0.0,
+                3.0
               ]
             ]
           }
@@ -2724,14 +2858,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "additive",
             "value_unit": "number"
           },
           "data": {
-            "value": 0.0
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              0.0,
+              0.0
+            ]
           }
         },
         {
@@ -2757,12 +2897,16 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
             ],
             "matrix": [
+              [
+                0.0
+              ],
               [
                 0.0
               ]
@@ -2788,14 +2932,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "ratio",
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.0
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              0.0,
+              0.0
+            ]
           }
         },
         {
@@ -2821,12 +2971,16 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
             ],
             "matrix": [
+              [
+                0.0
+              ],
               [
                 0.0
               ]
@@ -2860,7 +3014,7 @@ body.ai-collapsed .charts{
       "rows": [
         [
           "Yum Yum Cafe",
-          1,
+          2,
           91.0,
           "SGD",
           8.0,
@@ -2904,19 +3058,19 @@ body.ai-collapsed .charts{
       "rows": [
         [
           "Yum Yum Cafe",
-          1,
-          24.0,
-          24.0,
-          0.0,
-          3.0,
-          0.1,
-          1,
+          2,
+          27.0,
+          25.0,
+          2.0,
+          2.0,
+          0.1818,
+          2,
           0.0,
           0,
-          1,
-          3,
-          5,
-          10
+          2,
+          4,
+          8,
+          11
         ]
       ],
       "row_count": 1,
@@ -2938,14 +3092,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "ratio",
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.8333333333333334
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              0.8333333333333334,
+              1.0
+            ]
           }
         },
         {
@@ -2971,7 +3131,8 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
@@ -2979,6 +3140,9 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 0.8333333333333334
+              ],
+              [
+                1.0
               ]
             ]
           }
@@ -3000,14 +3164,20 @@ body.ai-collapsed .charts{
         {
           "tab_id": "overall",
           "tab_label": "Overall",
-          "kind": "single_value",
+          "kind": "bar_line",
           "meta": {
-            "date": "2026-09-04",
             "metric_nature": "ratio",
             "value_unit": "percent"
           },
           "data": {
-            "value": 0.4
+            "dates": [
+              "09-04",
+              "09-05"
+            ],
+            "values": [
+              0.4,
+              1.0
+            ]
           }
         },
         {
@@ -3033,7 +3203,8 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-04"
+              "09-04",
+              "09-05"
             ],
             "series": [
               "Yum Yum Cafe"
@@ -3041,6 +3212,9 @@ body.ai-collapsed .charts{
             "matrix": [
               [
                 0.4
+              ],
+              [
+                1.0
               ]
             ]
           }
@@ -3072,7 +3246,7 @@ body.ai-collapsed .charts{
         [
           "Yum Yum Cafe",
           "apple",
-          2
+          3
         ]
       ],
       "row_count": 2,
