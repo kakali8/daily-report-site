@@ -2490,23 +2490,23 @@ body.ai-collapsed .charts{
           "filterable": false,
           "data": {
             "volumes": [
-              99,
-              21,
+              98,
+              20,
               19,
               18
             ],
             "rates": [
-              0.2121,
-              0.9048,
+              0.2041,
+              0.95,
               0.9474
             ],
             "cumulative_rates": [
               1.0,
-              0.2121,
-              0.1919,
-              0.1818
+              0.2041,
+              0.1939,
+              0.1837
             ],
-            "overall_rate": 0.1818,
+            "overall_rate": 0.1837,
             "labels": [
               "\u8fdb\u5165\u6e38\u620f",
               "\u8d62\u5238",
@@ -2607,10 +2607,10 @@ body.ai-collapsed .charts{
         [
           "Cheerful Goat",
           1,
-          15,
+          14,
           0,
           "ad",
-          2
+          1
         ]
       ],
       "row_count": 6,
@@ -2692,6 +2692,8 @@ body.ai-collapsed .charts{
 <nav class="nav-tabs" id="navTabs">
     <!-- 导航按钮会通过JS插入到这里 -->
 </nav>
+
+
 
 
 
@@ -5663,10 +5665,53 @@ function renderProductChanges() {
   document.getElementById('productChangesBody').innerHTML = html;
 }
 
+// ====== 全局品牌选择器 (仅 Brand Gamification 看板) ======
+const GLOBAL_BRAND_FILTER = false;
+function _allSpecsFlat() { return Object.values(CHARTS_BY_DOMAIN || {}).flat(); }
+function initGlobalBrandBar() {
+  if (!GLOBAL_BRAND_FILTER) return;
+  const bar = document.getElementById("globalBrandBar");
+  const sel = document.getElementById("globalBrandSelect");
+  if (!bar || !sel) return;
+  const set = new Set();
+  _allSpecsFlat().forEach(spec => {
+    const t = (spec.tabs || []).find(x => x.tab_id === "by_brand");
+    if (t) (t.all_dim_values || []).forEach(v => {
+      if (v !== null && v !== undefined && String(v).trim() !== "") set.add(String(v));
+    });
+  });
+  const brands = Array.from(set).sort();
+  if (!brands.length) { bar.style.display = "none"; return; }
+  sel.innerHTML = "";
+  const optAll = document.createElement("option");
+  optAll.value = "__ALL__"; optAll.textContent = "全部品牌";
+  sel.appendChild(optAll);
+  brands.forEach(b => {
+    const o = document.createElement("option");
+    o.value = b; o.textContent = b; sel.appendChild(o);
+  });
+  sel.onchange = () => applyGlobalBrand(sel.value);
+}
+function applyGlobalBrand(brand) {
+  _allSpecsFlat().forEach(spec => {
+    const t = (spec.tabs || []).find(x => x.tab_id === "by_brand");
+    if (!t) return;  // 只作用于有 brand 维度的卡
+    const key = dimStateKey(spec.chart_id, "by_brand");
+    if (brand === "__ALL__") {
+      selectedDimsState[key] = t.selected_dim_values || getDefaultTopDims(t, 1) || [];
+    } else {
+      const vals = (t.all_dim_values || []).map(String);
+      selectedDimsState[key] = vals.includes(String(brand)) ? [brand] : [];
+    }
+    switchTab(spec, "by_brand");
+  });
+}
+
 // 初始化
 function initPage() {
   initNavigation();
   renderAllCharts();
+  initGlobalBrandBar();
 
   // Product changes panel
   renderProductChanges();
