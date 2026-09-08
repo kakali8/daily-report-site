@@ -2020,7 +2020,7 @@ body.ai-collapsed .charts{
               1768.0,
               1782.0,
               1790.0,
-              1791.0
+              1792.0
             ]
           }
         }
@@ -2151,7 +2151,8 @@ body.ai-collapsed .charts{
               "09-04",
               "09-05",
               "09-06",
-              "09-07"
+              "09-07",
+              "09-08"
             ],
             "values": [
               856.0,
@@ -2178,7 +2179,8 @@ body.ai-collapsed .charts{
               914.0,
               917.0,
               924.0,
-              925.0
+              925.0,
+              926.0
             ]
           }
         }
@@ -2492,23 +2494,23 @@ body.ai-collapsed .charts{
           "filterable": false,
           "data": {
             "volumes": [
-              97,
+              99,
+              20,
               19,
-              18,
-              17
+              18
             ],
             "rates": [
-              0.1959,
-              0.9474,
-              0.9444
+              0.202,
+              0.95,
+              0.9474
             ],
             "cumulative_rates": [
               1.0,
-              0.1959,
-              0.1856,
-              0.1753
+              0.202,
+              0.1919,
+              0.1818
             ],
-            "overall_rate": 0.1753,
+            "overall_rate": 0.1818,
             "labels": [
               "\u8fdb\u5165\u6e38\u620f",
               "\u8d62\u5238",
@@ -2569,7 +2571,7 @@ body.ai-collapsed .charts{
         [
           "Yi Fang",
           5,
-          37,
+          38,
           8,
           "non_ad",
           6
@@ -2584,11 +2586,11 @@ body.ai-collapsed .charts{
         ],
         [
           "Gelare",
-          3,
-          19,
-          5,
+          4,
+          20,
+          6,
           "non_ad",
-          3
+          4
         ],
         [
           "Gelare",
@@ -5670,6 +5672,15 @@ function renderProductChanges() {
 // ====== 全局品牌选择器 (仅 Brand Gamification 看板) ======
 const GLOBAL_BRAND_FILTER = false;
 function _allSpecsFlat() { return Object.values(CHARTS_BY_DOMAIN || {}).flat(); }
+// series 卡的维度值在 all_dim_values；multi_funnel 卡（funnel_steps 走
+// build_funnel_steps_spec）只有 ranked_dim_values，所以两个都要认，
+// 否则漏斗卡会拿到空列表、选中态被清空、静默回退到 data.overall。
+function _brandValsOf(tab) {
+  const a = tab.all_dim_values || [];
+  return a.length ? a : (tab.ranked_dim_values || []);
+}
+// 下拉框里的品牌全集（initGlobalBrandBar 填充），顺序与下拉框一致
+let GLOBAL_BRAND_VALUES = [];
 function initGlobalBrandBar() {
   if (!GLOBAL_BRAND_FILTER) return;
   const bar = document.getElementById("globalBrandBar");
@@ -5678,11 +5689,12 @@ function initGlobalBrandBar() {
   const set = new Set();
   _allSpecsFlat().forEach(spec => {
     const t = (spec.tabs || []).find(x => x.tab_id === "by_brand");
-    if (t) (t.all_dim_values || []).forEach(v => {
+    if (t) _brandValsOf(t).forEach(v => {
       if (v !== null && v !== undefined && String(v).trim() !== "") set.add(String(v));
     });
   });
   const brands = Array.from(set).sort();
+  GLOBAL_BRAND_VALUES = brands;
   if (!brands.length) { bar.style.display = "none"; return; }
   sel.innerHTML = "";
   const optAll = document.createElement("option");
@@ -5693,16 +5705,28 @@ function initGlobalBrandBar() {
     o.value = b; o.textContent = b; sel.appendChild(o);
   });
   sel.onchange = () => applyGlobalBrand(sel.value);
+  // 首屏就按下拉框当前值统一一次，否则各卡各自取默认 top1、互相错位
+  applyGlobalBrand(sel.value);
 }
 function applyGlobalBrand(brand) {
   _allSpecsFlat().forEach(spec => {
     const t = (spec.tabs || []).find(x => x.tab_id === "by_brand");
     if (!t) return;  // 只作用于有 brand 维度的卡
     const key = dimStateKey(spec.chart_id, "by_brand");
+    const vals = _brandValsOf(t).map(String);
+    // 漏斗类型只能单选(见 isFunnelType)，其余可多选
+    const singleOnly = (t.kind === "funnel" || t.kind === "multi_funnel");
     if (brand === "__ALL__") {
-      selectedDimsState[key] = t.selected_dim_values || getDefaultTopDims(t, 1) || [];
+      if (singleOnly) {
+        // 漏斗无法同时展示多品牌：统一取品牌全集里第一个该卡有数据的品牌，
+        // 保证各卡落在同一品牌上（旧实现是各卡各自取默认 top1，会出现
+        // 漏斗卡显示 A、series 卡显示 B 的错位）。
+        const first = GLOBAL_BRAND_VALUES.find(b => vals.includes(b));
+        selectedDimsState[key] = first ? [first] : [];
+      } else {
+        selectedDimsState[key] = vals.slice();  // 真的显示全部品牌
+      }
     } else {
-      const vals = (t.all_dim_values || []).map(String);
       selectedDimsState[key] = vals.includes(String(brand)) ? [brand] : [];
     }
     switchTab(spec, "by_brand");
