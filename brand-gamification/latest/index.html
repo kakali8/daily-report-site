@@ -1908,8 +1908,8 @@ body.ai-collapsed .charts{
                 16.0
               ],
               [
-                7.0,
-                1.0
+                8.0,
+                2.0
               ]
             ]
           }
@@ -2529,6 +2529,214 @@ body.ai-collapsed .charts{
       "hide_badge": true
     },
     {
+      "chart_id": "\u65b0\u7248\u7ec6\u5316\u6f0f\u6597",
+      "title": "\u65b0\u7248\u7ec6\u5316\u6f0f\u6597",
+      "metric_id": "\u65b0\u7248\u7ec6\u5316\u6f0f\u6597",
+      "module": "multi_funnel",
+      "kind": "tabbed",
+      "business_domain": "pe_b",
+      "default_tab": "by_brand",
+      "tabs": [
+        {
+          "tab_id": "by_brand",
+          "tab_label": "by brand",
+          "kind": "multi_funnel",
+          "filterable": true,
+          "ranked_dim_values": [
+            "INMERS",
+            "Yum Yum Cafe"
+          ],
+          "dim_overall_rates": {
+            "INMERS": 0.0,
+            "Yum Yum Cafe": 0.0
+          },
+          "data": {
+            "labels": [
+              "\u8fdb\u5165\u9875\u9762",
+              "\u5f00\u5c40(\u6e38\u620f\u9875\u66dd\u5149)",
+              "\u5b8c\u6210\u6574\u5c40",
+              "\u62bd\u5956",
+              "\u62bd\u4e2d",
+              "\u9886\u5230\u5238",
+              "\u5230\u5e97\u6838\u9500"
+            ],
+            "step_keys": [
+              "home_view",
+              "game_open",
+              "game_finish",
+              "draw",
+              "win",
+              "claim_success",
+              "redeemed"
+            ],
+            "date": "2026-09-11",
+            "step_details": [
+              {
+                "metric_id": "\u8fdb\u5165\u9875\u9762",
+                "metric_name": "\u8fdb\u5165\u9875\u9762",
+                "description": "home_view"
+              },
+              {
+                "metric_id": "\u5f00\u5c40(\u6e38\u620f\u9875\u66dd\u5149)",
+                "metric_name": "\u5f00\u5c40(\u6e38\u620f\u9875\u66dd\u5149)",
+                "description": "game_open"
+              },
+              {
+                "metric_id": "\u5b8c\u6210\u6574\u5c40",
+                "metric_name": "\u5b8c\u6210\u6574\u5c40",
+                "description": "game_finish"
+              },
+              {
+                "metric_id": "\u62bd\u5956",
+                "metric_name": "\u62bd\u5956",
+                "description": "draw"
+              },
+              {
+                "metric_id": "\u62bd\u4e2d",
+                "metric_name": "\u62bd\u4e2d",
+                "description": "win"
+              },
+              {
+                "metric_id": "\u9886\u5230\u5238",
+                "metric_name": "\u9886\u5230\u5238",
+                "description": "claim_success"
+              },
+              {
+                "metric_id": "\u5230\u5e97\u6838\u9500",
+                "metric_name": "\u5230\u5e97\u6838\u9500",
+                "description": "redeemed"
+              }
+            ],
+            "overall": {
+              "volumes": [
+                97,
+                94,
+                39,
+                50,
+                40,
+                11,
+                0
+              ],
+              "rates": [
+                0.9691,
+                0.4149,
+                1.2821,
+                0.8,
+                0.275,
+                0.0
+              ],
+              "cumulative_rates": [
+                1.0,
+                0.9691,
+                0.4021,
+                0.5155,
+                0.4124,
+                0.1134,
+                0.0
+              ],
+              "overall_rate": 0.0
+            },
+            "by_dim": {
+              "INMERS": {
+                "volumes": [
+                  85,
+                  83,
+                  31,
+                  38,
+                  30,
+                  8,
+                  0
+                ],
+                "rates": [
+                  0.9765,
+                  0.3735,
+                  1.2258,
+                  0.7895,
+                  0.2667,
+                  0.0
+                ],
+                "cumulative_rates": [
+                  1.0,
+                  0.9765,
+                  0.3647,
+                  0.4471,
+                  0.3529,
+                  0.0941,
+                  0.0
+                ],
+                "overall_rate": 0.0
+              },
+              "Yum Yum Cafe": {
+                "volumes": [
+                  12,
+                  11,
+                  8,
+                  12,
+                  10,
+                  3,
+                  0
+                ],
+                "rates": [
+                  0.9167,
+                  0.7273,
+                  1.5,
+                  0.8333,
+                  0.3,
+                  0.0
+                ],
+                "cumulative_rates": [
+                  1.0,
+                  0.9167,
+                  0.6667,
+                  1.0,
+                  0.8333,
+                  0.25,
+                  0.0
+                ],
+                "overall_rate": 0.0
+              }
+            }
+          }
+        }
+      ],
+      "related_metrics": [],
+      "description": "\u65b0\u7248\u7ec6\u5316\u6f0f\u6597",
+      "hide_badge": true
+    },
+    {
+      "chart_id": "\u5f00\u5c40\u5b8c\u6210\u8ba1\u6570__table",
+      "title": "\u5f00\u5c40\u5b8c\u6210\u8ba1\u6570",
+      "metric_id": "\u5f00\u5c40\u5b8c\u6210\u8ba1\u6570",
+      "module": "table",
+      "kind": "data_table",
+      "columns": [
+        "brand",
+        "finish_game",
+        "midquit_nodata",
+        "open_game"
+      ],
+      "column_descriptions": {},
+      "rows": [
+        [
+          "INMERS",
+          31,
+          0,
+          83
+        ],
+        [
+          "Yum Yum Cafe",
+          8,
+          0,
+          11
+        ]
+      ],
+      "row_count": 2,
+      "data_date": "2026-09-11",
+      "business_domain": "pe_b",
+      "related_metrics": [],
+      "description": "\u5f00\u5c40\u5b8c\u6210\u8ba1\u6570"
+    },
+    {
       "chart_id": "\u5f00\u5c40\u5230\u5b8c\u6210\u7387__series__series_daily",
       "title": "\u5f00\u5c40\u5230\u5b8c\u6210\u7387",
       "metric_id": "\u5f00\u5c40\u5230\u5b8c\u6210\u7387",
@@ -2574,7 +2782,7 @@ body.ai-collapsed .charts{
                 0.8
               ],
               [
-                0.6,
+                0.5,
                 0.0
               ]
             ]
@@ -3309,7 +3517,7 @@ body.ai-collapsed .charts{
                 0.3
               ],
               [
-                0.2,
+                0.1666666666666666,
                 0.0
               ]
             ]
