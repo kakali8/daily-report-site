@@ -1344,6 +1344,24 @@ body.ai-collapsed .charts{
   letter-spacing: -0.01em;
 }
 
+/* 富文本卡（Change Log）：内容由 markdown 渲染，样式与看板其余部分对齐 */
+.richtext-body { font-size: 13px; line-height: 1.7; color: var(--text); }
+.richtext-body h2 { font-size: 15px; font-weight: 600; margin: 18px 0 8px; }
+.richtext-body h2:first-child { margin-top: 4px; }
+.richtext-body h3 { font-size: 13px; font-weight: 600; margin: 14px 0 6px; }
+.richtext-body p { margin: 8px 0; }
+.richtext-body ul { margin: 8px 0; padding-left: 20px; }
+.richtext-body li { margin: 4px 0; }
+.richtext-body code { background: rgba(127,127,127,.12); border-radius: 3px; padding: 1px 5px; font-size: 12px; }
+.richtext-body blockquote { margin: 10px 0; padding: 8px 12px; border-left: 3px solid #9ca3af; background: rgba(127,127,127,.06); color: #6b7280; font-size: 12px; }
+.richtext-body blockquote p { margin: 2px 0; }
+.richtext-body table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.richtext-body th { text-align: left; font-weight: 600; padding: 6px 10px; border-bottom: 2px solid #e5e7eb; white-space: nowrap; }
+.richtext-body td { padding: 6px 10px; border-bottom: 1px solid #eef1f5; }
+.richtext-body tr:last-child td { border-bottom: none; }
+.richtext-body a { color: #2563eb; text-decoration: none; }
+.richtext-body a:hover { text-decoration: underline; }
+
 .ai-badge{
   display:inline-flex;
   align-items:center;
@@ -3152,6 +3170,17 @@ function createChartCard(spec) {
   card.dataset.metricId = spec.metric_id || ''; // 添加metric-id属性
 
   // multi_funnel 走 tabbed 壳（spec.kind === "tabbed"，每个 tab 内 kind === "multi_funnel"）
+
+  // 富文本卡（Change Log 之类）：html 已在 Python 侧从 markdown 渲染并转义好，
+  // 这里直接挂上去。它不含图表，所以不进 renderChart 的后续分支。
+  if (spec.kind === "richtext") {
+    card.innerHTML =
+      '<div class="chart-header"><div><div class="chart-title">' + (spec.title || '') + '</div>' +
+      (spec.subtitle ? '<div style="font-size:11px;color:#9ca3af;margin-top:4px;">' + spec.subtitle + '</div>' : '') +
+      '</div></div>' +
+      '<div class="richtext-body" style="padding:4px 16px 16px;">' + (spec.html || '') + '</div>';
+    return card;
+  }
 
   // 处理data_table类型
   if (spec.kind === "data_table") {

@@ -1344,6 +1344,24 @@ body.ai-collapsed .charts{
   letter-spacing: -0.01em;
 }
 
+/* 富文本卡（Change Log）：内容由 markdown 渲染，样式与看板其余部分对齐 */
+.richtext-body { font-size: 13px; line-height: 1.7; color: var(--text); }
+.richtext-body h2 { font-size: 15px; font-weight: 600; margin: 18px 0 8px; }
+.richtext-body h2:first-child { margin-top: 4px; }
+.richtext-body h3 { font-size: 13px; font-weight: 600; margin: 14px 0 6px; }
+.richtext-body p { margin: 8px 0; }
+.richtext-body ul { margin: 8px 0; padding-left: 20px; }
+.richtext-body li { margin: 4px 0; }
+.richtext-body code { background: rgba(127,127,127,.12); border-radius: 3px; padding: 1px 5px; font-size: 12px; }
+.richtext-body blockquote { margin: 10px 0; padding: 8px 12px; border-left: 3px solid #9ca3af; background: rgba(127,127,127,.06); color: #6b7280; font-size: 12px; }
+.richtext-body blockquote p { margin: 2px 0; }
+.richtext-body table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.richtext-body th { text-align: left; font-weight: 600; padding: 6px 10px; border-bottom: 2px solid #e5e7eb; white-space: nowrap; }
+.richtext-body td { padding: 6px 10px; border-bottom: 1px solid #eef1f5; }
+.richtext-body tr:last-child td { border-bottom: none; }
+.richtext-body a { color: #2563eb; text-decoration: none; }
+.richtext-body a:hover { text-decoration: underline; }
+
 .ai-badge{
   display:inline-flex;
   align-items:center;
@@ -1856,10 +1874,13 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "ID \u00d7 ios",
             "MY \u00d7 ios",
-            "PK \u00d7 ios",
             "SG \u00d7 ios",
+            "PK \u00d7 ios",
             "IN \u00d7 ios",
-            "KZ \u00d7 ios"
+            "KZ \u00d7 ios",
+            "SA \u00d7 ios",
+            "US \u00d7 ios",
+            "PH \u00d7 ios"
           ],
           "selected_dim_values": [
             "ID \u00d7 ios"
@@ -1867,23 +1888,30 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "ID \u00d7 ios",
             "MY \u00d7 ios",
-            "PK \u00d7 ios",
             "SG \u00d7 ios",
+            "PK \u00d7 ios",
             "IN \u00d7 ios",
-            "KZ \u00d7 ios"
+            "KZ \u00d7 ios",
+            "SA \u00d7 ios",
+            "US \u00d7 ios",
+            "PH \u00d7 ios"
           ],
           "data": {
             "dates": [
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "ID \u00d7 ios",
               "IN \u00d7 ios",
               "KZ \u00d7 ios",
               "MY \u00d7 ios",
+              "PH \u00d7 ios",
               "PK \u00d7 ios",
-              "SG \u00d7 ios"
+              "SA \u00d7 ios",
+              "SG \u00d7 ios",
+              "US \u00d7 ios"
             ],
             "matrix": [
               [
@@ -1891,16 +1919,33 @@ body.ai-collapsed .charts{
                 0.0,
                 78.0,
                 0.0,
+                0.0,
                 60.0,
-                120.0
+                0.0,
+                120.0,
+                0.0
               ],
               [
                 172.0,
                 223.0,
                 0.0,
                 376.0,
+                0.0,
                 202.0,
-                110.0
+                0.0,
+                110.0,
+                0.0
+              ],
+              [
+                268.0,
+                0.0,
+                0.0,
+                159.0,
+                39.0,
+                0.0,
+                65.0,
+                100.0,
+                52.0
               ]
             ]
           }
@@ -1920,10 +1965,13 @@ body.ai-collapsed .charts{
           "all_dim_values": [
             "ID",
             "MY",
-            "PK",
             "SG",
+            "PK",
             "IN",
-            "KZ"
+            "KZ",
+            "SA",
+            "US",
+            "PH"
           ],
           "selected_dim_values": [
             "ID"
@@ -1931,23 +1979,30 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "ID",
             "MY",
-            "PK",
             "SG",
+            "PK",
             "IN",
-            "KZ"
+            "KZ",
+            "SA",
+            "US",
+            "PH"
           ],
           "data": {
             "dates": [
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "ID",
               "IN",
               "KZ",
               "MY",
+              "PH",
               "PK",
-              "SG"
+              "SA",
+              "SG",
+              "US"
             ],
             "matrix": [
               [
@@ -1955,16 +2010,33 @@ body.ai-collapsed .charts{
                 0.0,
                 78.0,
                 0.0,
+                0.0,
                 60.0,
-                120.0
+                0.0,
+                120.0,
+                0.0
               ],
               [
                 172.0,
                 223.0,
                 0.0,
                 376.0,
+                0.0,
                 202.0,
-                110.0
+                0.0,
+                110.0,
+                0.0
+              ],
+              [
+                268.0,
+                0.0,
+                0.0,
+                159.0,
+                39.0,
+                0.0,
+                65.0,
+                100.0,
+                52.0
               ]
             ]
           }
@@ -1993,7 +2065,8 @@ body.ai-collapsed .charts{
           "data": {
             "dates": [
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "ios"
@@ -2004,6 +2077,9 @@ body.ai-collapsed .charts{
               ],
               [
                 1083.0
+              ],
+              [
+                683.0
               ]
             ]
           }
@@ -2036,25 +2112,25 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "Android",
-            "iPad",
-            "iPhone"
+            "iPhone",
+            "iPad"
           ],
           "selected_dim_values": [
             "Android"
           ],
           "ranked_dim_values": [
             "Android",
-            "iPad",
-            "iPhone"
+            "iPhone",
+            "iPad"
           ],
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "Android",
@@ -2062,11 +2138,6 @@ body.ai-collapsed .charts{
               "iPhone"
             ],
             "matrix": [
-              [
-                1.47,
-                0.0,
-                0.0
-              ],
               [
                 1.05,
                 0.0,
@@ -2091,6 +2162,11 @@ body.ai-collapsed .charts{
                 1.19,
                 0.01,
                 0.0
+              ],
+              [
+                0.57,
+                0.0,
+                0.02
               ]
             ]
           }
@@ -2123,48 +2199,47 @@ body.ai-collapsed .charts{
           "filterable": true,
           "all_dim_values": [
             "KH",
+            "DZ",
             "MM",
+            "MA",
             "EG",
             "TN",
             "FR",
-            "MA",
             "SN",
             "TH",
             "NZ",
-            "ZA",
-            "BD",
             "PH",
+            "ZA",
             "AU",
             "BE",
-            "BR",
             "GB",
             "IQ",
+            "BR",
+            "BD",
+            "AE",
+            "SA",
             "IR",
             "PK",
-            "AE",
-            "RU",
-            "MY",
-            "ID",
-            "CA",
             "AF",
+            "MY",
+            "CA",
             "VN",
-            "US",
+            "ID",
             "IN",
+            "US",
             "AR",
             "JM",
-            "TT",
             "SL",
             "UA",
-            "VE",
+            "TT",
             "IE",
+            "RU",
+            "ES",
             "IT",
             "CL",
             "PL",
             "NP",
             "SY",
-            "ES",
-            "DZ",
-            "SA",
             "TR",
             "PE",
             "NG",
@@ -2177,48 +2252,47 @@ body.ai-collapsed .charts{
           ],
           "ranked_dim_values": [
             "KH",
+            "DZ",
             "MM",
+            "MA",
             "EG",
             "TN",
             "FR",
-            "MA",
             "SN",
             "TH",
             "NZ",
-            "ZA",
-            "BD",
             "PH",
+            "ZA",
             "AU",
             "BE",
-            "BR",
             "GB",
             "IQ",
+            "BR",
+            "BD",
+            "AE",
+            "SA",
             "IR",
             "PK",
-            "AE",
-            "RU",
-            "MY",
-            "ID",
-            "CA",
             "AF",
+            "MY",
+            "CA",
             "VN",
-            "US",
+            "ID",
             "IN",
+            "US",
             "AR",
             "JM",
-            "TT",
             "SL",
             "UA",
-            "VE",
+            "TT",
             "IE",
+            "RU",
+            "ES",
             "IT",
             "CL",
             "PL",
             "NP",
             "SY",
-            "ES",
-            "DZ",
-            "SA",
             "TR",
             "PE",
             "NG",
@@ -2228,12 +2302,12 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "AE",
@@ -2282,62 +2356,10 @@ body.ai-collapsed .charts{
               "TT",
               "UA",
               "US",
-              "VE",
               "VN",
               "ZA"
             ],
             "matrix": [
-              [
-                0.0,
-                0.0,
-                0.0,
-                0.26,
-                6.59,
-                0.0,
-                0.0,
-                1.19,
-                0.98,
-                0.0,
-                0.38,
-                0.24,
-                0.0,
-                2.54,
-                1.65,
-                0.0,
-                2.08,
-                0.2,
-                1.39,
-                0.0,
-                2.3,
-                0.0,
-                0.79,
-                0.31,
-                0.0,
-                3.06,
-                0.49,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                2.03,
-                2.75,
-                0.0,
-                6.04,
-                0.59,
-                0.0,
-                0.0,
-                0.0,
-                2.6,
-                0.0,
-                0.0,
-                0.0,
-                1.24,
-                0.0,
-                1.17,
-                3.38,
-                0.0,
-                3.19
-              ],
               [
                 0.0,
                 0.0,
@@ -2385,7 +2407,6 @@ body.ai-collapsed .charts{
                 0.0,
                 3.56,
                 0.49,
-                0.0,
                 0.0,
                 14.47
               ],
@@ -2436,7 +2457,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 1.38,
-                0.0,
                 6.62,
                 0.0
               ],
@@ -2488,7 +2508,6 @@ body.ai-collapsed .charts{
                 0.0,
                 1.93,
                 0.0,
-                0.0,
                 0.26
               ],
               [
@@ -2538,7 +2557,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.91,
-                0.0,
                 0.0,
                 0.0
               ],
@@ -2590,6 +2608,55 @@ body.ai-collapsed .charts{
                 0.0,
                 0.7,
                 0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.17,
+                0.0,
+                0.0,
+                91.26,
+                0.44,
+                1.55,
+                0.0,
+                2.09,
+                0.0,
+                0.63,
+                0.0,
+                1.79,
+                0.0,
+                0.32,
+                0.0,
+                0.0,
+                3.8,
+                25.12,
+                0.32,
+                0.06,
+                0.0,
+                0.0,
+                0.24,
+                0.0,
+                4.18,
+                0.0,
+                0.0,
+                0.0,
+                8.78,
+                0.0,
+                0.0,
+                0.0,
+                2.16,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.22,
                 0.0,
                 0.0
               ]
@@ -2622,7 +2689,6 @@ body.ai-collapsed .charts{
           },
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
@@ -2630,7 +2696,6 @@ body.ai-collapsed .charts{
               "10-22"
             ],
             "values": [
-              303.0,
               617.0,
               333.0,
               371.0,
@@ -2662,7 +2727,6 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
@@ -2673,9 +2737,6 @@ body.ai-collapsed .charts{
               "other_issue"
             ],
             "matrix": [
-              [
-                303.0
-              ],
               [
                 617.0
               ],
@@ -2717,7 +2778,6 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
@@ -2728,9 +2788,6 @@ body.ai-collapsed .charts{
               "Android"
             ],
             "matrix": [
-              [
-                303.0
-              ],
               [
                 617.0
               ],
@@ -2773,20 +2830,20 @@ body.ai-collapsed .charts{
           },
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "values": [
-              0.0297029702970297,
               0.0338461538461538,
               0.0199335548172757,
               0.0277777777777777,
               0.0213523131672597,
-              0.0182481751824817
+              0.0182481751824817,
+              0.0034843205574912
             ]
           }
         },
@@ -2813,20 +2870,17 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "10-17",
               "10-18",
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "Android"
             ],
             "matrix": [
-              [
-                0.0297029702970297
-              ],
               [
                 0.0338461538461538
               ],
@@ -2841,6 +2895,9 @@ body.ai-collapsed .charts{
               ],
               [
                 0.0182481751824817
+              ],
+              [
+                0.0034843205574912
               ]
             ]
           }
@@ -2869,7 +2926,6 @@ body.ai-collapsed .charts{
           },
           "data": {
             "dates": [
-              "10-10",
               "10-11",
               "10-12",
               "10-13",
@@ -2881,10 +2937,10 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "values": [
-              0.0101522842639593,
               0.0081967213114754,
               0.0032154340836012,
               0.0219435736677116,
@@ -2896,7 +2952,8 @@ body.ai-collapsed .charts{
               0.0089020771513353,
               0.0278637770897832,
               0.0189873417721519,
-              0.0099667774086378
+              0.0099667774086378,
+              0.0062305295950155
             ]
           }
         },
@@ -2925,7 +2982,6 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "10-10",
               "10-11",
               "10-12",
               "10-13",
@@ -2937,17 +2993,14 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "Android",
               "iPhone"
             ],
             "matrix": [
-              [
-                0.0109289617486338,
-                0.0
-              ],
               [
                 0.0088757396449704,
                 0.0
@@ -2995,6 +3048,10 @@ body.ai-collapsed .charts{
               [
                 0.010948905109489,
                 0.0
+              ],
+              [
+                0.0069686411149825,
+                0.0
               ]
             ]
           }
@@ -3023,7 +3080,6 @@ body.ai-collapsed .charts{
           },
           "data": {
             "dates": [
-              "10-10",
               "10-11",
               "10-12",
               "10-13",
@@ -3035,10 +3091,10 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "values": [
-              2.0,
               1.0,
               1.0,
               2.0,
@@ -3050,6 +3106,7 @@ body.ai-collapsed .charts{
               1.0,
               2.0,
               2.0,
+              1.0,
               1.0
             ]
           }
@@ -3077,7 +3134,6 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "10-10",
               "10-11",
               "10-12",
               "10-13",
@@ -3089,16 +3145,14 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "Android"
             ],
             "matrix": [
               [
-                2.0
-              ],
-              [
                 1.0
               ],
               [
@@ -3130,6 +3184,9 @@ body.ai-collapsed .charts{
               ],
               [
                 2.0
+              ],
+              [
+                1.0
               ],
               [
                 1.0
@@ -3163,7 +3220,6 @@ body.ai-collapsed .charts{
           },
           "data": {
             "dates": [
-              "09-24",
               "09-25",
               "09-26",
               "09-27",
@@ -3191,10 +3247,10 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "values": [
-              0.7081260364842454,
               0.5360544217687074,
               0.5426008968609866,
               0.4825174825174825,
@@ -3222,7 +3278,8 @@ body.ai-collapsed .charts{
               0.125,
               0.3178294573643411,
               0.3378378378378378,
-              0.2758620689655172
+              0.2758620689655172,
+              0.6283783783783784
             ]
           }
         },
@@ -3244,54 +3301,52 @@ body.ai-collapsed .charts{
             "CONNECT4",
             "Chess",
             "Hole Eater",
-            "Punch Box",
             "Jelly Blast",
+            "Punch Box",
             "Deep Sea 2048",
             "Kitty Runner",
-            "Xiangqi",
             "Carrom King",
-            "Candy Super Match",
             "Dunk Master",
-            "Drift Bus",
-            "Helix Drop",
+            "Xiangqi",
             "Crazy Fishing",
+            "Helix Drop",
+            "Drift Bus",
             "Reversi",
             "Tic Tac Toe",
             "Sushi Frenzy",
+            "Candy Super Match",
             "Mini Golf",
             "Super Tetris",
+            "Golden Move Quest",
             "Stack Fall Hit 2",
             "Monkey Mart",
             "Bubble Pet Saga",
             "Fruit Slice",
-            "Gold Miner",
-            "Golden Move Quest",
             "Rescue the Sultan",
+            "Tofu Cat",
             "Basket Cannon1",
             "Happy Bird",
             "Cards Fusion",
-            "Tofu Cat",
-            "Knife Master",
             "Crossy Chicken",
             "Numerix Drop",
-            "Backgammon Battle",
-            "Gomoku",
-            "Plane War",
-            "Cut The Candy",
-            "Battlefront Escape",
-            "Ultimate Go!",
+            "Fruit Merge",
+            "Gold Miner",
+            "Stacking Tower",
             "Block Breaker",
+            "Ultimate Go!",
             "Candy Monster",
             "Tennis Dash",
             "Circle Burst",
-            "Stacking Tower",
-            "Darts",
-            "Squid Head Kick",
+            "Battlefront Escape",
+            "Cut The Candy",
+            "Knife Master",
             "Sling Tomb",
             "SkySpeedster",
+            "Darts",
             "Fast Driver",
-            "Fruit Merge",
-            "Habhab"
+            "Plane War",
+            "Habhab",
+            "Squid Head Kick"
           ],
           "selected_dim_values": [
             "Dragon Snap Rescue"
@@ -3299,31 +3354,30 @@ body.ai-collapsed .charts{
           "ranked_dim_values": [
             "Dragon Snap Rescue",
             "Uno King",
-            "CONNECT4",
-            "Chess",
-            "Carrom King",
             "Golden Move Quest",
-            "Mini Golf",
+            "CONNECT4",
+            "Carrom King",
+            "Crazy Fishing",
             "Dunk Master",
+            "Chess",
+            "Hole Eater",
+            "Fruit Merge",
             "Gold Miner",
             "Bubble Pet Saga",
-            "Tofu Cat",
+            "Plane War",
             "Tennis Dash",
             "Super Tetris",
             "Sling Tomb",
-            "Plane War",
             "Fruit Slice",
+            "Mini Golf",
             "Habhab",
-            "Fruit Merge",
             "Drift Bus",
             "Cut The Candy",
-            "Crazy Fishing",
             "Candy Monster",
             "Xiangqi"
           ],
           "data": {
             "dates": [
-              "09-24",
               "09-25",
               "09-26",
               "09-27",
@@ -3351,10 +3405,10 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
-              "Backgammon Battle",
               "Basket Cannon1",
               "Battlefront Escape",
               "Block Breaker",
@@ -3379,7 +3433,6 @@ body.ai-collapsed .charts{
               "Fruit Slice",
               "Gold Miner",
               "Golden Move Quest",
-              "Gomoku",
               "Habhab",
               "Happy Bird",
               "Helix Drop",
@@ -3410,62 +3463,6 @@ body.ai-collapsed .charts{
             ],
             "matrix": [
               [
-                0.3333333333333333,
-                0.0,
-                0.0,
-                0.0,
-                0.5,
-                0.7677725118483413,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.6521739130434783,
-                0.0,
-                0.5,
-                0.0,
-                0.0,
-                0.0,
-                0.6666666666666666,
-                1.0,
-                0.2758620689655172,
-                0.5,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.3333333333333333,
-                0.0,
-                0.0,
-                0.0,
-                0.1111111111111111,
-                0.0,
-                0.4444444444444444,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.8048780487804879,
-                0.5
-              ],
-              [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3484,7 +3481,6 @@ body.ai-collapsed .charts{
                 0.3333333333333333,
                 0.8823529411764706,
                 0.4285714285714285,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3524,7 +3520,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.5942028985507246,
                 0.0,
                 0.0,
@@ -3543,7 +3538,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.1,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3579,7 +3573,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.43,
                 0.0,
                 0.0,
@@ -3594,7 +3587,6 @@ body.ai-collapsed .charts{
                 1.0,
                 0.6666666666666666,
                 0.25,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3634,7 +3626,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.5263157894736842,
                 0.0,
                 1.0,
@@ -3650,7 +3641,6 @@ body.ai-collapsed .charts{
                 0.7272727272727273,
                 0.1,
                 0.3478260869565217,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3689,7 +3679,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.651017214397496,
                 0.0,
                 0.0,
@@ -3708,7 +3697,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 1.0,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3740,7 +3728,6 @@ body.ai-collapsed .charts{
                 1.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3790,12 +3777,10 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.6548117154811716,
                 1.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3813,7 +3798,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.7777777777777778,
                 0.5714285714285714,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3854,7 +3838,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.8806818181818182,
                 0.0,
                 0.0,
@@ -3868,7 +3851,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.85,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3908,7 +3890,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.5,
                 0.5232558139534884,
                 0.0,
@@ -3925,7 +3906,6 @@ body.ai-collapsed .charts{
                 0.5714285714285714,
                 0.0,
                 1.0,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -3963,7 +3943,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.6666666666666666,
                 0.2943722943722944,
                 0.0,
@@ -3971,7 +3950,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.4848484848484848,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4019,7 +3997,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4640522875816993,
                 0.0,
                 0.0,
@@ -4033,7 +4010,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.5,
                 0.9310344827586208,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4074,7 +4050,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4390243902439024,
                 0.0,
                 0.6666666666666666,
@@ -4088,7 +4063,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.875,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4129,7 +4103,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4693877551020408,
                 0.0,
                 0.0,
@@ -4144,7 +4117,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.3333333333333333,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4180,7 +4152,6 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.0,
                 1.0,
                 0.0,
                 0.0,
@@ -4191,7 +4162,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.7435897435897436,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4239,7 +4209,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.6585365853658537,
                 0.0,
                 0.0,
@@ -4253,7 +4222,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.7142857142857143,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4294,14 +4262,12 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4117647058823529,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
                 0.75,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4349,7 +4315,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4247787610619469,
                 0.0,
                 0.0,
@@ -4365,7 +4330,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.4,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4404,7 +4368,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4496644295302013,
                 0.0,
                 0.0,
@@ -4418,7 +4381,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.9166666666666666,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4459,9 +4421,7 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.3396226415094339,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4514,7 +4474,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.5,
                 0.0,
                 0.0,
@@ -4560,12 +4519,10 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.6,
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4584,7 +4541,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 1.0,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4624,7 +4580,6 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.1617647058823529,
                 0.0,
                 0.0,
@@ -4640,7 +4595,6 @@ body.ai-collapsed .charts{
                 0.7272727272727273,
                 0.0,
                 0.25,
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4675,7 +4629,6 @@ body.ai-collapsed .charts{
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4725,12 +4678,10 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.6153846153846154,
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4780,12 +4731,10 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.875,
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4836,11 +4785,9 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4890,12 +4837,10 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.4,
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -4946,11 +4891,9 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
-                0.0,
                 0.0
               ],
               [
-                0.0,
                 0.0,
                 0.0,
                 0.0,
@@ -5000,8 +4943,60 @@ body.ai-collapsed .charts{
                 0.0,
                 0.0,
                 0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.3,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.4655172413793103,
                 0.0,
                 1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.9411764705882352,
+                0.0,
+                1.0,
+                0.0,
+                0.3333333333333333,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.6666666666666666,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
                 0.0
               ]
             ]
@@ -5030,7 +5025,6 @@ body.ai-collapsed .charts{
           ],
           "data": {
             "dates": [
-              "09-24",
               "09-25",
               "09-26",
               "09-27",
@@ -5058,15 +5052,13 @@ body.ai-collapsed .charts{
               "10-19",
               "10-20",
               "10-21",
-              "10-22"
+              "10-22",
+              "10-23"
             ],
             "series": [
               "1v1"
             ],
             "matrix": [
-              [
-                0.7081260364842454
-              ],
               [
                 0.5360544217687074
               ],
@@ -5150,6 +5142,9 @@ body.ai-collapsed .charts{
               ],
               [
                 0.2758620689655172
+              ],
+              [
+                0.6283783783783784
               ]
             ]
           }
@@ -5184,10 +5179,10 @@ body.ai-collapsed .charts{
         ],
         [
           1909.0,
-          58.0,
-          128.12,
-          114.0,
-          37.0
+          63.0,
+          130.62,
+          118.0,
+          41.0
         ],
         [
           1908.0,
@@ -5324,7 +5319,7 @@ body.ai-collapsed .charts{
         ]
       ],
       "row_count": 21,
-      "data_date": "2026-10-23",
+      "data_date": "2026-10-24",
       "business_domain": "pe_c",
       "related_metrics": [],
       "description": "Bot\u9996\u6b21\u54cd\u5e94\u65f6\u957f"
@@ -6652,6 +6647,17 @@ function createChartCard(spec) {
   card.dataset.metricId = spec.metric_id || ''; // 添加metric-id属性
 
   // multi_funnel 走 tabbed 壳（spec.kind === "tabbed"，每个 tab 内 kind === "multi_funnel"）
+
+  // 富文本卡（Change Log 之类）：html 已在 Python 侧从 markdown 渲染并转义好，
+  // 这里直接挂上去。它不含图表，所以不进 renderChart 的后续分支。
+  if (spec.kind === "richtext") {
+    card.innerHTML =
+      '<div class="chart-header"><div><div class="chart-title">' + (spec.title || '') + '</div>' +
+      (spec.subtitle ? '<div style="font-size:11px;color:#9ca3af;margin-top:4px;">' + spec.subtitle + '</div>' : '') +
+      '</div></div>' +
+      '<div class="richtext-body" style="padding:4px 16px 16px;">' + (spec.html || '') + '</div>';
+    return card;
+  }
 
   // 处理data_table类型
   if (spec.kind === "data_table") {
